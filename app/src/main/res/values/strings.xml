@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Bazi</string>
+    <string name="app_bazi_title">八字算命</string>
+    <string name="app_bazi">八字算命</string>
+    <string name="app_bazi_science">相信科学</string>
+    <string name="app_bazi_paipan">八字排盘</string>
+    <string name="app_bazi_result">命理结果</string>
+    <string name="app_bazi_suanming">八字分析</string>
+    <string name="app_bazi_male">男</string>
+    <string name="app_bazi_female">女</string>
+    <string name="app_bazi_birth_date">出生日期</string>
+    <string name="app_bazi_birth_time">出生时间</string>
+    <string name="back_button">重新起盘</string>
+    <string name="pick">选择</string>
+    <string name="cancel">cancel</string>
+    <string name="next">next</string>
+    <string name="msg_taohua_no">施主八字没有桃花，但不要灰心，在不重新投胎的情况下，十年大运的转换，流年的变化，也有机会遇到桃花</string>
+    <string name="msg_taohua_normal">施主八字有桃花，八字带桃花的人，必定比没有桃花的人更容易吸引异性，同时自身也容易对不同的异性有好感</string>
+
+    <string name="bazi_date">日期</string>
+    <string name="bazi_year">年柱</string>
+    <string name="bazi_month">月柱</string>
+    <string name="bazi_day">日柱</string>
+    <string name="bazi_hour">时柱</string>
+
+    <string name="tiangan">天干</string>
+    <string name="tiangan_jia">甲</string>
+    <string name="tiangan_yi">乙</string>
+    <string name="tiangan_bing">丙</string>
+    <string name="tiangan_ding">丁</string>
+    <string name="tiangan_wu">戊</string>
+    <string name="tiangan_ji">己</string>
+    <string name="tiangan_geng">庚</string>
+    <string name="tiangan_xin">辛</string>
+    <string name="tiangan_ren">壬</string>
+    <string name="tiangan_gui">癸</string>
+
+    <string name="dizhi">地支</string>
+    <string name="dizhi_zi">子</string>
+    <string name="dizhi_chou">丑</string>
+    <string name="dizhi_yin">寅</string>
+    <string name="dizhi_mou">卯</string>
+    <string name="dizhi_chen">辰</string>
+    <string name="dizhi_si">巳</string>
+    <string name="dizhi_wu">午</string>
+    <string name="dizhi_wei">未</string>
+    <string name="dizhi_shen">申</string>
+    <string name="dizhi_you">酉</string>
+    <string name="dizhi_xu">戌</string>
+    <string name="dizhi_hai">亥</string>
+
+    <string name="bazi_rizhu">日主</string>
+    <string name="zhangsheng">长生</string>
+    <string name="zs_zhangsheng">长生</string>
+    <string name="zs_muyu">沐浴</string>
+    <string name="zs_guandai">冠带</string>
+    <string name="zs_linguan">临官</string>
+    <string name="zs_diwang">帝旺</string>
+    <string name="zs_shuai">衰</string>
+    <string name="zs_bing">病</string>
+    <string name="zs_si">死</string>
+    <string name="zs_mu">墓</string>
+    <string name="zs_jue">绝</string>
+    <string name="zs_tai">胎</string>
+    <string name="zs_yang">养</string>
+
+    <string name="ten_shen">十神</string>
+    <string name="ts_bijian">比肩</string>
+    <string name="ts_jiecai">劫财</string>
+    <string name="ts_shishen">食神</string>
+    <string name="ts_shangguan">伤官</string>
+    <string name="ts_zhengcai">正财</string>
+    <string name="ts_piancai">偏财</string>
+    <string name="ts_zhengguan">正官</string>
+    <string name="ts_qisha">七杀</string>
+    <string name="ts_zhengyin">正印</string>
+    <string name="ts_pianyin">偏印</string>
+
+</resources>
