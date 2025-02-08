@@ -140,7 +140,7 @@ fun BaziStartScreen(
         val defaultYear = Calendar.getInstance().get(Calendar.YEAR)
         //this is to reduce year pick list, the algrithm can support early date
         val maxYear = defaultYear + 100
-        val defaultYearIndex = 200
+        val defaultYearIndex = 120
         val minYear = defaultYear - defaultYearIndex
         val yearValues = remember { (minYear..maxYear).map { it.toString() } }
         val yearValuesPickerState = rememberPickerState()
@@ -455,62 +455,30 @@ fun paipan(
     var hourDZ = 1
     var tg: TianGan = TianGan.TIANGAN_JIA
     var dz: DiZhi = DiZhi.DIZHI_ZI
-
     var tmp = 0
-    //calculate Year Tiangan & Dizhi
-    tmp = year - 3
-    yearTG = tmp % 10
 
     val tgLookupMap: Map<Int, TianGan> = baziInfo.tgLookupMap
     val dzLookupMap: Map<Int, DiZhi> = baziInfo.dzLookupMap
 
+    //calculate Year Tiangan & Dizhi
+    var yearBase =  BaziUtil().getCyclicalYearBase(year, month, day, hour)
+    yearTG = yearBase % 10
     tg = tgLookupMap[yearTG]!!
     baziModel.setYearTiangan(tg)
-
-    var yearDZTmp = 0
-
-    yearDZTmp = year % 100
-
-    if (year >= 2000 && year < 2100) {
-        tmp = yearDZTmp + 5
-    } else if (year < 2000 && year >= 1900) {
-        tmp = yearDZTmp + 1
-    } else if (year < 1900 && year >= 1800) {
-        tmp = yearDZTmp + 9
-    } else {
-        yearDZTmp = year - 3
-        tmp = yearDZTmp
-    }
-    yearDZ = tmp % 12
-
-    dz = dzLookupMap.get(yearDZ)!!
+    yearDZ = yearBase % 12
+    dz = dzLookupMap[yearDZ]!!
     baziModel.setYearDiZhi(dz)
 
     //calculate Month Tiangan & Dizhi
-    //get lunar month
-    val timeZone = 7.0
-    val jd = jdFromDate(day, month, year)
-    val s = jdToDate(jd)
-    val l = convertSolar2Lunar(s[0], s[1], s[2], timeZone)
-    val lunarMonth = l[1]
-    val lunarYear = l[2]
-
-    println("yearTG=$yearTG , lunarMonth=$lunarMonth ")
-    tmp = yearTG * 2 + lunarMonth
-    monthTG = tmp % 10
-
+    var monthBase = BaziUtil().getCyclicalMonthBase(year, month, day, hour)
+    monthTG = monthBase % 10
     tg = tgLookupMap[monthTG]!!
     baziModel.setMonthTiangan(tg)
-
-    //dz = BaziUtil().getDizhiByLunarMonth(lunarMonth)
-
-    var minute : Int = 1
-    dz = BaziUtil().getMonthDZByLunaryear(lunarYear, lunarMonth, year, month, day, hour, minute)
-
+    monthDZ = monthBase % 12
+    dz = dzLookupMap.get(monthDZ)!!
     baziModel.setMonthDiZhi(dz)
 
     //calculate Day Tiangan & Dizhi
-
     var r = 0
     //23:00 to 23:59 is belong to the next day in lunar calendar
     if (hour == 23) {
@@ -529,6 +497,7 @@ fun paipan(
     baziModel.setDayTiangan(tg)
     baziModel.setDayDiZhi(dz)
 
+    //calculate Hour Tiangan & Dizhi
     dz = BaziUtil().getHourDZ(hour)
     hourDZ = BaziUtil().getHourDZInt(hour)
 
