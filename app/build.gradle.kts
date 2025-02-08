@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.rick.bazi"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.media3.common.ktx)
+    implementation(libs.androidx.compose.material)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

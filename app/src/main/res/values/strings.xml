@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Bazi</string>
+    <string name="app_calendar">阳历</string>
+    <string name="app_label_year">年</string>
+    <string name="app_label_month">月</string>
+    <string name="app_label_day">日</string>
+    <string name="app_label_hour">时</string>
     <string name="app_bazi_title">八字算命</string>
     <string name="app_bazi">八字算命</string>
     <string name="app_bazi_science">相信科学</string>
     <string name="app_bazi_paipan">八字排盘</string>
     <string name="app_bazi_result">命理结果</string>
     <string name="app_bazi_suanming">八字分析</string>
+    <string name="app_bazi_gender">性别</string>
     <string name="app_bazi_male">男</string>
     <string name="app_bazi_female">女</string>
     <string name="app_bazi_birth_date">出生日期</string>
@@ -17,11 +23,24 @@
     <string name="msg_taohua_no">施主八字没有桃花，但不要灰心，在不重新投胎的情况下，十年大运的转换，流年的变化，也有机会遇到桃花</string>
     <string name="msg_taohua_normal">施主八字有桃花，八字带桃花的人，必定比没有桃花的人更容易吸引异性，同时自身也容易对不同的异性有好感</string>
 
+    <string name="yhzp_y">渊</string>
+    <string name="yhzp_h">海</string>
+    <string name="yhzp_z">子</string>
+    <string name="yhzp_p">平</string>
+    <string name="dts_d">滴</string>
+    <string name="dts_t">天</string>
+    <string name="dts_s">髓</string>
+
     <string name="bazi_date">日期</string>
     <string name="bazi_year">年柱</string>
     <string name="bazi_month">月柱</string>
     <string name="bazi_day">日柱</string>
     <string name="bazi_hour">时柱</string>
+    <string name="bazi_owner">日主</string>
+    <string name="bazi_birth_year">出生年</string>
+    <string name="bazi_birth_month">出生月</string>
+    <string name="bazi_birth_day">出生日</string>
+    <string name="bazi_birth_hour">出生时</string>
 
     <string name="tiangan">天干</string>
     <string name="tiangan_jia">甲</string>

@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
@@ -28,6 +29,7 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 
@@ -51,6 +53,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,6 +72,7 @@ import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.FEMALE
 import com.rick.bazi.data.MALE
 import com.rick.bazi.data.TianGan
+import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.DateUtils
 import com.rick.bazi.util.VietCalendar.convertSolar2Lunar
 import com.rick.bazi.util.VietCalendar.jdFromDate
@@ -89,363 +94,345 @@ fun BaziStartScreen(
     baziInfo: BaziInfo,
     modifier: Modifier = Modifier
 ) {
-    var selectedValue by rememberSaveable { mutableStateOf(MALE) }
-    val dateState = rememberDatePickerState()
-
-    val currentTime = Calendar.getInstance()
-    val timePickerState = rememberTimePickerState(
-        initialHour = currentTime.get(Calendar.HOUR_OF_DAY),
-        initialMinute = currentTime.get(Calendar.MINUTE),
-        is24Hour = true,
-    )
-
-    var formatDateStr by remember { mutableStateOf("YYYY-MM-DD") }
-    var formatTimeStr by remember { mutableStateOf("MM-SS") }
-    var testResultStr by remember { mutableStateOf("XXX-XXX") }
-
-    formatDateStr = dateState.selectedDateMillis.toString()
-
-    val millisToLocalDate = dateState.selectedDateMillis?.let {
-        DateUtils().convertMillisToLocalDate(it)
-    }
-
-    val dateToString = millisToLocalDate?.let {
-        DateUtils().dateToString(millisToLocalDate)
-    } ?: "YYYY-MM-DD"
-    formatDateStr = dateToString
-    formatTimeStr = "${timePickerState.hour}:${timePickerState.minute}"
-
-    var showDatePicker by remember { mutableStateOf(false) }
-    var showTimePicker by remember { mutableStateOf(false) }
-    var year = 0
-    millisToLocalDate?.let { year = it.year }
-//    var year = millisToLocalDate.year
-    var year2 = year - 3
-    var year3 = year2 % 10
-
-//    var yearDz = 0
-    var yd2 = year % 100
-    var yd3 = 0
-    var yd4 = 0
-    if (year >= 2000 && year < 2100) {
-        yd3 = yd2 + 5
-    } else if (year < 2000 && year >= 1900) {
-        yd3 = yd2 + 1
-    } else if (year < 1900 && year >= 1800) {
-        yd3 = yd2 + 9
-    } else {
-        yd3 = year2
-    }
-    yd4 = yd3 % 12
-
-    var tmp = 0
-
-    var days = 0
-    millisToLocalDate?.let { days = it.dayOfYear }
-    if (year > 1900) {
-        tmp = (year - 1900) * 5 + (year - 1900 + 3) / 4 + 9 + days
-    }
-
-    yd2 = tmp % 60
-    yd3 = yd2 % 10
-    yd4 = yd2 % 12
-//    testResultStr = "${year}->${year2}->${year3} ${year}->${yd2}->${yd3}->${yd4}"
-
-    testResultStr = "days of the year = ${days}"
-
-//    testResultStr = "Day TG = ${tmp}->${yd2}->${yd3}->${yd4}"
-
-//    val timeZone = 7.0
-//    val jd = jdFromDate(9, 8, 1978)
-//    val s = jdToDate(jd)
-//    val l = convertSolar2Lunar(s[0], s[1], s[2], timeZone)
-    var month = 0
-    var day = 0
-    millisToLocalDate?.let { baziModel.setBirthDateYear(it.year) }
-    millisToLocalDate?.let { month = it.monthValue }
-    millisToLocalDate?.let { day = it.dayOfMonth }
-    val timeZone = 7.0
-    val jd = jdFromDate(day, month, year)
-    val s = jdToDate(jd)
-    val l = convertSolar2Lunar(s[0], s[1], s[2], timeZone)
-
-//    var str = DateUtils().getDayTianganBaseStr(year, month, day)
-
-//    var r = DateUtils().getDayTianganBase(year, month, day)
-//    var rs = 78/4
-//    str = "${rs} |${str}=${r}"
-//
-//    testResultStr = str
-
-//    testResultStr = "[${l[0]}->${l[1]}->${l[2]}]"
-
-//    var formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-//    var localDate = LocalDate.parse("9-8-1978", formatter)
-//    var date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-//    val chineseCalendar = ChineseCalendar(date)
-
-
-//    chineseCalendar
-//    var date : Date =
+    var selectedGenderValue by rememberSaveable { mutableStateOf(MALE) }
 
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-            Row(
-                modifier = Modifier
-                    .padding(5.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-//                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    painter = painterResource(R.drawable.you_believe_science),
-                    contentDescription = null
-                )
-
-                if (showDatePicker) {
-                    Popup(
-                        onDismissRequest = { showDatePicker = false },
-                        alignment = Alignment.TopStart
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .offset(y = 64.dp)
-                                .shadow(elevation = 4.dp)
-                                .background(MaterialTheme.colorScheme.surface)
-                                .padding(16.dp)
-                        ) {
-                            DatePicker(
-                                state = dateState,
-                                showModeToggle = true
-                            )
-                        }
-                    }
-                }
-
-                if (showTimePicker) {
-                    Popup(
-                        onDismissRequest = { showTimePicker = false },
-                        alignment = Alignment.Center
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .offset(y = 64.dp)
-                                .shadow(elevation = 4.dp)
-                                .background(MaterialTheme.colorScheme.surface)
-                                .padding(16.dp)
-                        ) {
-                            TimePicker(
-                                state = timePickerState
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
+        //Gender pick
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
             Row(
                 modifier = Modifier.padding(5.dp),
                 verticalAlignment = Alignment.Top
             ) {
                 RadioButton(
-                    selected = selectedValue == MALE,
+                    selected = selectedGenderValue == MALE,
                     onClick = {
-                        selectedValue = MALE
+                        selectedGenderValue = MALE
                         baziModel.setGender(MALE)
                         onSelectionChanged(MALE)
                     }
                 )
-                Text(text = stringResource(R.string.app_bazi_male))
+                Text(
+                    text = stringResource(R.string.app_bazi_male),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight(500),
+                    fontSize = 32.sp
+                )
                 RadioButton(
-                    selected = selectedValue == FEMALE,
+                    selected = selectedGenderValue == FEMALE,
                     onClick = {
-                        selectedValue = FEMALE
+                        selectedGenderValue = FEMALE
                         baziModel.setGender(FEMALE)
                         onSelectionChanged(FEMALE)
                     }
                 )
-                Text(text = stringResource(R.string.app_bazi_female))
-
+                Text(
+                    text = stringResource(R.string.app_bazi_female),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight(500),
+                    fontSize = 32.sp
+                )
 
             }
         }
+        val defaultYear = Calendar.getInstance().get(Calendar.YEAR)
+        //this is to reduce year pick list, the algrithm can support early date
+        val maxYear = defaultYear + 100
+        val defaultYearIndex = 200
+        val minYear = defaultYear - defaultYearIndex
+        val yearValues = remember { (minYear..maxYear).map { it.toString() } }
+        val yearValuesPickerState = rememberPickerState()
+        val monthValues = remember { (1..12).map { it.toString() } }
+        val monthValuesPickerState = rememberPickerState()
+        val dayValues = remember { (1..31).map { it.toString() } }
+        val dayValuesPickerState = rememberPickerState()
+        val hourValues = remember { (0..23).map { it.toString() } }
+        val hourValuesPickerState = rememberPickerState()
 
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.app_bazi_birth_date)
-                )
-
-                OutlinedButton(
-                    modifier = Modifier.weight(1f),
-                    onClick = {
-                        showDatePicker = !showDatePicker
-                    }
-                ) {
-                    Text(stringResource(R.string.pick))
-                }
-
-                Text(
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.weight(1f),
-                    text = "${formatDateStr}"
-                )
-            }
-        }
-
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.app_bazi_birth_time)
-                )
-
-                OutlinedButton(
-                    modifier = Modifier.weight(1f),
-                    onClick = {
-                        showTimePicker = !showTimePicker
-                    }
-                ) {
-                    Text(stringResource(R.string.pick))
-                }
-
-                Text(
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.weight(1f),
-                    text = "${formatTimeStr}"
-                )
-            }
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.padding_medium)),
-            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
-            verticalAlignment = Alignment.Bottom
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            OutlinedButton(
-                modifier = Modifier.weight(1f),
-                onClick = {
-                    val millisToLocalDate = dateState.selectedDateMillis?.let {
-                        DateUtils().convertMillisToLocalDate(it)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 10.dp)
+            }
+        }
+
+        //year picker
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    fontSize = 22.sp,
+                    text = stringResource(R.string.bazi_birth_year)
+                )
+                Picker(
+                    state = yearValuesPickerState,
+                    items = yearValues,
+                    startIndex = defaultYearIndex,
+                    visibleItemsCount = 1,
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    textModifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 22.sp),
+                    dividerColor = Color(0xFFE8E8E8)
+                )
+
+                Text(
+                    text = "${yearValuesPickerState.selectedItem}",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight(500),
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .fillMaxWidth(0.5f)
+                        .background(
+                            color = Color(0xFFF5F5F5),
+                            shape = RoundedCornerShape(size = 8.dp)
+                        )
+                        .padding(vertical = 10.dp, horizontal = 16.dp)
+                )
+            }
+        }
+
+        //month picker
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    fontSize = 22.sp,
+                    text = stringResource(R.string.bazi_birth_month)
+                )
+                Picker(
+                    state = monthValuesPickerState,
+                    items = monthValues,
+                    visibleItemsCount = 1,
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    textModifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 22.sp),
+                    dividerColor = Color(0xFFE8E8E8)
+                )
+
+                Text(
+                    text = "${monthValuesPickerState.selectedItem}",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight(500),
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .fillMaxWidth(0.5f)
+                        .background(
+                            color = Color(0xFFF5F5F5),
+                            shape = RoundedCornerShape(size = 8.dp)
+                        )
+                        .padding(vertical = 10.dp, horizontal = 16.dp)
+                )
+            }
+        }
+
+        //day picker
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    fontSize = 22.sp,
+                    text = stringResource(R.string.bazi_birth_day)
+                )
+                Picker(
+                    state = dayValuesPickerState,
+                    items = dayValues,
+                    visibleItemsCount = 1,
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    textModifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 22.sp),
+                    dividerColor = Color(0xFFE8E8E8)
+                )
+
+                Text(
+                    text = "${dayValuesPickerState.selectedItem}",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight(500),
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .fillMaxWidth(0.5f)
+                        .background(
+                            color = Color(0xFFF5F5F5),
+                            shape = RoundedCornerShape(size = 8.dp)
+                        )
+                        .padding(vertical = 10.dp, horizontal = 16.dp)
+                )
+            }
+        }
+
+        //hour picker
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    fontSize = 22.sp,
+                    text = stringResource(R.string.bazi_birth_hour)
+                )
+                Picker(
+                    state = hourValuesPickerState,
+                    items = hourValues,
+                    visibleItemsCount = 1,
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    textModifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 22.sp),
+                    dividerColor = Color(0xFFE8E8E8)
+                )
+
+                Text(
+                    text = "${hourValuesPickerState.selectedItem}",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight(500),
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .fillMaxWidth(0.5f)
+                        .background(
+                            color = Color(0xFFF5F5F5),
+                            shape = RoundedCornerShape(size = 8.dp)
+                        )
+                        .padding(vertical = 10.dp, horizontal = 16.dp)
+                )
+            }
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 10.dp)
+            }
+        }
+
+        //Calculate bazi
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedButton(
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+
+                        val year = yearValuesPickerState.selectedItem.toInt()
+                        val month = monthValuesPickerState.selectedItem.toInt()
+                        val day = dayValuesPickerState.selectedItem.toInt()
+                        val hour = hourValuesPickerState.selectedItem.toInt()
+
+                        baziModel.setBirthDateYear(year)
+                        baziModel.setBirthDateMonth(month)
+                        baziModel.setBirthDateDay(day)
+                        baziModel.setBirthHour(hour)
+
+                        baziModel.setGender(selectedGenderValue)
+
+                        paipan(year, month, day, hour, baziModel, baziInfo)
+
+                        navController.navigate(BaziScreen.Paipan.name)
                     }
-
-                    var dayOfYear = 0
-                    millisToLocalDate?.let { days = it.dayOfYear }
-
-                    millisToLocalDate?.let { baziModel.setBirthDateYear(it.year) }
-                    millisToLocalDate?.let { baziModel.setBirthDateMonth(it.monthValue) }
-                    millisToLocalDate?.let { baziModel.setBirthDateDay(it.dayOfMonth) }
-
-                    baziModel.setBirthHour(timePickerState.hour)
-                    baziModel.setBirthMinute(timePickerState.minute)
-                    baziModel.setGender(selectedValue)
-
-                    var year = 0
-                    var month = 0
-                    var day = 0
-                    val hour = timePickerState.hour
-                    millisToLocalDate?.let { year = it.year }
-                    millisToLocalDate?.let { month = it.monthValue }
-                    millisToLocalDate?.let { day = it.dayOfMonth }
-
-                    paipan(year, month, day, hour, dayOfYear, baziModel, baziInfo)
-
-                    navController.navigate(BaziScreen.Paipan.name)
+                ) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_paipan),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
                 }
-            ) {
-                Text(stringResource(R.string.app_bazi_paipan))
             }
         }
 
-//        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Text(
-//                    textAlign = TextAlign.Start,
-//                    modifier = Modifier.weight(1f).fillMaxWidth(),
-//                    fontSize = 32.sp,
-//                    text = "${testResultStr}"
-//                )
-//            }
-//        }
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-
-                    modifier = Modifier.fillMaxSize().fillMaxHeight(),
-                    painter = painterResource(R.drawable.baizisuanming),
-                    contentDescription = null
-                )
+                HorizontalDivider(thickness = 10.dp)
             }
         }
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
+
+        //create bottom space
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-
-                    modifier = Modifier.fillMaxSize().fillMaxHeight(),
-                    painter = painterResource(R.drawable.baizisuanming),
-                    contentDescription = null
+                Divider(
+                    thickness = dimensionResource(R.dimen.thickness_divider),
+                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
                 )
             }
-        }
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
 
-                    modifier = Modifier.fillMaxSize().fillMaxHeight(),
-                    painter = painterResource(R.drawable.baizisuanming),
-                    contentDescription = null
-                )
-            }
         }
-
-//        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Image(
-//                    modifier = Modifier.fillMaxSize(),
-//                    painter = painterResource(R.drawable.baizisuanming),
-//                    contentDescription = null
-//                )
-//            }
-//        }
     }
-
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -454,11 +441,10 @@ fun paipan(
     month: Int,
     day: Int,
     hour: Int,
-    dayOfYear: Int,
     baziModel: BaziViewModel,
     baziInfo: BaziInfo
 ) {
-
+    println("Bazi Paipan: year=$year,month=$month,day=$day,hour=$hour ")
     var yearTG = 1
     var yearDZ = 1
     var monthTG = 1
@@ -507,21 +493,20 @@ fun paipan(
     val s = jdToDate(jd)
     val l = convertSolar2Lunar(s[0], s[1], s[2], timeZone)
     val lunarMonth = l[1]
+    val lunarYear = l[2]
 
+    println("yearTG=$yearTG , lunarMonth=$lunarMonth ")
     tmp = yearTG * 2 + lunarMonth
     monthTG = tmp % 10
 
     tg = tgLookupMap[monthTG]!!
     baziModel.setMonthTiangan(tg)
 
-    if (lunarMonth == 11) {
-        dz = DiZhi.DIZHI_ZI
-    } else if (lunarMonth == 12) {
-        dz = DiZhi.DIZHI_CHOU
-    } else {
-        tmp = lunarMonth + 2
-        dz = dzLookupMap.get(tmp)!!
-    }
+    //dz = BaziUtil().getDizhiByLunarMonth(lunarMonth)
+
+    var minute : Int = 1
+    dz = BaziUtil().getMonthDZByLunaryear(lunarYear, lunarMonth, year, month, day, hour, minute)
+
     baziModel.setMonthDiZhi(dz)
 
     //calculate Day Tiangan & Dizhi
@@ -544,44 +529,8 @@ fun paipan(
     baziModel.setDayTiangan(tg)
     baziModel.setDayDiZhi(dz)
 
-    //calculate Hour Tiangan & Dizhi
-    if (hour == 23 || hour == 0) {
-        dz = DiZhi.DIZHI_ZI
-        hourDZ = 1
-    } else if (hour == 1 || hour == 2) {
-        dz = DiZhi.DIZHI_CHOU
-        hourDZ = 2
-    } else if (hour == 3 || hour == 4) {
-        dz = DiZhi.DIZHI_YIN
-        hourDZ = 3
-    } else if (hour == 5 || hour == 6) {
-        dz = DiZhi.DIZHI_MOU
-        hourDZ = 4
-    } else if (hour == 7 || hour == 8) {
-        dz = DiZhi.DIZHI_CHEN
-        hourDZ = 5
-    } else if (hour == 9 || hour == 10) {
-        dz = DiZhi.DIZHI_SI
-        hourDZ = 6
-    } else if (hour == 11 || hour == 12) {
-        dz = DiZhi.DIZHI_WU
-        hourDZ = 7
-    } else if (hour == 13 || hour == 14) {
-        dz = DiZhi.DIZHI_WEI
-        hourDZ = 8
-    } else if (hour == 15 || hour == 16) {
-        dz = DiZhi.DIZHI_SHEN
-        hourDZ = 9
-    } else if (hour == 17 || hour == 18) {
-        dz = DiZhi.DIZHI_YOU
-        hourDZ = 10
-    } else if (hour == 19 || hour == 20) {
-        dz = DiZhi.DIZHI_XU
-        hourDZ = 11
-    } else if (hour == 21 || hour == 22) {
-        dz = DiZhi.DIZHI_HAI
-        hourDZ = 12
-    }
+    dz = BaziUtil().getHourDZ(hour)
+    hourDZ = BaziUtil().getHourDZInt(hour)
 
     tmp = dayTG * 2 + hourDZ - 2
     hourTG = tmp % 10
