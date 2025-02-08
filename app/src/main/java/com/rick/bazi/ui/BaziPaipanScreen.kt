@@ -146,7 +146,7 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Black,
+                    color = Color.White,
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
@@ -195,7 +195,7 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Black,
+                    color = Color.White,
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
@@ -243,7 +243,7 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Black,
+                    color = Color.White,
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(

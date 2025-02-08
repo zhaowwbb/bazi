@@ -1,5 +1,6 @@
 package com.rick.bazi.ui
 
+import android.app.Activity
 import android.icu.util.ChineseCalendar
 import android.os.Build
 
@@ -50,6 +51,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -392,6 +394,21 @@ fun BaziStartScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.app_bazi_paipan),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+                val activity = (LocalContext.current as? Activity)
+                OutlinedButton(
+                    modifier = Modifier.weight(1f),
+                    onClick = {
+                        activity?.finish()
+                    }
+                ){
+                    Text(
+                        text = stringResource(R.string.bazi_quit),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight(500),
