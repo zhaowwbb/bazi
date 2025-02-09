@@ -47,6 +47,7 @@ import com.rick.bazi.data.TianGan
 import com.rick.bazi.util.getTianganStr
 import com.rick.bazi.util.getDizhiStr
 import com.rick.bazi.ui.theme.BaziTheme
+import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.DateUtils
 
 
@@ -123,6 +124,37 @@ fun BaziPaipanScreen(
             }
         }
 
+        var liunianBase : Int = BaziUtil().getTodayCyclicalYearBase()
+
+        var liunianTgStr = BaziUtil().getTianGanLabel(BaziUtil().getTianGan(liunianBase))
+        var liunianDzStr = BaziUtil().getDizhiLabel(BaziUtil().getDiZhi(liunianBase))
+
+        var liunianStr = stringResource(R.string.bazi_liunian)
+
+        var liunianLabel = "$liunianStr $liunianTgStr$liunianDzStr"
+
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "$liunianStr $liunianTgStr$liunianDzStr",
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(300),
+//                    color = Color.Red,
+                    style = MaterialTheme.typography.headlineLarge
+                )
+            }
+        }
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -146,7 +178,7 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.White,
+                    color = Color.Magenta,
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
@@ -195,7 +227,7 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.White,
+                    color = Color.Magenta,
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
@@ -243,7 +275,7 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.White,
+                    color = Color.Magenta,
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(

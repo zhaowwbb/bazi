@@ -34,6 +34,7 @@ import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.MALE
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.ui.theme.BaziTheme
+import com.rick.bazi.util.BaziUtil
 
 @Composable
 fun BaziSummaryScreen(
@@ -220,20 +221,20 @@ fun checkBianyeTaohua(baziInfo: BaziInfo): Boolean {
 }
 
 fun checkLuoxingTaohua(baziInfo: BaziInfo): Boolean {
-    if(baziInfo.dayTiangan == TianGan.TIANGAN_JIA && baziInfo.dayDizhi == DiZhi.DIZHI_ZI){
-        if(baziInfo.monthTiangan == TianGan.TIANGAN_GENG && baziInfo.monthDizhi == DiZhi.DIZHI_WU){
+    if (baziInfo.dayTiangan == TianGan.TIANGAN_JIA && baziInfo.dayDizhi == DiZhi.DIZHI_ZI) {
+        if (baziInfo.monthTiangan == TianGan.TIANGAN_GENG && baziInfo.monthDizhi == DiZhi.DIZHI_WU) {
             return true
         }
-        if(baziInfo.hourTiangan == TianGan.TIANGAN_GENG && baziInfo.hourDizhi == DiZhi.DIZHI_WU){
+        if (baziInfo.hourTiangan == TianGan.TIANGAN_GENG && baziInfo.hourDizhi == DiZhi.DIZHI_WU) {
             return true
         }
     }
 
-    if(baziInfo.hourTiangan == TianGan.TIANGAN_GENG && baziInfo.hourDizhi == DiZhi.DIZHI_WU){
-        if(baziInfo.monthTiangan == TianGan.TIANGAN_JIA && baziInfo.monthDizhi == DiZhi.DIZHI_ZI){
+    if (baziInfo.hourTiangan == TianGan.TIANGAN_GENG && baziInfo.hourDizhi == DiZhi.DIZHI_WU) {
+        if (baziInfo.monthTiangan == TianGan.TIANGAN_JIA && baziInfo.monthDizhi == DiZhi.DIZHI_ZI) {
             return true
         }
-        if(baziInfo.hourTiangan == TianGan.TIANGAN_JIA && baziInfo.hourDizhi == DiZhi.DIZHI_ZI){
+        if (baziInfo.hourTiangan == TianGan.TIANGAN_JIA && baziInfo.hourDizhi == DiZhi.DIZHI_ZI) {
             return true
         }
     }
@@ -324,9 +325,9 @@ fun calculateTaohua(baziInfo: BaziInfo): String {
     }
     println("taohuaCount = $taohuaCount")
 
-    if(checkBianyeTaohua(baziInfo)){
+    if (checkBianyeTaohua(baziInfo)) {
         content = stringResource(R.string.msg_taohua_bianye)
-    }else if(checkLuoxingTaohua(baziInfo)){
+    } else if (checkLuoxingTaohua(baziInfo)) {
         content = stringResource(R.string.msg_taohua_luoxing)
     } else if (taohuaCount == 0) {
         content = stringResource(R.string.msg_taohua_0)
@@ -340,7 +341,43 @@ fun calculateTaohua(baziInfo: BaziInfo): String {
         content = stringResource(R.string.msg_taohua_4)
     }
 
-    var result = "$genderStr  $content "
+    var liunianTao = getLiunianTaohua(baziInfo)
+
+    var result = "$genderStr  $content $liunianTao"
 
     return result
+}
+
+@Composable
+fun getLiunianTaohua(baziInfo: BaziInfo): String {
+    val builder = StringBuilder()
+    builder.append(stringResource(R.string.msg_taohua_liunian))
+    builder.append("   ")
+
+    var thisYearTg = baziInfo.yearTiangan
+    var thisYearDz = baziInfo.yearDizhi
+
+    var yearBase = BaziUtil().getCyclicalYearBase(
+        baziInfo.birthDateYear,
+        baziInfo.birthDateMonth,
+        baziInfo.birthDateDay,
+        baziInfo.birthHour
+    )
+    var yearBaseTmp = yearBase
+    var year = baziInfo.birthDateYear
+    for (i in 0..100) {
+        yearBaseTmp = yearBase + i
+        thisYearTg = BaziUtil().getTianGan(yearBaseTmp)
+        thisYearDz = BaziUtil().getDiZhi(yearBaseTmp)
+        if(BaziUtil().isTaohua(thisYearDz)){
+            //Found Taohua liunian
+            builder.append(year + i)
+            builder.append("(")
+            builder.append(BaziUtil().getTianGanLabel(thisYearTg))
+            builder.append(BaziUtil().getDizhiLabel(thisYearDz))
+            builder.append(")")
+            builder.append("  ")
+        }
+    }
+    return builder.toString()
 }
