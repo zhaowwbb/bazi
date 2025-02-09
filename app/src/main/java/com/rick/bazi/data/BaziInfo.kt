@@ -1,6 +1,11 @@
 package com.rick.bazi.data
 
 import com.rick.bazi.R
+import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_0
+import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_1
+import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_2
+import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_3
+import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_4
 
 const val MALE = "Male"
 const val FEMALE = "Female"
@@ -77,5 +82,13 @@ data class BaziInfo(
         10 to DiZhi.DIZHI_YOU,
         11 to DiZhi.DIZHI_XU,
         0 to DiZhi.DIZHI_HAI
+    ),
+
+    val msgMap: Map<String, Int> = mapOf(
+        TAOHUA_0 to R.string.msg_taohua_0,
+        TAOHUA_1 to R.string.msg_taohua_1,
+        TAOHUA_2 to R.string.msg_taohua_2,
+        TAOHUA_3 to R.string.msg_taohua_3,
+        TAOHUA_4 to R.string.msg_taohua_4
     )
 )
