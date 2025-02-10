@@ -341,7 +341,7 @@ fun calculateTaohua(baziInfo: BaziInfo): String {
         content = stringResource(R.string.msg_taohua_4)
     }
 
-    var liunianTao = getLiunianTaohua(baziInfo)
+    var liunianTao = getLiunianTaohua(baziInfo, taohuaMap)
 
     var result = "$genderStr  $content $liunianTao"
 
@@ -349,7 +349,7 @@ fun calculateTaohua(baziInfo: BaziInfo): String {
 }
 
 @Composable
-fun getLiunianTaohua(baziInfo: BaziInfo): String {
+fun getLiunianTaohua(baziInfo: BaziInfo, taohuaMap : Map<DiZhi, DiZhi>): String {
     val builder = StringBuilder()
     builder.append(stringResource(R.string.msg_taohua_liunian))
     builder.append("   ")
@@ -369,7 +369,7 @@ fun getLiunianTaohua(baziInfo: BaziInfo): String {
         yearBaseTmp = yearBase + i
         thisYearTg = BaziUtil().getTianGan(yearBaseTmp)
         thisYearDz = BaziUtil().getDiZhi(yearBaseTmp)
-        if(BaziUtil().isTaohua(thisYearDz)){
+        if(taohuaMap.containsKey(thisYearDz)){
             //Found Taohua liunian
             builder.append(year + i)
             builder.append("(")
