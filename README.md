@@ -18,8 +18,25 @@ People's birth date and time can be converted to eight Chinese word which called
 1988-05-10 12:00:00<br>
 //八字无桃花<br>
 1988-07-10 12:00:00<br>
+桃花劫<br>
+1975年05月08日 16:36<br>
+桃花劫<br>
+1975年05月08日 16:36<br>
+桃花杀<br>
+2026年05月13日 06:36<br>
+正官桃花<br>
+2026年03月11日 06:36<br>
+墙外桃花<br>
+2026年03月13日 06:36<br>
+墙内桃花<br>
+2026年03月13日 09:36<br>
+桃花刃<br>
+2026年04月16日 18:36<br>
 裸形桃花<br>
-还没找到案例<br>
+2024年06月29日 18:36<br>
+滚浪桃花<br>
+2016年04月24日 6:36<br>
+
 =================================<br>
 手机截屏<br>
 ![alt text](https://github.com/zhaowwbb/bazi/blob/SNAKE-1.0.0/screenshot/Screenshot_main.png?raw=true "Main screen")

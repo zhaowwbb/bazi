@@ -83,37 +83,179 @@ class BaziUtil {
         TAOHUA_4 to R.string.msg_taohua_4
     )
 
+    val shishenMap: Map<TianGan, Array<TianGan>> = mapOf(
+        //[ShiShen] ZhengCai || PianCai || ZhengGuan || Qisha || ZhengYin || PianYin || ShiShen || ShangGuan || BiJian || JieCai
+        //[Index]    0  1  2  3  4  5  6  7  8  9
+        TianGan.TIANGAN_JIA to arrayOf(
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_YI
+        ),
+        TianGan.TIANGAN_YI to arrayOf(
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_JIA
+        ),
+        TianGan.TIANGAN_BING to arrayOf(
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_DING
+        ),
+        TianGan.TIANGAN_DING to arrayOf(
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_BING
+        ),
+        TianGan.TIANGAN_WU to arrayOf(
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_JI
+        ),
+        TianGan.TIANGAN_JI to arrayOf(
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_WU
+        ),
+        TianGan.TIANGAN_GENG to arrayOf(
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_XIN
+        ),
+        TianGan.TIANGAN_XIN to arrayOf(
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_GENG
+        ),
+        TianGan.TIANGAN_REN to arrayOf(
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_REN,
+            TianGan.TIANGAN_GUI
+        ),
+        TianGan.TIANGAN_GUI to arrayOf(
+            TianGan.TIANGAN_BING,
+            TianGan.TIANGAN_DING,
+            TianGan.TIANGAN_WU,
+            TianGan.TIANGAN_JI,
+            TianGan.TIANGAN_GENG,
+            TianGan.TIANGAN_XIN,
+            TianGan.TIANGAN_YI,
+            TianGan.TIANGAN_JIA,
+            TianGan.TIANGAN_GUI,
+            TianGan.TIANGAN_REN
+        )
+    )
+
+    val tgYangrenLookupMap: Map<TianGan, DiZhi> = mapOf(
+        TianGan.TIANGAN_JIA to DiZhi.DIZHI_MOU,
+        TianGan.TIANGAN_YI to DiZhi.DIZHI_YIN,
+        TianGan.TIANGAN_BING to DiZhi.DIZHI_WU,
+        TianGan.TIANGAN_DING to DiZhi.DIZHI_SI,
+        TianGan.TIANGAN_WU to DiZhi.DIZHI_WU,
+        TianGan.TIANGAN_JI to DiZhi.DIZHI_SI,
+        TianGan.TIANGAN_GENG to DiZhi.DIZHI_YOU,
+        TianGan.TIANGAN_XIN to DiZhi.DIZHI_SHEN,
+        TianGan.TIANGAN_REN to DiZhi.DIZHI_ZI,
+        TianGan.TIANGAN_GUI to DiZhi.DIZHI_HAI
+    )
+
+    fun getYangren(tg : TianGan)  : DiZhi{
+        return tgYangrenLookupMap.get(tg)!!
+    }
+
     val taohuaSet = setOf(DiZhi.DIZHI_ZI, DiZhi.DIZHI_WU, DiZhi.DIZHI_MOU, DiZhi.DIZHI_YOU)
 
-    fun isTaohua(dz : DiZhi) : Boolean{
+    fun isTaohua(dz: DiZhi): Boolean {
         return taohuaSet.contains(dz)
     }
 
     @Composable
-    fun getTianGan(tianganBase: Int) : TianGan{
-        var tg : TianGan  = TianGan.TIANGAN_JIA
+    fun getTianGan(tianganBase: Int): TianGan {
+        var tg: TianGan = TianGan.TIANGAN_JIA
         val tgIndex = tianganBase % 10
         tg = tgLookupMap[tgIndex]!!
         return tg
     }
 
     @Composable
-    fun getDiZhi(dizhiBase: Int) : DiZhi{
-        var dz : DiZhi  = DiZhi.DIZHI_ZI
+    fun getDiZhi(dizhiBase: Int): DiZhi {
+        var dz: DiZhi = DiZhi.DIZHI_ZI
         val index = dizhiBase % 12
         dz = dzLookupMap[index]!!
         return dz
     }
 
     @Composable
-    fun getTianGanLabel(tiangan: TianGan) : String{
+    fun getTianGanLabel(tiangan: TianGan): String {
         val key = tianganStrMap.getValue(tiangan)
         val label = stringResource(key)
         return label
     }
 
     @Composable
-    fun getDizhiLabel(dizhi: DiZhi) : String{
+    fun getDizhiLabel(dizhi: DiZhi): String {
         val dizhiStrKey = dizhiStrMap.getValue(dizhi)
         val label = stringResource(dizhiStrKey)
         return label
@@ -485,6 +627,68 @@ class BaziUtil {
         )
         return yearBase
     }
+
+    fun getZhengcai(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![0]
+        println("$tg  getZhengcai= $ret")
+        return ret
+    }
+
+    fun getPiancai(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![1]
+        println("$tg  getPiancai= $ret")
+        return ret
+    }
+
+    fun getZhengguan(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![2]
+        println("$tg  getZhengguan= $ret")
+        return ret
+    }
+
+    fun getQisha(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![3]
+
+        println("$tg  getZhengguan= $ret")
+        return ret
+    }
+
+    fun getZhengyin(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![4]
+        println("$tg  getZhengyin= $ret")
+        return ret
+    }
+
+    fun getPianyin(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![5]
+        println("$tg  getPianyin= $ret")
+        return ret
+    }
+
+    fun getShishen(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![6]
+        println("$tg  getShishen= $ret")
+        return ret
+    }
+
+    fun getShangguan(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![7]
+        println("$tg  getShangguan= $ret")
+        return ret
+    }
+
+    fun getBijian(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![8]
+        println("$tg  getBijian= $ret")
+        return ret
+    }
+
+    fun getJiecai(tg: TianGan): TianGan {
+        var ret = shishenMap.get(tg)!![9]
+        println("$tg  getJiecai= $ret")
+        return ret
+    }
+
 
 }
 
