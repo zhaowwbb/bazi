@@ -21,6 +21,9 @@
     <string name="cancel">cancel</string>
     <string name="next">next</string>
     <string name="bazi_quit">退出程序</string>
+    <string name="app_after_birth">出生后</string>
+    <string name="app_start_dayun">起大运</string>
+    <string name="age_unit">岁</string>
 
 
     <string name="yhzp_y">渊</string>
@@ -41,6 +44,12 @@
     <string name="bazi_birth_month">出生月</string>
     <string name="bazi_birth_day">出生日</string>
     <string name="bazi_birth_hour">出生时</string>
+    <string name="bazi_liunian">流年</string>
+    <string name="bazi_dayun">大运</string>
+    <string name="bazi_main_star">主星</string>
+    <string name="bazi_canggan">藏干</string>
+    <string name="bazi_second_star">副星</string>
+
 
     <string name="tiangan">天干</string>
     <string name="tiangan_jia">甲</string>
@@ -95,10 +104,7 @@
     <string name="ts_zhengyin">正印</string>
     <string name="ts_pianyin">偏印</string>
 
-    <string name="bazi_liunian">流年</string>
-    <string name="bazi_dayun">大运</string>
-    <string name="bazi_main_star">主星</string>
-    <string name="bazi_canggan">藏干</string>
+
 
     <string name="msg_male">施主</string>
     <string name="msg_female">师太</string>

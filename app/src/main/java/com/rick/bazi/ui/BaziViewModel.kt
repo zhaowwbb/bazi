@@ -135,10 +135,51 @@ class BaziViewModel : ViewModel() {
             )
         }
     }
+
     fun setHourDiZhi(dz: DiZhi) {
         _uiState.update { currentState ->
             currentState.copy(
                 hourDizhi = dz
+            )
+        }
+    }
+
+    fun setYearBase(base: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                yearBase = base
+            )
+        }
+    }
+
+    fun setMonthBase(base: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                monthBase = base
+            )
+        }
+    }
+
+    fun setDayBase(base: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                dayBase = base
+            )
+        }
+    }
+
+    fun setDayunForward(isForward: Boolean) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                dayunForward = isForward
+            )
+        }
+    }
+
+    fun setDayunDays(days: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                dayunDays = days
             )
         }
     }

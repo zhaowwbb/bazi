@@ -479,6 +479,7 @@ fun paipan(
 
     //calculate Year Tiangan & Dizhi
     var yearBase =  BaziUtil().getCyclicalYearBase(year, month, day, hour)
+    baziModel.setYearBase(yearBase)
     yearTG = yearBase % 10
     tg = tgLookupMap[yearTG]!!
     baziModel.setYearTiangan(tg)
@@ -488,6 +489,7 @@ fun paipan(
 
     //calculate Month Tiangan & Dizhi
     var monthBase = BaziUtil().getCyclicalMonthBase(year, month, day, hour)
+    baziModel.setMonthBase(monthBase)
     monthTG = monthBase % 10
     tg = tgLookupMap[monthTG]!!
     baziModel.setMonthTiangan(tg)
@@ -505,6 +507,7 @@ fun paipan(
     }
 
     val dayBase = r % 60
+    baziModel.setDayBase(dayBase)
 
     dayTG = dayBase % 10
     dayDZ = dayBase % 12

@@ -117,14 +117,13 @@ fun BaziPaipanScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 10.dp)
+                HorizontalDivider(thickness = 2.dp)
             }
         }
 
-        var liunianBase : Int = BaziUtil().getTodayCyclicalYearBase()
+        var liunianBase: Int = BaziUtil().getTodayCyclicalYearBase()
 
         var liunianTgStr = BaziUtil().getTianGanLabel(BaziUtil().getTianGan(liunianBase))
         var liunianDzStr = BaziUtil().getDizhiLabel(BaziUtil().getDiZhi(liunianBase))
@@ -150,7 +149,7 @@ fun BaziPaipanScreen(
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(300),
 //                    color = Color.Red,
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.headlineMedium
                 )
             }
         }
@@ -170,43 +169,102 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Red,
-                    style = MaterialTheme.typography.headlineLarge
+//                    color = Color.Red,
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
                     text = stringResource(R.string.bazi_year),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Magenta,
-                    style = MaterialTheme.typography.headlineLarge
+//                    color = Color.Magenta,
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
                     text = stringResource(R.string.bazi_month),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Blue,
-                    style = MaterialTheme.typography.headlineLarge
+//                    color = Color.Blue,
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
-                    text = stringResource(R.string.bazi_owner),
+                    text = stringResource(R.string.bazi_day),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Green,
-                    style = MaterialTheme.typography.headlineLarge
+//                    color = Color.Green,
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
                     text = stringResource(R.string.bazi_hour),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Cyan,
-                    style = MaterialTheme.typography.headlineLarge
+//                    color = Color.Cyan,
+                    style = MaterialTheme.typography.headlineMedium
 
                 )
             }
+        }
+
+        //show main star
+        val yearStarLabel = BaziUtil().getMainStarLabel(baziInfo.yearTiangan, baziInfo.dayTiangan)
+        val monthStarLabel = BaziUtil().getMainStarLabel(baziInfo.monthTiangan, baziInfo.dayTiangan)
+        val hourStarLabel = BaziUtil().getMainStarLabel(baziInfo.hourTiangan, baziInfo.dayTiangan)
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.bazi_main_star),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Red,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = "$yearStarLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Magenta,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = "$monthStarLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Blue,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = stringResource(R.string.bazi_owner),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Green,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = "$hourStarLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Cyan,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+
 
             //show bazi tiangan details
             Row(
@@ -219,7 +277,7 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Red,
+//                    color = Color.Red,
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
@@ -267,7 +325,7 @@ fun BaziPaipanScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Red,
+//                    color = Color.Red,
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
@@ -303,6 +361,234 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
             }
+
+            //show cang gan
+            val yearCangganLabel =
+                BaziUtil().getCangganLabel(BaziUtil().getCanggan(baziInfo.yearDizhi))
+            val monthCangganLabel =
+                BaziUtil().getCangganLabel(BaziUtil().getCanggan(baziInfo.monthDizhi))
+            val dayCangganLabel =
+                BaziUtil().getCangganLabel(BaziUtil().getCanggan(baziInfo.dayDizhi))
+            val hourCangganLabel =
+                BaziUtil().getCangganLabel(BaziUtil().getCanggan(baziInfo.hourDizhi))
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.bazi_canggan),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Red,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = "$yearCangganLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(200),
+//                    color = Color.Magenta,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "$monthCangganLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(200),
+//                    color = Color.Blue,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "$dayCangganLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(200),
+//                    color = Color.Green,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "$hourCangganLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(200),
+//                    color = Color.Cyan,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+
+            //second star
+            val yearCangganStarLabel = BaziUtil().getCangganStarLabel(
+                BaziUtil().getCanggan(baziInfo.yearDizhi),
+                baziInfo.dayTiangan
+            )
+            val monthCangganStarLabel = BaziUtil().getCangganStarLabel(
+                BaziUtil().getCanggan(baziInfo.monthDizhi),
+                baziInfo.dayTiangan
+            )
+            val dayCangganStarLabel = BaziUtil().getCangganStarLabel(
+                BaziUtil().getCanggan(baziInfo.dayDizhi),
+                baziInfo.dayTiangan
+            )
+            val hourCangganStarLabel = BaziUtil().getCangganStarLabel(
+                BaziUtil().getCanggan(baziInfo.hourDizhi),
+                baziInfo.dayTiangan
+            )
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.bazi_second_star),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Red,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = "$yearCangganStarLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Magenta,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "$monthCangganStarLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Blue,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "$dayCangganStarLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Green,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "$hourCangganStarLabel",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Cyan,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
+
+
+            //dayun
+            var dayunLabel = stringResource(R.string.bazi_dayun)
+            var dayunForward: Boolean =
+                BaziUtil().isDayunDirectionForward(baziInfo.gender, baziInfo.yearDizhi)
+            var days = BaziUtil().getDayunStartDays(
+//                baziInfo.gender,
+//                baziInfo.yearDizhi,
+                baziInfo.birthDateYear,
+                baziInfo.birthDateMonth,
+                baziInfo.birthDateDay,
+                dayunForward,
+                baziInfo.birthHour,
+                baziInfo.birthMinute
+            )
+
+            var afterBirthStr = stringResource(R.string.app_after_birth)
+            var startDayunStr = stringResource(R.string.app_start_dayun)
+            var yearLabelStr = stringResource(R.string.app_label_year)
+            var monthLabelStr = stringResource(R.string.app_label_month)
+            var monthOffset = 0
+            var yearOffset = days/3
+            var remains =  days % 3
+            if(remains == 2){
+                yearOffset = yearOffset + 1
+                monthOffset = 8
+            }else if(remains == 1){
+                monthOffset = 4
+            }
+
+
+            var dayunLabelStr = "$dayunLabel  $afterBirthStr $yearOffset$yearLabelStr $monthOffset$monthLabelStr  $startDayunStr"
+
+            baziModel.setDayunForward(dayunForward)
+            baziModel.setDayunDays(days)
+            var dayunStartYear = BaziUtil().getDayunStartYear(baziInfo.birthDateYear, days)
+            var yearOffet = BaziUtil().getDayunStartOffset(days)
+
+            var dayunLabelOne = BaziUtil().getDayunLabelList(
+                baziInfo.gender,
+                baziInfo.yearDizhi,
+                baziInfo.monthBase,
+                1,
+                5,
+                dayunStartYear,
+                yearOffet,
+                0,
+                0,
+                0
+            )
+            var dayunLabelTwo = BaziUtil().getDayunLabelList(
+                baziInfo.gender,
+                baziInfo.yearDizhi,
+                baziInfo.monthBase,
+                6,
+                10,
+                dayunStartYear,
+                yearOffet,
+                0,
+                0,
+                0
+            )
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "$dayunLabelStr",
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "$dayunLabelOne",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Magenta,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Text(
+                    text = "$dayunLabelTwo",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+//                    color = Color.Magenta,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
         }
 
         Column(
@@ -311,10 +597,9 @@ fun BaziPaipanScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 10.dp)
+                HorizontalDivider(thickness = 3.dp)
             }
         }
 
@@ -328,11 +613,9 @@ fun BaziPaipanScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedButton(
-                    modifier = Modifier.weight(1f),
-                    onClick = {
-                        navController.navigate(BaziScreen.Summary.name)
-                    }) {
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.Summary.name)
+                }) {
                     Text(
                         text = stringResource(R.string.app_bazi_suanming),
                         textAlign = TextAlign.Center,

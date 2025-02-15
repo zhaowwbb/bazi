@@ -28,6 +28,12 @@ data class BaziInfo(
     val dayDizhi: DiZhi = DiZhi.DIZHI_YIN,
     val hourDizhi: DiZhi = DiZhi.DIZHI_MOU,
 
+    val yearBase : Int = 1,
+    val monthBase : Int = 1,
+    val dayBase : Int = 1,
+    val dayunForward : Boolean = true,
+    val dayunDays : Int = 0,
+
     val tianganStrMap: Map<TianGan, Int> = mapOf(
         TianGan.TIANGAN_JIA to R.string.tiangan_jia,
         TianGan.TIANGAN_YI to R.string.tiangan_yi,

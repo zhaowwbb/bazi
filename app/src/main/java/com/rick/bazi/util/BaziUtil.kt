@@ -11,7 +11,16 @@ import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_2
 import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_3
 import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_4
 import com.rick.bazi.data.DiZhi
+import com.rick.bazi.data.FEMALE
+import com.rick.bazi.data.MALE
 import com.rick.bazi.data.TianGan
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.time.temporal.TemporalAdjusters
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
@@ -221,7 +230,33 @@ class BaziUtil {
         TianGan.TIANGAN_GUI to DiZhi.DIZHI_HAI
     )
 
-    fun getYangren(tg : TianGan)  : DiZhi{
+    val yangDizhiSet = setOf(
+        DiZhi.DIZHI_ZI,
+        DiZhi.DIZHI_YIN,
+        DiZhi.DIZHI_CHEN,
+        DiZhi.DIZHI_WU,
+        DiZhi.DIZHI_SHEN,
+        DiZhi.DIZHI_XU
+    )
+
+    val yinDizhiSet = setOf(
+        DiZhi.DIZHI_CHOU,
+        DiZhi.DIZHI_MOU,
+        DiZhi.DIZHI_SI,
+        DiZhi.DIZHI_WEI,
+        DiZhi.DIZHI_YOU,
+        DiZhi.DIZHI_HAI
+    )
+
+    fun isYangDizhi(dz: DiZhi): Boolean {
+        return yangDizhiSet.contains(dz)
+    }
+
+    fun isYinDizhi(dz: DiZhi): Boolean {
+        return yinDizhiSet.contains(dz)
+    }
+
+    fun getYangren(tg: TianGan): DiZhi {
         return tgYangrenLookupMap.get(tg)!!
     }
 
@@ -535,9 +570,33 @@ class BaziUtil {
         solarYear: Int,
         index: Int
     ): Date {
-        var l = (31556925974.7.toLong() * (solarYear - 1900)) + (solarTermInfo[index] * 60000L)
+        var pos : Int = index
+        if(index > 23){
+            println("Found broken case, index=$index")
+            pos = 23
+        }
+        var l = (31556925974.7.toLong() * (solarYear - 1900)) + (solarTermInfo[pos] * 60000L)
         l = l + UTC(calendar, 1900, 0, 6, 2, 5, 0)
         return Date(l)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getLocalDate(
+        calendar: Calendar,
+        solarYear: Int,
+        solarMonth: Int
+    ): ZonedDateTime {
+        var index = (solarMonth - 1)*2
+        println("   getLocalDate  index= $index")
+        var l = (31556925974.7.toLong() * (solarYear - 1900)) + (solarTermInfo[index] * 60000L)
+        l = l + UTC(calendar, 1900, 0, 6, 2, 5, 0)
+
+        val utcDateAtStartOfDay = Instant.ofEpochMilli(l)
+            .atZone(ZoneOffset.UTC)
+            .toLocalDate()
+
+        val localDate = utcDateAtStartOfDay.atStartOfDay(ZoneId.systemDefault())
+        return localDate
     }
 
     fun getUTCDay(calendar: Calendar, date: Date): Int {
@@ -630,65 +689,360 @@ class BaziUtil {
 
     fun getZhengcai(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![0]
-        println("$tg  getZhengcai= $ret")
+//        println("$tg  getZhengcai= $ret")
         return ret
     }
 
     fun getPiancai(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![1]
-        println("$tg  getPiancai= $ret")
+//        println("$tg  getPiancai= $ret")
         return ret
     }
 
     fun getZhengguan(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![2]
-        println("$tg  getZhengguan= $ret")
+//        println("$tg  getZhengguan= $ret")
         return ret
     }
 
     fun getQisha(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![3]
 
-        println("$tg  getZhengguan= $ret")
+//        println("$tg  getZhengguan= $ret")
         return ret
     }
 
     fun getZhengyin(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![4]
-        println("$tg  getZhengyin= $ret")
+//        println("$tg  getZhengyin= $ret")
         return ret
     }
 
     fun getPianyin(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![5]
-        println("$tg  getPianyin= $ret")
+//        println("$tg  getPianyin= $ret")
         return ret
     }
 
     fun getShishen(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![6]
-        println("$tg  getShishen= $ret")
+//        println("$tg  getShishen= $ret")
         return ret
     }
 
     fun getShangguan(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![7]
-        println("$tg  getShangguan= $ret")
+//        println("$tg  getShangguan= $ret")
         return ret
     }
 
     fun getBijian(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![8]
-        println("$tg  getBijian= $ret")
+//        println("$tg  getBijian= $ret")
         return ret
     }
 
     fun getJiecai(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![9]
-        println("$tg  getJiecai= $ret")
+//        println("$tg  getJiecai= $ret")
         return ret
     }
 
+    @Composable
+    fun getMainStarLabel(tg: TianGan, dayTg: TianGan): String {
+        var str = stringResource(R.string.ts_bijian)
 
+        if (tg == getBijian(dayTg)) {
+            str = stringResource(R.string.ts_bijian)
+        } else if (tg == getJiecai(dayTg)) {
+            str = stringResource(R.string.ts_jiecai)
+        } else if (tg == getShishen(dayTg)) {
+            str = stringResource(R.string.ts_shishen)
+        } else if (tg == getShangguan(dayTg)) {
+            str = stringResource(R.string.ts_shangguan)
+        } else if (tg == getZhengyin(dayTg)) {
+            str = stringResource(R.string.ts_zhengyin)
+        } else if (tg == getPianyin(dayTg)) {
+            str = stringResource(R.string.ts_pianyin)
+        } else if (tg == getZhengcai(dayTg)) {
+            str = stringResource(R.string.ts_zhengcai)
+        } else if (tg == getPiancai(dayTg)) {
+            str = stringResource(R.string.ts_piancai)
+        } else if (tg == getZhengguan(dayTg)) {
+            str = stringResource(R.string.ts_zhengguan)
+        } else if (tg == getQisha(dayTg)) {
+            str = stringResource(R.string.ts_qisha)
+        }
+
+        return str
+    }
+
+    fun getCanggan(dz: DiZhi): Array<TianGan> {
+        var tgArray = arrayOf(TianGan.TIANGAN_JIA)
+        if (dz == DiZhi.DIZHI_ZI) {
+            tgArray = arrayOf(TianGan.TIANGAN_GUI)
+        } else if (dz == DiZhi.DIZHI_CHOU) {
+            tgArray = arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_GUI, TianGan.TIANGAN_XIN)
+        } else if (dz == DiZhi.DIZHI_YIN) {
+            tgArray = arrayOf(TianGan.TIANGAN_JIA, TianGan.TIANGAN_BING, TianGan.TIANGAN_WU)
+        } else if (dz == DiZhi.DIZHI_MOU) {
+            tgArray = arrayOf(TianGan.TIANGAN_YI)
+        } else if (dz == DiZhi.DIZHI_CHEN) {
+            tgArray = arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_YI, TianGan.TIANGAN_GUI)
+        } else if (dz == DiZhi.DIZHI_SI) {
+            tgArray = arrayOf(TianGan.TIANGAN_BING, TianGan.TIANGAN_GENG, TianGan.TIANGAN_WU)
+        } else if (dz == DiZhi.DIZHI_WU) {
+            tgArray = arrayOf(TianGan.TIANGAN_DING, TianGan.TIANGAN_JI)
+        } else if (dz == DiZhi.DIZHI_WEI) {
+            tgArray = arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_DING, TianGan.TIANGAN_YI)
+        } else if (dz == DiZhi.DIZHI_SHEN) {
+            tgArray = arrayOf(TianGan.TIANGAN_GENG, TianGan.TIANGAN_REN, TianGan.TIANGAN_WU)
+        } else if (dz == DiZhi.DIZHI_YOU) {
+            tgArray = arrayOf(TianGan.TIANGAN_XIN)
+        } else if (dz == DiZhi.DIZHI_XU) {
+            tgArray = arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_XIN, TianGan.TIANGAN_DING)
+        } else if (dz == DiZhi.DIZHI_HAI) {
+            tgArray = arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
+        }
+        return tgArray
+    }
+
+    @Composable
+    fun getCangganLabel(tgArray: Array<TianGan>): String {
+        val builder = StringBuilder()
+        tgArray.forEach {
+            builder.append(stringResource(tianganStrMap.get(it)!!))
+        }
+        return builder.toString()
+    }
+
+    @Composable
+    fun getCangganStarLabel(tgArray: Array<TianGan>, dayTg: TianGan): String {
+        val builder = StringBuilder()
+        if (tgArray.size == 1) {
+            builder.append(getMainStarLabel(tgArray[0], dayTg))
+        } else if (tgArray.size == 2) {
+            builder.append(getMainStarLabel(tgArray[0], dayTg))
+            builder.append("\n")
+            builder.append(getMainStarLabel(tgArray[1], dayTg))
+        } else if (tgArray.size == 3) {
+            builder.append(getMainStarLabel(tgArray[0], dayTg))
+            builder.append("\n")
+            builder.append(getMainStarLabel(tgArray[1], dayTg))
+            builder.append("\n")
+            builder.append(getMainStarLabel(tgArray[2], dayTg))
+        }
+        return builder.toString()
+    }
+
+    fun isDayunDirectionForward(
+        gender: String,
+        yearDz: DiZhi
+    ): Boolean {
+        var ret = true
+        if (((gender == MALE) && isYangDizhi(yearDz)) || ((gender == FEMALE) && isYinDizhi(yearDz))) {
+            return true
+        }
+
+        if (((gender == MALE) && isYinDizhi(yearDz)) || ((gender == FEMALE) && isYangDizhi(yearDz))) {
+            return false
+        }
+        return ret
+    }
+
+    @Composable
+    fun getDayunLabelList(
+        gender: String,
+        yearDz: DiZhi,
+        monthBase: Int,
+        startIndex: Int,
+        endIndex: Int,
+        dayunStartYear : Int,
+        yearOffet : Int,
+        birthDateYear: Int,
+        birthDateMonth: Int,
+        birthDateDay: Int
+    ): String {
+        val builder = StringBuilder()
+        var base = monthBase
+        var dayTG = 0
+        var dayDZ = 0
+        var tg: TianGan = TianGan.TIANGAN_JIA
+        var dz: DiZhi = DiZhi.DIZHI_ZI
+
+        var yearUnit = stringResource(R.string.age_unit)
+
+        //forward
+        if (isDayunDirectionForward(gender, yearDz)) {
+//        if (((gender == MALE) && isYangDizhi(yearDz)) || ((gender == FEMALE) && isYinDizhi(yearDz))) {
+            for (i in startIndex..endIndex) {
+                base = monthBase + i
+                base = base % 60
+
+                dayTG = base % 10
+                dayDZ = base % 12
+                tg = tgLookupMap[dayTG]!!
+                dz = dzLookupMap.get(dayDZ)!!
+                builder.append(getTianGanLabel(tg))
+                builder.append(getDizhiLabel(dz))
+                builder.append(" ")
+                builder.append(dayunStartYear + (i - 1)* 10)
+                builder.append("-")
+                builder.append((i - 1)* 10 + yearOffet)
+                builder.append(yearUnit)
+                builder.append("\n")
+            }
+        }
+        //backward
+        if (!(isDayunDirectionForward(gender, yearDz))) {
+//        if (((gender == MALE) && isYinDizhi(yearDz)) || ((gender == FEMALE) && isYangDizhi(yearDz))) {
+            for (i in startIndex..endIndex) {
+                base = monthBase - i
+                if (base < 0) {
+                    base = base + 60
+                }
+                base = base % 60
+
+                dayTG = base % 10
+                dayDZ = base % 12
+                tg = tgLookupMap[dayTG]!!
+                dz = dzLookupMap.get(dayDZ)!!
+                builder.append(getTianGanLabel(tg))
+                builder.append(getDizhiLabel(dz))
+                builder.append(dayunStartYear + (i - 1)* 10)
+                builder.append("-")
+                builder.append((i - 1)* 10 + yearOffet)
+                builder.append(yearUnit)
+
+                builder.append("\n")
+            }
+        }
+
+        return builder.toString()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun convertMillisToLocalDate(millis: Long): ZonedDateTime {
+        // Interpret the milliseconds as the start of the day in UTC, then convert to Los Angeles time
+        val utcDateAtStartOfDay = Instant.ofEpochMilli(millis)
+            .atZone(ZoneOffset.UTC)
+            .toLocalDate()
+
+        // Convert to the same instant in Local time zone
+        val localDate = utcDateAtStartOfDay.atStartOfDay(ZoneId.systemDefault())
+        return localDate
+    }
+
+    fun getJieqiByMonth(calendar: Calendar, solarYear: Int, solarMonth: Int): Date {
+        var index = (solarMonth - 1) * 2
+        return getSolarTermCalendar(calendar, solarYear, index)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDayunStartDays(
+        solarYear: Int,
+        solarMonth: Int,
+        solarDay: Int,
+        dayunForward: Boolean,
+        hour: Int,
+        minute: Int
+    ): Int {
+        var ret = 0
+        println("solarYear=$solarYear  solarMonth=$solarMonth  solarDay=$solarDay")
+        val calendar: Calendar = makeUTCCalendar()!!
+
+        var year = solarYear
+        var month = solarMonth
+        var preJieqi: ZonedDateTime = convertMillisToLocalDate(calendar.timeInMillis)
+        var nextJieqi: ZonedDateTime = convertMillisToLocalDate(calendar.timeInMillis)
+        var tmpUTC = UTC(calendar, solarYear, solarMonth -1, solarDay, hour, 1, 1)
+        var birthDate : ZonedDateTime = convertMillisToLocalDate(tmpUTC)
+        var lastDayOfMonth = calendar.getMaximum(Calendar.DAY_OF_MONTH)
+        println("birthDate lastDayOfMonth= $lastDayOfMonth")
+
+        var curJieqi: ZonedDateTime = getLocalDate(calendar, solarYear, solarMonth)
+        var curJieqiMaxDay = calendar.getMaximum(Calendar.DAY_OF_MONTH)
+        println("curJieqiMaxDay= $curJieqiMaxDay")
+
+        println("curJieqi= $curJieqi")
+        println("birthDate= $birthDate")
+
+        if(dayunForward){
+            //go to next month Jieqi
+            if(birthDate.compareTo(curJieqi) > 0){
+                if(solarMonth == 12){
+                    year = solarYear + 1
+                    month = 1
+                    nextJieqi = getLocalDate(calendar, year, month)
+                }else{
+                    month = solarMonth + 1
+                    nextJieqi = getLocalDate(calendar, year, month)
+                }
+                println("year=$year  month=$month  nextJieqi=$nextJieqi")
+
+                ret = nextJieqi.dayOfMonth + (lastDayOfMonth - birthDate.dayOfMonth + 1)
+
+                println("   ret= $ret")
+            }else if(birthDate.compareTo(curJieqi) < 0){
+                println("   curJieqi.dayOfMonth= $curJieqi.dayOfMonth  , birthDate.dayOfMonth=$birthDate.dayOfMonth")
+                ret = curJieqi.dayOfMonth - birthDate.dayOfMonth + 1
+                return ret
+            }else{
+                return 0
+            }
+        }else{
+            //go to previous month Jieqi
+
+            println("[previous month] birthDate=$birthDate  month=$month  curJieqi=$curJieqi")
+            if(birthDate.compareTo(curJieqi) > 0) {
+                ret = birthDate.dayOfMonth - curJieqi.dayOfMonth + 1
+                return ret
+            }else if(birthDate.compareTo(curJieqi) < 0){
+                if (solarMonth == 1) {
+                    year = solarYear - 1
+                    month = 12
+                    preJieqi = getLocalDate(calendar, year, month)
+                } else {
+                    month = solarMonth - 1
+                    preJieqi = getLocalDate(calendar, year, month)
+                }
+                month = month - 1
+                tmpUTC = UTC(calendar, year, month, solarDay, hour, 1, 1)
+                lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+                println("[previous month] preJieqi=$preJieqi  lastDayOfMonth=$lastDayOfMonth")
+//                val endOfMonth = preJieqi.toLocalDate().with(TemporalAdjusters.lastDayOfMonth())
+                ret = (lastDayOfMonth - preJieqi.dayOfMonth + 1) + birthDate.dayOfMonth
+                return ret
+            }else{
+                return 0
+            }
+        }
+
+        return ret
+    }
+
+    fun getDayunStartOffset(dayunDays : Int) : Int{
+        var ret = 0
+        var offset = dayunDays/3
+        var remains =  dayunDays % 3
+        if(remains == 2){
+            offset = offset + 1
+        }
+        return  offset
+    }
+
+    fun getDayunStartYear(year : Int, dayunDays : Int) : Int{
+        var ret = 0
+        var dyStartYear = year
+        var offset = dayunDays/3
+        var remains =  dayunDays % 3
+        if(remains == 2){
+            offset = offset + 1
+        }
+        dyStartYear = dyStartYear + offset
+
+        println("year =$year  dyStartYear=$dyStartYear ")
+        return dyStartYear
+    }
 }
 
