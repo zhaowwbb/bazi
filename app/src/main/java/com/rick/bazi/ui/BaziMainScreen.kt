@@ -162,7 +162,7 @@ fun BaziStartScreen(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 10.dp)
+                HorizontalDivider(thickness = 2.dp)
             }
         }
 
@@ -356,7 +356,7 @@ fun BaziStartScreen(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 10.dp)
+                HorizontalDivider(thickness = 2.dp)
             }
         }
 
@@ -427,7 +427,7 @@ fun BaziStartScreen(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 10.dp)
+                HorizontalDivider(thickness = 2.dp)
             }
         }
 

@@ -20,8 +20,6 @@ People's birth date and time can be converted to eight Chinese word which called
 1988-07-10 12:00:00<br>
 桃花劫<br>
 1975年05月08日 16:36<br>
-桃花劫<br>
-1975年05月08日 16:36<br>
 桃花杀<br>
 2026年05月13日 06:36<br>
 正官桃花<br>

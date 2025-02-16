@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
+import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_0
 import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_1
 import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_2
@@ -570,8 +571,8 @@ class BaziUtil {
         solarYear: Int,
         index: Int
     ): Date {
-        var pos : Int = index
-        if(index > 23){
+        var pos: Int = index
+        if (index > 23) {
             println("Found broken case, index=$index")
             pos = 23
         }
@@ -586,7 +587,7 @@ class BaziUtil {
         solarYear: Int,
         solarMonth: Int
     ): ZonedDateTime {
-        var index = (solarMonth - 1)*2
+        var index = (solarMonth - 1) * 2
         println("   getLocalDate  index= $index")
         var l = (31556925974.7.toLong() * (solarYear - 1900)) + (solarTermInfo[index] * 60000L)
         l = l + UTC(calendar, 1900, 0, 6, 2, 5, 0)
@@ -857,8 +858,8 @@ class BaziUtil {
         monthBase: Int,
         startIndex: Int,
         endIndex: Int,
-        dayunStartYear : Int,
-        yearOffet : Int,
+        dayunStartYear: Int,
+        yearOffet: Int,
         birthDateYear: Int,
         birthDateMonth: Int,
         birthDateDay: Int
@@ -886,9 +887,9 @@ class BaziUtil {
                 builder.append(getTianGanLabel(tg))
                 builder.append(getDizhiLabel(dz))
                 builder.append(" ")
-                builder.append(dayunStartYear + (i - 1)* 10)
+                builder.append(dayunStartYear + (i - 1) * 10)
                 builder.append("-")
-                builder.append((i - 1)* 10 + yearOffet)
+                builder.append((i - 1) * 10 + yearOffet)
                 builder.append(yearUnit)
                 builder.append("\n")
             }
@@ -909,9 +910,9 @@ class BaziUtil {
                 dz = dzLookupMap.get(dayDZ)!!
                 builder.append(getTianGanLabel(tg))
                 builder.append(getDizhiLabel(dz))
-                builder.append(dayunStartYear + (i - 1)* 10)
+                builder.append(dayunStartYear + (i - 1) * 10)
                 builder.append("-")
-                builder.append((i - 1)* 10 + yearOffet)
+                builder.append((i - 1) * 10 + yearOffet)
                 builder.append(yearUnit)
 
                 builder.append("\n")
@@ -955,8 +956,8 @@ class BaziUtil {
         var month = solarMonth
         var preJieqi: ZonedDateTime = convertMillisToLocalDate(calendar.timeInMillis)
         var nextJieqi: ZonedDateTime = convertMillisToLocalDate(calendar.timeInMillis)
-        var tmpUTC = UTC(calendar, solarYear, solarMonth -1, solarDay, hour, 1, 1)
-        var birthDate : ZonedDateTime = convertMillisToLocalDate(tmpUTC)
+        var tmpUTC = UTC(calendar, solarYear, solarMonth - 1, solarDay, hour, 1, 1)
+        var birthDate: ZonedDateTime = convertMillisToLocalDate(tmpUTC)
         var lastDayOfMonth = calendar.getMaximum(Calendar.DAY_OF_MONTH)
         println("birthDate lastDayOfMonth= $lastDayOfMonth")
 
@@ -967,14 +968,14 @@ class BaziUtil {
         println("curJieqi= $curJieqi")
         println("birthDate= $birthDate")
 
-        if(dayunForward){
+        if (dayunForward) {
             //go to next month Jieqi
-            if(birthDate.compareTo(curJieqi) > 0){
-                if(solarMonth == 12){
+            if (birthDate.compareTo(curJieqi) > 0) {
+                if (solarMonth == 12) {
                     year = solarYear + 1
                     month = 1
                     nextJieqi = getLocalDate(calendar, year, month)
-                }else{
+                } else {
                     month = solarMonth + 1
                     nextJieqi = getLocalDate(calendar, year, month)
                 }
@@ -983,21 +984,21 @@ class BaziUtil {
                 ret = nextJieqi.dayOfMonth + (lastDayOfMonth - birthDate.dayOfMonth + 1)
 
                 println("   ret= $ret")
-            }else if(birthDate.compareTo(curJieqi) < 0){
+            } else if (birthDate.compareTo(curJieqi) < 0) {
                 println("   curJieqi.dayOfMonth= $curJieqi.dayOfMonth  , birthDate.dayOfMonth=$birthDate.dayOfMonth")
                 ret = curJieqi.dayOfMonth - birthDate.dayOfMonth + 1
                 return ret
-            }else{
+            } else {
                 return 0
             }
-        }else{
+        } else {
             //go to previous month Jieqi
 
             println("[previous month] birthDate=$birthDate  month=$month  curJieqi=$curJieqi")
-            if(birthDate.compareTo(curJieqi) > 0) {
+            if (birthDate.compareTo(curJieqi) > 0) {
                 ret = birthDate.dayOfMonth - curJieqi.dayOfMonth + 1
                 return ret
-            }else if(birthDate.compareTo(curJieqi) < 0){
+            } else if (birthDate.compareTo(curJieqi) < 0) {
                 if (solarMonth == 1) {
                     year = solarYear - 1
                     month = 12
@@ -1013,7 +1014,7 @@ class BaziUtil {
 //                val endOfMonth = preJieqi.toLocalDate().with(TemporalAdjusters.lastDayOfMonth())
                 ret = (lastDayOfMonth - preJieqi.dayOfMonth + 1) + birthDate.dayOfMonth
                 return ret
-            }else{
+            } else {
                 return 0
             }
         }
@@ -1021,22 +1022,22 @@ class BaziUtil {
         return ret
     }
 
-    fun getDayunStartOffset(dayunDays : Int) : Int{
+    fun getDayunStartOffset(dayunDays: Int): Int {
         var ret = 0
-        var offset = dayunDays/3
-        var remains =  dayunDays % 3
-        if(remains == 2){
+        var offset = dayunDays / 3
+        var remains = dayunDays % 3
+        if (remains == 2) {
             offset = offset + 1
         }
-        return  offset
+        return offset
     }
 
-    fun getDayunStartYear(year : Int, dayunDays : Int) : Int{
+    fun getDayunStartYear(year: Int, dayunDays: Int): Int {
         var ret = 0
         var dyStartYear = year
-        var offset = dayunDays/3
-        var remains =  dayunDays % 3
-        if(remains == 2){
+        var offset = dayunDays / 3
+        var remains = dayunDays % 3
+        if (remains == 2) {
             offset = offset + 1
         }
         dyStartYear = dyStartYear + offset
@@ -1044,5 +1045,117 @@ class BaziUtil {
         println("year =$year  dyStartYear=$dyStartYear ")
         return dyStartYear
     }
+
+    @Composable
+    fun getDayunTaohuaResult(
+        baziInfo: BaziInfo,
+        taohuaMap: Map<DiZhi, DiZhi>
+    ): String {
+        val builder = StringBuilder()
+        var isTaohua: Boolean = false
+        var base = baziInfo.monthBase
+        var dayTG = 0
+        var dayDZ = 0
+        var tg: TianGan = TianGan.TIANGAN_JIA
+        var dz: DiZhi = DiZhi.DIZHI_ZI
+
+        var yearUnit = stringResource(R.string.age_unit)
+        var dayunStartYear =
+            BaziUtil().getDayunStartYear(baziInfo.birthDateYear, baziInfo.dayunDays)
+        var yearOffet = BaziUtil().getDayunStartOffset(baziInfo.dayunDays)
+
+        var dayunTaohuaLabel = stringResource(R.string.app_taohua_dayun)
+        var toLabel = stringResource(R.string.app_to)
+//        builder.append(dayunTaohuaLabel).append("\n")
+
+        if (baziInfo.dayunForward) {
+            for (i in 1..12) {
+                base = baziInfo.monthBase + i
+                base = base % 60
+
+                dayTG = base % 10
+                dayDZ = base % 12
+                tg = tgLookupMap[dayTG]!!
+                dz = dzLookupMap.get(dayDZ)!!
+                if (taohuaMap.containsKey(dz)) {
+                    //found dayun taohua
+                    builder.append(getTianGanLabel(tg))
+                    builder.append(getDizhiLabel(dz))
+                    builder.append(" ")
+                    builder.append(dayunStartYear + (i - 1) * 10)
+                    builder.append("-")
+                    builder.append((i - 1) * 10 + yearOffet)
+                    builder.append(yearUnit)
+                    builder.append(toLabel)
+                    builder.append((i - 1) * 10 + yearOffet + 9)
+                    builder.append(yearUnit)
+                    builder.append("\n")
+                }
+            }
+        } else {
+            for (i in 1..12) {
+                base = baziInfo.monthBase - i
+                if (base < 0) {
+                    base = base + 60
+                }
+                base = base % 60
+
+                dayTG = base % 10
+                dayDZ = base % 12
+                tg = tgLookupMap[dayTG]!!
+                dz = dzLookupMap.get(dayDZ)!!
+//                builder.append(getTianGanLabel(tg))
+//                builder.append(getDizhiLabel(dz))
+                if (taohuaMap.containsKey(dz)) {
+                    //found dayun taohua
+                    builder.append(getTianGanLabel(tg))
+                    builder.append(getDizhiLabel(dz))
+                    builder.append(" ")
+                    builder.append(dayunStartYear + (i - 1) * 10)
+                    builder.append("-")
+                    builder.append((i - 1) * 10 + yearOffet)
+                    builder.append(yearUnit)
+                    builder.append(toLabel)
+                    builder.append((i - 1) * 10 + yearOffet + 9)
+                    builder.append(yearUnit)
+                    builder.append("\n")
+                }
+            }
+        }
+        return builder.toString()
+    }
+
+    @Composable
+    fun getBirthDateLabel(baziInfo: BaziInfo): String {
+        val calendarStr = stringResource(R.string.app_calendar)
+        var yearLabel = stringResource(R.string.app_label_year)
+        var monthLabel = stringResource(R.string.app_label_month)
+        var dayLabel = stringResource(R.string.app_label_day)
+        var hourLabel = stringResource(R.string.app_label_hour)
+
+        var genderStr = MALE
+        if (baziInfo.gender == MALE) {
+            genderStr = stringResource(R.string.app_bazi_male)
+        } else {
+            genderStr = stringResource(R.string.app_bazi_female)
+        }
+        val birthDateStr =
+            "$calendarStr ${baziInfo.birthDateYear}$yearLabel ${baziInfo.birthDateMonth}$monthLabel ${baziInfo.birthDateDay}$dayLabel ${baziInfo.birthHour}$hourLabel  $genderStr"
+
+        return birthDateStr
+    }
+
+    @Composable
+    fun getTitleLable(baziInfo: BaziInfo): String {
+        var genderStr = ""
+        if (baziInfo.gender == MALE) {
+            genderStr = stringResource(R.string.msg_male)
+        } else {
+            genderStr = stringResource(R.string.msg_female)
+        }
+        return genderStr
+    }
+
+
 }
 

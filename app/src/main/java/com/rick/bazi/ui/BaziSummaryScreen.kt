@@ -51,16 +51,38 @@ fun BaziSummaryScreen(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
+        val birthDateStr = BaziUtil().getBirthDateLabel(baziInfo)
+        val baziTaohuaLable = stringResource(R.string.app_taohua_bazi)
+        val dayunTaohuaLable = stringResource(R.string.app_taohua_dayun)
+        val liunianTaohuaLable = stringResource(R.string.app_taohua_liunian)
+
+        var taohuaMap : Map<DiZhi, DiZhi> = getTaohuaMap(baziInfo)
+        var taohuaCount = getTaohuaCount(taohuaMap, baziInfo)
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 10.dp)
+                Text(
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    fontSize = 26.sp,
+                    text = "${birthDateStr}"
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
             }
         }
 
@@ -75,13 +97,109 @@ fun BaziSummaryScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-//                    text = stringResource(R.string.msg_taohua_normal),
-                    text = calculateTaohua(baziInfo),
+                    text = BaziUtil().getTitleLable(baziInfo),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    color = Color.Blue,
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = getTaohuaIntroduction(),
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "$baziTaohuaLable",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = getBaziTaohuaResult(baziInfo, taohuaMap, taohuaCount),
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "$dayunTaohuaLable",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = BaziUtil().getDayunTaohuaResult(baziInfo, taohuaMap),
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "$liunianTaohuaLable",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = getLiunianTaohua(baziInfo, taohuaMap),
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineSmall
                 )
             }
 
@@ -125,7 +243,6 @@ fun BaziSummaryScreen(
             }
         }
 
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -166,7 +283,6 @@ fun BaziSummaryScreen(
                 )
             }
         }
-
 
         Column(
             modifier = modifier
@@ -245,8 +361,7 @@ fun checkLuoxingTaohua(baziInfo: BaziInfo): Boolean {
     return false
 }
 
-@Composable
-fun calculateTaohua(baziInfo: BaziInfo): String {
+fun getTaohuaMap(baziInfo: BaziInfo) : Map<DiZhi, DiZhi>{
     var taohuaMap = mutableMapOf<DiZhi, DiZhi>()
     var yDz = baziInfo.yearDizhi
     var dDz = baziInfo.dayDizhi
@@ -255,13 +370,11 @@ fun calculateTaohua(baziInfo: BaziInfo): String {
     if (yDz == DiZhi.DIZHI_YIN || yDz == DiZhi.DIZHI_WU || yDz == DiZhi.DIZHI_XU) {
         if (!taohuaMap.containsKey(DiZhi.DIZHI_MOU)) {
             taohuaMap.put(DiZhi.DIZHI_MOU, DiZhi.DIZHI_MOU)
-//            println("Add taohua MOU")
         }
     }
     if (dDz == DiZhi.DIZHI_YIN || dDz == DiZhi.DIZHI_WU || dDz == DiZhi.DIZHI_XU) {
         if (!taohuaMap.containsKey(DiZhi.DIZHI_MOU)) {
             taohuaMap.put(DiZhi.DIZHI_MOU, DiZhi.DIZHI_MOU)
-//            println("Add taohua MOU")
         }
     }
 
@@ -269,13 +382,11 @@ fun calculateTaohua(baziInfo: BaziInfo): String {
     if (yDz == DiZhi.DIZHI_SHEN || yDz == DiZhi.DIZHI_ZI || yDz == DiZhi.DIZHI_CHEN) {
         if (!taohuaMap.containsKey(DiZhi.DIZHI_YOU)) {
             taohuaMap.put(DiZhi.DIZHI_YOU, DiZhi.DIZHI_YOU)
-//            println("Add taohua YOU")
         }
     }
     if (dDz == DiZhi.DIZHI_SHEN || dDz == DiZhi.DIZHI_ZI || dDz == DiZhi.DIZHI_CHEN) {
         if (!taohuaMap.containsKey(DiZhi.DIZHI_YOU)) {
             taohuaMap.put(DiZhi.DIZHI_YOU, DiZhi.DIZHI_YOU)
-//            println("Add taohua YOU")
         }
     }
 
@@ -283,13 +394,11 @@ fun calculateTaohua(baziInfo: BaziInfo): String {
     if (yDz == DiZhi.DIZHI_HAI || yDz == DiZhi.DIZHI_MOU || yDz == DiZhi.DIZHI_WEI) {
         if (!taohuaMap.containsKey(DiZhi.DIZHI_ZI)) {
             taohuaMap.put(DiZhi.DIZHI_ZI, DiZhi.DIZHI_ZI)
-//            println("Add taohua ZI")
         }
     }
     if (dDz == DiZhi.DIZHI_HAI || dDz == DiZhi.DIZHI_MOU || dDz == DiZhi.DIZHI_WEI) {
         if (!taohuaMap.containsKey(DiZhi.DIZHI_ZI)) {
             taohuaMap.put(DiZhi.DIZHI_ZI, DiZhi.DIZHI_ZI)
-//            println("Add taohua ZI")
         }
     }
 
@@ -297,91 +406,161 @@ fun calculateTaohua(baziInfo: BaziInfo): String {
     if (yDz == DiZhi.DIZHI_SI || yDz == DiZhi.DIZHI_YOU || yDz == DiZhi.DIZHI_CHOU) {
         if (!taohuaMap.containsKey(DiZhi.DIZHI_WU)) {
             taohuaMap.put(DiZhi.DIZHI_WU, DiZhi.DIZHI_WU)
-//            println("Add taohua WU")
         }
     }
     if (dDz == DiZhi.DIZHI_SI || dDz == DiZhi.DIZHI_YOU || dDz == DiZhi.DIZHI_CHOU) {
         if (!taohuaMap.containsKey(DiZhi.DIZHI_WU)) {
             taohuaMap.put(DiZhi.DIZHI_WU, DiZhi.DIZHI_WU)
-//            println("Add taohua WU")
         }
     }
-    var genderStr = ""
-    if (baziInfo.gender == MALE) {
-        genderStr = stringResource(R.string.msg_male)
-    } else {
-        genderStr = stringResource(R.string.msg_female)
-    }
-    println("taohuaMap = $taohuaMap")
-    var content = ""
+    return taohuaMap
+}
+
+fun getTaohuaCount(taohuaMap : Map<DiZhi, DiZhi>, baziInfo: BaziInfo) : Int{
     var taohuaCount = 0
 
-    taohuaMap.forEach() {
-        if (it.key == baziInfo.yearDizhi) {
-            taohuaCount += 1
-        } else if (it.key == baziInfo.monthDizhi) {
-            taohuaCount += 1
-        } else if (it.key == baziInfo.dayDizhi) {
-            taohuaCount += 1
-        } else if (it.key == baziInfo.hourDizhi) {
-            taohuaCount += 1
-        }
+    if(taohuaMap.containsKey(baziInfo.yearDizhi)){
+        taohuaCount += 1
     }
-    println("Bazi taohuaCount = $taohuaCount")
 
-    content = getTaohuaCheckResult(baziInfo, taohuaMap, taohuaCount)
+    if(taohuaMap.containsKey(baziInfo.monthDizhi)){
+        taohuaCount += 1
+    }
 
-    var liunianTao = getLiunianTaohua(baziInfo, taohuaMap)
+    if(taohuaMap.containsKey(baziInfo.dayDizhi)){
+        taohuaCount += 1
+    }
 
-    var result = "$genderStr  $content $liunianTao"
-
-    return result
+    if(taohuaMap.containsKey(baziInfo.hourDizhi)){
+        taohuaCount += 1
+    }
+    return taohuaCount
 }
 
 @Composable
-fun getTaohuaCheckResult(
+fun getBaziTaohuaResult(
     baziInfo: BaziInfo,
     taohuaMap: Map<DiZhi, DiZhi>,
     taohuaCount: Int
 ): String {
+    val builder = StringBuilder()
+    var isTaohua: Boolean = false
+
     if (checkBianyeTaohua(baziInfo)) {
-        return stringResource(R.string.msg_taohua_bianye)
-    } else if (checkLuoxingTaohua(baziInfo)) {
-        return stringResource(R.string.msg_taohua_luoxing)
-    } else if (checkGunlangTaohua(baziInfo)) {
-        return stringResource(R.string.msg_taohua_gunlang)
-    } else if (checkTaohuaRen(baziInfo, taohuaMap)) {
-        return stringResource(R.string.msg_taohua_ren)
-    } else if (checkTaohuaJie(baziInfo, taohuaMap)) {
-        return stringResource(R.string.msg_taohua_jie)
-    } else if (checkTaohuaSha(baziInfo, taohuaMap)) {
-        return stringResource(R.string.msg_taohua_sha)
-    } else if (checkTaohuaZhengguan(baziInfo, taohuaMap)) {
-        return stringResource(R.string.msg_taohua_zhengguan)
-    } else if (checkTaohuaQiangwai(baziInfo, taohuaMap)) {
-        return stringResource(R.string.msg_taohua_qiangwai)
-    } else if (checkTaohuaQiangnei(baziInfo, taohuaMap)) {
-        return stringResource(R.string.msg_taohua_qiangnei)
-    } else if (taohuaCount == 0) {
-        return stringResource(R.string.msg_taohua_0)
-    } else if (taohuaCount == 1) {
-        return stringResource(R.string.msg_taohua_1)
-    } else if (taohuaCount == 2) {
-        return stringResource(R.string.msg_taohua_2)
-    } else if (taohuaCount == 3) {
-        return stringResource(R.string.msg_taohua_3)
-    } else if (taohuaCount == 4) {
-        return stringResource(R.string.msg_taohua_4)
-    } else {
-        return stringResource(R.string.msg_taohua_0)
+        builder.append(stringResource(R.string.msg_taohua_bianye))
+        builder.append("\n")
+        isTaohua = true
     }
+    if (checkLuoxingTaohua(baziInfo)) {
+        builder.append(stringResource(R.string.msg_taohua_luoxing))
+        builder.append("\n")
+        isTaohua = true
+    }
+    if (checkGunlangTaohua(baziInfo)) {
+        builder.append(stringResource(R.string.msg_taohua_gunlang))
+        builder.append("\n")
+        isTaohua = true
+    }
+    if (checkTaohuaRen(baziInfo, taohuaMap)) {
+        builder.append(stringResource(R.string.msg_taohua_ren))
+        builder.append("\n")
+        isTaohua = true
+    }
+    if (checkTaohuaJie(baziInfo, taohuaMap)) {
+        builder.append(stringResource(R.string.msg_taohua_jie))
+        builder.append("\n")
+        isTaohua = true
+    }
+    if (checkTaohuaSha(baziInfo, taohuaMap)) {
+        builder.append(stringResource(R.string.msg_taohua_sha))
+        builder.append("\n")
+        isTaohua = true
+    }
+    if (checkTaohuaZhengguan(baziInfo, taohuaMap)) {
+        builder.append(stringResource(R.string.msg_taohua_zhengguan))
+        builder.append("\n")
+        isTaohua = true
+    }
+    if (checkTaohuaQiangwai(baziInfo, taohuaMap)) {
+        builder.append(stringResource(R.string.msg_taohua_qiangwai))
+        builder.append("\n")
+        isTaohua = true
+    }
+    if (checkTaohuaQiangnei(baziInfo, taohuaMap)) {
+        builder.append(stringResource(R.string.msg_taohua_qiangnei))
+        builder.append("\n")
+        isTaohua = true
+    }
+
+    println("taohuaMap=$taohuaMap  taohuaCount=$taohuaCount")
+
+    if (taohuaCount == 0) {
+        if(!isTaohua) {
+            builder.append(stringResource(R.string.msg_taohua_0))
+//            builder.append("\n")
+        }
+    }
+    if (taohuaCount == 1) {
+//        builder.append("\n")
+        builder.append(stringResource(R.string.msg_taohua_1))
+    }
+    if (taohuaCount == 2) {
+        builder.append(stringResource(R.string.msg_taohua_2))
+//        builder.append("\n")
+    }
+    if (taohuaCount == 3) {
+        builder.append(stringResource(R.string.msg_taohua_3))
+//        builder.append("\n")
+    }
+    if (taohuaCount == 4) {
+        builder.append(stringResource(R.string.msg_taohua_4))
+//        builder.append("\n")
+    }
+    return builder.toString()
 }
+
+//@Composable
+//fun getTaohuaCheckResult(
+//    baziInfo: BaziInfo,
+//    taohuaMap: Map<DiZhi, DiZhi>,
+//    taohuaCount: Int
+//): String {
+//    if (checkBianyeTaohua(baziInfo)) {
+//        return stringResource(R.string.msg_taohua_bianye)
+//    } else if (checkLuoxingTaohua(baziInfo)) {
+//        return stringResource(R.string.msg_taohua_luoxing)
+//    } else if (checkGunlangTaohua(baziInfo)) {
+//        return stringResource(R.string.msg_taohua_gunlang)
+//    } else if (checkTaohuaRen(baziInfo, taohuaMap)) {
+//        return stringResource(R.string.msg_taohua_ren)
+//    } else if (checkTaohuaJie(baziInfo, taohuaMap)) {
+//        return stringResource(R.string.msg_taohua_jie)
+//    } else if (checkTaohuaSha(baziInfo, taohuaMap)) {
+//        return stringResource(R.string.msg_taohua_sha)
+//    } else if (checkTaohuaZhengguan(baziInfo, taohuaMap)) {
+//        return stringResource(R.string.msg_taohua_zhengguan)
+//    } else if (checkTaohuaQiangwai(baziInfo, taohuaMap)) {
+//        return stringResource(R.string.msg_taohua_qiangwai)
+//    } else if (checkTaohuaQiangnei(baziInfo, taohuaMap)) {
+//        return stringResource(R.string.msg_taohua_qiangnei)
+//    } else if (taohuaCount == 0) {
+//        return stringResource(R.string.msg_taohua_0)
+//    } else if (taohuaCount == 1) {
+//        return stringResource(R.string.msg_taohua_1)
+//    } else if (taohuaCount == 2) {
+//        return stringResource(R.string.msg_taohua_2)
+//    } else if (taohuaCount == 3) {
+//        return stringResource(R.string.msg_taohua_3)
+//    } else if (taohuaCount == 4) {
+//        return stringResource(R.string.msg_taohua_4)
+//    } else {
+//        return stringResource(R.string.msg_taohua_0)
+//    }
+//}
 
 @Composable
 fun getLiunianTaohua(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): String {
     val builder = StringBuilder()
-    builder.append(stringResource(R.string.msg_taohua_liunian))
-    builder.append("   ")
 
     var thisYearTg = baziInfo.yearTiangan
     var thisYearDz = baziInfo.yearDizhi
@@ -394,6 +573,7 @@ fun getLiunianTaohua(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): String {
     )
     var yearBaseTmp = yearBase
     var year = baziInfo.birthDateYear
+    var yearUnit = stringResource(R.string.age_unit)
     for (i in 0..100) {
         yearBaseTmp = yearBase + i
         thisYearTg = BaziUtil().getTianGan(yearBaseTmp)
@@ -405,7 +585,10 @@ fun getLiunianTaohua(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): String {
             builder.append(BaziUtil().getTianGanLabel(thisYearTg))
             builder.append(BaziUtil().getDizhiLabel(thisYearDz))
             builder.append(")")
-            builder.append("  ")
+            builder.append(" ")
+            builder.append(i + 1)
+            builder.append(yearUnit)
+            builder.append("\n")
         }
     }
     return builder.toString()
@@ -459,9 +642,9 @@ fun checkTaohuaJie(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
 }
 
 fun checkTaohuaSha(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
-    println("Check TaohuaSha")
+//    println("Check TaohuaSha")
     var owner = baziInfo.dayTiangan
-    println("owner $owner")
+//    println("owner $owner")
 
     var tg = baziInfo.yearTiangan
     var dz = baziInfo.yearDizhi
@@ -605,4 +788,9 @@ fun checkGunlangTaohua(baziInfo: BaziInfo): Boolean {
     }
 
     return false
+}
+
+@Composable
+fun getTaohuaIntroduction(): String {
+    return stringResource(R.string.msg_taohua_intro)
 }

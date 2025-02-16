@@ -24,7 +24,11 @@
     <string name="app_after_birth">出生后</string>
     <string name="app_start_dayun">起大运</string>
     <string name="age_unit">岁</string>
-
+    <string name="app_bazi_taohua_query">桃花查询</string>
+    <string name="app_taohua_bazi">八字桃花</string>
+    <string name="app_taohua_dayun">大运桃花</string>
+    <string name="app_taohua_liunian">流年桃花</string>
+    <string name="app_to">到</string>
 
     <string name="yhzp_y">渊</string>
     <string name="yhzp_h">海</string>
@@ -108,21 +112,21 @@
 
     <string name="msg_male">施主</string>
     <string name="msg_female">师太</string>
+    <string name="msg_taohua_intro">    在八字命理学中，桃花是一个常用的神煞，又名咸池，传说是王母院后的瑶池，是专供众仙女洗澡的地方，处五行沐浴之地，为风流之星，主男欢女爱，八字带桃花的人，一般比较花心，容易吸引异性，也容易对异性感兴趣。\n桃花又分为先天桃花和后天桃花，先天桃花，指的就是以上所述本身八字中带桃花，是与生俱来的，而年运逢桃花，则是特定的时间段上碰到桃花，过后则消失变无。先天桃花主一生风流多情，而后天桃花则主行桃花的年运偶然风骚。先天桃花不好办，后天桃花没有什么的，几乎每个人都会与桃花有缘，只不过是有轻有重，有长有短而已。再说桃花虽主风骚暖昧，但同时也表示风骚多才、文采飞扬或色艺双绝，非常多文人、艺人、明星多带桃花。再者行桃花年运时，因异性缘旺，也有助于婚恋交友，非常多人就是在桃花年运时恋爱结婚的，对于那些剩男剩女到是好机会，碰到桃花可能找到婚姻。</string>
 
-    <string name="msg_taohua_0">八字没有桃花，但不要灰心，在不重新投胎的情况下，十年大运的转换，流年的变化，也有机会遇到桃花</string>
-    <string name="msg_taohua_1">八字有1朵桃花，八字带桃花的人，必定比没有桃花的人更容易吸引异性，同时自身也容易对不同的异性有好感</string>
-    <string name="msg_taohua_2">八字有2朵桃花</string>
-    <string name="msg_taohua_3">八字有3朵桃花</string>
-    <string name="msg_taohua_4">八字有4朵桃花</string>
+    <string name="msg_taohua_0">八字没有桃花\n但不要灰心，在不重新投胎的情况下，十年大运的转换，流年的变化，也有机会遇到桃花。</string>
+    <string name="msg_taohua_1">八字有1朵桃花\n八字带桃花的人，必定比没有桃花的人更容易吸引异性，同时自身也容易对不同的异性有好感。</string>
+    <string name="msg_taohua_2">八字有2朵桃花\n阁下的桃花过于旺盛，具有成为时间管理大师的潜质，努力提升自己吧，祝你桃花事业更上一层楼，但要注意保重身体。</string>
+    <string name="msg_taohua_3">八字有3朵桃花\n阁下的桃花那是相当，相当，相当的旺盛，怎么说哪？这就是传说中的先天大猪蹄子圣体，前途不可限量。</string>
+    <string name="msg_taohua_4">八字有4朵桃花\n阁下是天生的满级桃花斗士，将来不是成为桃花坞坞主，就是成为桃花岛岛主。</string>
     <string name="msg_taohua_liunian">流年桃花</string>
-    <string name="msg_taohua_bianye">八字有遍野桃花   八字地支子午卯酉四字全占，为遍野桃花，一般说这样的人才华横溢，风骚无穷，多为帝王将相之命。不过绝大多数命中桃花泛滥成灾者，不但成不了大事，而且还变成滥桃花了！而滥桃花则是妨害婚姻感情的。八字遍野桃花的代表人物是乾隆皇帝。</string>
-    <string name="msg_taohua_luoxing">八字有裸形桃花   甲子日生，月柱或时柱为庚午；庚午时生，月柱或时柱为甲子，称为裸形桃花，不论男女，犯之均主生性淫乱，婚姻破败。</string>
-    <string name="msg_taohua_jie">八字有桃花劫   八字中的桃花假如坐在比肩劫财上，为“桃花劫”，表示会因色破财，受人欺骗敲诈，或因频繁出入声色场所（如歌舞厅、夜总会等）而消耗不少金钱，或者自己成为“横刀夺爱的”主角。女人则有可能是受骗失身，或者为达某种目的而对某些男人以身相许，经云：女命劫比桃花大不良</string>
-    <string name="msg_taohua_sha">八字有桃花杀   桃花坐七杀，为“桃花杀”，经云：酒色猖狂，只为桃花带杀。不论男女，皆色玉极重，并且会因逃色事件而招来杀身之祸，或被人狠狠地敲诈一笔，或因性乱染上性病。</string>
-    <string name="msg_taohua_zhengguan">八字有正官桃花  女命八字正官坐桃花，不但表示老公长得帅，有较好的工作事业，更表示老公会在外金屋藏娇</string>
-    <string name="msg_taohua_qiangwai">八字有墙外桃花  桃花落在时辰上，称为墙外桃花，其所犯桃花的机会与力度又大大增多</string>
-
-    <string name="msg_taohua_qiangnei">八字有墙内桃花  凡桃花位于年支或月支者，称墙内桃花。一般主夫妻恩爱，如胶似漆，形影不离，相敬如宾。忌冲破。</string>
-    <string name="msg_taohua_ren">八字有桃花刃  指日、时支占桃花又逢羊刃。主其人如不修身，易为情欲伤身带残</string>
-    <string name="msg_taohua_gunlang">八字有滚浪桃花  丙子日生，月柱或时柱为辛卯；辛卯日生，月柱为丙子，称为滚浪桃花，不论男女，犯之均表示生性淫乱，婚姻破败。诗云：四柱干支合到刑，多因酒色丧其身，若临羊刃并七杀，定作黄泉路上人。又：丙子辛卯相刑，荒淫滚浪难免。</string>
+    <string name="msg_taohua_bianye">八字有遍野桃花\n八字地支子午卯酉四字全占，为遍野桃花，一般说这样的人才华横溢，风骚无穷，多为帝王将相之命。不过绝大多数命中桃花泛滥成灾者，不但成不了大事，而且还变成滥桃花了！而滥桃花则是妨害婚姻感情的。八字遍野桃花的代表人物是乾隆皇帝。</string>
+    <string name="msg_taohua_luoxing">八字有裸形桃花\n甲子日生，月柱或时柱为庚午；庚午时生，月柱或时柱为甲子，称为裸形桃花，不论男女，犯之均主生性淫乱，婚姻破败。</string>
+    <string name="msg_taohua_jie">八字有桃花劫\n八字中的桃花假如坐在比肩劫财上，为“桃花劫”，表示会因色破财，受人欺骗敲诈，或因频繁出入声色场所（如歌舞厅、夜总会等）而消耗不少金钱，或者自己成为“横刀夺爱的”主角。女人则有可能是受骗失身，或者为达某种目的而对某些男人以身相许，经云：女命劫比桃花大不良</string>
+    <string name="msg_taohua_sha">八字有桃花杀\n桃花坐七杀，为“桃花杀”，经云：酒色猖狂，只为桃花带杀。不论男女，皆色玉极重，并且会因逃色事件而招来杀身之祸，或被人狠狠地敲诈一笔，或因性乱染上性病。</string>
+    <string name="msg_taohua_zhengguan">八字有正官桃花\n女命八字正官坐桃花，不但表示老公长得帅，有较好的工作事业，更表示老公会在外金屋藏娇</string>
+    <string name="msg_taohua_qiangwai">八字有墙外桃花\n桃花落在时辰上，称为墙外桃花，其所犯桃花的机会与力度又大大增多</string>
+    <string name="msg_taohua_qiangnei">八字有墙内桃花\n凡桃花位于年支或月支者，称墙内桃花。一般主夫妻恩爱，如胶似漆，形影不离，相敬如宾。忌冲破。</string>
+    <string name="msg_taohua_ren">八字有桃花刃\n指日、时支占桃花又逢羊刃。主其人如不修身，易为情欲伤身带残</string>
+    <string name="msg_taohua_gunlang">八字有滚浪桃花\n丙子日生，月柱或时柱为辛卯；辛卯日生，月柱为丙子，称为滚浪桃花，不论男女，犯之均表示生性淫乱，婚姻破败。诗云：四柱干支合到刑，多因酒色丧其身，若临羊刃并七杀，定作黄泉路上人。又：丙子辛卯相刑，荒淫滚浪难免。</string>
 </resources>

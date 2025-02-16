@@ -69,24 +69,24 @@ fun BaziPaipanScreen(
         modifier = modifier, verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        val calendarStr = stringResource(R.string.app_calendar)
-        var yearLabel = stringResource(R.string.app_label_year)
-        var monthLabel = stringResource(R.string.app_label_month)
-        var dayLabel = stringResource(R.string.app_label_day)
-        var hourLabel = stringResource(R.string.app_label_hour)
+//        val calendarStr = stringResource(R.string.app_calendar)
+//        var yearLabel = stringResource(R.string.app_label_year)
+//        var monthLabel = stringResource(R.string.app_label_month)
+//        var dayLabel = stringResource(R.string.app_label_day)
+//        var hourLabel = stringResource(R.string.app_label_hour)
+//
+//        var genderStr = MALE
+//        if (baziInfo.gender == MALE) {
+//            genderStr = stringResource(R.string.app_bazi_male)
+////            println("genderStr: $genderStr")
+//        } else {
+//            genderStr = stringResource(R.string.app_bazi_female)
+//        }
 
-        var genderStr = MALE
-        if (baziInfo.gender == MALE) {
-            genderStr = stringResource(R.string.app_bazi_male)
-//            println("genderStr: $genderStr")
-        } else {
-            genderStr = stringResource(R.string.app_bazi_female)
-        }
+//        val birthDateStr =
+//            "$calendarStr ${baziInfo.birthDateYear}$yearLabel ${baziInfo.birthDateMonth}$monthLabel ${baziInfo.birthDateDay}$dayLabel ${baziInfo.birthHour}$hourLabel  $genderStr"
 
-        val birthDateStr =
-            "$calendarStr ${baziInfo.birthDateYear}$yearLabel ${baziInfo.birthDateMonth}$monthLabel ${baziInfo.birthDateDay}$dayLabel ${baziInfo.birthHour}$hourLabel  $genderStr"
-
-
+        val birthDateStr = BaziUtil().getBirthDateLabel(baziInfo)
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -617,7 +617,7 @@ fun BaziPaipanScreen(
                     navController.navigate(BaziScreen.Summary.name)
                 }) {
                     Text(
-                        text = stringResource(R.string.app_bazi_suanming),
+                        text = stringResource(R.string.app_bazi_taohua_query),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight(500),
