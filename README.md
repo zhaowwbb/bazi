@@ -34,8 +34,16 @@ People's birth date and time can be converted to eight Chinese word which called
 2024年06月29日 18:36<br>
 滚浪桃花<br>
 2016年04月24日 6:36<br>
-地支藏干<br>
-2025年02月2日 3:36<br>
+
+日主桃花<br>
+2025年10月9日 11:36<br>
+=================================<br>
+修改记录
+2025年2月23日
+（1）修复时干计算错误，在子时会得到错误结果
+（2）增加日主桃花检测
+
+
 =================================<br>
 手机截屏<br>
 ![alt text](https://github.com/zhaowwbb/bazi/blob/SNAKE-1.0.0/screenshot/Screenshot_main.png?raw=true "Main screen")

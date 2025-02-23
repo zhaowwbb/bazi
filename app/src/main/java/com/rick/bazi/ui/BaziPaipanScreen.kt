@@ -496,8 +496,6 @@ fun BaziPaipanScreen(
             var dayunForward: Boolean =
                 BaziUtil().isDayunDirectionForward(baziInfo.gender, baziInfo.yearDizhi)
             var days = BaziUtil().getDayunStartDays(
-//                baziInfo.gender,
-//                baziInfo.yearDizhi,
                 baziInfo.birthDateYear,
                 baziInfo.birthDateMonth,
                 baziInfo.birthDateDay,
@@ -618,6 +616,34 @@ fun BaziPaipanScreen(
                 }) {
                     Text(
                         text = stringResource(R.string.app_bazi_taohua_query),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+            }
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.Sample.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_sample),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.Version.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_version),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight(500),

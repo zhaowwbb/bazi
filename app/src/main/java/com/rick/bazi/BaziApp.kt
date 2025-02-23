@@ -33,13 +33,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rick.bazi.data.DataSource
 import com.rick.bazi.ui.BaziPaipanScreen
+import com.rick.bazi.ui.BaziSampleScreen
 import com.rick.bazi.ui.BaziStartScreen
 import com.rick.bazi.ui.BaziSummaryScreen
+import com.rick.bazi.ui.BaziVersionScreen
 import com.rick.bazi.ui.BaziViewModel
 
 enum class BaziScreen(@StringRes val title: Int) {
     Start(title = R.string.app_bazi_title),
     Paipan(title = R.string.app_bazi_paipan),
+    Sample(title = R.string.app_bazi_sample),
+    Version(title = R.string.app_bazi_version),
     Summary(title = R.string.app_bazi_result)
 }
 
@@ -103,9 +107,7 @@ fun BaziApp(
         ) {
             composable(route = BaziScreen.Start.name) {
                 BaziStartScreen(
-//                    quantityOptions = DataSource.quantityOptions,
                     onNextButtonClicked = {
-//                        viewModel.setQuantity(it)
                         navController.navigate(BaziScreen.Paipan.name)
                     },
                     navController = navController,
@@ -136,12 +138,37 @@ fun BaziApp(
             composable(route = BaziScreen.Summary.name) {
                 val context = LocalContext.current
                 BaziSummaryScreen(
-//                    orderUiState = uiState,
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(baziModel, navController)
                     },
                     onSendButtonClicked = { subject: String, summary: String -> {}
-//                        shareOrder(context, subject = subject, summary = summary)
+
+                    },
+                    baziInfo = baziUIInfo,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = BaziScreen.Sample.name) {
+                val context = LocalContext.current
+                BaziSampleScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    baziInfo = baziUIInfo,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = BaziScreen.Version.name) {
+                val context = LocalContext.current
+                BaziVersionScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
                     },
                     baziInfo = baziUIInfo,
                     modifier = Modifier.fillMaxHeight()

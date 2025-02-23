@@ -406,7 +406,7 @@ fun BaziStartScreen(
                     onClick = {
                         activity?.finish()
                     }
-                ){
+                ) {
                     Text(
                         text = stringResource(R.string.bazi_quit),
                         textAlign = TextAlign.Center,
@@ -478,7 +478,7 @@ fun paipan(
     val dzLookupMap: Map<Int, DiZhi> = baziInfo.dzLookupMap
 
     //calculate Year Tiangan & Dizhi
-    var yearBase =  BaziUtil().getCyclicalYearBase(year, month, day, hour)
+    var yearBase = BaziUtil().getCyclicalYearBase(year, month, day, hour)
     baziModel.setYearBase(yearBase)
     yearTG = yearBase % 10
     tg = tgLookupMap[yearTG]!!
@@ -518,20 +518,10 @@ fun paipan(
     baziModel.setDayDiZhi(dz)
 
     //calculate Hour Tiangan & Dizhi
+    var curDayTG: TianGan = tg
     dz = BaziUtil().getHourDZ(hour)
-    hourDZ = BaziUtil().getHourDZInt(hour)
-
-    tmp = dayTG * 2 + hourDZ - 2
-    hourTG = tmp % 10
-    println("hourTG=${hourTG}")
-    if (hourTG < 0) {
-        hourTG = 1
-        println("####: found hourTG 0")
-    }
-
-    tg = tgLookupMap[hourTG]!!
+    tg = BaziUtil().getHourTG(curDayTG, hour)
     baziModel.setHourTiangan(tg)
-
     baziModel.setHourDiZhi(dz)
 }
 

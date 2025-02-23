@@ -491,72 +491,32 @@ fun getBaziTaohuaResult(
         builder.append("\n")
         isTaohua = true
     }
-
+    if (checkRizhuTaohua(baziInfo)) {
+        builder.append(stringResource(R.string.msg_taohua_rizhu))
+        builder.append("\n")
+        isTaohua = true
+    }
     println("taohuaMap=$taohuaMap  taohuaCount=$taohuaCount")
 
     if (taohuaCount == 0) {
         if(!isTaohua) {
             builder.append(stringResource(R.string.msg_taohua_0))
-//            builder.append("\n")
         }
     }
     if (taohuaCount == 1) {
-//        builder.append("\n")
         builder.append(stringResource(R.string.msg_taohua_1))
     }
     if (taohuaCount == 2) {
         builder.append(stringResource(R.string.msg_taohua_2))
-//        builder.append("\n")
     }
     if (taohuaCount == 3) {
         builder.append(stringResource(R.string.msg_taohua_3))
-//        builder.append("\n")
     }
     if (taohuaCount == 4) {
         builder.append(stringResource(R.string.msg_taohua_4))
-//        builder.append("\n")
     }
     return builder.toString()
 }
-
-//@Composable
-//fun getTaohuaCheckResult(
-//    baziInfo: BaziInfo,
-//    taohuaMap: Map<DiZhi, DiZhi>,
-//    taohuaCount: Int
-//): String {
-//    if (checkBianyeTaohua(baziInfo)) {
-//        return stringResource(R.string.msg_taohua_bianye)
-//    } else if (checkLuoxingTaohua(baziInfo)) {
-//        return stringResource(R.string.msg_taohua_luoxing)
-//    } else if (checkGunlangTaohua(baziInfo)) {
-//        return stringResource(R.string.msg_taohua_gunlang)
-//    } else if (checkTaohuaRen(baziInfo, taohuaMap)) {
-//        return stringResource(R.string.msg_taohua_ren)
-//    } else if (checkTaohuaJie(baziInfo, taohuaMap)) {
-//        return stringResource(R.string.msg_taohua_jie)
-//    } else if (checkTaohuaSha(baziInfo, taohuaMap)) {
-//        return stringResource(R.string.msg_taohua_sha)
-//    } else if (checkTaohuaZhengguan(baziInfo, taohuaMap)) {
-//        return stringResource(R.string.msg_taohua_zhengguan)
-//    } else if (checkTaohuaQiangwai(baziInfo, taohuaMap)) {
-//        return stringResource(R.string.msg_taohua_qiangwai)
-//    } else if (checkTaohuaQiangnei(baziInfo, taohuaMap)) {
-//        return stringResource(R.string.msg_taohua_qiangnei)
-//    } else if (taohuaCount == 0) {
-//        return stringResource(R.string.msg_taohua_0)
-//    } else if (taohuaCount == 1) {
-//        return stringResource(R.string.msg_taohua_1)
-//    } else if (taohuaCount == 2) {
-//        return stringResource(R.string.msg_taohua_2)
-//    } else if (taohuaCount == 3) {
-//        return stringResource(R.string.msg_taohua_3)
-//    } else if (taohuaCount == 4) {
-//        return stringResource(R.string.msg_taohua_4)
-//    } else {
-//        return stringResource(R.string.msg_taohua_0)
-//    }
-//}
 
 @Composable
 fun getLiunianTaohua(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): String {
@@ -794,3 +754,33 @@ fun checkGunlangTaohua(baziInfo: BaziInfo): Boolean {
 fun getTaohuaIntroduction(): String {
     return stringResource(R.string.msg_taohua_intro)
 }
+
+fun checkRizhuTaohua(baziInfo: BaziInfo): Boolean {
+    var isRizhuTaohua = false
+    val tg = baziInfo.dayTiangan
+    val dz = baziInfo.dayDizhi
+
+    if(tg == TianGan.TIANGAN_JIA && dz == DiZhi.DIZHI_ZI){
+        return true
+    }
+    if(tg == TianGan.TIANGAN_YI && dz == DiZhi.DIZHI_SI){
+        return true
+    }
+    if(tg == TianGan.TIANGAN_GENG && dz == DiZhi.DIZHI_WU){
+        return true
+    }
+    if(tg == TianGan.TIANGAN_XIN && dz == DiZhi.DIZHI_HAI){
+        return true
+    }
+    if(tg == TianGan.TIANGAN_JIA && dz == DiZhi.DIZHI_WU){
+        return true
+    }
+    if(tg == TianGan.TIANGAN_GENG && dz == DiZhi.DIZHI_ZI){
+        return true
+    }
+    if(tg == TianGan.TIANGAN_GUI && dz == DiZhi.DIZHI_HAI){
+        return true
+    }
+    return isRizhuTaohua
+}
+

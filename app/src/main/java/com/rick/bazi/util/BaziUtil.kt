@@ -1156,6 +1156,61 @@ class BaziUtil {
         return genderStr
     }
 
+    fun getNextTG(tg : TianGan) : TianGan{
+        var nextTg = TianGan.TIANGAN_JIA
+
+        if(tg == TianGan.TIANGAN_JIA){
+            nextTg = TianGan.TIANGAN_YI
+        }else if(tg == TianGan.TIANGAN_YI){
+            nextTg = TianGan.TIANGAN_BING
+        }else if(tg == TianGan.TIANGAN_BING){
+            nextTg = TianGan.TIANGAN_DING
+        }else if(tg == TianGan.TIANGAN_DING){
+            nextTg = TianGan.TIANGAN_WU
+        }else if(tg == TianGan.TIANGAN_WU){
+            nextTg = TianGan.TIANGAN_JI
+        }else if(tg == TianGan.TIANGAN_JI){
+            nextTg = TianGan.TIANGAN_GENG
+        }else if(tg == TianGan.TIANGAN_GENG){
+            nextTg = TianGan.TIANGAN_XIN
+        }else if(tg == TianGan.TIANGAN_XIN){
+            nextTg = TianGan.TIANGAN_REN
+        }else if(tg == TianGan.TIANGAN_REN){
+            nextTg = TianGan.TIANGAN_GUI
+        }else if(tg == TianGan.TIANGAN_GUI){
+            nextTg = TianGan.TIANGAN_JIA
+        }
+
+        return nextTg
+    }
+
+    fun getHourTG(dayTG : TianGan, hour: Int) : TianGan{
+        var hourTg = TianGan.TIANGAN_JIA
+        var hourDZSeq = getHourDZInt(hour)
+        if(dayTG == TianGan.TIANGAN_JIA || dayTG == TianGan.TIANGAN_JI){
+            hourTg = TianGan.TIANGAN_JIA
+        }
+        if(dayTG == TianGan.TIANGAN_YI || dayTG == TianGan.TIANGAN_GENG){
+            hourTg = TianGan.TIANGAN_BING
+        }
+        if(dayTG == TianGan.TIANGAN_BING || dayTG == TianGan.TIANGAN_XIN){
+            hourTg = TianGan.TIANGAN_WU
+        }
+        if(dayTG == TianGan.TIANGAN_DING || dayTG == TianGan.TIANGAN_REN){
+            hourTg = TianGan.TIANGAN_GENG
+        }
+        if(dayTG == TianGan.TIANGAN_WU || dayTG == TianGan.TIANGAN_GUI){
+            hourTg = TianGan.TIANGAN_REN
+        }
+
+        for(i in 2..hourDZSeq){
+            hourTg = getNextTG(hourTg)
+        }
+
+        println("Calcuate hour Tiangan, dayTG =$dayTG  hour=$hour ")
+        return hourTg
+    }
+
 
 }
 
