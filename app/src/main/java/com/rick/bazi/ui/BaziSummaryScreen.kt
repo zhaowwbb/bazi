@@ -437,6 +437,46 @@ fun getTaohuaCount(taohuaMap : Map<DiZhi, DiZhi>, baziInfo: BaziInfo) : Int{
     return taohuaCount
 }
 
+fun getDizhiSiCount(baziInfo: BaziInfo) : Int{
+    var count = 0
+    if(baziInfo.yearDizhi == DiZhi.DIZHI_SI){
+        count = count + 1
+    }
+
+    if(baziInfo.monthDizhi == DiZhi.DIZHI_SI){
+        count = count + 1
+    }
+
+    if(baziInfo.dayDizhi == DiZhi.DIZHI_SI){
+        count = count + 1
+    }
+
+    if(baziInfo.hourDizhi == DiZhi.DIZHI_SI){
+        count = count + 1
+    }
+    return count
+}
+
+fun getDizhiHaiCount(baziInfo: BaziInfo) : Int{
+    var count = 0
+    if(baziInfo.yearDizhi == DiZhi.DIZHI_HAI){
+        count = count + 1
+    }
+
+    if(baziInfo.monthDizhi == DiZhi.DIZHI_HAI){
+        count = count + 1
+    }
+
+    if(baziInfo.dayDizhi == DiZhi.DIZHI_HAI){
+        count = count + 1
+    }
+
+    if(baziInfo.hourDizhi == DiZhi.DIZHI_HAI){
+        count = count + 1
+    }
+    return count
+}
+
 @Composable
 fun getBaziTaohuaResult(
     baziInfo: BaziInfo,
@@ -445,6 +485,43 @@ fun getBaziTaohuaResult(
 ): String {
     val builder = StringBuilder()
     var isTaohua: Boolean = false
+
+    if(BaziUtil().isLady(baziInfo)){
+        var haiCount = getDizhiHaiCount(baziInfo)
+        if(haiCount == 1){
+            builder.append(stringResource(R.string.msg_lady_looking1))
+            builder.append("\n")
+        }
+        if(haiCount == 2){
+            builder.append(stringResource(R.string.msg_lady_looking2))
+            builder.append("\n")
+        }
+        if(haiCount == 3){
+            builder.append(stringResource(R.string.msg_lady_looking3))
+            builder.append("\n")
+        }
+        if(haiCount == 4){
+            builder.append(stringResource(R.string.msg_lady_looking4))
+            builder.append("\n")
+        }
+        var siCount = getDizhiSiCount(baziInfo)
+        if(siCount == 1){
+            builder.append(stringResource(R.string.msg_lady_se1))
+            builder.append("\n")
+        }
+        if(siCount == 2){
+            builder.append(stringResource(R.string.msg_lady_se2))
+            builder.append("\n")
+        }
+        if(siCount == 3){
+            builder.append(stringResource(R.string.msg_lady_se3))
+            builder.append("\n")
+        }
+        if(siCount == 4){
+            builder.append(stringResource(R.string.msg_lady_se4))
+            builder.append("\n")
+        }
+    }
 
     if (checkBianyeTaohua(baziInfo)) {
         builder.append(stringResource(R.string.msg_taohua_bianye))

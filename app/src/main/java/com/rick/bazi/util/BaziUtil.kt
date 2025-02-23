@@ -1211,6 +1211,12 @@ class BaziUtil {
         return hourTg
     }
 
+    fun isLady(baziInfo: BaziInfo) : Boolean{
+        if (baziInfo.gender == FEMALE) {
+            return true
+        }
+        return false
+    }
 
 }
 
