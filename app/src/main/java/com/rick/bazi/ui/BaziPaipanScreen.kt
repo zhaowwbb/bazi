@@ -69,23 +69,6 @@ fun BaziPaipanScreen(
         modifier = modifier, verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-//        val calendarStr = stringResource(R.string.app_calendar)
-//        var yearLabel = stringResource(R.string.app_label_year)
-//        var monthLabel = stringResource(R.string.app_label_month)
-//        var dayLabel = stringResource(R.string.app_label_day)
-//        var hourLabel = stringResource(R.string.app_label_hour)
-//
-//        var genderStr = MALE
-//        if (baziInfo.gender == MALE) {
-//            genderStr = stringResource(R.string.app_bazi_male)
-////            println("genderStr: $genderStr")
-//        } else {
-//            genderStr = stringResource(R.string.app_bazi_female)
-//        }
-
-//        val birthDateStr =
-//            "$calendarStr ${baziInfo.birthDateYear}$yearLabel ${baziInfo.birthDateMonth}$monthLabel ${baziInfo.birthDateDay}$dayLabel ${baziInfo.birthHour}$hourLabel  $genderStr"
-
         val birthDateStr = BaziUtil().getBirthDateLabel(baziInfo)
 
         Column(
@@ -107,7 +90,6 @@ fun BaziPaipanScreen(
                     fontSize = 26.sp,
                     text = "${birthDateStr}"
                 )
-
             }
         }
 
@@ -651,6 +633,23 @@ fun BaziPaipanScreen(
                     )
                 }
             }
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.Introduction.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_introduction),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+            }
         }
 
         Column(
@@ -668,9 +667,9 @@ fun BaziPaipanScreen(
                     modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
                 )
 
-                Divider(
-                    thickness = dimensionResource(R.dimen.thickness_divider),
-                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
+                HorizontalDivider(
+                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium)),
+                    thickness = dimensionResource(R.dimen.thickness_divider)
                 )
             }
         }

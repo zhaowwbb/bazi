@@ -31,60 +31,86 @@
     <string name="app_taohua_dayun">大运桃花</string>
     <string name="app_taohua_liunian">流年桃花</string>
     <string name="app_to">到</string>
+    <string name="app_introduction">应用介绍</string>
 
     <string name="version_introduction">第一次开始安卓开发是2015年，完全是个人兴趣，不是工作需要，那时候还是用Java，十年之后，一时兴起，想把最近学到的八字知识做个手机应用玩玩，可一动手，才发现安卓开发早已沧海桑田，要使用新语言Kotlin，发布流程也完全不一样了，从零开始，重新上路，花了1个月的时间，搞出来这个八字应用，一路上遇到的技术问题不少，不过好在是坚持走过来了，不知道这次的开发激情能持续多长时间，一切看缘分。</string>
-    <string name="bazi_version_1">1. 2025年2月8日\n
-发布第一个内侧版本\n
-（1）能够计算八字信息</string>
-    <string name="bazi_version_2">2. 2025年2月16日 \n
-发布第一个正式版本\n
-（1）增加八字十神信息\n
-（2）增加地支藏干信息\n
-（3）增加桃花预测\n
-（4）计算桃花大运和桃花流年</string>
-    <string name="bazi_version_3">3. 2025年2月23日\n
-（1）修复时干计算错误，在子时会得到错误结果\n
-（2）增加日主桃花检测\n
-（3）增加登明足艳，太乙多淫检测</string>
+    <string name="app_introduction2">在八字计算方面，我做了很多测试，用这个应用的排盘结果和其他几款在线排盘软件进行比较，经过多轮的Bugfix，准确率还行。可以用这个作为工具来计算八字，时辰的时间如果不确定，就扩大范围，2个小时一个时辰，一天推算12个八字来验证那个最符合自己，最终精准定位个人八字。</string>
+    <string name="app_introduction3">桃花预测算法来源网上搜集，总结了多方资料，应该有一定的准确率，但不够精确，里面没有日主强弱判断或喜用神选择，也没有考虑刑冲克害，想要更精确的结果，还是要找专业人士，术术门派众多，八字子平，盲派，紫微斗数，铁板神数，面相，手相，占星，占卜，风水，六爻等等，总有一款合适你。</string>
+    <string name="app_introduction4">这个应用还是以娱乐为主，如果算的结果好，就是准，要是结果不好，就是不准，要算命，更要相信科学。</string>
+
+    <string name="bz_version_1_0">1.0</string>
+    <string name="bz_version_1_0_time">2025年2月8日</string>
+    <string name="bz_version_1_0_item1">(1)第一个内侧版本</string>
+    <string name="bz_version_1_0_item2">(2)根据阳历出生日期时间来计算八字信息</string>
+    <string name="bz_version_1_2">1.2</string>
+    <string name="bz_version_1_2_time">2025年2月16日</string>
+    <string name="bz_version_1_2_item1">(1)第一个正式版本</string>
+    <string name="bz_version_1_2_item2">(2)增加八字十神信息</string>
+    <string name="bz_version_1_2_item3">(3)增加地支藏干信息</string>
+    <string name="bz_version_1_2_item4">(4)增加桃花预测</string>
+    <string name="bz_version_1_2_item5">(5)计算桃花大运和桃花流年</string>
+    <string name="bz_version_1_3">1.3</string>
+    <string name="bz_version_1_3_time">2025年2月25日</string>
+    <string name="bz_version_1_3_item1">(1)修复时干计算错误，在子时会得到错误结果</string>
+    <string name="bz_version_1_3_item2">(2)增加日主桃花检测</string>
+    <string name="bz_version_1_3_item3">(3)增加女性登明足艳，太乙多淫检测</string>
+    <string name="bz_version_1_3_item4">(4)增加版本信息页面</string>
+    <string name="bz_version_1_3_item5">(5)增加八字用例页面</string>
 
     <string name="bazi_sample_introduction">在八字计算方面，我做了很多测试，用这个应用的排盘结果和其他几款在线排盘软件进行比较，经过多轮的Bugfix，准确率还行。可以用这个作为工具来计算八字，时辰的时间如果不确定，就扩大范围，2个小时一个时辰，一天推算12个八字来验证那个最符合自己，最终精准定位个人八字。\n 桃花预测算法来源网上搜集，总结了多方资料，应该有一定的准确率，但不够精确，里面没有日主强弱判断或喜用神选择，也没有考虑刑冲克害，想要更精确的结果，还是要找专业人士，术术门派众多，八字子平，盲派，紫微斗数，铁板神数，面相，手相，占星，占卜，风水，六爻等等，总有一款合适你。\n
 下面是一些桃花预测的用例，这个应用还是以娱乐为主，如果算的结果好，就是准，要是结果不好，就是不准，要算命，更要相信科学。</string>
     <string name="taohua_sample_label">桃花测试用例</string>
+    <string name="bazi_sample_label">八字用例</string>
 
-    <string name="taohua_sample_list">遍野桃花\n
-2011-09-12 00:00:00\n
-八字有两朵桃花\n
-1983-06-29 18:00:00\n
-1978-08-09 00:00:00\n
-裸形桃花\n
-1988-03-10 12:00:00\n
-八字有一朵桃花\n
-1988-05-10 12:00:00\n
-八字无桃花\n
-1988-07-10 12:00:00\n
-桃花劫\n
-1975年05月08日 16:36\n
-桃花杀\n
-2026年05月13日 06:36\n
-正官桃花\n
-2026年03月11日 06:36\n
-墙外桃花\n
-2026年03月13日 06:36\n
-墙内桃花\n
-2026年03月13日 09:36\n
-桃花刃\n
-2026年04月16日 18:36\n
-裸形桃花\n
-2024年06月29日 18:36\n
-滚浪桃花\n
-2016年04月24日 6:36\n
-日主桃花\n
-2025年10月9日 11:36\n
-登明足艳 1亥\n
-1971-05-11 00:00:00\n
-登明足艳 2亥\n
-1971-05-14 00:00:00\n
-登明足艳 3亥\n
+    <string name="sample_bianyetaohua_label">遍野桃花</string>
+    <string name="sample_bianyetaohua_date">2011年09月12日 00:00:00</string>
+    <string name="sample_1taohua_label">八字一朵桃花</string>
+    <string name="sample_1taohua_date">1988年05月10日 12:00:00</string>
+    <string name="sample_2taohua_label">八字两朵桃花</string>
+    <string name="sample_2taohua_date">1983年06月29日 18:00:00</string>
+    <string name="sample_0taohua_label">八字无桃花</string>
+    <string name="sample_0taohua_date">1988年07月10日 12:00:00</string>
+    <string name="sample_luoxingtaohua_label">裸形桃花</string>
+    <string name="sample_luoxingtaohua_date">1988年03月10日 12:00:00</string>
+    <string name="sample_taohuajie_label">桃花劫</string>
+    <string name="sample_taohuajie_date">1975年05月08日 16:36:00</string>
+    <string name="sample_taohuasha_label">桃花杀</string>
+    <string name="sample_taohuasha_date">2026年05月13日 06:36:00</string>
+
+    <string name="sample_zhengguantaohua_label">正官桃花</string>
+    <string name="sample_zhengguantaohua_date">2026年03月11日 06:36:00</string>
+    <string name="sample_qiangwaitaohua_label">墙外桃花</string>
+    <string name="sample_qiangwaitaohua_date">2026年03月13日 06:36:00</string>
+    <string name="sample_qiangneitaohua_label">墙内桃花</string>
+    <string name="sample_qiangneitaohua_date">2026年03月13日 09:36:00</string>
+    <string name="sample_taohuaren_label">桃花刃</string>
+    <string name="sample_taohuaren_date">2026年04月16日 18:36:00</string>
+    <string name="sample_taohuagunlang_label">滚浪桃花</string>
+    <string name="sample_taohuagunlang_date">2016年04月24日 6:36:00</string>
+    <string name="sample_taohuarizhu_label">日主桃花</string>
+    <string name="sample_taohuarizhu_date">2025年10月9日 11:36:00</string>
+    <string name="sample_jueyanhai1_label">登明足艳 1亥</string>
+    <string name="sample_jueyanhai1_date">1971年05月11日 00:00:00</string>
+    <string name="sample_jueyanhai2_label">登明足艳 2亥</string>
+    <string name="sample_jueyanhai2_date">1971年05月14日 00:00:00</string>
+    <string name="sample_jueyanhai3_label">登明足艳 3亥</string>
+    <string name="sample_jueyanhai3_date">1971年11月10日 00:00:00</string>
+    <string name="sample_jueyanhai4_label">登明足艳 4亥</string>
+    <string name="sample_jueyanhai4_date">2031年12月1日 22:00:00</string>
+
+    <string name="sample_taiyiduoyinsi1_label">太乙多淫 1巳</string>
+    <string name="sample_taiyiduoyinsi1_date">2025年3月2日 00:00:00</string>
+    <string name="sample_taiyiduoyinsi2_label">太乙多淫 2巳</string>
+    <string name="sample_taiyiduoyinsi2_date">2025年3月1日 00:00:00</string>
+    <string name="sample_taiyiduoyinsi3_label">太乙多淫 3巳</string>
+    <string name="sample_taiyiduoyinsi3_date">2025年6月5日 00:00:00</string>
+    <string name="sample_taiyiduoyinsi4_label">太乙多淫 4巳</string>
+    <string name="sample_taiyiduoyinsi4_date">2025年6月5日 10:00:00</string>
+    <string name="sample_dmjy_3hai1si_label">登明足艳 太乙多淫 3亥1巳</string>
+    <string name="sample_dmjy_3hai1si_date">2031年12月1日 10:00:00</string>
+
+    <string name="taohua_sample_list">
+
 1971-11-10 00:00:00\n
 登明足艳 4亥\n
 2031-12-1 22:00:00\n

@@ -32,6 +32,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rick.bazi.data.DataSource
+import com.rick.bazi.ui.BaziAppIntroductionScreen
 import com.rick.bazi.ui.BaziPaipanScreen
 import com.rick.bazi.ui.BaziSampleScreen
 import com.rick.bazi.ui.BaziStartScreen
@@ -44,6 +45,7 @@ enum class BaziScreen(@StringRes val title: Int) {
     Paipan(title = R.string.app_bazi_paipan),
     Sample(title = R.string.app_bazi_sample),
     Version(title = R.string.app_bazi_version),
+    Introduction(title = R.string.app_introduction),
     Summary(title = R.string.app_bazi_result)
 }
 
@@ -164,6 +166,18 @@ fun BaziApp(
             composable(route = BaziScreen.Version.name) {
                 val context = LocalContext.current
                 BaziVersionScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    baziInfo = baziUIInfo,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = BaziScreen.Introduction.name) {
+                BaziAppIntroductionScreen(
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(baziModel, navController)
                     },

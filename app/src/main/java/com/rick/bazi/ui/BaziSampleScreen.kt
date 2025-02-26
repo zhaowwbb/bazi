@@ -33,6 +33,36 @@ fun BaziSampleScreen(
     baziInfo: BaziInfo,
     modifier: Modifier = Modifier
 ) {
+
+    data class BaziSample(val nameId: Int, val baziDateStrId: Int)
+
+    val samples = listOf(
+        BaziSample(R.string.sample_bianyetaohua_label, R.string.sample_bianyetaohua_date),
+        BaziSample(R.string.sample_0taohua_label, R.string.sample_0taohua_date),
+        BaziSample(R.string.sample_1taohua_label, R.string.sample_1taohua_date),
+        BaziSample(R.string.sample_2taohua_label, R.string.sample_2taohua_date),
+        BaziSample(R.string.sample_luoxingtaohua_label, R.string.sample_luoxingtaohua_date),
+        BaziSample(R.string.sample_taohuajie_label, R.string.sample_taohuajie_date),
+        BaziSample(R.string.sample_taohuasha_label, R.string.sample_taohuasha_date),
+
+        BaziSample(R.string.sample_zhengguantaohua_label, R.string.sample_zhengguantaohua_date),
+        BaziSample(R.string.sample_qiangwaitaohua_label, R.string.sample_qiangwaitaohua_date),
+        BaziSample(R.string.sample_qiangneitaohua_label, R.string.sample_qiangneitaohua_date),
+        BaziSample(R.string.sample_taohuaren_label, R.string.sample_taohuaren_date),
+        BaziSample(R.string.sample_taohuagunlang_label, R.string.sample_taohuagunlang_date),
+        BaziSample(R.string.sample_taohuarizhu_label, R.string.sample_taohuarizhu_date),
+        BaziSample(R.string.sample_jueyanhai1_label, R.string.sample_jueyanhai1_date),
+        BaziSample(R.string.sample_jueyanhai2_label, R.string.sample_jueyanhai2_date),
+        BaziSample(R.string.sample_jueyanhai3_label, R.string.sample_jueyanhai3_date),
+        BaziSample(R.string.sample_jueyanhai4_label, R.string.sample_jueyanhai4_date),
+
+        BaziSample(R.string.sample_taiyiduoyinsi1_label, R.string.sample_taiyiduoyinsi1_date),
+        BaziSample(R.string.sample_taiyiduoyinsi2_label, R.string.sample_taiyiduoyinsi2_date),
+        BaziSample(R.string.sample_taiyiduoyinsi3_label, R.string.sample_taiyiduoyinsi3_date),
+        BaziSample(R.string.sample_taiyiduoyinsi4_label, R.string.sample_taiyiduoyinsi4_date),
+        BaziSample(R.string.sample_dmjy_3hai1si_label, R.string.sample_dmjy_3hai1si_date)
+    )
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
@@ -42,21 +72,21 @@ fun BaziSampleScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier
-                    .padding(5.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineMedium,
-                    text = stringResource(R.string.bazi_sample_introduction)
-                )
-            }
+//            Row(
+//                modifier = Modifier
+//                    .padding(5.dp)
+//                    .fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    textAlign = TextAlign.Left,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+//                    style = MaterialTheme.typography.headlineMedium,
+//                    text = stringResource(R.string.bazi_sample_introduction)
+//                )
+//            }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -69,11 +99,11 @@ fun BaziSampleScreen(
                 modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    textAlign = TextAlign.Left,
+                    textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
                     style = MaterialTheme.typography.headlineLarge,
-                    text = stringResource(R.string.taohua_sample_label)
+                    text = stringResource(R.string.app_bazi_sample)
                 )
             }
 
@@ -84,17 +114,51 @@ fun BaziSampleScreen(
                 HorizontalDivider(thickness = 2.dp)
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineSmall,
-                    text = stringResource(R.string.taohua_sample_list)
-                )
+            samples.forEach { sample ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        style = MaterialTheme.typography.headlineSmall,
+                        text = stringResource(sample.nameId)
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        style = MaterialTheme.typography.headlineSmall,
+                        text = stringResource(sample.baziDateStrId)
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    HorizontalDivider(thickness = 2.dp)
+                }
             }
+
+
+//            Row(
+//                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    textAlign = TextAlign.Left,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+//                    style = MaterialTheme.typography.headlineSmall,
+//                    text = stringResource(R.string.taohua_sample_list)
+//                )
+//            }
         }
 
         Column(

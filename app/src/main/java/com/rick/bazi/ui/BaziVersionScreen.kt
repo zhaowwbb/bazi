@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,72 +34,93 @@ fun BaziVersionScreen(
     baziInfo: BaziInfo,
     modifier: Modifier = Modifier
 ) {
+    data class Version(val versionId: Int, val releaseDateId: Int, val releaseDetails: List<Int>)
+
+    val versions = listOf(
+        Version(
+            R.string.bz_version_1_0,
+            R.string.bz_version_1_0_time,
+            listOf(R.string.bz_version_1_0_item1, R.string.bz_version_1_0_item2)
+        ),
+        Version(
+            R.string.bz_version_1_2,
+            R.string.bz_version_1_2_time,
+            listOf(
+                R.string.bz_version_1_2_item1,
+                R.string.bz_version_1_2_item2,
+                R.string.bz_version_1_2_item3,
+                R.string.bz_version_1_2_item4,
+                R.string.bz_version_1_2_item5
+            )
+        ),
+        Version(
+            R.string.bz_version_1_3,
+            R.string.bz_version_1_3_time,
+            listOf(
+                R.string.bz_version_1_3_item1,
+                R.string.bz_version_1_3_item2,
+                R.string.bz_version_1_3_item3,
+                R.string.bz_version_1_3_item4,
+                R.string.bz_version_1_3_item5
+            )
+        )
+    )
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier
-                    .padding(5.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineMedium,
-                    text = stringResource(R.string.version_introduction)
-                )
+        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
+            versions.forEach { version ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    HorizontalDivider(thickness = 2.dp)
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        style = MaterialTheme.typography.headlineMedium,
+                        text = stringResource(version.versionId)
+                    )
+                    Text(
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        style = MaterialTheme.typography.headlineSmall,
+                        text = stringResource(version.releaseDateId)
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    HorizontalDivider(thickness = 2.dp)
+                }
+                version.releaseDetails.forEach { detail ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            textAlign = TextAlign.Left,
+                            modifier = Modifier.weight(1f),
+                            fontWeight = FontWeight(500),
+                            style = MaterialTheme.typography.headlineSmall,
+                            text = stringResource(detail)
+                        )
+                    }
+                }
             }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                HorizontalDivider(thickness = 2.dp)
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineSmall,
-                    text = stringResource(R.string.bazi_version_1)
-                )
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineSmall,
-                    text = stringResource(R.string.bazi_version_2)
-                )
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineSmall,
-                    text = stringResource(R.string.bazi_version_3)
-                )
-            }
-
         }
 
         Column(
