@@ -37,6 +37,7 @@ import com.rick.bazi.ui.BaziPaipanScreen
 import com.rick.bazi.ui.BaziSampleScreen
 import com.rick.bazi.ui.BaziStartScreen
 import com.rick.bazi.ui.BaziSummaryScreen
+import com.rick.bazi.ui.BaziTianKeDiChongScreen
 import com.rick.bazi.ui.BaziVersionScreen
 import com.rick.bazi.ui.BaziViewModel
 
@@ -46,6 +47,7 @@ enum class BaziScreen(@StringRes val title: Int) {
     Sample(title = R.string.app_bazi_sample),
     Version(title = R.string.app_bazi_version),
     Introduction(title = R.string.app_introduction),
+    TianKeDiChong(title = R.string.bazi_tkdc),
     Summary(title = R.string.app_bazi_result)
 }
 
@@ -178,6 +180,18 @@ fun BaziApp(
             }
             composable(route = BaziScreen.Introduction.name) {
                 BaziAppIntroductionScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    baziInfo = baziUIInfo,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = BaziScreen.TianKeDiChong.name) {
+                BaziTianKeDiChongScreen(
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(baziModel, navController)
                     },

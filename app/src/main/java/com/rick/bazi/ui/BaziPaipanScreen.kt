@@ -604,6 +604,17 @@ fun BaziPaipanScreen(
                         fontSize = 22.sp,
                     )
                 }
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.TianKeDiChong.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.bazi_tkdc),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
             }
             Row(
                 modifier = Modifier.padding(5.dp),

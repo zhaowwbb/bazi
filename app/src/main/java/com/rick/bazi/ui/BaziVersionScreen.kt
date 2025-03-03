@@ -63,6 +63,14 @@ fun BaziVersionScreen(
                 R.string.bz_version_1_3_item4,
                 R.string.bz_version_1_3_item5
             )
+        ),
+        Version(
+            R.string.bz_version_1_4,
+            R.string.bz_version_1_4_time,
+            listOf(
+                R.string.bz_version_1_4_item1,
+                R.string.bz_version_1_4_item2
+            )
         )
     )
 

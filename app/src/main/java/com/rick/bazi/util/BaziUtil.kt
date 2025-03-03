@@ -1218,5 +1218,357 @@ class BaziUtil {
         return false
     }
 
+    fun isTianKeDiChong(tg1 : TianGan, dz1 : DiZhi, tg2 : TianGan, dz2 : DiZhi) : Boolean{
+        var ret = false
+
+        //6 Jia
+        if(tg1 == TianGan.TIANGAN_JIA){
+            if(dz1 == DiZhi.DIZHI_ZI){
+                if(tg2 == TianGan.TIANGAN_GENG && dz2 == DiZhi.DIZHI_WU){
+                    return true
+                }
+            }
+            if(dz1 == DiZhi.DIZHI_XU){
+                if(tg2 == TianGan.TIANGAN_GENG && dz2 == DiZhi.DIZHI_CHEN){
+                    return true
+                }
+            }
+            if(dz1 == DiZhi.DIZHI_SHEN){
+                if(tg2 == TianGan.TIANGAN_GENG && dz2 == DiZhi.DIZHI_YIN){
+                    return true
+                }
+            }
+            if(dz1 == DiZhi.DIZHI_WU){
+                if(tg2 == TianGan.TIANGAN_GENG && dz2 == DiZhi.DIZHI_ZI){
+                    return true
+                }
+            }
+            if(dz1 == DiZhi.DIZHI_CHEN){
+                if(tg2 == TianGan.TIANGAN_GENG && dz2 == DiZhi.DIZHI_XU){
+                    return true
+                }
+            }
+            if(dz1 == DiZhi.DIZHI_YIN){
+                if(tg2 == TianGan.TIANGAN_GENG && dz2 == DiZhi.DIZHI_SHEN){
+                    return true
+                }
+            }
+        }
+
+        //6 Yi
+        if(tg1 == TianGan.TIANGAN_YI) {
+            if (dz1 == DiZhi.DIZHI_CHOU) {
+                if (tg2 == TianGan.TIANGAN_XIN && dz2 == DiZhi.DIZHI_WEI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_HAI) {
+                if (tg2 == TianGan.TIANGAN_XIN && dz2 == DiZhi.DIZHI_SI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_YOU) {
+                if (tg2 == TianGan.TIANGAN_XIN && dz2 == DiZhi.DIZHI_MOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_WEI) {
+                if (tg2 == TianGan.TIANGAN_XIN && dz2 == DiZhi.DIZHI_CHOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_SI) {
+                if (tg2 == TianGan.TIANGAN_XIN && dz2 == DiZhi.DIZHI_HAI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_MOU) {
+                if (tg2 == TianGan.TIANGAN_XIN && dz2 == DiZhi.DIZHI_YOU) {
+                    return true
+                }
+            }
+        }
+
+        //6 Bing
+        if(tg1 == TianGan.TIANGAN_BING) {
+            if (dz1 == DiZhi.DIZHI_YIN) {
+                if (tg2 == TianGan.TIANGAN_GUI && dz2 == DiZhi.DIZHI_YOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_ZI) {
+                if (tg2 == TianGan.TIANGAN_REN && dz2 == DiZhi.DIZHI_WU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_XU) {
+                if (tg2 == TianGan.TIANGAN_REN && dz2 == DiZhi.DIZHI_CHEN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_SHEN) {
+                if (tg2 == TianGan.TIANGAN_REN && dz2 == DiZhi.DIZHI_YIN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_WU) {
+                if (tg2 == TianGan.TIANGAN_REN && dz2 == DiZhi.DIZHI_ZI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_CHEN) {
+                if (tg2 == TianGan.TIANGAN_REN && dz2 == DiZhi.DIZHI_XU) {
+                    return true
+                }
+            }
+        }
+
+        //6 Ding
+        if(tg1 == TianGan.TIANGAN_DING) {
+            if (dz1 == DiZhi.DIZHI_MOU) {
+                if (tg2 == TianGan.TIANGAN_REN && dz2 == DiZhi.DIZHI_SHEN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_CHOU) {
+                if (tg2 == TianGan.TIANGAN_GUI && dz2 == DiZhi.DIZHI_WEI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_HAI) {
+                if (tg2 == TianGan.TIANGAN_GUI && dz2 == DiZhi.DIZHI_SI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_YOU) {
+                if (tg2 == TianGan.TIANGAN_GUI && dz2 == DiZhi.DIZHI_MOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_WEI) {
+                if (tg2 == TianGan.TIANGAN_GUI && dz2 == DiZhi.DIZHI_CHOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_SI) {
+                if (tg2 == TianGan.TIANGAN_GUI && dz2 == DiZhi.DIZHI_HAI) {
+                    return true
+                }
+            }
+        }
+
+        //6 Wu
+        if(tg1 == TianGan.TIANGAN_WU) {
+            if (dz1 == DiZhi.DIZHI_CHEN) {
+                if (tg2 == TianGan.TIANGAN_JIA && dz2 == DiZhi.DIZHI_XU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_YIN) {
+                if (tg2 == TianGan.TIANGAN_JIA && dz2 == DiZhi.DIZHI_SHEN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_ZI) {
+                if (tg2 == TianGan.TIANGAN_JIA && dz2 == DiZhi.DIZHI_WU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_XU) {
+                if (tg2 == TianGan.TIANGAN_JIA && dz2 == DiZhi.DIZHI_CHEN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_SHEN) {
+                if (tg2 == TianGan.TIANGAN_JIA && dz2 == DiZhi.DIZHI_YIN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_WU) {
+                if (tg2 == TianGan.TIANGAN_JIA && dz2 == DiZhi.DIZHI_ZI) {
+                    return true
+                }
+            }
+        }
+
+        //6 Ji
+        if(tg1 == TianGan.TIANGAN_JI) {
+            if (dz1 == DiZhi.DIZHI_SI) {
+                if (tg2 == TianGan.TIANGAN_YI && dz2 == DiZhi.DIZHI_HAI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_MOU) {
+                if (tg2 == TianGan.TIANGAN_YI && dz2 == DiZhi.DIZHI_YOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_CHOU) {
+                if (tg2 == TianGan.TIANGAN_YI && dz2 == DiZhi.DIZHI_WEI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_HAI) {
+                if (tg2 == TianGan.TIANGAN_YI && dz2 == DiZhi.DIZHI_SI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_YOU) {
+                if (tg2 == TianGan.TIANGAN_YI && dz2 == DiZhi.DIZHI_MOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_WEI) {
+                if (tg2 == TianGan.TIANGAN_YI && dz2 == DiZhi.DIZHI_CHOU) {
+                    return true
+                }
+            }
+        }
+
+        //6 Geng
+        if(tg1 == TianGan.TIANGAN_GENG) {
+            if (dz1 == DiZhi.DIZHI_WU) {
+                if (tg2 == TianGan.TIANGAN_BING && dz2 == DiZhi.DIZHI_ZI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_CHEN) {
+                if (tg2 == TianGan.TIANGAN_BING && dz2 == DiZhi.DIZHI_XU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_YIN) {
+                if (tg2 == TianGan.TIANGAN_BING && dz2 == DiZhi.DIZHI_SHEN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_ZI) {
+                if (tg2 == TianGan.TIANGAN_BING && dz2 == DiZhi.DIZHI_WU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_XU) {
+                if (tg2 == TianGan.TIANGAN_BING && dz2 == DiZhi.DIZHI_CHEN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_SHEN) {
+                if (tg2 == TianGan.TIANGAN_DING && dz2 == DiZhi.DIZHI_MOU) {
+                    return true
+                }
+            }
+        }
+
+        //6 Xin
+        if(tg1 == TianGan.TIANGAN_XIN) {
+            if (dz1 == DiZhi.DIZHI_WEI) {
+                if (tg2 == TianGan.TIANGAN_DING && dz2 == DiZhi.DIZHI_CHOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_SI) {
+                if (tg2 == TianGan.TIANGAN_DING && dz2 == DiZhi.DIZHI_HAI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_MOU) {
+                if (tg2 == TianGan.TIANGAN_DING && dz2 == DiZhi.DIZHI_YOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_CHOU) {
+                if (tg2 == TianGan.TIANGAN_DING && dz2 == DiZhi.DIZHI_WEI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_HAI) {
+                if (tg2 == TianGan.TIANGAN_DING && dz2 == DiZhi.DIZHI_SI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_YOU) {
+                if (tg2 == TianGan.TIANGAN_BING && dz2 == DiZhi.DIZHI_YIN) {
+                    return true
+                }
+            }
+        }
+
+        //6 Ren
+        if(tg1 == TianGan.TIANGAN_REN) {
+            if (dz1 == DiZhi.DIZHI_SHEN) {
+                if (tg2 == TianGan.TIANGAN_WU && dz2 == DiZhi.DIZHI_YIN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_WU) {
+                if (tg2 == TianGan.TIANGAN_WU && dz2 == DiZhi.DIZHI_ZI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_CHEN) {
+                if (tg2 == TianGan.TIANGAN_WU && dz2 == DiZhi.DIZHI_XU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_YIN) {
+                if (tg2 == TianGan.TIANGAN_WU && dz2 == DiZhi.DIZHI_SHEN) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_ZI) {
+                if (tg2 == TianGan.TIANGAN_WU && dz2 == DiZhi.DIZHI_WU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_XU) {
+                if (tg2 == TianGan.TIANGAN_WU && dz2 == DiZhi.DIZHI_CHEN) {
+                    return true
+                }
+            }
+        }
+
+        //6 Gui
+        if(tg1 == TianGan.TIANGAN_GUI) {
+            if (dz1 == DiZhi.DIZHI_YOU) {
+                if (tg2 == TianGan.TIANGAN_JI && dz2 == DiZhi.DIZHI_MOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_WEI) {
+                if (tg2 == TianGan.TIANGAN_JI && dz2 == DiZhi.DIZHI_CHOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_SI) {
+                if (tg2 == TianGan.TIANGAN_JI && dz2 == DiZhi.DIZHI_HAI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_MOU) {
+                if (tg2 == TianGan.TIANGAN_JI && dz2 == DiZhi.DIZHI_YOU) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_CHOU) {
+                if (tg2 == TianGan.TIANGAN_JI && dz2 == DiZhi.DIZHI_WEI) {
+                    return true
+                }
+            }
+            if (dz1 == DiZhi.DIZHI_HAI) {
+                if (tg2 == TianGan.TIANGAN_JI && dz2 == DiZhi.DIZHI_SI) {
+                    return true
+                }
+            }
+        }
+        return ret
+    }
+
+//    fun isDizhiChong(dz1 : DiZhi, dz2 : DiZhi) : Boolean{
+//        var ret = false
+//
+//
+//        return ret
+//    }
+
 }
 

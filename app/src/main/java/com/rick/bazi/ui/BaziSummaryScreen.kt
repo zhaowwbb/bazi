@@ -829,7 +829,8 @@ fun checkGunlangTaohua(baziInfo: BaziInfo): Boolean {
 
 @Composable
 fun getTaohuaIntroduction(): String {
-    return stringResource(R.string.msg_taohua_intro)
+//    return stringResource(R.string.msg_taohua_intro)
+    return stringResource(R.string.msg_taohua_brief)
 }
 
 fun checkRizhuTaohua(baziInfo: BaziInfo): Boolean {
