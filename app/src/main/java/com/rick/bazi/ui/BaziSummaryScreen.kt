@@ -44,8 +44,6 @@ fun BaziSummaryScreen(
     baziInfo: BaziInfo,
     modifier: Modifier = Modifier
 ) {
-    val resources = LocalContext.current.resources
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
@@ -294,15 +292,7 @@ fun BaziSummaryScreen(
                     .selectableGroup()
 //                .padding(all = 10.dp)
             ) {
-                Divider(
-                    thickness = dimensionResource(R.dimen.thickness_divider),
-                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
-                )
-
-                Divider(
-                    thickness = dimensionResource(R.dimen.thickness_divider),
-                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
-                )
+                HorizontalDivider(thickness = 2.dp)
             }
         }
     }

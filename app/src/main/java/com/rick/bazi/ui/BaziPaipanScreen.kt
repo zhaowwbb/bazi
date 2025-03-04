@@ -42,6 +42,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rick.bazi.BaziScreen
 import com.rick.bazi.R
 import com.rick.bazi.data.BaziInfo
+import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.MALE
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.util.getTianganStr
@@ -50,6 +51,11 @@ import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.DateUtils
 
+
+data class DayunRecord(
+    val dyLabel: String,
+    val dyAgeLabel: String
+)
 
 @Composable
 fun BaziPaipanScreen(
@@ -106,14 +112,9 @@ fun BaziPaipanScreen(
         }
 
         var liunianBase: Int = BaziUtil().getTodayCyclicalYearBase()
-
         var liunianTgStr = BaziUtil().getTianGanLabel(BaziUtil().getTianGan(liunianBase))
         var liunianDzStr = BaziUtil().getDizhiLabel(BaziUtil().getDiZhi(liunianBase))
-
         var liunianStr = stringResource(R.string.bazi_liunian)
-
-        var liunianLabel = "$liunianStr $liunianTgStr$liunianDzStr"
-
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -500,38 +501,10 @@ fun BaziPaipanScreen(
                 monthOffset = 4
             }
 
-
             var dayunLabelStr = "$dayunLabel  $afterBirthStr $yearOffset$yearLabelStr $monthOffset$monthLabelStr  $startDayunStr"
 
             baziModel.setDayunForward(dayunForward)
             baziModel.setDayunDays(days)
-            var dayunStartYear = BaziUtil().getDayunStartYear(baziInfo.birthDateYear, days)
-            var yearOffet = BaziUtil().getDayunStartOffset(days)
-
-            var dayunLabelOne = BaziUtil().getDayunLabelList(
-                baziInfo.gender,
-                baziInfo.yearDizhi,
-                baziInfo.monthBase,
-                1,
-                5,
-                dayunStartYear,
-                yearOffet,
-                0,
-                0,
-                0
-            )
-            var dayunLabelTwo = BaziUtil().getDayunLabelList(
-                baziInfo.gender,
-                baziInfo.yearDizhi,
-                baziInfo.monthBase,
-                6,
-                10,
-                dayunStartYear,
-                yearOffet,
-                0,
-                0,
-                0
-            )
 
             Row(
                 modifier = Modifier.padding(5.dp),
@@ -547,27 +520,40 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "$dayunLabelOne",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
+
+            var records = getDayunList(baziInfo)
+
+            records.forEach { record ->
+
+                Row(
+                    modifier = Modifier.padding(5.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = record.dyLabel,
+                        textAlign = TextAlign.Left,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
 //                    color = Color.Magenta,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Text(
-                    text = "$dayunLabelTwo",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.padding(5.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = record.dyAgeLabel,
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
 //                    color = Color.Magenta,
-                    style = MaterialTheme.typography.headlineSmall
-                )
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
             }
         }
 
@@ -579,7 +565,7 @@ fun BaziPaipanScreen(
             Row(
                 modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 3.dp)
+                HorizontalDivider(thickness = 2.dp)
             }
         }
 
@@ -673,15 +659,7 @@ fun BaziPaipanScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Divider(
-                    thickness = dimensionResource(R.dimen.thickness_divider),
-                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
-                )
-
-                HorizontalDivider(
-                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium)),
-                    thickness = dimensionResource(R.dimen.thickness_divider)
-                )
+                HorizontalDivider(thickness = 2.dp)
             }
         }
         Column(
@@ -753,4 +731,54 @@ fun BaziPaipanPreview() {
             modifier = Modifier.fillMaxHeight()
         )
     }
+}
+
+@Composable
+fun getDayunList(baziInfo: BaziInfo) : MutableList<DayunRecord>{
+    var records: MutableList<DayunRecord> = arrayListOf()
+    var startIndex = 1
+    var endIndex = 10
+    var base = baziInfo.monthBase
+    var tg = TianGan.TIANGAN_JIA
+    var dz = DiZhi.DIZHI_ZI
+    var builder = StringBuilder()
+    var days = baziInfo.dayunDays
+    var dayunStartYear = BaziUtil().getDayunStartYear(baziInfo.birthDateYear, days)
+    var isDYForward = baziInfo.dayunForward
+    var yearOffet = BaziUtil().getDayunStartOffset(days)
+    var labelstr = ""
+    var ageStr = ""
+    for (i in startIndex..endIndex) {
+        if(isDYForward){
+            base = baziInfo.monthBase + i
+        }else{
+            base = baziInfo.monthBase - i
+        }
+        tg = BaziUtil().getTianganFromBase(base)
+        dz = BaziUtil().getDizhiFromBase(base)
+        builder = StringBuilder()
+        builder.append(BaziUtil().getTianGanLabel(tg))
+        builder.append(BaziUtil().getDizhiLabel(dz))
+        builder.append("(")
+        builder.append(stringResource(R.string.bazi_tkdc_dayun))
+        builder.append(")")
+        builder.append(" ")
+
+        builder.append(dayunStartYear + (i - 1) * 10)
+        builder.append(stringResource(R.string.app_to))
+        builder.append(dayunStartYear + (i - 1) * 10 + 9)
+
+        labelstr = builder.toString()
+
+        builder = StringBuilder()
+        builder.append((i - 1) * 10 + yearOffet + 1)
+        builder.append(stringResource(R.string.app_to))
+        builder.append((i - 1) * 10 + yearOffet + 10)
+        builder.append(stringResource(R.string.age_unit))
+
+        ageStr = builder.toString()
+        val r = DayunRecord(labelstr, ageStr)
+        records.add(r)
+    }
+    return records
 }

@@ -1218,7 +1218,7 @@ class BaziUtil {
         return false
     }
 
-    fun isTianKeDiChong(tg1 : TianGan, dz1 : DiZhi, tg2 : TianGan, dz2 : DiZhi) : Boolean{
+    fun isTianKeDiChongOneway(tg1 : TianGan, dz1 : DiZhi, tg2 : TianGan, dz2 : DiZhi) : Boolean{
         var ret = false
 
         //6 Jia
@@ -1563,12 +1563,42 @@ class BaziUtil {
         return ret
     }
 
-//    fun isDizhiChong(dz1 : DiZhi, dz2 : DiZhi) : Boolean{
-//        var ret = false
-//
-//
-//        return ret
-//    }
+    fun isTianKeDiChong(tg1 : TianGan, dz1 : DiZhi, tg2 : TianGan, dz2 : DiZhi) : Boolean {
+        var ret = false
+        if(isTianKeDiChongOneway(tg1, dz1, tg2, dz2) || isTianKeDiChongOneway(tg2, dz2, tg1, dz1)){
+            return true
+        }
+        return ret
+    }
+
+    fun getTianganFromBase(baseNum : Int) : TianGan{
+        var tg = TianGan.TIANGAN_JIA
+        var base = baseNum
+        var dayunTG = 0
+        if (base < 60) {
+            base = base + 60
+        }
+        base = base % 60
+
+        dayunTG = base % 10
+        tg = tgLookupMap.get(dayunTG)!!
+        return tg
+    }
+
+    fun getDizhiFromBase(baseNum : Int) : DiZhi{
+        var dz = DiZhi.DIZHI_ZI
+        var base = baseNum
+        var dayunDZ = 0
+        if (base < 0) {
+            base = base + 60
+        }
+        base = base % 60
+        dayunDZ = base % 12
+        dz = BaziUtil().dzLookupMap.get(dayunDZ)!!
+        return dz
+    }
+
+
 
 }
 

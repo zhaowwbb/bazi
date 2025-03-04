@@ -60,7 +60,8 @@ fun BaziSampleScreen(
         BaziSample(R.string.sample_taiyiduoyinsi2_label, R.string.sample_taiyiduoyinsi2_date),
         BaziSample(R.string.sample_taiyiduoyinsi3_label, R.string.sample_taiyiduoyinsi3_date),
         BaziSample(R.string.sample_taiyiduoyinsi4_label, R.string.sample_taiyiduoyinsi4_date),
-        BaziSample(R.string.sample_dmjy_3hai1si_label, R.string.sample_dmjy_3hai1si_date)
+        BaziSample(R.string.sample_dmjy_3hai1si_label, R.string.sample_dmjy_3hai1si_date),
+        BaziSample(R.string.sample_tiankedichong_label, R.string.sample_tiankedichong_date),
     )
 
     Column(

@@ -113,6 +113,8 @@
     <string name="sample_taiyiduoyinsi4_date">2025年6月5日 10:00:00</string>
     <string name="sample_dmjy_3hai1si_label">登明足艳 太乙多淫 3亥1巳</string>
     <string name="sample_dmjy_3hai1si_date">2031年12月1日 10:00:00</string>
+    <string name="sample_tiankedichong_label">2020庚子年的天克地冲</string>
+    <string name="sample_tiankedichong_date">1983年11月14日4时30分</string>
 
     <string name="yhzp_y">渊</string>
     <string name="yhzp_h">海</string>
@@ -229,7 +231,7 @@
     <string name="bazi_tkdc_liunian">流年</string>
     <string name="bazi_tkdc_year">冲年柱，家里父母、或长辈、或本人之有灾或不顺的现象。</string>
     <string name="bazi_tkdc_month">冲月柱，兄弟姐妹有灾或也会影响本人。</string>
-    <string name="bazi_tkdc_day">冲年柱，对妻子或丈夫不利。</string>
-    <string name="bazi_tkdc_hour">冲年柱，主子女有伤。</string>
+    <string name="bazi_tkdc_day">冲日柱，对妻子或丈夫不利。</string>
+    <string name="bazi_tkdc_hour">冲时柱，主子女有伤。</string>
     <string name="bazi_tkdc_dayun_liunian">大运和流年天克地冲。</string>
 </resources>
