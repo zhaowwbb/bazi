@@ -2,6 +2,8 @@ package com.rick.bazi
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,6 +42,8 @@ import com.rick.bazi.ui.BaziSummaryScreen
 import com.rick.bazi.ui.BaziTianKeDiChongScreen
 import com.rick.bazi.ui.BaziVersionScreen
 import com.rick.bazi.ui.BaziViewModel
+import com.rick.bazi.ui.BaziDayunScreen
+import com.rick.bazi.ui.BaziYimaScreen
 
 enum class BaziScreen(@StringRes val title: Int) {
     Start(title = R.string.app_bazi_title),
@@ -48,6 +52,8 @@ enum class BaziScreen(@StringRes val title: Int) {
     Version(title = R.string.app_bazi_version),
     Introduction(title = R.string.app_introduction),
     TianKeDiChong(title = R.string.bazi_tkdc),
+    DaYun(title = R.string.app_bazi_dayun),
+    YiMa(title = R.string.app_bazi_yima),
     Summary(title = R.string.app_bazi_result)
 }
 
@@ -78,6 +84,7 @@ fun BaziAppBar(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BaziApp(
     baziModel: BaziViewModel = viewModel(),
@@ -202,6 +209,33 @@ fun BaziApp(
                     modifier = Modifier.fillMaxHeight()
                 )
             }
+            composable(route = BaziScreen.DaYun.name) {
+                BaziDayunScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    baziInfo = baziUIInfo,
+                    baziModel = baziModel,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = BaziScreen.YiMa.name) {
+                BaziYimaScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    baziInfo = baziUIInfo,
+                    baziModel = baziModel,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+
         }
     }
 }

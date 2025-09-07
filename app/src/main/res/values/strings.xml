@@ -11,6 +11,9 @@
     <string name="app_bazi_paipan">八字排盘</string>
     <string name="app_bazi_result">命理结果</string>
     <string name="app_bazi_suanming">八字分析</string>
+    <string name="app_bazi_dayun">大运</string>
+    <string name="app_bazi_10yeardayun">十年大运</string>
+    <string name="app_bazi_yima">驿马</string>
     <string name="app_bazi_sample">八字案例</string>
     <string name="app_bazi_version">版本信息</string>
     <string name="app_bazi_gender">性别</string>
@@ -26,7 +29,7 @@
     <string name="app_after_birth">出生后</string>
     <string name="app_start_dayun">起大运</string>
     <string name="age_unit">岁</string>
-    <string name="app_bazi_taohua_query">桃花查询</string>
+    <string name="app_bazi_taohua_query">桃花</string>
     <string name="app_taohua_bazi">八字桃花</string>
     <string name="app_taohua_dayun">桃花运</string>
     <string name="app_taohua_liunian">桃花年</string>

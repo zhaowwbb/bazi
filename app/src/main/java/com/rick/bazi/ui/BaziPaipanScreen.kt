@@ -473,88 +473,6 @@ fun BaziPaipanScreen(
                 HorizontalDivider(thickness = 2.dp)
             }
 
-
-            //dayun
-            var dayunLabel = stringResource(R.string.bazi_dayun)
-            var dayunForward: Boolean =
-                BaziUtil().isDayunDirectionForward(baziInfo.gender, baziInfo.yearDizhi)
-            var days = BaziUtil().getDayunStartDays(
-                baziInfo.birthDateYear,
-                baziInfo.birthDateMonth,
-                baziInfo.birthDateDay,
-                dayunForward,
-                baziInfo.birthHour,
-                baziInfo.birthMinute
-            )
-
-            var afterBirthStr = stringResource(R.string.app_after_birth)
-            var startDayunStr = stringResource(R.string.app_start_dayun)
-            var yearLabelStr = stringResource(R.string.app_label_year)
-            var monthLabelStr = stringResource(R.string.app_label_month)
-            var monthOffset = 0
-            var yearOffset = days/3
-            var remains =  days % 3
-            if(remains == 2){
-                yearOffset = yearOffset + 1
-                monthOffset = 8
-            }else if(remains == 1){
-                monthOffset = 4
-            }
-
-            var dayunLabelStr = "$dayunLabel  $afterBirthStr $yearOffset$yearLabelStr $monthOffset$monthLabelStr  $startDayunStr"
-
-            baziModel.setDayunForward(dayunForward)
-            baziModel.setDayunDays(days)
-
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "$dayunLabelStr",
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            }
-
-            var records = getDayunList(baziInfo)
-
-            records.forEach { record ->
-
-                Row(
-                    modifier = Modifier.padding(5.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = record.dyLabel,
-                        textAlign = TextAlign.Left,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-//                    color = Color.Magenta,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                }
-
-                Row(
-                    modifier = Modifier.padding(5.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = record.dyAgeLabel,
-                        textAlign = TextAlign.End,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-//                    color = Color.Magenta,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                }
-            }
         }
 
         Column(
@@ -565,7 +483,7 @@ fun BaziPaipanScreen(
             Row(
                 modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 2.dp)
+                HorizontalDivider(thickness = 5.dp)
             }
         }
 
@@ -574,6 +492,36 @@ fun BaziPaipanScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.DaYun.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_dayun),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.YiMa.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_yima),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+            }
+
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
