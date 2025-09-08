@@ -43,6 +43,57 @@ fun BaziDayunScreen(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
+        val birthDateStr = BaziUtil().getBirthDateLabel(baziInfo)
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "${birthDateStr}",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.app_bazi_dayun_intro),
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
+
+        }
+
+
         //dayun
         var dayunLabel = stringResource(R.string.app_bazi_10yeardayun)
         var dayunForward: Boolean =
@@ -70,10 +121,15 @@ fun BaziDayunScreen(
             monthOffset = 4
         }
 
-        var dayunLabelStr = "$dayunLabel  $afterBirthStr $yearOffset$yearLabelStr $monthOffset$monthLabelStr  $startDayunStr"
+        var dayunLabelStr = "$afterBirthStr $yearOffset$yearLabelStr $monthOffset$monthLabelStr  $startDayunStr"
 
         baziModel.setDayunForward(dayunForward)
         baziModel.setDayunDays(days)
+
+
+
+
+
 
         Row(
             modifier = Modifier.padding(5.dp),
@@ -82,11 +138,10 @@ fun BaziDayunScreen(
         ) {
             Text(
                 text = "$dayunLabelStr",
-                textAlign = TextAlign.Left,
+                textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f),
                 fontWeight = FontWeight(500),
-
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineMedium
             )
         }
 
@@ -113,7 +168,7 @@ fun BaziDayunScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = record.dyLabel + ' ' + record.dyAgeLabel,
+                    text = record.dyLabel + "  " + record.dyAgeLabel,
                     textAlign = TextAlign.Left,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -122,33 +177,8 @@ fun BaziDayunScreen(
                 )
             }
 
-//            Row(
-//                modifier = Modifier.padding(5.dp),
-//                horizontalArrangement = Arrangement.SpaceBetween,
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Text(
-//                    text = record.dyAgeLabel,
-//                    textAlign = TextAlign.End,
-//                    modifier = Modifier.weight(1f),
-//                    fontWeight = FontWeight(500),
-////                    color = Color.Magenta,
-//                    style = MaterialTheme.typography.headlineSmall
-//                )
-//            }
         }
 
-//        Column(
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center,
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Row(
-//                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                HorizontalDivider(thickness = 2.dp)
-//            }
-//        }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

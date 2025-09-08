@@ -53,8 +53,22 @@ fun BaziYimaScreen(
         ) {
 
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = BaziUtil().getBirthDateLabel(baziInfo),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
                 HorizontalDivider(thickness = 2.dp)
             }
@@ -80,7 +94,20 @@ fun BaziYimaScreen(
             ) {
                 HorizontalDivider(thickness = 2.dp)
             }
-
+            //bazi
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.app_bazi_yima_bazi),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -99,6 +126,21 @@ fun BaziYimaScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 HorizontalDivider(thickness = 2.dp)
+            }
+            //dayun
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.app_bazi_yima_dayun),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineMedium
+                )
             }
 
             var records = getDayunHorseList(baziInfo)
@@ -119,12 +161,26 @@ fun BaziYimaScreen(
                     )
                 }
             }
-
+            //Liunian
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 HorizontalDivider(thickness = 2.dp)
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.app_bazi_yima_liunian),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    style = MaterialTheme.typography.headlineMedium
+                )
             }
 
             var liunianHorseRecords = getLiunianHorseList(baziInfo)
@@ -307,6 +363,11 @@ fun getHorseString(baziInfo: BaziInfo) : String {
         builder.append("\n")
     }
 
+    if(builder.length == 0){
+        builder.append(stringResource(R.string.app_bazi_yima_no))
+        builder.append("\n")
+    }
+
     return builder.toString()
 }
 
@@ -405,10 +466,6 @@ fun getLiunianHorseList(baziInfo: BaziInfo) : MutableList<DayunRecord>{
     var dz = baziInfo.yearDizhi
     var builder = StringBuilder()
 
-//    var days = baziInfo.dayunDays
-//    var dayunStartYear = BaziUtil().getDayunStartYear(baziInfo.birthDateYear, days)
-//    var isDYForward = baziInfo.dayunForward
-//    var yearOffet = BaziUtil().getDayunStartOffset(days)
     var labelstr = ""
     var ageStr = ""
     for (i in startIndex..endIndex) {
@@ -424,9 +481,6 @@ fun getLiunianHorseList(baziInfo: BaziInfo) : MutableList<DayunRecord>{
         builder.append(" ")
 
         builder.append(year + i)
-//        builder.append(stringResource(R.string.app_to))
-//        builder.append(dayunStartYear + (i - 1) * 10 + 9)
-
         builder.append(" ")
 
         builder.append(getDayunHorseString(baziInfo, dz))

@@ -81,19 +81,6 @@ fun BaziSummaryScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = BaziUtil().getTitleLable(baziInfo),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineMedium
-                )
-            }
 
             Row(
                 modifier = Modifier.padding(5.dp),
@@ -109,6 +96,13 @@ fun BaziSummaryScreen(
                 )
             }
 
+            //bazi
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -136,7 +130,14 @@ fun BaziSummaryScreen(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
 
+            //dayun
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -164,7 +165,14 @@ fun BaziSummaryScreen(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
 
+            //liunian
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -192,21 +200,15 @@ fun BaziSummaryScreen(
                     style = MaterialTheme.typography.headlineSmall
                 )
             }
-
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 10.dp)
+                HorizontalDivider(thickness = 2.dp)
             }
+
         }
+
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -230,61 +232,6 @@ fun BaziSummaryScreen(
                         fontSize = 22.sp,
                     )
                 }
-            }
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.dts_d),
-                    color = Color.Blue,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-            }
-
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.dts_t),
-                    color = Color.Blue,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-            }
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.dts_s),
-                    color = Color.Blue,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-            }
-        }
-
-        Column(
-            modifier = modifier
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .selectableGroup()
-//                .padding(all = 10.dp)
-            ) {
-                HorizontalDivider(thickness = 2.dp)
             }
         }
     }
@@ -604,7 +551,7 @@ fun getLiunianTaohua(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): String {
             builder.append(BaziUtil().getTianGanLabel(thisYearTg))
             builder.append(BaziUtil().getDizhiLabel(thisYearDz))
             builder.append(")")
-            builder.append(" ")
+            builder.append("  ")
             builder.append(i + 1)
             builder.append(yearUnit)
             builder.append("\n")

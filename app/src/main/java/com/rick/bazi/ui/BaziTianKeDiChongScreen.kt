@@ -73,11 +73,11 @@ fun BaziTianKeDiChongScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
+                    text = "${birthDateStr}",
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
-                    fontSize = 26.sp,
-                    text = "${birthDateStr}"
+                    style = MaterialTheme.typography.headlineMedium
                 )
             }
             Row(
@@ -92,19 +92,19 @@ fun BaziTianKeDiChongScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = BaziUtil().getTitleLable(baziInfo),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineMedium
-                )
-            }
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = BaziUtil().getTitleLable(baziInfo),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+//                    style = MaterialTheme.typography.headlineMedium
+//                )
+//            }
 
             Row(
                 modifier = Modifier.padding(5.dp),
@@ -118,6 +118,12 @@ fun BaziTianKeDiChongScreen(
                     fontWeight = FontWeight(500),
                     style = MaterialTheme.typography.headlineSmall
                 )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
             }
             Row(
                 modifier = Modifier.padding(5.dp),
@@ -261,16 +267,22 @@ fun BaziTianKeDiChongScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
             }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
         }
 
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
             records.forEach { record ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    HorizontalDivider(thickness = 2.dp)
-                }
+//                Row(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    HorizontalDivider(thickness = 2.dp)
+//                }
                 Row(
                     modifier = Modifier
                         .padding(5.dp)
@@ -319,18 +331,18 @@ fun BaziTianKeDiChongScreen(
             }
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                HorizontalDivider(thickness = 2.dp)
-            }
-        }
+//        Column(
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                HorizontalDivider(thickness = 2.dp)
+//            }
+//        }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
