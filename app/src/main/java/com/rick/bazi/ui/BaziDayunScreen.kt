@@ -42,17 +42,9 @@ fun BaziDayunScreen(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Row(
-            modifier = Modifier.padding(5.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            HorizontalDivider(thickness = 2.dp)
-        }
-
 
         //dayun
-        var dayunLabel = stringResource(R.string.bazi_dayun)
+        var dayunLabel = stringResource(R.string.app_bazi_10yeardayun)
         var dayunForward: Boolean =
             BaziUtil().isDayunDirectionForward(baziInfo.gender, baziInfo.yearDizhi)
         var days = BaziUtil().getDayunStartDays(
@@ -98,6 +90,19 @@ fun BaziDayunScreen(
             )
         }
 
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
+        }
+
         var records = getDayunList(baziInfo)
 
         records.forEach { record ->
@@ -108,7 +113,7 @@ fun BaziDayunScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = record.dyLabel,
+                    text = record.dyLabel + ' ' + record.dyAgeLabel,
                     textAlign = TextAlign.Left,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -117,33 +122,33 @@ fun BaziDayunScreen(
                 )
             }
 
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = record.dyAgeLabel,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Magenta,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            }
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = record.dyAgeLabel,
+//                    textAlign = TextAlign.End,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Magenta,
+//                    style = MaterialTheme.typography.headlineSmall
+//                )
+//            }
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-            ) {
-                HorizontalDivider(thickness = 2.dp)
-            }
-        }
+//        Column(
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Row(
+//                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                HorizontalDivider(thickness = 2.dp)
+//            }
+//        }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -154,7 +159,7 @@ fun BaziDayunScreen(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(thickness = 10.dp)
+                HorizontalDivider(thickness = 2.dp)
             }
         }
 

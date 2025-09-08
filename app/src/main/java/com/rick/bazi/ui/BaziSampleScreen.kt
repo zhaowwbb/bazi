@@ -73,28 +73,6 @@ fun BaziSampleScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-//            Row(
-//                modifier = Modifier
-//                    .padding(5.dp)
-//                    .fillMaxWidth(),
-//                horizontalArrangement = Arrangement.SpaceBetween,
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Text(
-//                    textAlign = TextAlign.Left,
-//                    modifier = Modifier.weight(1f),
-//                    fontWeight = FontWeight(500),
-//                    style = MaterialTheme.typography.headlineMedium,
-//                    text = stringResource(R.string.bazi_sample_introduction)
-//                )
-//            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                HorizontalDivider(thickness = 2.dp)
-            }
 
             Row(
                 modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
@@ -148,18 +126,6 @@ fun BaziSampleScreen(
                 }
             }
 
-
-//            Row(
-//                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Text(
-//                    textAlign = TextAlign.Left,
-//                    modifier = Modifier.weight(1f),
-//                    fontWeight = FontWeight(500),
-//                    style = MaterialTheme.typography.headlineSmall,
-//                    text = stringResource(R.string.taohua_sample_list)
-//                )
-//            }
         }
 
         Column(

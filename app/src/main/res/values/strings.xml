@@ -237,4 +237,6 @@
     <string name="bazi_tkdc_day">冲日柱，对妻子或丈夫不利。</string>
     <string name="bazi_tkdc_hour">冲时柱，主子女有伤。</string>
     <string name="bazi_tkdc_dayun_liunian">大运和流年天克地冲。</string>
+
+    <string name="app_bazi_yima_intro">驿马在八字中的意义代表升迁，调动，走动，变更，奔波，换工作，出国等。驿马是八字命理中的术语，如命中带驿马，则此人命多走动，必有走遍东西南北之行。比如说一些商人、军人、外交人员经常出差，走动多者，移居不止者，一般命中都多带驿马。\n运势遇到驿马逢冲时，一定会出行。命中驿马为吉神时，驿马星动会引发迁移和顺利的喜事，而且是命主喜欢的变动；命中驿马为凶神时，会引发奔波劳苦、流离之灾祸，属于命主不喜欢的变动。</string>
 </resources>
