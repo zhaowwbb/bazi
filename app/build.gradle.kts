@@ -12,8 +12,8 @@ android {
         applicationId = "com.rick.bazi"
         minSdk = 25
         targetSdk = 35
-        versionCode = 8
-        versionName = "1.4"
+        versionCode = 10
+        versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

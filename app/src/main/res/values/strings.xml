@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">Bazi</string>
+    <string name="app_name">八字排盘软件</string>
     <string name="app_calendar">阳历</string>
     <string name="app_label_year">年</string>
     <string name="app_label_month">月</string>
     <string name="app_label_day">日</string>
     <string name="app_label_hour">时</string>
-    <string name="app_bazi_title">八字算命</string>
-    <string name="app_bazi">八字算命</string>
+    <string name="app_bazi_title">八字排盘软件</string>
+    <string name="app_bazi">八字排盘软件</string>
     <string name="app_bazi_science">相信科学</string>
     <string name="app_bazi_paipan">八字排盘</string>
-    <string name="app_bazi_result">命理结果</string>
+    <string name="app_bazi_result">桃花</string>
     <string name="app_bazi_suanming">八字分析</string>
     <string name="app_bazi_dayun">大运</string>
     <string name="app_bazi_10yeardayun">十年大运</string>
