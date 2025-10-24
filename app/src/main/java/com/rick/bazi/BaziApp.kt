@@ -35,6 +35,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rick.bazi.data.DataSource
 import com.rick.bazi.ui.BaziAppIntroductionScreen
+import com.rick.bazi.ui.BaziConfirmPrivacyScreen
 import com.rick.bazi.ui.BaziPaipanScreen
 import com.rick.bazi.ui.BaziSampleScreen
 import com.rick.bazi.ui.BaziStartScreen
@@ -43,9 +44,14 @@ import com.rick.bazi.ui.BaziTianKeDiChongScreen
 import com.rick.bazi.ui.BaziVersionScreen
 import com.rick.bazi.ui.BaziViewModel
 import com.rick.bazi.ui.BaziDayunScreen
+import com.rick.bazi.ui.BaziPrivacyPolicyScreen
+import com.rick.bazi.ui.BaziUserAgreementScreen
 import com.rick.bazi.ui.BaziYimaScreen
 
 enum class BaziScreen(@StringRes val title: Int) {
+    ConfirmPrivacy(title = R.string.app_bazi_confirm_privacy),
+    UserAgreement(title = R.string.app_bazi_user_agreement),
+    PrivacyPolicy(title = R.string.app_bazi_privacy_policy),
     Start(title = R.string.app_bazi_title),
     Paipan(title = R.string.app_bazi_paipan),
     Sample(title = R.string.app_bazi_sample),
@@ -110,12 +116,77 @@ fun BaziApp(
 
         NavHost(
             navController = navController,
-            startDestination = BaziScreen.Start.name,
+            startDestination = BaziScreen.ConfirmPrivacy.name,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .padding(innerPadding)
         ) {
+
+
+            composable(route = BaziScreen.ConfirmPrivacy.name) {
+                BaziConfirmPrivacyScreen(
+                    onNextButtonClicked = {
+                        navController.navigate(BaziScreen.Paipan.name)
+                    },
+                    navController = navController,
+                    baziInfo = baziUIInfo,
+                    baziModel = baziModel,
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium))
+                )
+            }
+
+            composable(route = BaziScreen.UserAgreement.name) {
+                BaziUserAgreementScreen(
+                    onNextButtonClicked = {
+                        navController.navigate(BaziScreen.Paipan.name)
+                    },
+                    navController = navController,
+                    baziInfo = baziUIInfo,
+                    baziModel = baziModel,
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium))
+                )
+            }
+
+
+            composable(route = BaziScreen.PrivacyPolicy.name) {
+                BaziPrivacyPolicyScreen(
+                    onNextButtonClicked = {
+                        navController.navigate(BaziScreen.Paipan.name)
+                    },
+                    navController = navController,
+                    baziInfo = baziUIInfo,
+                    baziModel = baziModel,
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium))
+                )
+            }
+
+
+
             composable(route = BaziScreen.Start.name) {
                 BaziStartScreen(
                     onNextButtonClicked = {

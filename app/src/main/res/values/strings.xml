@@ -6,6 +6,50 @@
     <string name="app_label_day">日</string>
     <string name="app_label_hour">时</string>
     <string name="app_bazi_title">八字排盘软件</string>
+    <string name="app_bazi_confirm_privacy">隐私政策</string>
+    <string name="app_bazi_confirm_privacy_yes">同意</string>
+    <string name="app_bazi_confirm_privacy_no">不同意</string>
+    <string name="app_bazi_confirm_privacy_content">欢迎使用“八字排盘软件”应用，我们非常重视您的个人信息和隐私保护, 请阅读并同意下面的《用户协议》和《隐私政策》，以继续使用本服务。\n
+为了提供完整的服务，我们需要您提供出生时间的个人信息。我们将严格保护您的个人信息， 点击同意即表示您已阅读并接受该政策。
+</string>
+    <string name="app_bazi_confirm_privacy_content1">欢迎使用“八字排盘软件”应用，我们非常重视您的个人信息和隐私保护, 为了提供完整的服务，我们需要您提供出生时间的个人信息。请阅读并同意我们的</string>
+    <string name="app_bazi_confirm_privacy_content2">我们将严格保护您的个人信息， 点击同意即表示您已阅读并接受该政策。</string>
+    <string name="app_bazi_confirm_privacy_content3">为了提供完整的服务，我们需要您提供出生时间的个人信息。我们将严格保护您的个人信息， 点击同意即表示您已阅读并接受该政策。</string>
+    <string name="app_bazi_confirm_privacy_content4">请阅读</string>
+    <string name="app_bazi_confirm_privacy_content_and">和</string>
+    <string name="app_bazi_confirm_privacy_content6">用户协议</string>
+    <string name="app_bazi_user_agreement">用户协议</string>
+    <string name="app_bazi_user_agreement_content">
+八字，又称生辰八字或四柱八字，是中国传统命理学中的概念，指一个人出生年、月、日、时所对应的八个天干和地支字组合，形成年柱、月柱、日柱和时柱。它用干支历法记录时间，古代星相家以此推算人的命运好坏。八字由一个人的出生时间点决定，是其一生信息的一种反映。 \n
+根据出生时间计算出一个人的八字需要经过复杂的计算，这个软件的主要功能就是帮助人们快速计算出一个人的八字信息，并且根据信息进行一些简单的分析。\n
+这个软件使用Kotlin编写，Kotlin是一种静态类型、开源的通用编程语言，由JetBrains开发，支持面向对象和函数式编程，用于Android开发。\n
+这个应用以娱乐为主，要相信科学。\n
+        为了提供完整的服务，我们需要您提供出生时间的个人信息。我们将严格保护您的个人信息， 您的个人信息将用于优化体验。
+    </string>
+    <string name="app_bazi_privacy_policy">隐私政策</string>
+    <string name="app_bazi_privacy_policy_content">
+生效日期：2025年10月19日\n
+开发者：Rick Zhao\n
+运营者：Rick Zhao\n
+\n
+本隐私政策旨在说明我们如何收集、使用、存储和保护您的个人信息。请您在使用我们的产品或服务前，仔细阅读并理解本政策。\n
+1. 信息收集\n
+该应用不搜集和存储个人信息\n
+2. 信息共享与披露\n
+我们不会将您的个人信息出售给第三方。\n
+3. 信息存储与安全\n
+•	我们会采取合理的技术和管理措施，防止信息丢失、被滥用或未经授权访问。\n
+•	信息的存储期限将根据实现收集目的所需的最短时间确定，除非法律另有规定。\n
+4. 未成年人保护\n
+我们不会主动收集未满法定年龄用户的个人信息。如发现已收集，将及时删除。\n
+5. 政策更新\n
+我们可能会不时更新本政策，并在更新后通过公告或其他方式通知您。\n
+6. 政策更新\n
+我们可能会不时更新本政策，并在更新后通过公告或其他方式通知您。\n
+7. 联系我们\n
+如您对本隐私政策有任何疑问或投诉，请通过以下方式联系我们：\n
+•	邮箱：zhaowenbo751@hotmail.com
+    </string>
     <string name="app_bazi">八字排盘软件</string>
     <string name="app_bazi_science">相信科学</string>
     <string name="app_bazi_paipan">八字排盘</string>

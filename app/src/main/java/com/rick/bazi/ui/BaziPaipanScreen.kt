@@ -572,6 +572,35 @@ fun BaziPaipanScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.PrivacyPolicy.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_privacy_policy),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.UserAgreement.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_user_agreement),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
                     navController.navigate(BaziScreen.Introduction.name)
                 }) {
                     Text(
