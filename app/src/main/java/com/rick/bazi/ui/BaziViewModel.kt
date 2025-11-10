@@ -2,8 +2,12 @@ package com.rick.bazi.ui
 
 import com.rick.bazi.data.BaziInfo
 import androidx.lifecycle.ViewModel
+import com.rick.bazi.data.BaziGeJu
+import com.rick.bazi.data.BaziStrength
 import com.rick.bazi.data.DiZhi
+import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
+import com.rick.bazi.data.WuXing
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -180,6 +184,342 @@ class BaziViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 dayunDays = days
+            )
+        }
+    }
+
+    fun setDangLing(isDangLing: Boolean) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isDangLing = isDangLing
+            )
+        }
+    }
+
+    fun setStrongRootNum(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                strongRootNum = n
+            )
+        }
+    }
+
+    fun setMediumRootNum(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                mediumRootNum = n
+            )
+        }
+    }
+
+    fun setWeakRootNum(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                weakRootNum = n
+            )
+        }
+    }
+
+    fun setBaziStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziStr = str
+            )
+        }
+    }
+
+    fun setBaziOwnerStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                ownerStr = str
+            )
+        }
+    }
+
+    fun setWuxingSummaryStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                wuxingSummaryStr = str
+            )
+        }
+    }
+
+    fun setDeLingCheckStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                deLingCheckStr = str
+            )
+        }
+    }
+
+    fun setDeDiCheckStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                deDiCheckStr = str
+            )
+        }
+    }
+
+    fun setDeHelpStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                deHelpStr = str
+            )
+        }
+    }
+
+    fun setKeXieHaoStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                keXieHaoStr = str
+            )
+        }
+    }
+
+    fun setShishenYearStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                shishenYearStr = str
+            )
+        }
+    }
+
+    fun setShishenMonthStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                shishenMonthStr = str
+            )
+        }
+    }
+
+    fun setShishenDayStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                shishenDayStr = str
+            )
+        }
+    }
+
+    fun setShishenHourStr(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                shishenHourStr = str
+            )
+        }
+    }
+
+    fun setHelpElementNum(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                helpElementNum = n
+            )
+        }
+    }
+
+    fun setImpedeElementNum(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                impedeElementNum = n
+            )
+        }
+    }
+
+    fun setYearTgShiShen(s: ShiShen) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                yearTgShiShen = s
+            )
+        }
+    }
+
+    fun setYearDzShiShen(s: ShiShen) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                yearDzShiShen = s
+            )
+        }
+    }
+
+    fun setMonthTgShiShen(s: ShiShen) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                monthTgShiShen = s
+            )
+        }
+    }
+
+    fun setMonthDzShiShen(s: ShiShen) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                monthDzShiShen = s
+            )
+        }
+    }
+
+    fun setDayDzShiShen(s: ShiShen) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                dayDzShiShen = s
+            )
+        }
+    }
+
+    fun setHourTgShiShen(s: ShiShen) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                hourTgShiShen = s
+            )
+        }
+    }
+
+    fun setHourDzShiShen(s: ShiShen) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                hourDzShiShen = s
+            )
+        }
+    }
+
+    fun setYinCount(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                yinCount = n
+            )
+        }
+    }
+
+    fun setBiJieCount(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                bijieCount = n
+            )
+        }
+    }
+
+    fun setYinString(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                yinString = str
+            )
+        }
+    }
+
+    fun setBiJieString(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                bijieString = str
+            )
+        }
+    }
+
+    fun setGuanShaCount(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                guanshaCount = n
+            )
+        }
+    }
+
+    fun setShiShangCount(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                shishangCount = n
+            )
+        }
+    }
+
+    fun setCaiCount(n: Int) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                caiCount = n
+            )
+        }
+    }
+
+    fun setBaziStrength(s: BaziStrength) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziStrength = s
+            )
+        }
+    }
+
+    fun setBaziStrengthSummary(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziStrengthSummary = str
+            )
+        }
+    }
+
+    fun setIsDedi(flag: Boolean) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                isDedi = flag
+            )
+        }
+    }
+
+    fun setBaziXiJiSummary(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziXiJiSummary = str
+            )
+        }
+    }
+
+    fun setBaziGJ(gj: BaziGeJu) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziGJ = gj
+            )
+        }
+    }
+
+    fun setBaziGJSummary(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziGJSummary = str
+            )
+        }
+    }
+
+    fun setBaziGJString(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziGJString = str
+            )
+        }
+    }
+
+    fun setBaziDayunSummary(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziDayunSummary = str
+            )
+        }
+    }
+
+    fun setBaziXiyongShenList(list: List<WuXing>) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                xiyongShenList = list
+            )
+        }
+    }
+
+    fun setBaziJiShenList(list: List<WuXing>) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                jiShenList = list
+            )
+        }
+    }
+
+    fun setBaziTiaohouShenList(list: List<WuXing>) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                tiaohouShenList = list
             )
         }
     }

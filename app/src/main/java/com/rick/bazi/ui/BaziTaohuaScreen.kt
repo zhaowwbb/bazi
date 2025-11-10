@@ -28,6 +28,7 @@ import com.rick.bazi.data.FEMALE
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziUtil
+import com.rick.bazi.util.ShiShenUtil
 
 @Composable
 fun BaziSummaryScreen(
@@ -569,7 +570,7 @@ fun checkTaohuaJie(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
     var dz = baziInfo.yearDizhi
 
     if (taohuaMap.containsKey(dz)) {
-        if (tg == BaziUtil().getBijian(owner) || tg == BaziUtil().getJiecai(owner)) {
+        if (tg == ShiShenUtil().getBijian(owner) || tg == ShiShenUtil().getJiecai(owner)) {
             //found taohua sha
             println("Found TaohuaJie on year Tiangan")
             return true
@@ -580,7 +581,7 @@ fun checkTaohuaJie(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
     dz = baziInfo.monthDizhi
     println("owner $owner  tg=$tg  dz=$dz ")
     if (taohuaMap.containsKey(dz)) {
-        if (tg == BaziUtil().getBijian(owner) || tg == BaziUtil().getJiecai(owner)) {
+        if (tg == ShiShenUtil().getBijian(owner) || tg == ShiShenUtil().getJiecai(owner)) {
             println("Found TaohuaJie on month Tiangan")
             return true
         }
@@ -589,7 +590,7 @@ fun checkTaohuaJie(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
     tg = baziInfo.dayTiangan
     dz = baziInfo.dayDizhi
     if (taohuaMap.containsKey(dz)) {
-        if (tg == BaziUtil().getBijian(owner) || tg == BaziUtil().getJiecai(owner)) {
+        if (tg == ShiShenUtil().getBijian(owner) || tg == ShiShenUtil().getJiecai(owner)) {
             println("Found TaohuaJie on day Tiangan")
             return true
         }
@@ -598,7 +599,7 @@ fun checkTaohuaJie(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
     tg = baziInfo.hourTiangan
     dz = baziInfo.hourDizhi
     if (taohuaMap.containsKey(dz)) {
-        if (tg == BaziUtil().getBijian(owner) || tg == BaziUtil().getJiecai(owner)) {
+        if (tg == ShiShenUtil().getBijian(owner) || tg == ShiShenUtil().getJiecai(owner)) {
             println("Found TaohuaJie on hour Tiangan")
             return true
         }
@@ -616,7 +617,7 @@ fun checkTaohuaSha(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
     var dz = baziInfo.yearDizhi
 
     if (taohuaMap.containsKey(dz)) {
-        if (tg == BaziUtil().getQisha(owner)) {
+        if (tg == ShiShenUtil().getQisha(owner)) {
             println("Found taohua sha on year Tiangan")
             return true
         }
@@ -626,7 +627,7 @@ fun checkTaohuaSha(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
     dz = baziInfo.monthDizhi
     println("owner $owner  tg=$tg  dz=$dz ")
     if (taohuaMap.containsKey(dz)) {
-        if (tg == BaziUtil().getQisha(owner)) {
+        if (tg == ShiShenUtil().getQisha(owner)) {
             println("Found taohua sha on month Tiangan")
             return true
         }
@@ -635,7 +636,7 @@ fun checkTaohuaSha(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
     tg = baziInfo.dayTiangan
     dz = baziInfo.dayDizhi
     if (taohuaMap.containsKey(dz)) {
-        if (tg == BaziUtil().getQisha(owner)) {
+        if (tg == ShiShenUtil().getQisha(owner)) {
             println("Found taohua sha on day Tiangan")
             return true
         }
@@ -644,7 +645,7 @@ fun checkTaohuaSha(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Boolean {
     tg = baziInfo.hourTiangan
     dz = baziInfo.hourDizhi
     if (taohuaMap.containsKey(dz)) {
-        if (tg == BaziUtil().getQisha(owner)) {
+        if (tg == ShiShenUtil().getQisha(owner)) {
             println("Found taohua sha on hour Tiangan")
             return true
         }
@@ -662,14 +663,14 @@ fun checkTaohuaZhengguan(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Bool
         var dz = baziInfo.yearDizhi
 
         if (taohuaMap.containsKey(dz)) {
-            if (tg == BaziUtil().getZhengguan(owner)) {
+            if (tg == ShiShenUtil().getZhengguan(owner)) {
                 return true
             }
         }
         tg = baziInfo.monthTiangan
         dz = baziInfo.monthDizhi
         if (taohuaMap.containsKey(dz)) {
-            if (tg == BaziUtil().getZhengguan(owner)) {
+            if (tg == ShiShenUtil().getZhengguan(owner)) {
                 return true
             }
         }
@@ -677,7 +678,7 @@ fun checkTaohuaZhengguan(baziInfo: BaziInfo, taohuaMap: Map<DiZhi, DiZhi>): Bool
         tg = baziInfo.hourTiangan
         dz = baziInfo.hourDizhi
         if (taohuaMap.containsKey(dz)) {
-            if (tg == BaziUtil().getZhengguan(owner)) {
+            if (tg == ShiShenUtil().getZhengguan(owner)) {
                 return true
             }
         }

@@ -74,6 +74,7 @@ import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.FEMALE
 import com.rick.bazi.data.MALE
 import com.rick.bazi.data.TianGan
+import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.DateUtils
 import com.rick.bazi.util.VietCalendar.convertSolar2Lunar
@@ -388,7 +389,6 @@ fun BaziStartScreen(
                         baziModel.setGender(selectedGenderValue)
 
                         paipan(year, month, day, hour, baziModel, baziInfo)
-
                         navController.navigate(BaziScreen.Paipan.name)
                     }
                 ) {

@@ -1,0 +1,14 @@
+package com.rick.bazi.data
+
+enum class ShiShen {
+    SHISHEN_BI_JIAN,
+    SHISHEN_JIE_CAI,
+    SHISHEN_ZHENG_YIN,
+    SHISHEN_PIAN_YIN,
+    SHISHEN_SHI_SHEN,
+    SHISHEN_SHANG_GUAN,
+    SHISHEN_ZHENG_CAI,
+    SHISHEN_PIAN_CAI,
+    SHISHEN_ZHENG_GUAN,
+    SHISHEN_QI_SHA
+}

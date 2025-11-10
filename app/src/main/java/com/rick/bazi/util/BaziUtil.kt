@@ -14,6 +14,7 @@ import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_4
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.FEMALE
 import com.rick.bazi.data.MALE
+import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import java.time.Instant
 import java.time.LocalDate
@@ -91,131 +92,6 @@ class BaziUtil {
         TAOHUA_2 to R.string.msg_taohua_2,
         TAOHUA_3 to R.string.msg_taohua_3,
         TAOHUA_4 to R.string.msg_taohua_4
-    )
-
-    val shishenMap: Map<TianGan, Array<TianGan>> = mapOf(
-        //[ShiShen] ZhengCai || PianCai || ZhengGuan || Qisha || ZhengYin || PianYin || ShiShen || ShangGuan || BiJian || JieCai
-        //[Index]    0  1  2  3  4  5  6  7  8  9
-        TianGan.TIANGAN_JIA to arrayOf(
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_YI
-        ),
-        TianGan.TIANGAN_YI to arrayOf(
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_JIA
-        ),
-        TianGan.TIANGAN_BING to arrayOf(
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_DING
-        ),
-        TianGan.TIANGAN_DING to arrayOf(
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_BING
-        ),
-        TianGan.TIANGAN_WU to arrayOf(
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_JI
-        ),
-        TianGan.TIANGAN_JI to arrayOf(
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_WU
-        ),
-        TianGan.TIANGAN_GENG to arrayOf(
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_XIN
-        ),
-        TianGan.TIANGAN_XIN to arrayOf(
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_GENG
-        ),
-        TianGan.TIANGAN_REN to arrayOf(
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_REN,
-            TianGan.TIANGAN_GUI
-        ),
-        TianGan.TIANGAN_GUI to arrayOf(
-            TianGan.TIANGAN_BING,
-            TianGan.TIANGAN_DING,
-            TianGan.TIANGAN_WU,
-            TianGan.TIANGAN_JI,
-            TianGan.TIANGAN_GENG,
-            TianGan.TIANGAN_XIN,
-            TianGan.TIANGAN_YI,
-            TianGan.TIANGAN_JIA,
-            TianGan.TIANGAN_GUI,
-            TianGan.TIANGAN_REN
-        )
     )
 
     val tgYangrenLookupMap: Map<TianGan, DiZhi> = mapOf(
@@ -688,96 +564,6 @@ class BaziUtil {
         return yearBase
     }
 
-    fun getZhengcai(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![0]
-//        println("$tg  getZhengcai= $ret")
-        return ret
-    }
-
-    fun getPiancai(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![1]
-//        println("$tg  getPiancai= $ret")
-        return ret
-    }
-
-    fun getZhengguan(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![2]
-//        println("$tg  getZhengguan= $ret")
-        return ret
-    }
-
-    fun getQisha(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![3]
-
-//        println("$tg  getZhengguan= $ret")
-        return ret
-    }
-
-    fun getZhengyin(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![4]
-//        println("$tg  getZhengyin= $ret")
-        return ret
-    }
-
-    fun getPianyin(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![5]
-//        println("$tg  getPianyin= $ret")
-        return ret
-    }
-
-    fun getShishen(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![6]
-//        println("$tg  getShishen= $ret")
-        return ret
-    }
-
-    fun getShangguan(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![7]
-//        println("$tg  getShangguan= $ret")
-        return ret
-    }
-
-    fun getBijian(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![8]
-//        println("$tg  getBijian= $ret")
-        return ret
-    }
-
-    fun getJiecai(tg: TianGan): TianGan {
-        var ret = shishenMap.get(tg)!![9]
-//        println("$tg  getJiecai= $ret")
-        return ret
-    }
-
-    @Composable
-    fun getMainStarLabel(tg: TianGan, dayTg: TianGan): String {
-        var str = stringResource(R.string.ts_bijian)
-
-        if (tg == getBijian(dayTg)) {
-            str = stringResource(R.string.ts_bijian)
-        } else if (tg == getJiecai(dayTg)) {
-            str = stringResource(R.string.ts_jiecai)
-        } else if (tg == getShishen(dayTg)) {
-            str = stringResource(R.string.ts_shishen)
-        } else if (tg == getShangguan(dayTg)) {
-            str = stringResource(R.string.ts_shangguan)
-        } else if (tg == getZhengyin(dayTg)) {
-            str = stringResource(R.string.ts_zhengyin)
-        } else if (tg == getPianyin(dayTg)) {
-            str = stringResource(R.string.ts_pianyin)
-        } else if (tg == getZhengcai(dayTg)) {
-            str = stringResource(R.string.ts_zhengcai)
-        } else if (tg == getPiancai(dayTg)) {
-            str = stringResource(R.string.ts_piancai)
-        } else if (tg == getZhengguan(dayTg)) {
-            str = stringResource(R.string.ts_zhengguan)
-        } else if (tg == getQisha(dayTg)) {
-            str = stringResource(R.string.ts_qisha)
-        }
-
-        return str
-    }
-
     fun getCanggan(dz: DiZhi): Array<TianGan> {
         var tgArray = arrayOf(TianGan.TIANGAN_JIA)
         if (dz == DiZhi.DIZHI_ZI) {
@@ -813,25 +599,6 @@ class BaziUtil {
         val builder = StringBuilder()
         tgArray.forEach {
             builder.append(stringResource(tianganStrMap.get(it)!!))
-        }
-        return builder.toString()
-    }
-
-    @Composable
-    fun getCangganStarLabel(tgArray: Array<TianGan>, dayTg: TianGan): String {
-        val builder = StringBuilder()
-        if (tgArray.size == 1) {
-            builder.append(getMainStarLabel(tgArray[0], dayTg))
-        } else if (tgArray.size == 2) {
-            builder.append(getMainStarLabel(tgArray[0], dayTg))
-            builder.append("\n")
-            builder.append(getMainStarLabel(tgArray[1], dayTg))
-        } else if (tgArray.size == 3) {
-            builder.append(getMainStarLabel(tgArray[0], dayTg))
-            builder.append("\n")
-            builder.append(getMainStarLabel(tgArray[1], dayTg))
-            builder.append("\n")
-            builder.append(getMainStarLabel(tgArray[2], dayTg))
         }
         return builder.toString()
     }
@@ -1597,8 +1364,6 @@ class BaziUtil {
         dz = BaziUtil().dzLookupMap.get(dayunDZ)!!
         return dz
     }
-
-
 
 }
 

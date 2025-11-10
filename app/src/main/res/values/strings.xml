@@ -5,6 +5,8 @@
     <string name="app_label_month">月</string>
     <string name="app_label_day">日</string>
     <string name="app_label_hour">时</string>
+    <string name="app_label_gan">干</string>
+    <string name="app_label_zhi">支</string>
     <string name="app_bazi_title">八字排盘软件</string>
     <string name="app_bazi_confirm_privacy">隐私政策</string>
     <string name="app_bazi_confirm_privacy_yes">同意</string>
@@ -48,9 +50,10 @@
 我们可能会不时更新本政策，并在更新后通过公告或其他方式通知您。\n
 7. 联系我们\n
 如您对本隐私政策有任何疑问或投诉，请通过以下方式联系我们：\n
-•	邮箱：zhaowenbo751@hotmail.com
+•	邮箱：rick942@outlook.com
     </string>
     <string name="app_bazi">八字排盘软件</string>
+    <string name="app_bazi_str">八字</string>
     <string name="app_bazi_science">相信科学</string>
     <string name="app_bazi_paipan">八字排盘</string>
     <string name="app_bazi_result">桃花</string>
@@ -60,6 +63,7 @@
     <string name="app_bazi_yima">驿马</string>
     <string name="app_bazi_sample">八字案例</string>
     <string name="app_bazi_version">版本信息</string>
+    <string name="app_bazi_analysis">命盘分析</string>
     <string name="app_bazi_gender">性别</string>
     <string name="app_bazi_male">男</string>
     <string name="app_bazi_female">女</string>
@@ -78,6 +82,13 @@
     <string name="app_taohua_dayun">大运桃花</string>
     <string name="app_taohua_liunian">流年桃花</string>
     <string name="app_to">到</string>
+    <string name="app_number_one">一</string>
+    <string name="app_number_two">二</string>
+    <string name="app_number_three">三</string>
+    <string name="app_number_four">四</string>
+    <string name="app_number_five">五</string>
+    <string name="app_number_six">六</string>
+    <string name="app_wuxing_fenbu">五行分布</string>
     <string name="app_introduction">应用介绍</string>
 
     <string name="version_introduction">第一次开始安卓开发是2015年，完全是个人兴趣，不是工作需要，那时候还是用Java，十年之后，一时兴起，想把最近学到的八字知识做个手机应用玩玩，可一动手，才发现安卓开发早已沧海桑田，要使用新语言Kotlin，发布流程也完全不一样了，从零开始，重新上路，花了1个月的时间，搞出来这个八字应用，一路上遇到的技术问题不少，不过好在是坚持走过来了，不知道这次的开发激情能持续多长时间，一切看缘分。</string>
@@ -181,6 +192,7 @@
     <string name="bazi_day">日柱</string>
     <string name="bazi_hour">时柱</string>
     <string name="bazi_owner">日主</string>
+    <string name="bazi_owner_brief">（出生日的天干，代表命主本人）</string>
     <string name="bazi_birth_year">出生年</string>
     <string name="bazi_birth_month">出生月</string>
     <string name="bazi_birth_day">出生日</string>
@@ -291,6 +303,106 @@
     <string name="app_bazi_yima_bazi">八字驿马</string>
     <string name="app_bazi_yima_dayun">大运驿马</string>
     <string name="app_bazi_yima_liunian">流年驿马</string>
+
+    <string name="app_bazi_wood">木</string>
+    <string name="app_bazi_water">水</string>
+    <string name="app_bazi_metal">金</string>
+    <string name="app_bazi_fire">火</string>
+    <string name="app_bazi_soil">土</string>
+
+    <string name="app_bazi_analyze_label1">一、八字排盘</string>
+    <string name="app_bazi_analyze_label2">二、日主旺衰分析</string>
+    <string name="app_bazi_analyze_label3">三、喜用神与忌神</string>
+    <string name="app_bazi_analyze_label4">四、日主格局</string>
+    <string name="app_bazi_analyze_label5">五、大运作用分析</string>
+    <string name="app_bazi_analyze_label6">四、命局综合解读</string>
+
+    <string name="app_bazi_deling_label">1.得令：</string>
+    <string name="app_bazi_dedi_label">2.得地：</string>
+    <string name="app_bazi_dezhu_label">3.得助：</string>
+    <string name="app_bazi_kexiehao_label">4.克泄耗：</string>
+    <string name="app_bazi_born_label">生于</string>
+    <string name="app_bazi_wangxiang_label">旺相</string>
+    <string name="app_bazi_xiuqiu_label">休囚</string>
+    <string name="app_bazi_dangling_yes">得令</string>
+    <string name="app_bazi_dangling_no">不得令</string>
+    <string name="app_bazi_strong_root">强根</string>
+    <string name="app_bazi_weak_root">弱根</string>
+    <string name="app_bazi_dedi_yes">得地</string>
+    <string name="app_bazi_dedi_no">不得地</string>
+    <string name="app_bazi_deshi_yes">得助</string>
+    <string name="app_bazi_deshi_no">不得助</string>
+    <string name="app_bazi_have">有</string>
+    <string name="app_bazi_yin_label">印</string>
+    <string name="app_bazi_bj_label">比劫</string>
+    <string name="app_bazi_gs_label">官杀</string>
+    <string name="app_bazi_ss_label">食伤</string>
+    <string name="app_bazi_cai_label">财</string>
+
+    <string name="app_bazi_bangfu">帮扶</string>
+    <string name="app_bazi_shengshen">生身</string>
+    <string name="app_bazi_ke">克身</string>
+    <string name="app_bazi_xie">泄身</string>
+    <string name="app_bazi_hao">耗身</string>
+
+    <string name="app_bazi_strong_3">极强</string>
+    <string name="app_bazi_strong_2">强</string>
+    <string name="app_bazi_strong_1">偏强</string>
+    <string name="app_bazi_balanced">均衡</string>
+    <string name="app_bazi_weak_1">偏弱</string>
+    <string name="app_bazi_weak_2">弱</string>
+    <string name="app_bazi_weak_3">极弱</string>
+    <string name="app_bazi_strength_label">综合判断：</string>
+
+    <string name="app_bazi_xiyong_shen">喜用神</string>
+    <string name="app_bazi_ji_shen">忌神</string>
+    <string name="app_bazi_tiaohou_shen">调候用神</string>
+
+    <string name="app_bazi_gj_label">格局</string>
+    <string name="app_bazi_gj_no_label">没有格局</string>
+    <string name="app_bazi_gj_personality">性格</string>
+    <string name="app_bazi_gj_congqiang">从强格</string>
+    <string name="app_bazi_gj_congruo">从弱格</string>
+    <string name="app_bazi_gj_zhengguan">正官格</string>
+    <string name="app_bazi_gj_qisha">七杀格</string>
+    <string name="app_bazi_gj_zhengcai">正财格</string>
+    <string name="app_bazi_gj_piancai">偏财格</string>
+    <string name="app_bazi_gj_zhengyin">正印格</string>
+    <string name="app_bazi_gj_pianyin">偏印格</string>
+    <string name="app_bazi_gj_shishen">食神格</string>
+    <string name="app_bazi_gj_shangguan">伤官格</string>
+    <string name="app_bazi_gj_jianlu">建禄格</string>
+
+    <string name="app_bazi_gj_zhengguan_desc">重名誉、守规则、适合公职</string>
+    <string name="app_bazi_gj_qisha_desc">有魄力、有野心、适合竞争性行业</string>
+    <string name="app_bazi_gj_zhengcai_desc">勤劳致富、稳重诚信、适合商业</string>
+    <string name="app_bazi_gj_piancai_desc">善经营、机会主义者、适合投资</string>
+    <string name="app_bazi_gj_zhengyin_desc">仁慈好学、有贵人、适合文教科研</string>
+    <string name="app_bazi_gj_pianyin_desc">专研精神、思想独特、适合偏门技术</string>
+    <string name="app_bazi_gj_shishen_desc">温和聪慧、有口福、适合艺术美食</string>
+    <string name="app_bazi_gj_shangguan_desc">才华横溢、不拘一格、适合创新技术</string>
+    <string name="app_bazi_gj_jianlu_desc">外表温和、内敛，但内心坚韧刚强，具备很强的能力和亲和力，因此人缘普遍很好</string>
+
+
+    <string name="app_bazi_gj_congruo_desc">从弱格: 日主极弱，整个八字都顺从弱日主，需要泄耗。</string>
+    <string name="app_bazi_gj_congqian_desc">从强格: 日主极强，整个八字都顺从日主，需要继续生扶。</string>
+    <string name="app_bazi_strong_2_desc">身强（日主旺）: 日主力量过强，需要克制或泄耗。</string>
+    <string name="app_bazi_weak_2_desc">身弱（日主弱）: 日主力量过弱，需要生扶。</string>
+    <string name="app_bazi_strong_1_desc">身强（日主旺）: 日主力量偏强，需要克制或泄耗。</string>
+    <string name="app_bazi_weak_1_desc">身弱（日主弱）: 日主力量偏弱，需要生扶。</string>
+    <string name="app_bazi_balanced_desc">日主五行力量均衡，无法用旺衰法取喜用神，还需要查看调侯用神和格局用神，还要看大运的变化。</string>
+
+    <string name="app_bazi_tiaohou_cold">寒局，水冷金寒，最需要火来暖局。</string>
+    <string name="app_bazi_tiaohou_hot">暖局，火炎土燥，最需要水来降温。</string>
+    <string name="app_bazi_tiaohou_dry">燥局，焦灼干燥，最需要水来调候。</string>
+    <string name="app_bazi_tiaohou_wet">湿局，湿土重重，最需要火土来调候。</string>
+    <string name="app_bazi_tiaohou_mild">温和局，寒暖适中，命局本身寒暖较为均衡，不一定非要调候，重点看五行旺衰平衡。</string>
+
+    <string name="app_bazi_jixiong_1">大吉</string>
+    <string name="app_bazi_jixiong_2">小吉</string>
+    <string name="app_bazi_jixiong_3">吉凶参半</string>
+    <string name="app_bazi_jixiong_4">小凶</string>
+    <string name="app_bazi_jixiong_5">大凶</string>
 
     <string name="app_bazi_dayun_intro">大运是命理学的重要概念，指以十年为周期的人生运程变化体系，是大运与流年共同构成人生运程。大运的排法分顺行和逆行两种，并根据生辰的阴阳属性、月柱的五行旺衰来推算，它对人生各阶段境遇有直接影响。</string>
 </resources>

@@ -34,6 +34,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.rick.bazi.data.DataSource
+import com.rick.bazi.ui.BaziAppAnalysisScreen
 import com.rick.bazi.ui.BaziAppIntroductionScreen
 import com.rick.bazi.ui.BaziConfirmPrivacyScreen
 import com.rick.bazi.ui.BaziPaipanScreen
@@ -60,7 +61,8 @@ enum class BaziScreen(@StringRes val title: Int) {
     TianKeDiChong(title = R.string.bazi_tkdc),
     DaYun(title = R.string.app_bazi_dayun),
     YiMa(title = R.string.app_bazi_yima),
-    Summary(title = R.string.app_bazi_result)
+    Summary(title = R.string.app_bazi_result),
+    Analysis(title = R.string.app_bazi_analysis)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -306,7 +308,19 @@ fun BaziApp(
                     modifier = Modifier.fillMaxHeight()
                 )
             }
+            composable(route = BaziScreen.Analysis.name) {
+                BaziAppAnalysisScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
 
+                    },
+                    baziInfo = baziUIInfo,
+                    baziModel = baziModel,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
         }
     }
 }

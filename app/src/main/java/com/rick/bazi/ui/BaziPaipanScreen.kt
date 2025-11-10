@@ -23,6 +23,7 @@ import androidx.compose.material3.TimeInput
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,8 +49,10 @@ import com.rick.bazi.data.TianGan
 import com.rick.bazi.util.getTianganStr
 import com.rick.bazi.util.getDizhiStr
 import com.rick.bazi.ui.theme.BaziTheme
+import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.DateUtils
+import com.rick.bazi.util.ShiShenUtil
 
 
 data class DayunRecord(
@@ -70,6 +73,16 @@ fun BaziPaipanScreen(
     modifier: Modifier = Modifier
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
+//    val preProcessBazi = mutableStateOf(false)
+
+    val preProcessBazi = remember { mutableStateOf(false) }
+
+//    preProcessBazi.value
+
+//    var preProcessBazi by rememberSaveable { mutableStateOf(false) }
+    if(preProcessBazi.value) {
+        BaziMeasureUtil().analyzeBaziAndSaveStat(baziInfo, baziModel)
+    }
 
     Column(
         modifier = modifier, verticalArrangement = Arrangement.SpaceBetween
@@ -192,9 +205,9 @@ fun BaziPaipanScreen(
         }
 
         //show main star
-        val yearStarLabel = BaziUtil().getMainStarLabel(baziInfo.yearTiangan, baziInfo.dayTiangan)
-        val monthStarLabel = BaziUtil().getMainStarLabel(baziInfo.monthTiangan, baziInfo.dayTiangan)
-        val hourStarLabel = BaziUtil().getMainStarLabel(baziInfo.hourTiangan, baziInfo.dayTiangan)
+        val yearStarLabel = ShiShenUtil().getShiShenText(baziInfo.yearTiangan, baziInfo.dayTiangan)
+        val monthStarLabel = ShiShenUtil().getShiShenText(baziInfo.monthTiangan, baziInfo.dayTiangan)
+        val hourStarLabel = ShiShenUtil().getShiShenText(baziInfo.hourTiangan, baziInfo.dayTiangan)
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -402,19 +415,19 @@ fun BaziPaipanScreen(
             }
 
             //second star
-            val yearCangganStarLabel = BaziUtil().getCangganStarLabel(
+            val yearCangganStarLabel = ShiShenUtil().getCangganStarLabel(
                 BaziUtil().getCanggan(baziInfo.yearDizhi),
                 baziInfo.dayTiangan
             )
-            val monthCangganStarLabel = BaziUtil().getCangganStarLabel(
+            val monthCangganStarLabel = ShiShenUtil().getCangganStarLabel(
                 BaziUtil().getCanggan(baziInfo.monthDizhi),
                 baziInfo.dayTiangan
             )
-            val dayCangganStarLabel = BaziUtil().getCangganStarLabel(
+            val dayCangganStarLabel = ShiShenUtil().getCangganStarLabel(
                 BaziUtil().getCanggan(baziInfo.dayDizhi),
                 baziInfo.dayTiangan
             )
-            val hourCangganStarLabel = BaziUtil().getCangganStarLabel(
+            val hourCangganStarLabel = ShiShenUtil().getCangganStarLabel(
                 BaziUtil().getCanggan(baziInfo.hourDizhi),
                 baziInfo.dayTiangan
             )
@@ -480,6 +493,24 @@ fun BaziPaipanScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    preProcessBazi.value = true
+                    navController.navigate(BaziScreen.Analysis.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_analysis),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+            }
 
             Row(
                 modifier = Modifier.padding(5.dp),
