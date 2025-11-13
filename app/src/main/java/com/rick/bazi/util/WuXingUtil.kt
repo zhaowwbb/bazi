@@ -3,8 +3,10 @@ package com.rick.bazi.util
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
+import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.DiZhi
+import com.rick.bazi.data.RootLevel
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
 import com.rick.bazi.ui.BaziViewModel
@@ -187,13 +189,18 @@ class WuXingUtil {
         return isWuXingBorn(tgWuXing, dzWuXing)
     }
 
-    @Composable
     fun isDangling(monthDz: DiZhi, dayTg: TianGan): Boolean {
+        var isDangLing = false
         var tgWuXing = getTianGanWuxing(dayTg)
         var dzWuXing = getDiZhiWuxing(monthDz)
-        if (tgWuXing == dzWuXing) return true
-        if (isWuXingBorn(tgWuXing, dzWuXing)) return true
-        return false
+        if (tgWuXing == dzWuXing){
+            isDangLing = true
+        }
+        if (isWuXingBorn(tgWuXing, dzWuXing)){
+            isDangLing = true
+        }
+        println("Bazi isDangling: $isDangLing")
+        return isDangLing
     }
 
     fun getTgWX(tg : TianGan) : WuXing{
@@ -271,7 +278,7 @@ class WuXingUtil {
         return getWuXingText(wx)
     }
 
-    @Composable
+//    @Composable
     fun getDiZhiWuxing(dz : DiZhi) : WuXing {
         var ret = WuXing.WUXING_MU
         if (dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI) {
@@ -305,6 +312,14 @@ class WuXingUtil {
     ): String {
         var ownerStr = getTianganStr(baziInfo, baziInfo.dayTiangan)
         ownerStr = ownerStr + WuXingUtil().getTianGanWuxingText(baziInfo.dayTiangan)
+        return ownerStr
+    }
+
+    @Composable
+    fun getOwnerString(tg: TianGan): String {
+        var tianganStrKey = BaziUtil().tianganStrMap.getValue(tg)
+        var str = stringResource(tianganStrKey)
+        var ownerStr = str + WuXingUtil().getTianGanWuxingText(tg) + stringResource(R.string.bazi_owner_brief)
         return ownerStr
     }
 
@@ -517,9 +532,28 @@ class WuXingUtil {
             result = result + stringResource(R.string.bazi_owner) + stringResource(R.string.app_bazi_xiuqiu_label) + " " + stringResource(R.string.app_bazi_dangling_no)
             baziModel.setDangLing(false)
         }
-
-
+        baziModel.setDeLingCheckStr(result)
         return result
+    }
+
+    @Composable
+    fun getDeDiDescription(
+        baziInfo: BaziData) : String{
+        var deDiStr = "  "
+        var isDedi = isBaziDedi(baziInfo)
+
+        deDiStr = deDiStr + stringResource(R.string.dizhi) + " " +
+                baziInfo.strongRootCount + stringResource(R.string.app_bazi_strong_root) + " " +
+                baziInfo.mediumRootCount + stringResource(R.string.app_bazi_weak_root) + " " +
+                baziInfo.weakRootCount + stringResource(R.string.app_bazi_tiny_root)
+        if(isDedi) {
+            deDiStr = deDiStr + " " + stringResource(R.string.app_bazi_dedi_yes)
+        }else{
+            deDiStr = deDiStr + " " + stringResource(R.string.app_bazi_dedi_no)
+        }
+
+//        baziModel.setDeDiCheckStr(deDiStr)
+        return deDiStr
     }
 
     @Composable
@@ -527,211 +561,366 @@ class WuXingUtil {
         baziInfo: BaziInfo,
         baziModel: BaziViewModel
     ): String {
-        var isDedi = false
         var deDiStr = "  "
 
-        deDiStr = deDiStr + stringResource(R.string.dizhi) + " " + baziInfo.strongRootNum + stringResource(R.string.app_bazi_strong_root) + " " + baziInfo.weakRootNum + stringResource(R.string.app_bazi_weak_root)
-        if(baziInfo.strongRootNum > 0 || baziInfo.weakRootNum > 0) {
+        deDiStr = deDiStr + stringResource(R.string.dizhi) + " " + baziInfo.strongRootCount + stringResource(R.string.app_bazi_strong_root) + " " + baziInfo.weakRootCount + stringResource(R.string.app_bazi_weak_root)
+        if(baziInfo.strongRootCount > 0 || baziInfo.weakRootCount > 0) {
             deDiStr = deDiStr + " " + stringResource(R.string.app_bazi_dedi_yes)
         }else{
             deDiStr = deDiStr + " " + stringResource(R.string.app_bazi_dedi_no)
         }
+
+        baziModel.setDeDiCheckStr(deDiStr)
         return deDiStr
 
+    }
+
+    fun checkMuRoot(dz: DiZhi) : RootLevel{
+        var rootLevel = RootLevel.NO_ROOT
+            if (dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU) {
+                rootLevel = RootLevel.STRONG_ROOT
+            } else if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_HAI) {
+                rootLevel = RootLevel.MEDIUM_ROOT
+            } else if (dz == DiZhi.DIZHI_WEI) {
+                rootLevel = RootLevel.WEAK_ROOT
+            } else {
+                rootLevel = RootLevel.NO_ROOT
+            }
+        return rootLevel
+    }
+
+    fun checkHuoRoot(dz: DiZhi) : RootLevel{
+        var rootLevel = RootLevel.NO_ROOT
+        if (dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU) {
+            rootLevel = RootLevel.STRONG_ROOT
+        } else if (dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_WEI) {
+            rootLevel = RootLevel.MEDIUM_ROOT
+        } else if (dz == DiZhi.DIZHI_XU) {
+            rootLevel = RootLevel.WEAK_ROOT
+        } else {
+            rootLevel = RootLevel.NO_ROOT
+        }
+        return rootLevel
+    }
+
+    fun checkShuiRoot(dz: DiZhi) : RootLevel{
+        var rootLevel = RootLevel.NO_ROOT
+        if (dz == DiZhi.DIZHI_ZI || dz == DiZhi.DIZHI_HAI) {
+            rootLevel = RootLevel.STRONG_ROOT
+        } else if (dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_CHOU) {
+            rootLevel = RootLevel.MEDIUM_ROOT
+        } else if (dz == DiZhi.DIZHI_CHEN) {
+            rootLevel = RootLevel.WEAK_ROOT
+        } else {
+            rootLevel = RootLevel.NO_ROOT
+        }
+        return rootLevel
+    }
+
+    fun checkJinRoot(dz: DiZhi) : RootLevel{
+        var rootLevel = RootLevel.NO_ROOT
+        if (dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_YOU) {
+            rootLevel = RootLevel.STRONG_ROOT
+        } else if (dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_XU) {
+            rootLevel = RootLevel.MEDIUM_ROOT
+        } else if (dz == DiZhi.DIZHI_CHOU) {
+            rootLevel = RootLevel.WEAK_ROOT
+        } else {
+            rootLevel = RootLevel.NO_ROOT
+        }
+        return rootLevel
+    }
+
+    fun checkTuRoot(dz: DiZhi) : RootLevel{
+        var rootLevel = RootLevel.NO_ROOT
+        if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_WEI) {
+            rootLevel = RootLevel.STRONG_ROOT
+        } else if (dz == DiZhi.DIZHI_WU) {
+            rootLevel = RootLevel.MEDIUM_ROOT
+        } else if (dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_SHEN) {
+            rootLevel = RootLevel.WEAK_ROOT
+        } else {
+            rootLevel = RootLevel.NO_ROOT
+        }
+        return rootLevel
+    }
+
+    fun checkRootToTianGan(baziInfo: BaziData, tg : TianGan): Boolean{
+        var ret = false
+        var tg = baziInfo.dayTiangan
+        var dz = baziInfo.yearDizhi
+        var rootLevel = RootLevel.NO_ROOT
+        var strongRootCount = 0
+        var mediumRootCount = 0
+        var weakRootCount = 0
+        if(tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI) {
+            dz = baziInfo.yearDizhi
+            baziInfo.yearDzRootLevel = checkMuRoot(dz)
+            dz = baziInfo.monthDizhi
+            baziInfo.monthDzRootLevel = checkMuRoot(dz)
+            dz = baziInfo.dayDizhi
+            baziInfo.dayDzRootLevel = checkMuRoot(dz)
+            dz = baziInfo.hourDizhi
+            baziInfo.hourDzRootLevel = checkMuRoot(dz)
+        }
+        if(tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_DING){
+            dz = baziInfo.yearDizhi
+            baziInfo.yearDzRootLevel = checkHuoRoot(dz)
+            dz = baziInfo.monthDizhi
+            baziInfo.monthDzRootLevel = checkHuoRoot(dz)
+            dz = baziInfo.dayDizhi
+            baziInfo.dayDzRootLevel = checkHuoRoot(dz)
+            dz = baziInfo.hourDizhi
+            baziInfo.hourDzRootLevel = checkHuoRoot(dz)
+        }
+        if(tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_JI) {
+            dz = baziInfo.yearDizhi
+            baziInfo.yearDzRootLevel = checkTuRoot(dz)
+            dz = baziInfo.monthDizhi
+            baziInfo.monthDzRootLevel = checkTuRoot(dz)
+            dz = baziInfo.dayDizhi
+            baziInfo.dayDzRootLevel = checkTuRoot(dz)
+            dz = baziInfo.hourDizhi
+            baziInfo.hourDzRootLevel = checkTuRoot(dz)
+        }
+        if(tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_XIN) {
+            dz = baziInfo.yearDizhi
+            baziInfo.yearDzRootLevel = checkJinRoot(dz)
+            dz = baziInfo.monthDizhi
+            baziInfo.monthDzRootLevel = checkJinRoot(dz)
+            dz = baziInfo.dayDizhi
+            baziInfo.dayDzRootLevel = checkJinRoot(dz)
+            dz = baziInfo.hourDizhi
+            baziInfo.hourDzRootLevel = checkJinRoot(dz)
+        }
+        if(tg == TianGan.TIANGAN_REN || tg == TianGan.TIANGAN_GUI) {
+            dz = baziInfo.yearDizhi
+            baziInfo.yearDzRootLevel = checkShuiRoot(dz)
+            dz = baziInfo.monthDizhi
+            baziInfo.monthDzRootLevel = checkShuiRoot(dz)
+            dz = baziInfo.dayDizhi
+            baziInfo.dayDzRootLevel = checkShuiRoot(dz)
+            dz = baziInfo.hourDizhi
+            baziInfo.hourDzRootLevel = checkShuiRoot(dz)
+        }
+        if( baziInfo.yearDzRootLevel != RootLevel.NO_ROOT ||
+            baziInfo.monthDzRootLevel != RootLevel.NO_ROOT ||
+            baziInfo.dayDzRootLevel != RootLevel.NO_ROOT ||
+            baziInfo.hourDzRootLevel != RootLevel.NO_ROOT){
+            ret = true
+        }
+
+        return ret
+    }
+
+    fun isBaziDedi(baziInfo: BaziData): Boolean{
+        var strongRootCount = 0
+        var mediumRootCount = 0
+        var weakRootCount = 0
+        var isDeDi = false
+        var yearRootLevel = RootLevel.NO_ROOT
+        var monthRootLevel = RootLevel.NO_ROOT
+        var dayRootLevel = RootLevel.NO_ROOT
+        var hourRootLevel = RootLevel.NO_ROOT
+
+        //found root, check root strength
+        if(checkRootToTianGan(baziInfo, baziInfo.dayTiangan)){
+            yearRootLevel = baziInfo.yearDzRootLevel
+            monthRootLevel = baziInfo.monthDzRootLevel
+            dayRootLevel = baziInfo.dayDzRootLevel
+            hourRootLevel = baziInfo.hourDzRootLevel
+            //strong
+            if(yearRootLevel == RootLevel.STRONG_ROOT){
+                strongRootCount++
+            }
+            if(monthRootLevel == RootLevel.STRONG_ROOT){
+                strongRootCount++
+            }
+            if(dayRootLevel == RootLevel.STRONG_ROOT){
+                strongRootCount++
+            }
+            if(hourRootLevel == RootLevel.STRONG_ROOT){
+                strongRootCount++
+            }
+
+            //medium
+            if(yearRootLevel == RootLevel.MEDIUM_ROOT){
+                mediumRootCount++
+            }
+            if(monthRootLevel == RootLevel.MEDIUM_ROOT){
+                mediumRootCount++
+            }
+            if(dayRootLevel == RootLevel.MEDIUM_ROOT){
+                mediumRootCount++
+            }
+            if(hourRootLevel == RootLevel.MEDIUM_ROOT){
+                mediumRootCount++
+            }
+
+            //weak
+            if(yearRootLevel == RootLevel.WEAK_ROOT){
+                weakRootCount++
+            }
+            if(monthRootLevel == RootLevel.WEAK_ROOT){
+                weakRootCount++
+            }
+            if(dayRootLevel == RootLevel.WEAK_ROOT){
+                weakRootCount++
+            }
+            if(hourRootLevel == RootLevel.WEAK_ROOT){
+                weakRootCount++
+            }
+
+            //2 weak root is dedi, other root 1 is dedi
+            if(strongRootCount > 0 || mediumRootCount > 0 || weakRootCount> 1 ){
+                isDeDi = true
+            }
+        }
+        println("Bazi isDeDi=$isDeDi")
+        return isDeDi
     }
 
     fun isDeDi( baziInfo: BaziInfo, baziModel: BaziViewModel): Boolean{
         var tg = baziInfo.dayTiangan
         var dz = baziInfo.yearDizhi
-        var strongRootNum = 0
-        var weakRootNum = 0
-        if(tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI){
-            //yearDz
-            if(dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU){
-                strongRootNum++;
-            }
-            if(dz == DiZhi.DIZHI_WEI || dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI || dz == DiZhi.DIZHI_CHOU){
-                weakRootNum++
-            }
-
-            //month
+        var ret = false
+        var rootLevel = RootLevel.NO_ROOT
+        var strongRootCount = 0
+        var mediumRootCount = 0
+        var weakRootCount = 0
+        if(tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI) {
+            dz = baziInfo.yearDizhi
+            baziModel.setYearDzRootLevel(checkMuRoot(dz))
             dz = baziInfo.monthDizhi
-            if(dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU){
-                strongRootNum++;
-            }
-            if(dz == DiZhi.DIZHI_WEI || dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI || dz == DiZhi.DIZHI_CHOU){
-                weakRootNum++
-            }
-
-            //day
+            baziModel.setMonthDzRootLevel(checkMuRoot(dz))
             dz = baziInfo.dayDizhi
-            if(dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU){
-                strongRootNum++;
-            }
-            if(dz == DiZhi.DIZHI_WEI || dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI || dz == DiZhi.DIZHI_CHOU){
-                weakRootNum++
-            }
-
-            //hour
+            baziModel.setDayDzRootLevel(checkMuRoot(dz))
             dz = baziInfo.hourDizhi
-            if(dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU){
-                strongRootNum++;
-            }
-            if(dz == DiZhi.DIZHI_WEI || dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI || dz == DiZhi.DIZHI_CHOU){
-                weakRootNum++
-            }
+            baziModel.setHourDzRootLevel(checkMuRoot(dz))
         }
-
         if(tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_DING){
-            //yearDz
-            if(dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU){
-                strongRootNum++;
-            }
-            if(dz == DiZhi.DIZHI_WEI || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU || dz == DiZhi.DIZHI_CHEN){
-                weakRootNum++
-            }
-            //month
+            dz = baziInfo.yearDizhi
+            baziModel.setYearDzRootLevel(checkHuoRoot(dz))
             dz = baziInfo.monthDizhi
-            if(dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU){
-                strongRootNum++;
-            }
-            if(dz == DiZhi.DIZHI_WEI || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU || dz == DiZhi.DIZHI_CHEN){
-                weakRootNum++
-            }
-            //day
+            baziModel.setMonthDzRootLevel(checkHuoRoot(dz))
             dz = baziInfo.dayDizhi
-            if(dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU){
-                strongRootNum++;
-            }
-            if(dz == DiZhi.DIZHI_WEI || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU || dz == DiZhi.DIZHI_CHEN){
-                weakRootNum++
-            }
-
-            //hour
+            baziModel.setDayDzRootLevel(checkHuoRoot(dz))
             dz = baziInfo.hourDizhi
-            if(dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU){
-                strongRootNum++;
-            }
-            if(dz == DiZhi.DIZHI_WEI || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU || dz == DiZhi.DIZHI_CHEN){
-                weakRootNum++
-            }
+            baziModel.setHourDzRootLevel(checkHuoRoot(dz))
         }
-
         if(tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_JI) {
-            //yearDz
-            if (dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU ) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_WEI) {
-                weakRootNum++;
-            }
-
-            //month
+            dz = baziInfo.yearDizhi
+            baziModel.setYearDzRootLevel(checkTuRoot(dz))
             dz = baziInfo.monthDizhi
-            if (dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU ) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_WEI) {
-                weakRootNum++;
-            }
-
-            //day
+            baziModel.setMonthDzRootLevel(checkTuRoot(dz))
             dz = baziInfo.dayDizhi
-            if (dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU ) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_WEI) {
-                weakRootNum++;
-            }
-
-            //hour
+            baziModel.setDayDzRootLevel(checkTuRoot(dz))
             dz = baziInfo.hourDizhi
-            if (dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU ) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_WEI) {
-                weakRootNum++;
-            }
+            baziModel.setHourDzRootLevel(checkTuRoot(dz))
         }
-
         if(tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_XIN) {
-            //yearDz
-            if (dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_YOU) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_SI) {
-                weakRootNum++;
-            }
-
-            //month
+            dz = baziInfo.yearDizhi
+            baziModel.setYearDzRootLevel(checkJinRoot(dz))
             dz = baziInfo.monthDizhi
-            if (dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_YOU) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_SI) {
-                weakRootNum++;
-            }
-
-            //day
+            baziModel.setMonthDzRootLevel(checkJinRoot(dz))
             dz = baziInfo.dayDizhi
-            if (dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_YOU) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_SI) {
-                weakRootNum++;
-            }
-
-            //hour
+            baziModel.setDayDzRootLevel(checkJinRoot(dz))
             dz = baziInfo.hourDizhi
-            if (dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_YOU) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_SI) {
-                weakRootNum++;
-            }
+            baziModel.setHourDzRootLevel(checkJinRoot(dz))
         }
-
         if(tg == TianGan.TIANGAN_REN || tg == TianGan.TIANGAN_GUI) {
-            //yearDz
-            if (dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_CHEN) {
-                weakRootNum++;
-            }
-
-            //month
+            dz = baziInfo.yearDizhi
+            baziModel.setYearDzRootLevel(checkShuiRoot(dz))
             dz = baziInfo.monthDizhi
-            if (dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_CHEN) {
-                weakRootNum++;
-            }
-
-            //day
+            baziModel.setMonthDzRootLevel(checkShuiRoot(dz))
             dz = baziInfo.dayDizhi
-            if (dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_CHEN) {
-                weakRootNum++;
-            }
-
-            //hour
+            baziModel.setDayDzRootLevel(checkShuiRoot(dz))
             dz = baziInfo.hourDizhi
-            if (dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI) {
-                strongRootNum++
-            }
-            if (dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_CHEN) {
-                weakRootNum++;
-            }
+            baziModel.setHourDzRootLevel(checkShuiRoot(dz))
         }
 
-        baziModel.setStrongRootNum(strongRootNum)
-        baziModel.setWeakRootNum(weakRootNum)
-        if(strongRootNum > 0 || weakRootNum > 0)return true
+        updateRootCount(baziInfo, baziModel)
+        return ret
+    }
 
-        return false
+    fun updateRootCount(baziInfo: BaziInfo, baziModel: BaziViewModel){
+        var strongRootCount = 0
+        var mediumRootCount = 0
+        var weakRootCount = 0
+        var yearRootLevel = baziInfo.yearDzRootLevel
+        var monthRootLevel = baziInfo.monthDzRootLevel
+        var dayRootLevel = baziInfo.dayDzRootLevel
+        var hourRootLevel = baziInfo.hourDzRootLevel
+        var isDeDi = false
+
+        //strong
+        if(yearRootLevel == RootLevel.STRONG_ROOT){
+            strongRootCount++
+        }
+        if(monthRootLevel == RootLevel.STRONG_ROOT){
+            strongRootCount++
+        }
+        if(dayRootLevel == RootLevel.STRONG_ROOT){
+            strongRootCount++
+        }
+        if(hourRootLevel == RootLevel.STRONG_ROOT){
+            strongRootCount++
+        }
+
+        //medium
+        if(yearRootLevel == RootLevel.MEDIUM_ROOT){
+            mediumRootCount++
+        }
+        if(monthRootLevel == RootLevel.MEDIUM_ROOT){
+            mediumRootCount++
+        }
+        if(dayRootLevel == RootLevel.MEDIUM_ROOT){
+            mediumRootCount++
+        }
+        if(hourRootLevel == RootLevel.MEDIUM_ROOT){
+            mediumRootCount++
+        }
+
+        //weak
+        if(yearRootLevel == RootLevel.WEAK_ROOT){
+            weakRootCount++
+        }
+        if(monthRootLevel == RootLevel.WEAK_ROOT){
+            weakRootCount++
+        }
+        if(dayRootLevel == RootLevel.WEAK_ROOT){
+            weakRootCount++
+        }
+        if(hourRootLevel == RootLevel.WEAK_ROOT){
+            weakRootCount++
+        }
+
+        if(strongRootCount > 0 || mediumRootCount > 0 || weakRootCount> 1 ){
+            isDeDi = true
+        }
+
+        baziModel.setStrongRootCount(strongRootCount)
+        baziModel.setMediumRootCount(mediumRootCount)
+        baziModel.setWeakRootCount(weakRootCount)
+        baziModel.setIsDedi(isDeDi)
+    }
+
+    @Composable
+    fun getOwnerWuXingString(
+        baziInfo: BaziInfo,
+        baziModel: BaziViewModel
+    ): String {
+        var wuxingStr =
+            stringResource(R.string.app_bazi_metal) + "(" + WuXingUtil().getJinNumber(baziInfo) + ") " + stringResource(
+                R.string.app_bazi_wood
+            ) + "(" + WuXingUtil().getMuNumber(baziInfo) + ") " + stringResource(R.string.app_bazi_water) + "(" + WuXingUtil().getShuiNumber(
+                baziInfo
+            ) + ") " + stringResource(R.string.app_bazi_fire) + "(" + WuXingUtil().getHuoNumber(
+                baziInfo
+            ) + ") " + stringResource(R.string.app_bazi_soil) + "(" + WuXingUtil().getTuNumber(
+                baziInfo
+            ) + ")"
+        baziModel.setWuxingSummaryStr(wuxingStr)
+        return wuxingStr
     }
 }

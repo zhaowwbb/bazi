@@ -51,6 +51,42 @@ fun BaziAppAnalysisScreen(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        val birthDateStr = BaziUtil().getBirthDateLabel(baziInfo)
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight(500),
+                    fontSize = 26.sp,
+                    text = "${birthDateStr}"
+                )
+            }
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+            ) {
+                HorizontalDivider(thickness = 2.dp)
+            }
+        }
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -61,17 +97,7 @@ fun BaziAppAnalysisScreen(
             Row(
                 modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
-
                 val bullet = "\u2022" // Unicode bullet character
-
-//                var ownerStr = BaziMeasureUtil().getOwnerStr(baziInfo)
-
-
-
-//                var wuxingStr = stringResource(R.string.app_bazi_metal) + "(" + WuXingUtil().getJinNumber(baziInfo) + ") " + stringResource(R.string.app_bazi_wood) + "(" + WuXingUtil().getMuNumber(baziInfo) + ") " + stringResource(R.string.app_bazi_water) + "(" + WuXingUtil().getShuiNumber(baziInfo) + ") " + stringResource(R.string.app_bazi_fire) + "(" + WuXingUtil().getHuoNumber(baziInfo) + ") " + stringResource(R.string.app_bazi_soil) + "(" + WuXingUtil().getTuNumber(baziInfo) + ")"
-//
-//                ownerStr = ownerStr + stringResource(R.string.bazi_owner_brief)
-
                 val analysisResult = buildAnnotatedString {
 
                     //1.
@@ -82,19 +108,19 @@ fun BaziAppAnalysisScreen(
                         append(" " + stringResource(R.string.app_bazi_str) + ":")
                     }
                     withStyle(style = SpanStyle(color = Color.Black, fontSize = 16.sp)) {
-                        append(baziInfo.baziStr + "\n")
+                        append(BaziUtil().createBaziStringOneLine(baziInfo) + "\n")
                     }
                     withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.bazi_owner) + ":")
                     }
                     withStyle(style = SpanStyle(color = Color.Black, fontSize = 16.sp)) {
-                        append(" " + baziInfo.ownerStr + "\n")
+                        append(" " + WuXingUtil().getOwnerString(baziInfo.baziData.dayTiangan) + "\n")
                     }
                     withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.app_wuxing_fenbu) + ":")
                     }
                     withStyle(style = SpanStyle(color = Color.Black, fontSize = 16.sp)) {
-                        append(" " + baziInfo.wuxingSummaryStr + "\n")
+                        append(" " + WuXingUtil().getOwnerWuXingString(baziInfo, baziModel) + "\n")
                     }
                     withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.ten_shen) + ":\n")
@@ -120,14 +146,14 @@ fun BaziAppAnalysisScreen(
                         append(stringResource(R.string.app_bazi_deling_label) + " ")
                     }
                     withStyle(style = SpanStyle(color = Color.Black, fontSize = 16.sp)) {
-                        append(baziInfo.deLingCheckStr + "\n")
+                        append(WuXingUtil().getDangLingStr(baziInfo, baziModel) + "\n")
                     }
 
                     withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.app_bazi_dedi_label) + " ")
                     }
                     withStyle(style = SpanStyle(color = Color.Black, fontSize = 16.sp)) {
-                        append(baziInfo.deDiCheckStr + "\n")
+                        append(WuXingUtil().getDeDiDescription(baziInfo.baziData) + "\n")
                     }
 
                     withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)) {

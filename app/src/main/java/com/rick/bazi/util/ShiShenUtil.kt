@@ -3,9 +3,11 @@ package com.rick.bazi.util
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
+import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
+import com.rick.bazi.ui.BaziViewModel
 
 class ShiShenUtil {
     val shishenMap: Map<TianGan, Array<TianGan>> = mapOf(
@@ -384,5 +386,98 @@ class ShiShenUtil {
     fun isCai(ss : ShiShen) : Boolean{
         if(ss == ShiShen.SHISHEN_ZHENG_CAI || ss == ShiShen.SHISHEN_PIAN_CAI)return true
         return false
+    }
+
+    @Composable
+    fun getBaziShiShengString(baziInfo: BaziInfo, baziModel: BaziViewModel) : String{
+        var str = ""
+        var shishenYearStr = stringResource(R.string.bazi_year) + ": " + getTianganStr(
+            baziInfo,
+            baziInfo.yearTiangan
+        ) + "(" + ShiShenUtil().getShiShenText(
+            baziInfo.yearTiangan,
+            baziInfo.dayTiangan
+        ) + ") 、 " + getDizhiStr(
+            baziInfo,
+            baziInfo.yearDizhi
+        ) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.yearDizhi, baziInfo.dayTiangan) + ")"
+        baziModel.setShishenYearStr(shishenYearStr)
+        baziModel.setYearTgShiShen(
+            ShiShenUtil().getShiShen(
+                baziInfo.yearTiangan,
+                baziInfo.dayTiangan
+            )
+        )
+        baziModel.setYearDzShiShen(
+            ShiShenUtil().getDiZhiShiShen(
+                baziInfo.yearDizhi,
+                baziInfo.dayTiangan
+            )
+        )
+
+        var shishenMonthStr = stringResource(R.string.bazi_month) + ": " + getTianganStr(
+            baziInfo,
+            baziInfo.monthTiangan
+        ) + "(" + ShiShenUtil().getShiShenText(
+            baziInfo.monthTiangan,
+            baziInfo.dayTiangan
+        ) + ") 、 " + getDizhiStr(
+            baziInfo,
+            baziInfo.monthDizhi
+        ) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.monthDizhi, baziInfo.dayTiangan) + ")"
+        baziModel.setShishenMonthStr(shishenMonthStr)
+        baziModel.setMonthTgShiShen(
+            ShiShenUtil().getShiShen(
+                baziInfo.monthTiangan,
+                baziInfo.dayTiangan
+            )
+        )
+        baziModel.setMonthDzShiShen(
+            ShiShenUtil().getDiZhiShiShen(
+                baziInfo.monthDizhi,
+                baziInfo.dayTiangan
+            )
+        )
+
+        var shishenDayStr = stringResource(R.string.bazi_day) + ": " + getTianganStr(
+            baziInfo,
+            baziInfo.dayTiangan
+        ) + "(" + stringResource(R.string.bazi_owner) + ") 、 " + getDizhiStr(
+            baziInfo,
+            baziInfo.dayDizhi
+        ) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.dayDizhi, baziInfo.dayTiangan) + ")"
+        baziModel.setShishenDayStr(shishenDayStr)
+        baziModel.setDayDzShiShen(
+            ShiShenUtil().getDiZhiShiShen(
+                baziInfo.dayDizhi,
+                baziInfo.dayTiangan
+            )
+        )
+
+
+        var shishenHourStr = stringResource(R.string.bazi_hour) + ": " + getTianganStr(
+            baziInfo,
+            baziInfo.hourTiangan
+        ) + "(" + ShiShenUtil().getShiShenText(
+            baziInfo.hourTiangan,
+            baziInfo.dayTiangan
+        ) + ") 、 " + getDizhiStr(
+            baziInfo,
+            baziInfo.hourDizhi
+        ) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.hourDizhi, baziInfo.dayTiangan) + ")"
+        baziModel.setShishenHourStr(shishenHourStr)
+        baziModel.setHourTgShiShen(
+            ShiShenUtil().getShiShen(
+                baziInfo.hourTiangan,
+                baziInfo.dayTiangan
+            )
+        )
+        baziModel.setHourDzShiShen(
+            ShiShenUtil().getDiZhiShiShen(
+                baziInfo.hourDizhi,
+                baziInfo.dayTiangan
+            )
+        )
+        return str
     }
 }

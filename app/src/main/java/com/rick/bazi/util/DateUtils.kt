@@ -84,7 +84,7 @@ class DateUtils {
         var x = 0
         var r = 0
 
-        Log.i("[Rick]","Step 1");
+//        Log.i("[Rick]","Step 1");
 
         //check year 2000 case, todo
         if(month == 1 || month == 2){
@@ -125,14 +125,14 @@ class DateUtils {
             s = s % 100
         }
 
-        Log.i("[Rick]","Step 2");
+//        Log.i("[Rick]","Step 2");
         u = s % 4
 
         r = (s/4)*6 + ((s/4)*3 + u)*5 + (m*3 - 7)/5 + d + x
         if(m % 2 == 0){
             r = r + 30
         }
-        Log.i("[Rick]","Step 3 ${r}");
+//        Log.i("[Rick]","Step 3 ${r}");
         return r
     }
 }

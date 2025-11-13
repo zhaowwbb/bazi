@@ -1,0 +1,86 @@
+package com.rick.bazi.util
+
+import com.rick.bazi.data.BaziInfo
+import com.rick.bazi.data.DiZhi
+import com.rick.bazi.data.TianGan
+import com.rick.bazi.ui.BaziViewModel
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
+class BaziPaiPanUtilTest {
+
+    @Test
+    fun testPaiPan1() {
+        var year = 2025
+        var month = 1
+        var day = 1
+        var hour = 0
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male",baziModel, baziInfo)
+
+        assertEquals(year, data.birthDateYear)
+        assertEquals(month, data.birthDateMonth)
+        assertEquals(day, data.birthDateDay)
+        assertEquals(hour, data.birthHour)
+
+        assertEquals(TianGan.TIANGAN_JIA, data.yearTiangan)
+        assertEquals(DiZhi.DIZHI_CHEN, data.yearDizhi)
+        assertEquals(TianGan.TIANGAN_BING, data.monthTiangan)
+        assertEquals(DiZhi.DIZHI_ZI, data.monthDizhi)
+        assertEquals(TianGan.TIANGAN_GENG, data.dayTiangan)
+        assertEquals(DiZhi.DIZHI_WU, data.dayDizhi)
+        assertEquals(TianGan.TIANGAN_BING, data.hourTiangan)
+        assertEquals(DiZhi.DIZHI_ZI, data.hourDizhi)
+    }
+
+    @Test
+    fun testPaiPan2() {
+        var year = 1978
+        var month = 8
+        var day = 9
+        var hour = 0
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male",baziModel, baziInfo)
+
+        assertEquals(year, data.birthDateYear)
+        assertEquals(month, data.birthDateMonth)
+        assertEquals(day, data.birthDateDay)
+        assertEquals(hour, data.birthHour)
+
+        assertEquals(TianGan.TIANGAN_WU, data.yearTiangan)
+        assertEquals(DiZhi.DIZHI_WU, data.yearDizhi)
+        assertEquals(TianGan.TIANGAN_GENG, data.monthTiangan)
+        assertEquals(DiZhi.DIZHI_SHEN, data.monthDizhi)
+        assertEquals(TianGan.TIANGAN_GUI, data.dayTiangan)
+        assertEquals(DiZhi.DIZHI_MOU, data.dayDizhi)
+        assertEquals(TianGan.TIANGAN_REN, data.hourTiangan)
+        assertEquals(DiZhi.DIZHI_ZI, data.hourDizhi)
+    }
+
+    @Test
+    fun testPaiPan3() {
+        var year = 2025
+        var month = 11
+        var day = 12
+        var hour = 7
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male",baziModel, baziInfo)
+
+        assertEquals(year, data.birthDateYear)
+        assertEquals(month, data.birthDateMonth)
+        assertEquals(day, data.birthDateDay)
+        assertEquals(hour, data.birthHour)
+
+        assertEquals(TianGan.TIANGAN_YI, data.yearTiangan)
+        assertEquals(DiZhi.DIZHI_SI, data.yearDizhi)
+        assertEquals(TianGan.TIANGAN_DING, data.monthTiangan)
+        assertEquals(DiZhi.DIZHI_HAI, data.monthDizhi)
+        assertEquals(TianGan.TIANGAN_YI, data.dayTiangan)
+        assertEquals(DiZhi.DIZHI_YOU, data.dayDizhi)
+        assertEquals(TianGan.TIANGAN_GENG, data.hourTiangan)
+        assertEquals(DiZhi.DIZHI_CHEN, data.hourDizhi)
+    }
+}

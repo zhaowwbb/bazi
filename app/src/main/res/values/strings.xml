@@ -326,8 +326,9 @@
     <string name="app_bazi_xiuqiu_label">休囚</string>
     <string name="app_bazi_dangling_yes">得令</string>
     <string name="app_bazi_dangling_no">不得令</string>
-    <string name="app_bazi_strong_root">强根</string>
-    <string name="app_bazi_weak_root">弱根</string>
+    <string name="app_bazi_strong_root">本气强根</string>
+    <string name="app_bazi_weak_root">中气弱根</string>
+    <string name="app_bazi_tiny_root">余气微根</string>
     <string name="app_bazi_dedi_yes">得地</string>
     <string name="app_bazi_dedi_no">不得地</string>
     <string name="app_bazi_deshi_yes">得助</string>
@@ -373,6 +374,15 @@
     <string name="app_bazi_gj_shangguan">伤官格</string>
     <string name="app_bazi_gj_jianlu">建禄格</string>
 
+    <string name="app_bazi_gj_congsha">从煞格</string>
+    <string name="app_bazi_gj_congcai">从财格</string>
+    <string name="app_bazi_gj_conger">从儿格</string>
+    <string name="app_bazi_gj_quzhi">曲直格</string>
+    <string name="app_bazi_gj_yanshang">炎上格</string>
+    <string name="app_bazi_gj_jiase">稼穑格</string>
+    <string name="app_bazi_gj_congge">从革格</string>
+    <string name="app_bazi_gj_runxia">润下格</string>
+
     <string name="app_bazi_gj_zhengguan_desc">重名誉、守规则、适合公职</string>
     <string name="app_bazi_gj_qisha_desc">有魄力、有野心、适合竞争性行业</string>
     <string name="app_bazi_gj_zhengcai_desc">勤劳致富、稳重诚信、适合商业</string>
@@ -382,6 +392,14 @@
     <string name="app_bazi_gj_shishen_desc">温和聪慧、有口福、适合艺术美食</string>
     <string name="app_bazi_gj_shangguan_desc">才华横溢、不拘一格、适合创新技术</string>
     <string name="app_bazi_gj_jianlu_desc">外表温和、内敛，但内心坚韧刚强，具备很强的能力和亲和力，因此人缘普遍很好</string>
+    <string name="app_bazi_gj_congsha_desc">多具权威、领导力，能在压力和管理中成就事业。</string>
+    <string name="app_bazi_gj_congcai_desc">多富有经济头脑，善于理财和经营。</string>
+    <string name="app_bazi_gj_conger_desc">多才华横溢，创意无限，善于表达和技艺。</string>
+    <string name="app_bazi_gj_quzhi_desc">仁寿慈悲，积极向上。</string>
+    <string name="app_bazi_gj_yanshang_desc">热情礼貌，积极奋进。</string>
+    <string name="app_bazi_gj_jiase_desc">诚信稳重，可富可贵。</string>
+    <string name="app_bazi_gj_congge_desc">刚毅果断，有威严。</string>
+    <string name="app_bazi_gj_runxia_desc">智慧聪颖，流动性强。</string>
 
 
     <string name="app_bazi_gj_congruo_desc">从弱格: 日主极弱，整个八字都顺从弱日主，需要泄耗。</string>

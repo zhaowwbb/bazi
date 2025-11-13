@@ -4,7 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
 import com.rick.bazi.data.BaziGeJu
+import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.ShiShen
+import com.rick.bazi.data.WuXing
+import com.rick.bazi.ui.BaziViewModel
 
 class GeJuUtil {
     @Composable
@@ -95,5 +98,70 @@ class GeJuUtil {
         }
 
         return str
+    }
+
+    @Composable
+    fun isRootTouTianGan(baziInfo: BaziInfo, wx : WuXing) : Boolean{
+        var ret = false
+        var isTianGanExist = false
+        var isDiZhiExist = false
+        if(WuXingUtil().getTianGanWuxing(baziInfo.yearTiangan) == wx ||
+            WuXingUtil().getTianGanWuxing(baziInfo.monthTiangan) == wx ||
+            WuXingUtil().getTianGanWuxing(baziInfo.dayTiangan) == wx ||
+            WuXingUtil().getTianGanWuxing(baziInfo.hourTiangan) == wx){
+            isTianGanExist = true
+        }
+
+        if(WuXingUtil().getDiZhiWuxing(baziInfo.yearDizhi) == wx ||
+            WuXingUtil().getDiZhiWuxing(baziInfo.monthDizhi) == wx ||
+            WuXingUtil().getDiZhiWuxing(baziInfo.dayDizhi) == wx ||
+            WuXingUtil().getDiZhiWuxing(baziInfo.hourDizhi) == wx){
+            isDiZhiExist = true
+        }
+
+        if(isTianGanExist && isDiZhiExist){
+            ret = true
+        }
+
+        return ret
+    }
+
+    @Composable
+    fun isCongShaGJ(baziInfo: BaziInfo, baziModel: BaziViewModel) : Boolean {
+        //1970年10月21日 巳时
+        //八字: 庚戌 丁亥 己巳 丁巳
+        var ret = false
+        var gjString = ""
+        var gjSummary = ""
+        var gj = BaziGeJu.GJ_NONE
+        if(baziInfo.isDangLing)return false
+        //
+        if(baziInfo.strongRootCount > 0 || baziInfo.mediumRootCount > 0 || baziInfo.weakRootCount > 1)return false
+
+        //only Yin TianGan with weak root is CongSha
+        if(baziInfo.weakRootCount == 1 && BaziUtil().isYangTianGan(baziInfo.dayTiangan))return false
+
+        if(baziInfo.guanshaCount >= 2 && (baziInfo.guanshaCount + baziInfo.caiCount) >= 4 && baziInfo.shishangCount == 0){
+            if(isRootTouTianGan(baziInfo, WuXingUtil().getGuanshaWuXing(baziInfo.dayTiangan))){
+                if(!isRootTouTianGan(baziInfo, WuXingUtil().getYinWuXing(baziInfo.dayTiangan))){
+                    ret = true
+                    gj = BaziGeJu.GJ_CONG_SHA
+                    gjSummary = stringResource(R.string.app_bazi_gj_no_label)
+                    gjString = stringResource(R.string.app_bazi_gj_no_label)
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+
+        }else{
+            return false
+        }
+
+        baziModel.setBaziGJ(gj)
+        baziModel.setBaziGJSummary(gjSummary)
+        baziModel.setBaziGJString(gjString)
+        return ret
     }
 }

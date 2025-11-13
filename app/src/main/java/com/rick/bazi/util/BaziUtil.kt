@@ -511,7 +511,7 @@ class BaziUtil {
         }
 
         cyclicalYear += 1
-        println("cyclicalYear=$cyclicalYear")
+//        println("cyclicalYear=$cyclicalYear")
         return cyclicalYear
     }
 
@@ -542,12 +542,12 @@ class BaziUtil {
         } else {
             cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 13) % 60;
         }
-        println("cyclicalMonth=$cyclicalMonth")
+//        println("cyclicalMonth=$cyclicalMonth")
 
         var tmpUTC = UTC(calendar, solarYear, solarMonth, solarDay, hour, 0, 0)
         var tmp = (tmpUTC / 86400000) + 25567 + 10
         cyclicalDay = (tmp % 60).toInt()
-        println("cyclicalDay=$cyclicalDay")
+//        println("cyclicalDay=$cyclicalDay")
 
         return cyclicalMonth
     }
@@ -974,7 +974,7 @@ class BaziUtil {
             hourTg = getNextTG(hourTg)
         }
 
-        println("Calcuate hour Tiangan, dayTG =$dayTG  hour=$hour ")
+//        println("Calcuate hour Tiangan, dayTG =$dayTG  hour=$hour ")
         return hourTg
     }
 
@@ -1365,5 +1365,46 @@ class BaziUtil {
         return dz
     }
 
+    fun isYangTianGan(tg : TianGan) : Boolean{
+        if(tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_REN)return true
+        return false
+    }
+
+    @Composable
+    fun getTianganText(
+        baziInfo: BaziInfo,
+        tiangan: TianGan
+    ): String {
+        val tianganStrMap: Map<TianGan, Int> = baziInfo.tianganStrMap
+        var tianganStrKey = tianganStrMap.getValue(tiangan)
+        val str = stringResource(tianganStrKey)
+        return str
+    }
+
+    @Composable
+    fun getDizhiText(
+        baziInfo: BaziInfo,
+        diZhi: DiZhi
+    ): String {
+        val dizhiStrMap: Map<DiZhi, Int> = baziInfo.dizhiStrMap
+        var dizhiStrKey = dizhiStrMap.getValue(diZhi)
+        val str = stringResource(dizhiStrKey)
+        return str
+    }
+
+
+    @Composable
+    fun createBaziStringOneLine(baziInfo: BaziInfo) : String{
+        var baziStr = " " + getTianganText(baziInfo, baziInfo.yearTiangan) +
+                getDizhiText(baziInfo, baziInfo.yearDizhi) +
+                " " + getTianganText(baziInfo, baziInfo.monthTiangan) +
+                getDizhiText(baziInfo, baziInfo.monthDizhi) + " " +
+                getTianganText(baziInfo, baziInfo.dayTiangan) +
+                getDizhiText(baziInfo, baziInfo.dayDizhi) + " " +
+                getTianganText(baziInfo, baziInfo.hourTiangan) +
+                getDizhiText(baziInfo, baziInfo.hourDizhi)
+
+        return baziStr
+    }
 }
 

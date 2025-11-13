@@ -2,9 +2,11 @@ package com.rick.bazi.ui
 
 import com.rick.bazi.data.BaziInfo
 import androidx.lifecycle.ViewModel
+import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.BaziGeJu
 import com.rick.bazi.data.BaziStrength
 import com.rick.bazi.data.DiZhi
+import com.rick.bazi.data.RootLevel
 import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
@@ -196,26 +198,26 @@ class BaziViewModel : ViewModel() {
         }
     }
 
-    fun setStrongRootNum(n: Int) {
+    fun setStrongRootCount(n: Int) {
         _uiState.update { currentState ->
             currentState.copy(
-                strongRootNum = n
+                strongRootCount = n
             )
         }
     }
 
-    fun setMediumRootNum(n: Int) {
+    fun setMediumRootCount(n: Int) {
         _uiState.update { currentState ->
             currentState.copy(
-                mediumRootNum = n
+                mediumRootCount = n
             )
         }
     }
 
-    fun setWeakRootNum(n: Int) {
+    fun setWeakRootCount(n: Int) {
         _uiState.update { currentState ->
             currentState.copy(
-                weakRootNum = n
+                weakRootCount = n
             )
         }
     }
@@ -520,6 +522,46 @@ class BaziViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 tiaohouShenList = list
+            )
+        }
+    }
+
+    fun setYearDzRootLevel(level: RootLevel) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                yearDzRootLevel = level
+            )
+        }
+    }
+
+    fun setMonthDzRootLevel(level: RootLevel) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                monthDzRootLevel = level
+            )
+        }
+    }
+
+    fun setDayDzRootLevel(level: RootLevel) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                dayDzRootLevel = level
+            )
+        }
+    }
+
+    fun setHourDzRootLevel(level: RootLevel) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                hourDzRootLevel = level
+            )
+        }
+    }
+
+    fun setBaziData(data: BaziData) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziData = data
             )
         }
     }

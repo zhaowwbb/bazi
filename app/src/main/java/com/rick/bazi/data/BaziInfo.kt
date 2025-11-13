@@ -7,10 +7,10 @@ import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_2
 import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_3
 import com.rick.bazi.data.BaziSummaryMSG.Companion.TAOHUA_4
 
-const val MALE = "Male"
-const val FEMALE = "Female"
+
 
 data class BaziInfo(
+    val baziData : BaziData = BaziData(),
     val name: String = "",
     val birthDateMili: Long = 0,
     val birthDateYear: Int = 0,
@@ -34,9 +34,9 @@ data class BaziInfo(
     val dayunForward : Boolean = true,
     val dayunDays : Int = 0,
     val isDangLing : Boolean = false,
-    val strongRootNum : Int = 0,
-    val mediumRootNum : Int = 0,
-    val weakRootNum : Int = 0,
+    val strongRootCount : Int = 0,
+    val mediumRootCount : Int = 0,
+    val weakRootCount : Int = 0,
 
     val baziStr : String = "",
     val ownerStr : String = "",
@@ -79,6 +79,11 @@ data class BaziInfo(
     val xiyongShenList : List<WuXing> = arrayListOf<WuXing>(),
     val jiShenList : List<WuXing> = arrayListOf<WuXing>(),
     val tiaohouShenList : List<WuXing> = arrayListOf<WuXing>(),
+
+    val yearDzRootLevel : RootLevel = RootLevel.NO_ROOT,
+    val monthDzRootLevel : RootLevel = RootLevel.NO_ROOT,
+    val dayDzRootLevel : RootLevel = RootLevel.NO_ROOT,
+    val hourDzRootLevel : RootLevel = RootLevel.NO_ROOT,
 
     val tianganStrMap: Map<TianGan, Int> = mapOf(
         TianGan.TIANGAN_JIA to R.string.tiangan_jia,
