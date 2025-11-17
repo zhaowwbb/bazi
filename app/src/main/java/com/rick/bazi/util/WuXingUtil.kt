@@ -5,8 +5,10 @@ import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
 import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.BaziInfo
+import com.rick.bazi.data.BaziStrength
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.RootLevel
+import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
 import com.rick.bazi.ui.BaziViewModel
@@ -713,6 +715,55 @@ class WuXingUtil {
         return ret
     }
 
+    fun isBaziStrong(data: BaziData) : Boolean{
+        var ret = false
+        var danglingWeight = 0
+        var dediWeight = 0
+        var totalWeight = 0
+        var elementDiffWeight = getBaziHelpCount(data)
+//        var baziStrength = BaziStrength.BAZI_BALANCED
+//        var goodElementCount =
+
+            if (isDangling(data.monthDizhi, data.dayTiangan)) {
+            danglingWeight = 3
+        } else {
+            danglingWeight = -3
+        }
+
+        if (isBaziDedi(data)) {
+            dediWeight = 2
+        } else {
+            dediWeight = -2
+        }
+
+        totalWeight = danglingWeight + dediWeight + elementDiffWeight
+
+        //todo, for balanced case,
+        if(totalWeight > 0){
+            ret = true
+        }
+        return ret
+    }
+
+    //return total good element - bad element
+    fun getBaziHelpCount(data: BaziData): Int{
+        var ret = false
+        var yinCount = 0
+        var shiShangCount = 0
+        var biJieCount = 0
+        var guanShaCount = 0
+        var caiCount = 0
+        var goodCount = 0
+        yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
+        shiShangCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
+        biJieCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
+        guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
+        caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
+
+        goodCount = yinCount + biJieCount - guanShaCount - shiShangCount - caiCount
+        return goodCount
+    }
+
     fun isBaziDedi(baziInfo: BaziData): Boolean{
         var strongRootCount = 0
         var mediumRootCount = 0
@@ -780,68 +831,68 @@ class WuXingUtil {
         return isDeDi
     }
 
-    fun isDeDi( baziInfo: BaziInfo, baziModel: BaziViewModel): Boolean{
-        var tg = baziInfo.dayTiangan
-        var dz = baziInfo.yearDizhi
-        var ret = false
-        var rootLevel = RootLevel.NO_ROOT
-        var strongRootCount = 0
-        var mediumRootCount = 0
-        var weakRootCount = 0
-        if(tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI) {
-            dz = baziInfo.yearDizhi
-            baziModel.setYearDzRootLevel(checkMuRoot(dz))
-            dz = baziInfo.monthDizhi
-            baziModel.setMonthDzRootLevel(checkMuRoot(dz))
-            dz = baziInfo.dayDizhi
-            baziModel.setDayDzRootLevel(checkMuRoot(dz))
-            dz = baziInfo.hourDizhi
-            baziModel.setHourDzRootLevel(checkMuRoot(dz))
-        }
-        if(tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_DING){
-            dz = baziInfo.yearDizhi
-            baziModel.setYearDzRootLevel(checkHuoRoot(dz))
-            dz = baziInfo.monthDizhi
-            baziModel.setMonthDzRootLevel(checkHuoRoot(dz))
-            dz = baziInfo.dayDizhi
-            baziModel.setDayDzRootLevel(checkHuoRoot(dz))
-            dz = baziInfo.hourDizhi
-            baziModel.setHourDzRootLevel(checkHuoRoot(dz))
-        }
-        if(tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_JI) {
-            dz = baziInfo.yearDizhi
-            baziModel.setYearDzRootLevel(checkTuRoot(dz))
-            dz = baziInfo.monthDizhi
-            baziModel.setMonthDzRootLevel(checkTuRoot(dz))
-            dz = baziInfo.dayDizhi
-            baziModel.setDayDzRootLevel(checkTuRoot(dz))
-            dz = baziInfo.hourDizhi
-            baziModel.setHourDzRootLevel(checkTuRoot(dz))
-        }
-        if(tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_XIN) {
-            dz = baziInfo.yearDizhi
-            baziModel.setYearDzRootLevel(checkJinRoot(dz))
-            dz = baziInfo.monthDizhi
-            baziModel.setMonthDzRootLevel(checkJinRoot(dz))
-            dz = baziInfo.dayDizhi
-            baziModel.setDayDzRootLevel(checkJinRoot(dz))
-            dz = baziInfo.hourDizhi
-            baziModel.setHourDzRootLevel(checkJinRoot(dz))
-        }
-        if(tg == TianGan.TIANGAN_REN || tg == TianGan.TIANGAN_GUI) {
-            dz = baziInfo.yearDizhi
-            baziModel.setYearDzRootLevel(checkShuiRoot(dz))
-            dz = baziInfo.monthDizhi
-            baziModel.setMonthDzRootLevel(checkShuiRoot(dz))
-            dz = baziInfo.dayDizhi
-            baziModel.setDayDzRootLevel(checkShuiRoot(dz))
-            dz = baziInfo.hourDizhi
-            baziModel.setHourDzRootLevel(checkShuiRoot(dz))
-        }
-
-        updateRootCount(baziInfo, baziModel)
-        return ret
-    }
+//    fun isDeDi( baziInfo: BaziInfo, baziModel: BaziViewModel): Boolean{
+//        var tg = baziInfo.dayTiangan
+//        var dz = baziInfo.yearDizhi
+//        var ret = false
+//        var rootLevel = RootLevel.NO_ROOT
+//        var strongRootCount = 0
+//        var mediumRootCount = 0
+//        var weakRootCount = 0
+//        if(tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI) {
+//            dz = baziInfo.yearDizhi
+//            baziModel.setYearDzRootLevel(checkMuRoot(dz))
+//            dz = baziInfo.monthDizhi
+//            baziModel.setMonthDzRootLevel(checkMuRoot(dz))
+//            dz = baziInfo.dayDizhi
+//            baziModel.setDayDzRootLevel(checkMuRoot(dz))
+//            dz = baziInfo.hourDizhi
+//            baziModel.setHourDzRootLevel(checkMuRoot(dz))
+//        }
+//        if(tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_DING){
+//            dz = baziInfo.yearDizhi
+//            baziModel.setYearDzRootLevel(checkHuoRoot(dz))
+//            dz = baziInfo.monthDizhi
+//            baziModel.setMonthDzRootLevel(checkHuoRoot(dz))
+//            dz = baziInfo.dayDizhi
+//            baziModel.setDayDzRootLevel(checkHuoRoot(dz))
+//            dz = baziInfo.hourDizhi
+//            baziModel.setHourDzRootLevel(checkHuoRoot(dz))
+//        }
+//        if(tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_JI) {
+//            dz = baziInfo.yearDizhi
+//            baziModel.setYearDzRootLevel(checkTuRoot(dz))
+//            dz = baziInfo.monthDizhi
+//            baziModel.setMonthDzRootLevel(checkTuRoot(dz))
+//            dz = baziInfo.dayDizhi
+//            baziModel.setDayDzRootLevel(checkTuRoot(dz))
+//            dz = baziInfo.hourDizhi
+//            baziModel.setHourDzRootLevel(checkTuRoot(dz))
+//        }
+//        if(tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_XIN) {
+//            dz = baziInfo.yearDizhi
+//            baziModel.setYearDzRootLevel(checkJinRoot(dz))
+//            dz = baziInfo.monthDizhi
+//            baziModel.setMonthDzRootLevel(checkJinRoot(dz))
+//            dz = baziInfo.dayDizhi
+//            baziModel.setDayDzRootLevel(checkJinRoot(dz))
+//            dz = baziInfo.hourDizhi
+//            baziModel.setHourDzRootLevel(checkJinRoot(dz))
+//        }
+//        if(tg == TianGan.TIANGAN_REN || tg == TianGan.TIANGAN_GUI) {
+//            dz = baziInfo.yearDizhi
+//            baziModel.setYearDzRootLevel(checkShuiRoot(dz))
+//            dz = baziInfo.monthDizhi
+//            baziModel.setMonthDzRootLevel(checkShuiRoot(dz))
+//            dz = baziInfo.dayDizhi
+//            baziModel.setDayDzRootLevel(checkShuiRoot(dz))
+//            dz = baziInfo.hourDizhi
+//            baziModel.setHourDzRootLevel(checkShuiRoot(dz))
+//        }
+//
+//        updateRootCount(baziInfo, baziModel)
+//        return ret
+//    }
 
     fun updateRootCount(baziInfo: BaziInfo, baziModel: BaziViewModel){
         var strongRootCount = 0

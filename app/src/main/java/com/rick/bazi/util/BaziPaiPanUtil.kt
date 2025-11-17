@@ -102,4 +102,5 @@ class BaziPaiPanUtil {
         println("Bazi Paipan: year=$year,month=$month,day=$day,hour=$hour, Bazi data=$data")
         return data
     }
+
 }

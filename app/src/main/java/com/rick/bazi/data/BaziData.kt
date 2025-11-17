@@ -37,4 +37,8 @@ data class BaziData(
     var monthDzRootLevel : RootLevel = RootLevel.NO_ROOT,
     var dayDzRootLevel : RootLevel = RootLevel.NO_ROOT,
     var hourDzRootLevel : RootLevel = RootLevel.NO_ROOT,
+
+    var yongShenList : List<ShiShen> = listOf(),
+    var jiShenList : List<ShiShen> = listOf(),
+    var xiShenList : List<ShiShen> = listOf(),
 )

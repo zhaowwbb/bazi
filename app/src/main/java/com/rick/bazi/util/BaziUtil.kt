@@ -490,7 +490,18 @@ class BaziUtil {
         index: Int
     ): Int {
         val date: Date = getSolarTermCalendar(calendar, solarYear, index)
+        println("getSolarTermDay date=$date, solarYear=$solarYear, index=$index")
         return getUTCDay(calendar, date)
+    }
+
+    fun getSolarTermDate(
+        calendar: Calendar,
+        solarYear: Int,
+        index: Int
+    ): Date {
+        val date: Date = getSolarTermCalendar(calendar, solarYear, index)
+        println("getSolarTermDay date=$date, solarYear=$solarYear, index=$index")
+        return date
     }
 
     fun getCyclicalYearBase(
@@ -502,15 +513,29 @@ class BaziUtil {
         var cyclicalYear = 0
         val calendar: Calendar = makeUTCCalendar()!!
 
+        calendar.set(solarYear, solarMonth - 1, solarDay, hour, 30, 0)
+        var solarDate = calendar.time
+
+//        var xiaohanTime = getSolarTermDate(calendar, solarYear, 0)
+        var lichunTime = getSolarTermDate(calendar, solarYear, 2)
+//        var jingzheTime = getSolarTermDate(calendar, solarYear, 4)
+
         var term2 = getSolarTermDay(calendar, solarYear, 2)
 
-        if ((solarMonth < 1) || ((solarMonth == 1) && (solarDay < term2))) {
+        if(solarDate < lichunTime){
             cyclicalYear = (((solarYear - 1900) + 36) - 1) % 60;
-        } else {
+        }else{
             cyclicalYear = ((solarYear - 1900) + 36) % 60;
         }
 
+//        if ((solarMonth < 1) || ((solarMonth == 1) && (solarDay < term2))) {
+//            cyclicalYear = (((solarYear - 1900) + 36) - 1) % 60;
+//        } else {
+//            cyclicalYear = ((solarYear - 1900) + 36) % 60;
+//        }
+
         cyclicalYear += 1
+//        println("term2=$term2, solarYear=$solarYear, solarMonth=$solarMonth, cyclicalYear=$cyclicalYear")
 //        println("cyclicalYear=$cyclicalYear")
         return cyclicalYear
     }
@@ -526,27 +551,43 @@ class BaziUtil {
         var cyclicalDay: Int = 0
 
         val calendar: Calendar = makeUTCCalendar()!!
+        calendar.set(solarYear, solarMonth - 1, solarDay, hour, 30, 0)
+        var solarDate = calendar.time
 
-        var term2 = getSolarTermDay(calendar, solarYear, 2)
+        var xiaohanTime = getSolarTermDate(calendar, solarYear, 0)
+        var lichunTime = getSolarTermDate(calendar, solarYear, 2)
+        var jingzheTime = getSolarTermDate(calendar, solarYear, 4)
 
-        if ((solarMonth < 1) || ((solarMonth == 1) && (solarDay < term2))) {
-            cyclicalYear = (((solarYear - 1900) + 36) - 1) % 60;
-        } else {
-            cyclicalYear = ((solarYear - 1900) + 36) % 60;
-        }
+        println("solarDate=$solarDate, xiaohanTime=$xiaohanTime, lichunTime=$lichunTime, jingzheTime=$jingzheTime, cyclicalMonth=$cyclicalMonth")
 
-        var firstNode = getSolarTermDay(calendar, solarYear, solarMonth * 2)
-
-        if (solarDay < firstNode) {
+        //last year
+        if(solarDate < lichunTime){
             cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 12) % 60;
-        } else {
+        }else if(solarDate > lichunTime && solarDate < jingzheTime){
+            //yin month
+            cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 13) % 60;
+        }else{
             cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 13) % 60;
         }
-//        println("cyclicalMonth=$cyclicalMonth")
 
-        var tmpUTC = UTC(calendar, solarYear, solarMonth, solarDay, hour, 0, 0)
-        var tmp = (tmpUTC / 86400000) + 25567 + 10
-        cyclicalDay = (tmp % 60).toInt()
+//        if ((solarMonth < 1) || ((solarMonth == 1) && (solarDay < term2))) {
+//            cyclicalYear = (((solarYear - 1900) + 36) - 1) % 60;
+//        } else {
+//            cyclicalYear = ((solarYear - 1900) + 36) % 60;
+//        }
+
+        var firstNode = getSolarTermDay(calendar, solarYear, solarMonth * 2)
+//
+//        if (solarDay < firstNode) {
+//            cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 12) % 60;
+//        } else {
+//            cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 13) % 60;
+//        }
+        println("solarDay=$solarDay, solarMonth=$solarMonth, firstNode=$firstNode, cyclicalMonth=$cyclicalMonth")
+
+//        var tmpUTC = UTC(calendar, solarYear, solarMonth, solarDay, hour, 0, 0)
+//        var tmp = (tmpUTC / 86400000) + 25567 + 10
+//        cyclicalDay = (tmp % 60).toInt()
 //        println("cyclicalDay=$cyclicalDay")
 
         return cyclicalMonth

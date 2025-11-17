@@ -16,20 +16,20 @@ import com.rick.bazi.ui.BaziViewModel
 
 class BaziMeasureUtil {
 
-    val cangganLookupMap: Map<DiZhi, Array<TianGan>> = mapOf(
-        DiZhi.DIZHI_ZI to arrayOf(TianGan.TIANGAN_GUI),
-        DiZhi.DIZHI_CHOU to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_GUI, TianGan.TIANGAN_XIN),
-        DiZhi.DIZHI_YIN to arrayOf(TianGan.TIANGAN_JIA, TianGan.TIANGAN_BING, TianGan.TIANGAN_WU),
-        DiZhi.DIZHI_MOU to arrayOf(TianGan.TIANGAN_YI),
-        DiZhi.DIZHI_CHEN to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_YI, TianGan.TIANGAN_GUI),
-        DiZhi.DIZHI_SI to arrayOf(TianGan.TIANGAN_BING, TianGan.TIANGAN_GENG, TianGan.TIANGAN_WU),
-        DiZhi.DIZHI_WU to arrayOf(TianGan.TIANGAN_DING, TianGan.TIANGAN_JI),
-        DiZhi.DIZHI_WEI to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_DING, TianGan.TIANGAN_YI),
-        DiZhi.DIZHI_SHEN to arrayOf(TianGan.TIANGAN_GENG, TianGan.TIANGAN_REN, TianGan.TIANGAN_WU),
-        DiZhi.DIZHI_YOU to arrayOf(TianGan.TIANGAN_XIN),
-        DiZhi.DIZHI_XU to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_XIN, TianGan.TIANGAN_DING),
-        DiZhi.DIZHI_HAI to arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
-    )
+//    val cangganLookupMap: Map<DiZhi, Array<TianGan>> = mapOf(
+//        DiZhi.DIZHI_ZI to arrayOf(TianGan.TIANGAN_GUI),
+//        DiZhi.DIZHI_CHOU to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_GUI, TianGan.TIANGAN_XIN),
+//        DiZhi.DIZHI_YIN to arrayOf(TianGan.TIANGAN_JIA, TianGan.TIANGAN_BING, TianGan.TIANGAN_WU),
+//        DiZhi.DIZHI_MOU to arrayOf(TianGan.TIANGAN_YI),
+//        DiZhi.DIZHI_CHEN to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_YI, TianGan.TIANGAN_GUI),
+//        DiZhi.DIZHI_SI to arrayOf(TianGan.TIANGAN_BING, TianGan.TIANGAN_GENG, TianGan.TIANGAN_WU),
+//        DiZhi.DIZHI_WU to arrayOf(TianGan.TIANGAN_DING, TianGan.TIANGAN_JI),
+//        DiZhi.DIZHI_WEI to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_DING, TianGan.TIANGAN_YI),
+//        DiZhi.DIZHI_SHEN to arrayOf(TianGan.TIANGAN_GENG, TianGan.TIANGAN_REN, TianGan.TIANGAN_WU),
+//        DiZhi.DIZHI_YOU to arrayOf(TianGan.TIANGAN_XIN),
+//        DiZhi.DIZHI_XU to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_XIN, TianGan.TIANGAN_DING),
+//        DiZhi.DIZHI_HAI to arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
+//    )
 
     @Composable
     fun analyzeBaziHelpStar(baziInfo: BaziInfo, baziModel: BaziViewModel): String {
@@ -513,24 +513,14 @@ class BaziMeasureUtil {
     fun analyzeBaziAndSaveStat(baziInfo: BaziInfo, baziModel: BaziViewModel) {
         Log.i("[Rick]", "Aanalyze Bazi And Save Stat");
 
-//        //owner wuxing
-//        WuXingUtil().getOwnerWuXingString(baziInfo, baziModel)
-
         //shishen string
         ShiShenUtil().getBaziShiShengString(baziInfo, baziModel)
-
-//        //deling check
-//        WuXingUtil().getDangLingStr(baziInfo, baziModel)
-
-        //collect dedi info
-//        WuXingUtil().isDeDi(baziInfo, baziModel)
-//        WuXingUtil().getDeDiCheckStr(baziInfo, baziModel)
 
         analyzeBaziHelpStar(baziInfo, baziModel)
         analyzeBaziKeXieHao(baziInfo, baziModel)
         getBaziStrengthSummary(baziInfo, baziModel)
         getXiJiSummary(baziInfo, baziModel)
-        getBaziGeJuSummary(baziInfo, baziModel)
+//        getBaziGeJuSummary(baziInfo, baziModel)
         getBaziDayunSummary(baziInfo, baziModel)
     }
 
@@ -754,57 +744,57 @@ class BaziMeasureUtil {
         return summary
     }
 
-    @Composable
-    fun isRootToTianGan(tg: TianGan, baziInfo: BaziInfo): Boolean {
-        var ret = false
-        var wx = WuXingUtil().getTgWX(tg)
-        if (wx == WuXingUtil().getTgWX(baziInfo.yearTiangan)) return true
-        if (wx == WuXingUtil().getTgWX(baziInfo.monthTiangan)) return true
-        if (wx == WuXingUtil().getTgWX(baziInfo.dayTiangan)) return true
-        if (wx == WuXingUtil().getTgWX(baziInfo.hourTiangan)) return true
-        return ret
-    }
+//    @Composable
+//    fun isRootToTianGan(tg: TianGan, baziInfo: BaziInfo): Boolean {
+//        var ret = false
+//        var wx = WuXingUtil().getTgWX(tg)
+//        if (wx == WuXingUtil().getTgWX(baziInfo.yearTiangan)) return true
+//        if (wx == WuXingUtil().getTgWX(baziInfo.monthTiangan)) return true
+//        if (wx == WuXingUtil().getTgWX(baziInfo.dayTiangan)) return true
+//        if (wx == WuXingUtil().getTgWX(baziInfo.hourTiangan)) return true
+//        return ret
+//    }
 
-    @Composable
-    fun getBaziGeJuSummary(baziInfo: BaziInfo, baziModel: BaziViewModel){
-        var string = ""
-        var gjString = ""
-        var gjSummary = ""
-        var gj = BaziGeJu.GJ_NONE
-        var gjTG = TianGan.TIANGAN_JIA
-
-        if(GeJuUtil().isCongShaGJ(baziInfo, baziModel))return
-
-        //normal GeJu
-        var monthDz = baziInfo.monthDizhi
-        var ss = baziInfo.monthDzShiShen
-        var tgList = cangganLookupMap.get(monthDz)
-        Log.i("[Rick]", "tgList=" + tgList)
-        if (tgList != null) {
-            if (tgList.size == 1) {
-                gjTG = tgList.get(0)
-            } else {
-                for (tg in tgList) {
-                    if (isRootToTianGan(tg, baziInfo)) {
-                        gjTG = tg
-                        Log.i("[Rick]", "GeJu tg=" + tg)
-                        break
-                    }
-                }
-            }
-            ss = ShiShenUtil().getShiShen(gjTG, baziInfo.dayTiangan)
-            gj = GeJuUtil().getGJByShiShen(ss)
-            gjString = GeJuUtil().getGJText(gj)
-            gjSummary = GeJuUtil().getGJSummary(gj)
-//            Log.i("[Rick]", "GeJu tg=" + tg)
-            Log.i("[Rick]", "GeJu gjSummary=" + gjSummary)
-
-        }
-
-        baziModel.setBaziGJ(gj)
-        baziModel.setBaziGJSummary(gjSummary)
-        baziModel.setBaziGJString(gjString)
-    }
+//    @Composable
+//    fun getBaziGeJuSummary(baziInfo: BaziInfo, baziModel: BaziViewModel){
+//        var string = ""
+//        var gjString = ""
+//        var gjSummary = ""
+//        var gj = BaziGeJu.GJ_NONE
+//        var gjTG = TianGan.TIANGAN_JIA
+//
+////        if(GeJuUtil().isCongShaGJ(baziInfo, baziModel))return
+//
+//        //normal GeJu
+//        var monthDz = baziInfo.monthDizhi
+//        var ss = baziInfo.monthDzShiShen
+//        var tgList = cangganLookupMap.get(monthDz)
+//        Log.i("[Rick]", "tgList=" + tgList)
+//        if (tgList != null) {
+//            if (tgList.size == 1) {
+//                gjTG = tgList.get(0)
+//            } else {
+//                for (tg in tgList) {
+//                    if (isRootToTianGan(tg, baziInfo)) {
+//                        gjTG = tg
+//                        Log.i("[Rick]", "GeJu tg=" + tg)
+//                        break
+//                    }
+//                }
+//            }
+//            ss = ShiShenUtil().getShiShen(gjTG, baziInfo.dayTiangan)
+//            gj = GeJuUtil().getGJByShiShen(ss)
+//            gjString = GeJuUtil().getGJText(gj)
+//            gjSummary = GeJuUtil().getGJSummary(gj)
+////            Log.i("[Rick]", "GeJu tg=" + tg)
+//            Log.i("[Rick]", "GeJu gjSummary=" + gjSummary)
+//
+//        }
+//
+//        baziModel.setBaziGJ(gj)
+//        baziModel.setBaziGJSummary(gjSummary)
+//        baziModel.setBaziGJString(gjString)
+//    }
 
     @Composable
     fun getBaziStrongSummary(baziInfo: BaziInfo, baziModel: BaziViewModel): String {

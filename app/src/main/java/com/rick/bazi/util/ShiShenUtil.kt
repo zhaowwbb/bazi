@@ -3,6 +3,7 @@ package com.rick.bazi.util
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
+import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.ShiShen
@@ -247,6 +248,48 @@ class ShiShenUtil {
         return getShiShenLabel(ss)
     }
 
+    fun getMainTianGanFromDizhi(dz: DiZhi, dayTg: TianGan) : TianGan{
+        var dzMainStar = TianGan.TIANGAN_JIA
+        if(dz == DiZhi.DIZHI_ZI){
+            dzMainStar = TianGan.TIANGAN_GUI
+        }
+        if(dz == DiZhi.DIZHI_CHOU){
+            dzMainStar = TianGan.TIANGAN_JI
+        }
+        if(dz == DiZhi.DIZHI_YIN){
+            dzMainStar = TianGan.TIANGAN_JIA
+        }
+        if(dz == DiZhi.DIZHI_MOU){
+            dzMainStar = TianGan.TIANGAN_YI
+        }
+        if(dz == DiZhi.DIZHI_CHEN){
+            dzMainStar = TianGan.TIANGAN_WU
+        }
+        if(dz == DiZhi.DIZHI_SI){
+            dzMainStar = TianGan.TIANGAN_BING
+        }
+        if(dz == DiZhi.DIZHI_WU){
+            dzMainStar = TianGan.TIANGAN_DING
+        }
+        if(dz == DiZhi.DIZHI_WEI){
+            dzMainStar = TianGan.TIANGAN_JI
+        }
+        if(dz == DiZhi.DIZHI_SHEN){
+            dzMainStar = TianGan.TIANGAN_GENG
+        }
+        if(dz == DiZhi.DIZHI_YOU){
+            dzMainStar = TianGan.TIANGAN_XIN
+        }
+        if(dz == DiZhi.DIZHI_XU){
+            dzMainStar = TianGan.TIANGAN_WU
+        }
+        if(dz == DiZhi.DIZHI_HAI){
+            dzMainStar = TianGan.TIANGAN_REN
+        }
+        return dzMainStar
+    }
+
+
     @Composable
     fun getDiZhiMainTianGan(dz: DiZhi, dayTg: TianGan) : TianGan{
         var dzMainStar = TianGan.TIANGAN_JIA
@@ -287,6 +330,12 @@ class ShiShenUtil {
             dzMainStar = TianGan.TIANGAN_REN
         }
         return dzMainStar
+    }
+
+    fun getShiShenFromDizhi(dz: DiZhi, dayTg: TianGan) : ShiShen{
+        var ss : ShiShen = ShiShen.SHISHEN_BI_JIAN
+        var dzMainStar = getMainTianGanFromDizhi(dz, dayTg)
+        return getShiShen(dzMainStar, dayTg)
     }
 
     @Composable
@@ -479,5 +528,39 @@ class ShiShenUtil {
             )
         )
         return str
+    }
+
+    fun getShiShenCount(data : BaziData, targetShiShen : ShiShen) : Int{
+        var count = 0
+        var ss = getShiShen(data.yearTiangan, data.dayTiangan)
+        if(ss == targetShiShen){
+            count = count + 1
+        }
+        ss = getShiShen(data.monthTiangan, data.dayTiangan)
+        if(ss == targetShiShen){
+            count = count + 1
+        }
+        ss = getShiShen(data.hourTiangan, data.dayTiangan)
+        if(ss == targetShiShen){
+            count = count + 1
+        }
+        ss = getShiShenFromDizhi(data.yearDizhi, data.dayTiangan)
+//        ss = getShiShen(data.hourTiangan, data.dayTiangan)
+        if(ss == targetShiShen){
+            count = count + 1
+        }
+        ss = getShiShenFromDizhi(data.monthDizhi, data.dayTiangan)
+        if(ss == targetShiShen){
+            count = count + 1
+        }
+        ss = getShiShenFromDizhi(data.dayDizhi, data.dayTiangan)
+        if(ss == targetShiShen){
+            count = count + 1
+        }
+        ss = getShiShenFromDizhi(data.hourDizhi, data.dayTiangan)
+        if(ss == targetShiShen){
+            count = count + 1
+        }
+        return count
     }
 }

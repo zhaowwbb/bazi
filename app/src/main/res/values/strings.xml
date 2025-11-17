@@ -312,8 +312,8 @@
 
     <string name="app_bazi_analyze_label1">一、八字排盘</string>
     <string name="app_bazi_analyze_label2">二、日主旺衰分析</string>
-    <string name="app_bazi_analyze_label3">三、喜用神与忌神</string>
-    <string name="app_bazi_analyze_label4">四、日主格局</string>
+    <string name="app_bazi_analyze_label3">三、日主格局</string>
+    <string name="app_bazi_analyze_label4">四、喜用神与忌神</string>
     <string name="app_bazi_analyze_label5">五、大运作用分析</string>
     <string name="app_bazi_analyze_label6">四、命局综合解读</string>
 
@@ -356,16 +356,20 @@
     <string name="app_bazi_strength_label">综合判断：</string>
 
     <string name="app_bazi_xiyong_shen">喜用神</string>
+    <string name="app_bazi_yong_shen">用神</string>
+    <string name="app_bazi_xi_shen">喜神</string>
     <string name="app_bazi_ji_shen">忌神</string>
     <string name="app_bazi_tiaohou_shen">调候用神</string>
 
     <string name="app_bazi_gj_label">格局</string>
+    <string name="app_bazi_gj_job">职业</string>
+    <string name="app_bazi_gj_xiji">格局运途喜忌</string>
     <string name="app_bazi_gj_no_label">没有格局</string>
     <string name="app_bazi_gj_personality">性格</string>
     <string name="app_bazi_gj_congqiang">从强格</string>
     <string name="app_bazi_gj_congruo">从弱格</string>
     <string name="app_bazi_gj_zhengguan">正官格</string>
-    <string name="app_bazi_gj_qisha">七杀格</string>
+    <string name="app_bazi_gj_qisha">偏官格</string>
     <string name="app_bazi_gj_zhengcai">正财格</string>
     <string name="app_bazi_gj_piancai">偏财格</string>
     <string name="app_bazi_gj_zhengyin">正印格</string>
@@ -382,6 +386,12 @@
     <string name="app_bazi_gj_jiase">稼穑格</string>
     <string name="app_bazi_gj_congge">从革格</string>
     <string name="app_bazi_gj_runxia">润下格</string>
+
+    <string name="app_bazi_gj_job_ss">适合从事口才、表演、开发设计之类的职业</string>
+    <string name="app_bazi_gj_job_yin">适合从事学术、宗教、安静的职业</string>
+    <string name="app_bazi_gj_job_gs">适合从事管理方面岗位</string>
+    <string name="app_bazi_gj_job_cai">适合从事商业金融需要情商的职业岗位</string>
+    <string name="app_bazi_gj_job_tbd">建设中。。。</string>
 
     <string name="app_bazi_gj_zhengguan_desc">重名誉、守规则、适合公职</string>
     <string name="app_bazi_gj_qisha_desc">有魄力、有野心、适合竞争性行业</string>
