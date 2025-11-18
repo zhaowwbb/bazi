@@ -136,6 +136,34 @@ class ShiShenUtil {
         )
     )
 
+    fun getShiShenTianGan(ss : ShiShen, dayTg : TianGan) : TianGan{
+        //[ShiShen] ZhengCai || PianCai || ZhengGuan || Qisha || ZhengYin || PianYin || ShiShen || ShangGuan || BiJian || JieCai
+        //[Index]    0  1  2  3  4  5  6  7  8  9
+        var tg = TianGan.TIANGAN_JIA
+        if(ss == ShiShen.SHISHEN_ZHENG_CAI){
+            tg = getZhengcai(dayTg)
+        }else if(ss == ShiShen.SHISHEN_PIAN_CAI){
+            tg = getPiancai(dayTg)
+        }else if(ss == ShiShen.SHISHEN_ZHENG_GUAN){
+            tg = getZhengguan(dayTg)
+        }else if(ss == ShiShen.SHISHEN_QI_SHA){
+            tg = getQisha(dayTg)
+        }else if(ss == ShiShen.SHISHEN_ZHENG_YIN){
+            tg = getZhengyin(dayTg)
+        }else if(ss == ShiShen.SHISHEN_PIAN_YIN){
+            tg = getPianyin(dayTg)
+        }else if(ss == ShiShen.SHISHEN_SHI_SHEN){
+            tg = getShishen(dayTg)
+        }else if(ss == ShiShen.SHISHEN_SHANG_GUAN){
+            tg = getShangguan(dayTg)
+        }else if(ss == ShiShen.SHISHEN_BI_JIAN){
+            tg = getBijian(dayTg)
+        }else if(ss == ShiShen.SHISHEN_JIE_CAI){
+            tg = getJiecai(dayTg)
+        }
+        return tg
+    }
+
     fun getZhengcai(tg: TianGan): TianGan {
         var ret = shishenMap.get(tg)!![0]
         return ret
@@ -348,42 +376,6 @@ class ShiShenUtil {
     @Composable
     fun getDiZhiShiShenText(dz: DiZhi, dayTg: TianGan) : String{
         var dzMainStar = getDiZhiMainTianGan(dz, dayTg)
-//        if(dz == DiZhi.DIZHI_ZI){
-//            dzMainStar = TianGan.TIANGAN_GUI
-//        }
-//        if(dz == DiZhi.DIZHI_CHOU){
-//            dzMainStar = TianGan.TIANGAN_JI
-//        }
-//        if(dz == DiZhi.DIZHI_YIN){
-//            dzMainStar = TianGan.TIANGAN_JIA
-//        }
-//        if(dz == DiZhi.DIZHI_MOU){
-//            dzMainStar = TianGan.TIANGAN_YI
-//        }
-//        if(dz == DiZhi.DIZHI_CHEN){
-//            dzMainStar = TianGan.TIANGAN_WU
-//        }
-//        if(dz == DiZhi.DIZHI_SI){
-//            dzMainStar = TianGan.TIANGAN_BING
-//        }
-//        if(dz == DiZhi.DIZHI_WU){
-//            dzMainStar = TianGan.TIANGAN_DING
-//        }
-//        if(dz == DiZhi.DIZHI_WEI){
-//            dzMainStar = TianGan.TIANGAN_JI
-//        }
-//        if(dz == DiZhi.DIZHI_SHEN){
-//            dzMainStar = TianGan.TIANGAN_GENG
-//        }
-//        if(dz == DiZhi.DIZHI_YOU){
-//            dzMainStar = TianGan.TIANGAN_XIN
-//        }
-//        if(dz == DiZhi.DIZHI_XU){
-//            dzMainStar = TianGan.TIANGAN_WU
-//        }
-//        if(dz == DiZhi.DIZHI_HAI){
-//            dzMainStar = TianGan.TIANGAN_REN
-//        }
 
         return getShiShenText(dzMainStar, dayTg)
     }
@@ -440,6 +432,7 @@ class ShiShenUtil {
     @Composable
     fun getBaziShiShengString(baziInfo: BaziInfo, baziModel: BaziViewModel) : String{
         var str = ""
+        var data = baziInfo.baziData
         var shishenYearStr = stringResource(R.string.bazi_year) + ": " + getTianganStr(
             baziInfo,
             baziInfo.yearTiangan
@@ -470,7 +463,7 @@ class ShiShenUtil {
         ) + "(" + ShiShenUtil().getShiShenText(
             baziInfo.monthTiangan,
             baziInfo.dayTiangan
-        ) + ") 、 " + getDizhiStr(
+        ) + ") 、 " + BaziUtil().getDizhiText(
             baziInfo,
             baziInfo.monthDizhi
         ) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.monthDizhi, baziInfo.dayTiangan) + ")"
@@ -562,5 +555,98 @@ class ShiShenUtil {
             count = count + 1
         }
         return count
+    }
+
+    @Composable
+    fun getBaziShiShenStatString(data : BaziData, targetShiShen : ShiShen) : String{
+        val sb = StringBuilder()
+        var tg = data.yearTiangan
+        var dz = data.yearDizhi
+
+        var ss = getShiShen(tg, data.dayTiangan)
+        if(ss == targetShiShen){
+            sb.append(stringResource(R.string.app_label_year))
+            sb.append(stringResource(R.string.app_label_gan))
+            sb.append(" ")
+            sb.append(WuXingUtil().getTianGanWuXingText(tg))
+            sb.append("(")
+            sb.append(getShiShenText(tg, data.dayTiangan))
+            sb.append(") ")
+        }
+        tg = data.monthTiangan
+        ss = getShiShen(tg, data.dayTiangan)
+        if(ss == targetShiShen){
+            sb.append(stringResource(R.string.app_label_month))
+            sb.append(stringResource(R.string.app_label_gan))
+            sb.append(" ")
+            sb.append(WuXingUtil().getTianGanWuXingText(tg))
+            sb.append("(")
+            sb.append(getShiShenText(tg, data.dayTiangan))
+            sb.append(") ")
+        }
+        tg = data.hourTiangan
+        ss = getShiShen(tg, data.dayTiangan)
+        if(ss == targetShiShen){
+            sb.append(stringResource(R.string.app_label_hour))
+            sb.append(stringResource(R.string.app_label_gan))
+            sb.append(" ")
+            sb.append(WuXingUtil().getTianGanWuXingText(tg))
+            sb.append("(")
+            sb.append(getShiShenText(tg, data.dayTiangan))
+            sb.append(") ")
+        }
+
+        //check dizhi
+        dz = data.yearDizhi
+        ss = getShiShenFromDizhi(dz, data.dayTiangan)
+        if(ss == targetShiShen){
+            sb.append(stringResource(R.string.app_label_year))
+            sb.append(stringResource(R.string.app_label_zhi))
+            sb.append(" ")
+            sb.append(BaziUtil().getDizhiText(dz))
+            sb.append(WuXingUtil().getDiZhiWuxingText(dz))
+            sb.append("(")
+            sb.append(getDiZhiShiShenText(dz, data.dayTiangan))
+            sb.append(") ")
+        }
+        dz = data.monthDizhi
+        ss = getShiShenFromDizhi(dz, data.dayTiangan)
+        if(ss == targetShiShen){
+            sb.append(stringResource(R.string.app_label_month))
+            sb.append(stringResource(R.string.app_label_zhi))
+            sb.append(" ")
+            sb.append(BaziUtil().getDizhiText(dz))
+            sb.append(WuXingUtil().getDiZhiWuxingText(dz))
+            sb.append("(")
+            sb.append(getDiZhiShiShenText(dz, data.dayTiangan))
+            sb.append(") ")
+        }
+        dz = data.dayDizhi
+        ss = getShiShenFromDizhi(dz, data.dayTiangan)
+        if(ss == targetShiShen){
+            sb.append(stringResource(R.string.app_label_day))
+            sb.append(stringResource(R.string.app_label_zhi))
+            sb.append(" ")
+            sb.append(BaziUtil().getDizhiText(dz))
+            sb.append(WuXingUtil().getDiZhiWuxingText(dz))
+            sb.append("(")
+            sb.append(getDiZhiShiShenText(dz, data.dayTiangan))
+            sb.append(") ")
+        }
+        dz = data.hourDizhi
+        ss = getShiShenFromDizhi(dz, data.dayTiangan)
+        if(ss == targetShiShen){
+            sb.append(stringResource(R.string.app_label_hour))
+            sb.append(stringResource(R.string.app_label_zhi))
+            sb.append(" ")
+            sb.append(BaziUtil().getDizhiText(dz))
+            sb.append(WuXingUtil().getDiZhiWuxingText(dz))
+            sb.append("(")
+            sb.append(getDiZhiShiShenText(dz, data.dayTiangan))
+            sb.append(") ")
+        }
+
+        val finalString = sb.toString()
+        return finalString
     }
 }

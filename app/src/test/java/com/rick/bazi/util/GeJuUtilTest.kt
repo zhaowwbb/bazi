@@ -145,15 +145,12 @@ class GeJuUtilTest {
         assertEquals(BaziGeJu.GJ_SHANG_GUAN, gj)
 //        println("yongShenList.size=$data.yongShenList.size")
         println("data=$data")
-        assertTrue(data.yongShenList.size == 3 )
+        assertTrue(data.yongShenList.size == 2 )
         assertTrue(data.yongShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
         assertTrue(data.yongShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
-        assertTrue(data.yongShenList.get(2) == ShiShen.SHISHEN_JIE_CAI )
 
-        assertTrue(data.xiShenList.size == 3 )
-        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
-        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
-        assertTrue(data.xiShenList.get(2) == ShiShen.SHISHEN_JIE_CAI )
+        assertTrue(data.xiShenList.size == 1 )
+        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_JIE_CAI )
 
         assertTrue(data.jiShenList.size == 4 )
         assertTrue(data.jiShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
@@ -185,11 +182,9 @@ class GeJuUtilTest {
         assertTrue(data.yongShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
         assertTrue(data.yongShenList.get(1) == ShiShen.SHISHEN_PIAN_CAI )
 
-        assertTrue(data.xiShenList.size == 4 )
-        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
-        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_PIAN_CAI )
-        assertTrue(data.xiShenList.get(2) == ShiShen.SHISHEN_SHI_SHEN )
-        assertTrue(data.xiShenList.get(3) == ShiShen.SHISHEN_SHANG_GUAN )
+        assertTrue(data.xiShenList.size == 2 )
+        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_SHI_SHEN )
+        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_SHANG_GUAN )
 
         assertTrue(data.jiShenList.size == 6 )
         assertTrue(data.jiShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
@@ -222,11 +217,9 @@ class GeJuUtilTest {
         assertTrue(data.yongShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
         assertTrue(data.yongShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
 
-        assertTrue(data.xiShenList.size == 4 )
-        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
-        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
-        assertTrue(data.xiShenList.get(2) == ShiShen.SHISHEN_BI_JIAN )
-        assertTrue(data.xiShenList.get(3) == ShiShen.SHISHEN_JIE_CAI )
+        assertTrue(data.xiShenList.size == 2 )
+        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_BI_JIAN )
+        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_JIE_CAI )
 
         assertTrue(data.jiShenList.size == 2 )
         assertTrue(data.jiShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
@@ -255,11 +248,9 @@ class GeJuUtilTest {
         assertTrue(data.yongShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
         assertTrue(data.yongShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
 
-        assertTrue(data.xiShenList.size == 4 )
-        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
-        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
-        assertTrue(data.xiShenList.get(2) == ShiShen.SHISHEN_BI_JIAN )
-        assertTrue(data.xiShenList.get(3) == ShiShen.SHISHEN_JIE_CAI )
+        assertTrue(data.xiShenList.size == 2 )
+        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_BI_JIAN )
+        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_JIE_CAI )
 
         assertTrue(data.jiShenList.size == 4 )
         assertTrue(data.jiShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
@@ -289,11 +280,9 @@ class GeJuUtilTest {
         assertTrue(data.yongShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
         assertTrue(data.yongShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
 
-        assertTrue(data.xiShenList.size == 4 )
-        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
-        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
-        assertTrue(data.xiShenList.get(2) == ShiShen.SHISHEN_BI_JIAN )
-        assertTrue(data.xiShenList.get(3) == ShiShen.SHISHEN_JIE_CAI )
+        assertTrue(data.xiShenList.size == 2 )
+        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_BI_JIAN )
+        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_JIE_CAI )
 
         assertTrue(data.jiShenList.size == 2 )
         assertTrue(data.jiShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
@@ -322,11 +311,9 @@ class GeJuUtilTest {
         assertTrue(data.yongShenList.get(0) == ShiShen.SHISHEN_SHI_SHEN )
         assertTrue(data.yongShenList.get(1) == ShiShen.SHISHEN_SHANG_GUAN )
 
-        assertTrue(data.xiShenList.size == 4 )
-        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_SHI_SHEN )
-        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_SHANG_GUAN )
-        assertTrue(data.xiShenList.get(2) == ShiShen.SHISHEN_ZHENG_CAI )
-        assertTrue(data.xiShenList.get(3) == ShiShen.SHISHEN_PIAN_CAI )
+        assertTrue(data.xiShenList.size == 2 )
+        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
+        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_PIAN_CAI )
 
         assertTrue(data.jiShenList.size == 4 )
         assertTrue(data.jiShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
@@ -357,17 +344,50 @@ class GeJuUtilTest {
         assertTrue(data.yongShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
         assertTrue(data.yongShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
 
-        assertTrue(data.xiShenList.size == 4 )
-        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
-        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
-        assertTrue(data.xiShenList.get(2) == ShiShen.SHISHEN_BI_JIAN )
-        assertTrue(data.xiShenList.get(3) == ShiShen.SHISHEN_JIE_CAI )
+        assertTrue(data.xiShenList.size == 2 )
+        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_BI_JIAN )
+        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_JIE_CAI )
 
         assertTrue(data.jiShenList.size == 4 )
         assertTrue(data.jiShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
         assertTrue(data.jiShenList.get(1) == ShiShen.SHISHEN_PIAN_CAI )
         assertTrue(data.jiShenList.get(2) == ShiShen.SHISHEN_ZHENG_GUAN )
         assertTrue(data.jiShenList.get(3) == ShiShen.SHISHEN_QI_SHA)
+
+    }
+
+    @Test
+    fun test_gj_checkJianLuGJXiJi1(){
+        //阳历：1996年04月7日 5:36
+        //偏官格
+        var year = 1996
+        var month = 4
+        var day = 7
+        var hour = 5
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male",baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_JIAN_LU, gj)
+        GeJuUtil().checkQiShaGJXiJi(gj, data)
+
+        println("data=$data")
+//        assertTrue(data.yongShenList.size == 2 )
+//        assertTrue(data.yongShenList.get(0) == ShiShen.SHISHEN_ZHENG_CAI )
+//        assertTrue(data.yongShenList.get(1) == ShiShen.SHISHEN_PIAN_CAI )
+//
+//        assertTrue(data.xiShenList.size == 4 )
+//        assertTrue(data.xiShenList.get(0) == ShiShen.SHISHEN_SHI_SHEN )
+//        assertTrue(data.xiShenList.get(1) == ShiShen.SHISHEN_SHANG_GUAN )
+//        assertTrue(data.xiShenList.get(2) == ShiShen.SHISHEN_ZHENG_GUAN )
+//        assertTrue(data.xiShenList.get(3) == ShiShen.SHISHEN_QI_SHA )
+//
+//        assertTrue(data.jiShenList.size == 4 )
+//        assertTrue(data.jiShenList.get(0) == ShiShen.SHISHEN_ZHENG_YIN )
+//        assertTrue(data.jiShenList.get(1) == ShiShen.SHISHEN_PIAN_YIN )
+//        assertTrue(data.jiShenList.get(2) == ShiShen.SHISHEN_BI_JIAN )
+//        assertTrue(data.jiShenList.get(3) == ShiShen.SHISHEN_JIE_CAI)
 
     }
 }

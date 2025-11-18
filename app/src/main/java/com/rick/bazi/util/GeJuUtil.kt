@@ -1,6 +1,5 @@
 package com.rick.bazi.util
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
@@ -259,7 +258,10 @@ class GeJuUtil {
             str = stringResource(R.string.app_bazi_gj_job_gs)
         } else if(gj == BaziGeJu.GJ_ZHENG_CAI || gj == BaziGeJu.GJ_PIAN_CAI){
             str = stringResource(R.string.app_bazi_gj_job_cai)
-        }else{
+        } else if(gj == BaziGeJu.GJ_JIAN_LU){
+            str = stringResource(R.string.app_bazi_gj_job_jianlu)
+        }
+        else{
             str = stringResource(R.string.app_bazi_gj_job_tbd)
         }
         return str
@@ -322,9 +324,9 @@ class GeJuUtil {
         var guanShaCount = 0
         var caiCount = 0
 
-        yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
+//        yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
         shiShangCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
-        biJieCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
+//        biJieCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
         guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
         caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
 
@@ -358,25 +360,25 @@ class GeJuUtil {
         if(isBaziStrong){
             if(isYinStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isBiJieStrong(data)){
-                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN, ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
+                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN, ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_JIE_CAI)
             }else if(isCaiStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
             }
         }else{
             if(isGuanShaStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isShiShangStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
             }
         }
@@ -388,25 +390,25 @@ class GeJuUtil {
         if(isBaziStrong){
             if(isYinStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isBiJieStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             }
         }else{
             if(isShiShangStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isCaiStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isGuanShaStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
             }
         }
@@ -418,25 +420,25 @@ class GeJuUtil {
         if(isBaziStrong){
             if(isYinStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN)
             }else if(isBiJieStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_QI_SHA)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_QI_SHA)
+                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN)
             }
         }else{
             if(isGuanShaStrong(data)){
-                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_JIE_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_JIE_CAI)
+                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_JIE_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isCaiStrong(data)){
-                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isShiShangStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
             }
         }
@@ -449,50 +451,100 @@ class GeJuUtil {
         if(isBaziStrong){
             if(isBiJieStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA, ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             }else if(isYinStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             }else if(isShiShangStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             }
         }else{
             if(isCaiStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI, ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isShiShangStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
             }else if(isGuanShaStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
             }
         }
     }
 
     @Composable
+    fun getYongShenString(data : BaziData) : String{
+        var str = ""
+        var elementStr = ""
+        var tg = TianGan.TIANGAN_JIA
+        for(ss in data.yongShenList){
+            tg = ShiShenUtil().getShiShenTianGan(ss, data.dayTiangan)
+            elementStr = BaziUtil().getTianGanLabel(tg) + WuXingUtil().getTianGanWuxingText(tg)
+            str = str + elementStr + "(" + ShiShenUtil().getShiShenLabel(ss) + ") "
+        }
+
+        return str
+    }
+
+    @Composable
+    fun getXiShenString(data : BaziData) : String{
+        var str = ""
+        var elementStr = ""
+        var tg = TianGan.TIANGAN_JIA
+        for(ss in data.xiShenList){
+            tg = ShiShenUtil().getShiShenTianGan(ss, data.dayTiangan)
+            elementStr = BaziUtil().getTianGanLabel(tg) + WuXingUtil().getTianGanWuxingText(tg)
+            str = str + elementStr + "(" + ShiShenUtil().getShiShenLabel(ss) + ") "
+        }
+
+        return str
+    }
+
+    @Composable
+    fun getJiShenString(data : BaziData) : String{
+        var str = ""
+        var elementStr = ""
+        var tg = TianGan.TIANGAN_JIA
+        for(ss in data.jiShenList){
+            tg = ShiShenUtil().getShiShenTianGan(ss, data.dayTiangan)
+            elementStr = BaziUtil().getTianGanLabel(tg) + WuXingUtil().getTianGanWuxingText(tg)
+            str = str + elementStr + "(" + ShiShenUtil().getShiShenLabel(ss) + ") "
+        }
+
+        return str
+    }
+
+    @Composable
     fun getXiJiString(data : BaziData) : String{
         var str = ""
+        var elementStr = ""
+        var tg = TianGan.TIANGAN_JIA
         str = str + stringResource(R.string.app_bazi_yong_shen) + ":"
         for(ss in data.yongShenList){
-            str = str + "[" + ShiShenUtil().getShiShenLabel(ss) + "]"
+            tg = ShiShenUtil().getShiShenTianGan(ss, data.dayTiangan)
+            elementStr = BaziUtil().getTianGanLabel(tg) + WuXingUtil().getTianGanWuxingText(tg)
+            str = str + elementStr + "(" + ShiShenUtil().getShiShenLabel(ss) + ") "
         }
         str = str + "\n"
         str = str + stringResource(R.string.app_bazi_xi_shen) + ":"
         for(ss in data.xiShenList){
-            str = str + "[" + ShiShenUtil().getShiShenLabel(ss) + "]"
+            tg = ShiShenUtil().getShiShenTianGan(ss, data.dayTiangan)
+            elementStr = BaziUtil().getTianGanLabel(tg) + WuXingUtil().getTianGanWuxingText(tg)
+            str = str + elementStr + "(" + ShiShenUtil().getShiShenLabel(ss) + ") "
         }
         str = str + "\n"
         str = str + stringResource(R.string.app_bazi_ji_shen) + ":"
         for(ss in data.jiShenList){
-            str = str + "[" + ShiShenUtil().getShiShenLabel(ss) + "]"
+            tg = ShiShenUtil().getShiShenTianGan(ss, data.dayTiangan)
+            elementStr = BaziUtil().getTianGanLabel(tg) + WuXingUtil().getTianGanWuxingText(tg)
+            str = str + elementStr + "(" + ShiShenUtil().getShiShenLabel(ss) + ") "
         }
         return str
     }
@@ -503,29 +555,29 @@ class GeJuUtil {
         if(isBaziStrong){
             if(isYinStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isBiJieStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN,ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             }else if(isCaiStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             }
         }else{
             if(isShiShangStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
             }else if(isGuanShaStrong(data)){
-                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_QI_SHA)
             }else if(isCaiStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI,ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN, ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
             }
         }
@@ -537,31 +589,53 @@ class GeJuUtil {
         if(isBaziStrong){
             if(isYinStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             }else if(isBiJieStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA,ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             }else if(isGuanShaStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }
         }else{
             if(isShiShangStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf()
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
             }else if(isGuanShaStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
                 data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
             }else if(isCaiStrong(data)){
                 data.yongShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
-                data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI,ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
                 data.jiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN, ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
             }
+        }
+    }
+
+    fun checkJianLuGJXiJi(gj : BaziGeJu, data : BaziData){
+        var isBaziStrong = WuXingUtil().isBaziStrong(data)
+        var guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
+        println("checkJianLuGJXiJi(), isBaziStrong=$isBaziStrong")
+        if(isBaziStrong){
+            if(guanShaCount == 0){
+                data.yongShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                data.xiShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
+                data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+            }else{
+                data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+                data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
+                data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+            }
+        }else{
+            //unlikely happen
+            data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+            data.xiShenList = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN, ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
+            data.jiShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
         }
     }
 
@@ -581,6 +655,8 @@ class GeJuUtil {
             checkShiShenGJXiJi(gj, data)
         }else if(gj == BaziGeJu.GJ_QI_SHA) {
             checkQiShaGJXiJi(gj, data)
+        }else if(gj == BaziGeJu.GJ_JIAN_LU){
+            checkJianLuGJXiJi(gj, data)
         }
         else{
             str = "ToDo"

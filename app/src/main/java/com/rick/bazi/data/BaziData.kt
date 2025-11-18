@@ -41,4 +41,5 @@ data class BaziData(
     var yongShenList : List<ShiShen> = listOf(),
     var jiShenList : List<ShiShen> = listOf(),
     var xiShenList : List<ShiShen> = listOf(),
+    var tiaohouList : List<WuXing> = listOf(),
 )

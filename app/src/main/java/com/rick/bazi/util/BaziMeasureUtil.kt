@@ -16,497 +16,57 @@ import com.rick.bazi.ui.BaziViewModel
 
 class BaziMeasureUtil {
 
-//    val cangganLookupMap: Map<DiZhi, Array<TianGan>> = mapOf(
-//        DiZhi.DIZHI_ZI to arrayOf(TianGan.TIANGAN_GUI),
-//        DiZhi.DIZHI_CHOU to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_GUI, TianGan.TIANGAN_XIN),
-//        DiZhi.DIZHI_YIN to arrayOf(TianGan.TIANGAN_JIA, TianGan.TIANGAN_BING, TianGan.TIANGAN_WU),
-//        DiZhi.DIZHI_MOU to arrayOf(TianGan.TIANGAN_YI),
-//        DiZhi.DIZHI_CHEN to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_YI, TianGan.TIANGAN_GUI),
-//        DiZhi.DIZHI_SI to arrayOf(TianGan.TIANGAN_BING, TianGan.TIANGAN_GENG, TianGan.TIANGAN_WU),
-//        DiZhi.DIZHI_WU to arrayOf(TianGan.TIANGAN_DING, TianGan.TIANGAN_JI),
-//        DiZhi.DIZHI_WEI to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_DING, TianGan.TIANGAN_YI),
-//        DiZhi.DIZHI_SHEN to arrayOf(TianGan.TIANGAN_GENG, TianGan.TIANGAN_REN, TianGan.TIANGAN_WU),
-//        DiZhi.DIZHI_YOU to arrayOf(TianGan.TIANGAN_XIN),
-//        DiZhi.DIZHI_XU to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_XIN, TianGan.TIANGAN_DING),
-//        DiZhi.DIZHI_HAI to arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
-//    )
-
     @Composable
-    fun analyzeBaziHelpStar(baziInfo: BaziInfo, baziModel: BaziViewModel): String {
-        var str = ""
-        var helpNumber = 0
-        var impedeNumber = 0
-        var ss = ShiShen.SHISHEN_BI_JIAN
-
-        var goodElementStr = ""
-        var badElementStr = ""
-        var tg = baziInfo.yearTiangan
-        var dz = baziInfo.yearDizhi
-        var yinCount = 0
-        var bijieCount = 0
+    fun getHelpElementString(data : BaziData) : String{
+        var sb = StringBuilder()
         var bijieStr = ""
         var yinStr = ""
+        var yinCount = 0
+        var biJieCount = 0
 
-        //check tiangan
-        ss = baziInfo.yearTgShiShen
-        tg = baziInfo.yearTiangan
-        if (ShiShenUtil().isYin(ss)) {
-            yinCount++
-            yinStr = yinStr + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isBiJie(ss)) {
-            bijieCount++
-            bijieStr = bijieStr + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
+        yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
+        biJieCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
 
-        ss = baziInfo.monthTgShiShen
-        tg = baziInfo.monthTiangan
-        if (ShiShenUtil().isYin(ss)) {
-            yinCount++
-            yinStr = yinStr + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isBiJie(ss)) {
-            bijieCount++
-            bijieStr = bijieStr + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
+        yinStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_PIAN_YIN)
+        bijieStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_JIE_CAI)
 
-        ss = baziInfo.hourTgShiShen
-        tg = baziInfo.hourTiangan
-        if (ShiShenUtil().isYin(ss)) {
-            yinCount++
-            yinStr = yinStr + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isBiJie(ss)) {
-            bijieCount++
-            bijieStr = bijieStr + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
+        sb.append("\n")
+        sb.append(stringResource(R.string.app_bazi_have) + yinCount + stringResource(R.string.app_bazi_yin_label) + stringResource(R.string.app_bazi_shengshen))
+        sb.append("  " + yinStr)
+        sb.append("\n")
+        sb.append(stringResource(R.string.app_bazi_have) + biJieCount + stringResource(R.string.app_bazi_bj_label) + stringResource(R.string.app_bazi_bangfu))
+        sb.append(" " + bijieStr)
 
-        //check dizhi
-        ss = baziInfo.yearDzShiShen
-        dz = baziInfo.yearDizhi
-        if (ShiShenUtil().isYin(ss)) {
-            yinCount++
-            yinStr = yinStr + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isBiJie(ss)) {
-            bijieCount++
-            bijieStr = bijieStr + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-
-        ss = baziInfo.monthDzShiShen
-        dz = baziInfo.monthDizhi
-        if (ShiShenUtil().isYin(ss)) {
-            yinCount++
-            yinStr = yinStr + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isBiJie(ss)) {
-            bijieCount++
-            bijieStr = bijieStr + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-
-        ss = baziInfo.dayDzShiShen
-        dz = baziInfo.dayDizhi
-        if (ShiShenUtil().isYin(ss)) {
-            yinCount++
-            yinStr = yinStr + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isBiJie(ss)) {
-            bijieCount++
-            bijieStr = bijieStr + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-
-        ss = baziInfo.hourDzShiShen
-        dz = baziInfo.hourDizhi
-        if (ShiShenUtil().isYin(ss)) {
-            yinCount++
-            yinStr = yinStr + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isBiJie(ss)) {
-            bijieCount++
-            bijieStr = bijieStr + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-
-        if (yinCount > 0) {
-            yinStr =
-                stringResource(R.string.app_bazi_have) + yinCount + stringResource(R.string.app_bazi_yin_label) + stringResource(
-                    R.string.app_bazi_shengshen
-                ) + " " + yinStr
-        }
-        if (bijieCount > 0) {
-            bijieStr =
-                stringResource(R.string.app_bazi_have) + bijieCount + stringResource(R.string.app_bazi_bj_label) + stringResource(
-                    R.string.app_bazi_bangfu
-                ) + " " + bijieStr
-        }
-
-        goodElementStr = yinStr + bijieStr
-        baziModel.setDeHelpStr(goodElementStr)
-        baziModel.setYinCount(yinCount)
-        baziModel.setBiJieCount(bijieCount)
-
-        return goodElementStr
+        return sb.toString()
     }
 
     @Composable
-    fun analyzeBaziKeXieHao(baziInfo: BaziInfo, baziModel: BaziViewModel): String {
-
-        var ss = ShiShen.SHISHEN_BI_JIAN
-
-        var badElementStr = ""
-        var tg = baziInfo.yearTiangan
-        var dz = baziInfo.yearDizhi
-        var guanshaCount = 0
-        var shishangCount = 0
+    fun getKeXieHaoString(data : BaziData) : String{
+        var sb = StringBuilder()
+        var guanshaStr = ""
+        var shishangStr = ""
+        var caiStr = ""
+        var shiShangCount = 0
+        var guanShaCount = 0
         var caiCount = 0
-        var guanshaString = ""
-        var shishangString = ""
-        var caiString = ""
 
-        //check tiangan
-        ss = baziInfo.yearTgShiShen
-        tg = baziInfo.yearTiangan
-        if (ShiShenUtil().isGuanSha(ss)) {
-            guanshaCount++
-            guanshaString = guanshaString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isShiShang(ss)) {
-            shishangCount++
-            shishangString = shishangString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isCai(ss)) {
-            caiCount++
-            caiString = caiString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
+        shiShangCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
+        guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
+        caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
 
-        ss = baziInfo.monthTgShiShen
-        tg = baziInfo.monthTiangan
-        if (ShiShenUtil().isGuanSha(ss)) {
-            guanshaCount++
-            guanshaString = guanshaString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isShiShang(ss)) {
-            shishangCount++
-            shishangString = shishangString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isCai(ss)) {
-            caiCount++
-            caiString = caiString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
+        guanshaStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_QI_SHA)
+        shishangStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_SHANG_GUAN)
+        caiStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_PIAN_CAI)
 
-        ss = baziInfo.hourTgShiShen
-        tg = baziInfo.hourTiangan
-        if (ShiShenUtil().isGuanSha(ss)) {
-            guanshaCount++
-            guanshaString = guanshaString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isShiShang(ss)) {
-            shishangCount++
-            shishangString = shishangString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isCai(ss)) {
-            caiCount++
-            caiString = caiString + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
+        sb.append("\n")
+        sb.append(stringResource(R.string.app_bazi_have) + guanShaCount + stringResource(R.string.app_bazi_gs_label) + stringResource(R.string.app_bazi_ke))
+        sb.append(" ").append(guanshaStr).append("\n")
+        sb.append(stringResource(R.string.app_bazi_have) + shiShangCount + stringResource(R.string.app_bazi_ss_label) + stringResource(R.string.app_bazi_xie))
+        sb.append(" ").append(shishangStr).append("\n")
+        sb.append(stringResource(R.string.app_bazi_have) + caiCount + stringResource(R.string.app_bazi_cai_label) + stringResource(R.string.app_bazi_hao))
+        sb.append("  ").append(caiStr).append("")
 
-        //check dizhi
-        ss = baziInfo.yearDzShiShen
-        dz = baziInfo.yearDizhi
-        if (ShiShenUtil().isGuanSha(ss)) {
-            guanshaCount++
-            guanshaString = guanshaString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isShiShang(ss)) {
-            shishangCount++
-            shishangString = shishangString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isCai(ss)) {
-            caiCount++
-            caiString = caiString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-
-        ss = baziInfo.monthDzShiShen
-        dz = baziInfo.monthDizhi
-        if (ShiShenUtil().isGuanSha(ss)) {
-            guanshaCount++
-            guanshaString = guanshaString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isShiShang(ss)) {
-            shishangCount++
-            shishangString = shishangString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isCai(ss)) {
-            caiCount++
-            caiString = caiString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-
-        ss = baziInfo.dayDzShiShen
-        dz = baziInfo.dayDizhi
-        if (ShiShenUtil().isGuanSha(ss)) {
-            guanshaCount++
-            guanshaString = guanshaString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isShiShang(ss)) {
-            shishangCount++
-            shishangString = shishangString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isCai(ss)) {
-            caiCount++
-            caiString = caiString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-
-        ss = baziInfo.hourDzShiShen
-        dz = baziInfo.hourDizhi
-        if (ShiShenUtil().isGuanSha(ss)) {
-            guanshaCount++
-            guanshaString = guanshaString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isShiShang(ss)) {
-            shishangCount++
-            shishangString = shishangString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-        if (ShiShenUtil().isCai(ss)) {
-            caiCount++
-            caiString = caiString + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ") 、 "
-        }
-
-        if (guanshaCount > 0) {
-            guanshaString =
-                stringResource(R.string.app_bazi_have) + guanshaCount + stringResource(R.string.app_bazi_gs_label) + stringResource(
-                    R.string.app_bazi_ke
-                ) + " " + guanshaString
-        }
-        if (shishangCount > 0) {
-            shishangString =
-                stringResource(R.string.app_bazi_have) + shishangCount + stringResource(R.string.app_bazi_ss_label) + stringResource(
-                    R.string.app_bazi_xie
-                ) + " " + shishangString
-        }
-        if (caiCount > 0) {
-            caiString =
-                stringResource(R.string.app_bazi_have) + caiCount + stringResource(R.string.app_bazi_cai_label) + stringResource(
-                    R.string.app_bazi_hao
-                ) + " " + caiString
-        }
-
-
-        badElementStr = guanshaString + shishangString + caiString
-
-        baziModel.setKeXieHaoStr(badElementStr)
-        baziModel.setGuanShaCount(guanshaCount)
-        baziModel.setShiShangCount(shishangCount)
-        baziModel.setCaiCount(caiCount)
-
-        return badElementStr
+        return sb.toString()
     }
 
     @Composable
@@ -516,10 +76,10 @@ class BaziMeasureUtil {
         //shishen string
         ShiShenUtil().getBaziShiShengString(baziInfo, baziModel)
 
-        analyzeBaziHelpStar(baziInfo, baziModel)
-        analyzeBaziKeXieHao(baziInfo, baziModel)
+//        analyzeBaziHelpStar(baziInfo, baziModel)
+//        analyzeBaziKeXieHao(baziInfo, baziModel)
         getBaziStrengthSummary(baziInfo, baziModel)
-        getXiJiSummary(baziInfo, baziModel)
+//        getXiJiSummary(baziInfo, baziModel)
 //        getBaziGeJuSummary(baziInfo, baziModel)
         getBaziDayunSummary(baziInfo, baziModel)
     }
@@ -578,7 +138,7 @@ class BaziMeasureUtil {
             builder.append(" ")
             builder.append(dayunStartYear + (i - 1) * 10)
             builder.append(" ")
-            builder.append(getDayunCheckResult(tg, dz, baziInfo))
+            builder.append(getDayunAnalysisResult(tg, dz, baziInfo.baziData))
 
             builder.append("\n")
             str = str + builder.toString()
@@ -587,6 +147,125 @@ class BaziMeasureUtil {
 
         baziModel.setBaziDayunSummary(str)
         return str
+    }
+
+    @Composable
+    fun getDayunAnalysisResult(dyTg: TianGan, dyDz: DiZhi, data: BaziData): String {
+        var str = ""
+        var sb = StringBuilder()
+        var weight = 0
+        var tgWX = WuXingUtil().getTgWX(dyTg)
+        var dzWX = WuXingUtil().getDiZhiWuxing(dyDz)
+        var isJiShenExist = false
+
+        if(isTianGanXiShen(dyTg, data)){
+//            sb.append(stringResource(R.string.app_bazi_dayun))
+            sb.append(stringResource(R.string.tiangan))
+            sb.append("(" + stringResource(R.string.app_bazi_ji) + ")")
+            weight = weight + 1
+        }else if(isTianGanJiShen(dyTg, data)){
+//            sb.append(stringResource(R.string.app_bazi_dayun))
+            sb.append(stringResource(R.string.tiangan))
+            sb.append("(" + stringResource(R.string.app_bazi_xiong) + ")")
+            weight = weight - 1
+            isJiShenExist = true
+        }else{
+//            weight = weight + 1
+        }
+
+        if(isDiZhiXiShen(dyDz, data)){
+//            sb.append(stringResource(R.string.app_bazi_dayun))
+            sb.append(stringResource(R.string.dizhi))
+            sb.append("(" + stringResource(R.string.app_bazi_ji) + ")")
+            weight = weight + 1
+        }else if(isDiZhiJiShen(dyDz, data)){
+//            sb.append(stringResource(R.string.app_bazi_dayun))
+            sb.append(stringResource(R.string.dizhi))
+            sb.append("(" + stringResource(R.string.app_bazi_xiong) + ")")
+            weight = weight - 1
+            isJiShenExist = true
+        }else{
+//            weight = weight + 1
+        }
+
+        if (weight >= 5) {
+            str = stringResource(R.string.app_bazi_jixiong_1)
+        } else if (weight == 2) {
+            str = stringResource(R.string.app_bazi_jixiong_1)
+        } else if (weight == 1) {
+            str = stringResource(R.string.app_bazi_jixiong_2)
+        }
+        else if (weight == 0) {
+            if(isJiShenExist == true){
+                str = stringResource(R.string.app_bazi_jixiong_3)
+            }else{
+                str = stringResource(R.string.app_bazi_jixiong_0)
+            }
+        } else if (weight == -1) {
+            str = stringResource(R.string.app_bazi_jixiong_4)
+        } else if (weight == -2) {
+            str = stringResource(R.string.app_bazi_jixiong_5)
+        }
+        sb.append(str)
+
+        return sb.toString()
+    }
+
+    fun isTianGanJiShen(tg: TianGan, data: BaziData) : Boolean{
+        var ret = false
+        var tgSS = ShiShen.SHISHEN_BI_JIAN
+        tgSS = ShiShenUtil().getShiShen(tg, data.dayTiangan)
+        for(ss in data.jiShenList){
+            if(ss == tgSS){
+                println("Found TianGan JiShen=$ss")
+                ret = true
+                break
+            }
+        }
+        return ret
+    }
+
+//    @Composable
+    fun isDiZhiJiShen(dz : DiZhi, data: BaziData) : Boolean{
+        var ret = false
+//        var tgSS = ShiShen.SHISHEN_BI_JIAN
+        var dzSS = ShiShenUtil().getShiShenFromDizhi(dz, data.dayTiangan)
+        for(ss in data.jiShenList){
+            if(ss == dzSS){
+                println("Found DiZhi XiShen=$ss")
+                ret = true
+                break
+            }
+        }
+        return ret
+    }
+
+    fun isDiZhiXiShen(dz : DiZhi, data: BaziData) : Boolean{
+        var ret = false
+//        var tgSS = ShiShen.SHISHEN_BI_JIAN
+        var dzSS = ShiShenUtil().getShiShenFromDizhi(dz, data.dayTiangan)
+        for(ss in data.xiShenList){
+            if(ss == dzSS){
+                println("Found DiZhi XiShen=$ss")
+                ret = true
+                break
+            }
+        }
+        return ret
+    }
+
+    fun isTianGanXiShen(tg: TianGan, data: BaziData) : Boolean{
+        var ret = false
+        var tgSS = ShiShen.SHISHEN_BI_JIAN
+        tgSS = ShiShenUtil().getShiShen(tg, data.dayTiangan)
+        for(ss in data.xiShenList){
+            if(ss == tgSS){
+                println("Found TianGan XiShen=$ss")
+                ret = true
+                break
+            }
+        }
+        return ret
     }
 
     @Composable
@@ -648,51 +327,65 @@ class BaziMeasureUtil {
     fun getBaziStrengthText(s: BaziStrength): String {
         var str = ""
         if (s == BaziStrength.BAZI_STRONG_SUPER) {
-            str = stringResource(R.string.app_bazi_strong_3)
+            str = stringResource(R.string.app_bazi_gj_congqian_desc)
         }
         if (s == BaziStrength.BAZI_STRONG) {
-            str = stringResource(R.string.app_bazi_strong_2)
+            str = stringResource(R.string.app_bazi_strong_2_desc)
         }
         if (s == BaziStrength.BAZI_STRONG_MILD) {
-            str = stringResource(R.string.app_bazi_strong_1)
+            str = stringResource(R.string.app_bazi_strong_1_desc)
         }
         if (s == BaziStrength.BAZI_BALANCED) {
-            str = stringResource(R.string.app_bazi_balanced)
+            str = stringResource(R.string.app_bazi_balanced_desc)
         }
         if (s == BaziStrength.BAZI_WEAK_MILD) {
-            str = stringResource(R.string.app_bazi_weak_1)
+            str = stringResource(R.string.app_bazi_weak_1_desc)
         }
         if (s == BaziStrength.BAZI_WEAK) {
-            str = stringResource(R.string.app_bazi_weak_2)
+            str = stringResource(R.string.app_bazi_weak_2_desc)
         }
         if (s == BaziStrength.BAZI_WEAK_SUPER) {
-            str = stringResource(R.string.app_bazi_weak_3)
+            str = stringResource(R.string.app_bazi_gj_congruo_desc)
         }
         return str
     }
 
     @Composable
     fun getBaziStrengthSummary(baziInfo: BaziInfo, baziModel: BaziViewModel): String {
+        var sb = StringBuilder()
+        var bijieStr = ""
+        var yinStr = ""
+        var yinCount = 0
+        var biJieCount = 0
+        var shiShangCount = 0
+        var guanShaCount = 0
+        var caiCount = 0
+        var data = baziInfo.baziData
+
+        yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
+        biJieCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
+        shiShangCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
+        guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
+        caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
+
         var summary = ""
         var baziStrength = BaziStrength.BAZI_BALANCED
-        var goodElementCount = baziInfo.bijieCount + baziInfo.yinCount
-        var badElementCount = baziInfo.guanshaCount + baziInfo.shishangCount + baziInfo.caiCount
-        Log.i(
-            "[Rick]",
-            "goodElementCount=" + goodElementCount + ",badElementCount=" + badElementCount
-        );
+        var goodElementCount = biJieCount + yinCount
+        var badElementCount = guanShaCount + shiShangCount + caiCount
 
         var elementDiffWeight = goodElementCount - badElementCount
         var danglingWeight = 0
         var dediWeight = 0
         var totalWeight = 0
-        if (baziInfo.isDangLing) {
+        var isDangLing = WuXingUtil().isDangling(data.monthDizhi, data.dayTiangan)
+        var idDeDi = WuXingUtil().isBaziDedi(data)
+        if (isDangLing) {
             danglingWeight = 3
         } else {
             danglingWeight = -3
         }
 
-        if (baziInfo.isDedi) {
+        if (idDeDi) {
             dediWeight = 2
         } else {
             dediWeight = -2
@@ -718,25 +411,25 @@ class BaziMeasureUtil {
         }
 
         summary =
-            summary + stringResource(R.string.bazi_owner) + WuXingUtil().getOwnerStr(baziInfo)
+            summary + stringResource(R.string.bazi_owner) + WuXingUtil().getTianGanWuXingText(baziInfo.baziData.dayTiangan)
         if (baziInfo.isDangLing) {
             summary = summary + stringResource(R.string.app_bazi_dangling_yes)
         } else {
             summary = summary + stringResource(R.string.app_bazi_dangling_no)
         }
-        summary = summary + " "
+        summary = summary + ","
         if (baziInfo.isDedi) {
             summary = summary + stringResource(R.string.app_bazi_dedi_yes)
         } else {
             summary = summary + stringResource(R.string.app_bazi_dedi_no)
         }
-        summary = summary + " "
+        summary = summary + ","
         if (elementDiffWeight > 0) {
             summary = summary + stringResource(R.string.app_bazi_deshi_yes)
         } else if (elementDiffWeight < 0) {
             summary = summary + stringResource(R.string.app_bazi_deshi_no)
         }
-        summary = summary + " "
+        summary = summary + ","
         summary = summary + getBaziStrengthText(baziStrength)
 
         baziModel.setBaziStrength(baziStrength)
@@ -744,358 +437,57 @@ class BaziMeasureUtil {
         return summary
     }
 
-//    @Composable
-//    fun isRootToTianGan(tg: TianGan, baziInfo: BaziInfo): Boolean {
-//        var ret = false
-//        var wx = WuXingUtil().getTgWX(tg)
-//        if (wx == WuXingUtil().getTgWX(baziInfo.yearTiangan)) return true
-//        if (wx == WuXingUtil().getTgWX(baziInfo.monthTiangan)) return true
-//        if (wx == WuXingUtil().getTgWX(baziInfo.dayTiangan)) return true
-//        if (wx == WuXingUtil().getTgWX(baziInfo.hourTiangan)) return true
-//        return ret
-//    }
-
-//    @Composable
-//    fun getBaziGeJuSummary(baziInfo: BaziInfo, baziModel: BaziViewModel){
-//        var string = ""
-//        var gjString = ""
-//        var gjSummary = ""
-//        var gj = BaziGeJu.GJ_NONE
-//        var gjTG = TianGan.TIANGAN_JIA
-//
-////        if(GeJuUtil().isCongShaGJ(baziInfo, baziModel))return
-//
-//        //normal GeJu
-//        var monthDz = baziInfo.monthDizhi
-//        var ss = baziInfo.monthDzShiShen
-//        var tgList = cangganLookupMap.get(monthDz)
-//        Log.i("[Rick]", "tgList=" + tgList)
-//        if (tgList != null) {
-//            if (tgList.size == 1) {
-//                gjTG = tgList.get(0)
-//            } else {
-//                for (tg in tgList) {
-//                    if (isRootToTianGan(tg, baziInfo)) {
-//                        gjTG = tg
-//                        Log.i("[Rick]", "GeJu tg=" + tg)
-//                        break
-//                    }
-//                }
-//            }
-//            ss = ShiShenUtil().getShiShen(gjTG, baziInfo.dayTiangan)
-//            gj = GeJuUtil().getGJByShiShen(ss)
-//            gjString = GeJuUtil().getGJText(gj)
-//            gjSummary = GeJuUtil().getGJSummary(gj)
-////            Log.i("[Rick]", "GeJu tg=" + tg)
-//            Log.i("[Rick]", "GeJu gjSummary=" + gjSummary)
-//
-//        }
-//
-//        baziModel.setBaziGJ(gj)
-//        baziModel.setBaziGJSummary(gjSummary)
-//        baziModel.setBaziGJString(gjString)
-//    }
 
     @Composable
-    fun getBaziStrongSummary(baziInfo: BaziInfo, baziModel: BaziViewModel): String {
-        var summary = ""
-        var yinCount = baziInfo.yinCount
-        var bijieCount = baziInfo.bijieCount
-        summary = summary + stringResource(R.string.app_bazi_xiyong_shen) + ": "
-
-//        summary = summary + stringResource(R.string.app_bazi_strong_2_desc) + "\n "
-
-        var guanshaString = "[" + WuXingUtil().getGuanshaWuXingText(
-            baziInfo.dayTiangan
-        ) + "] " + getBaziYongshenStr(
-            baziInfo,
-            baziModel,
-            ShiShen.SHISHEN_ZHENG_GUAN
-        ) + getBaziYongshenStr(baziInfo, baziModel, ShiShen.SHISHEN_QI_SHA)
-
-        var shishangString =
-            "[" + WuXingUtil().getShishangWuXingText(baziInfo.dayTiangan) + "] " + getBaziYongshenStr(
-                baziInfo,
-                baziModel,
-                ShiShen.SHISHEN_SHI_SHEN
-            ) + getBaziYongshenStr(baziInfo, baziModel, ShiShen.SHISHEN_SHANG_GUAN) + "]"
-
-        var caiString =
-            "[" + WuXingUtil().getCaiWuXingText(baziInfo.dayTiangan) + "] " + getBaziYongshenStr(
-                baziInfo,
-                baziModel,
-                ShiShen.SHISHEN_ZHENG_CAI
-            ) + getBaziYongshenStr(baziInfo, baziModel, ShiShen.SHISHEN_PIAN_CAI) + "]"
-
-        if (bijieCount > yinCount) {
-            summary = summary + "(1)" + guanshaString
-            summary = summary + "(2)" + shishangString
-            summary = summary + "(3)" + caiString
-        } else if (yinCount > bijieCount) {
-            summary = summary + "(1)" + caiString
-            summary = summary + "(2)" + shishangString
-            summary = summary + "(3)" + guanshaString
-        } else {
-            summary = summary + "(1)" + shishangString
-            summary = summary + "(2)" + caiString
-            summary = summary + "(3)" + guanshaString
-        }
-
-        summary = summary + "\n"
-
-        summary =
-            summary + stringResource(R.string.app_bazi_ji_shen) + ": (1)[" + WuXingUtil().getYinWuXingText(
-                baziInfo.dayTiangan
-            ) + "] (2)[" + WuXingUtil().getBiJieWuXingText(baziInfo.dayTiangan) + "] \n"
-
-        return summary
-    }
-
-    @Composable
-    fun getBaziYongshenStr(baziInfo: BaziInfo, baziModel: BaziViewModel, ss: ShiShen): String {
+    fun getBaziYongshenSummary(data: BaziData): String {
         var str = ""
-        var tg = TianGan.TIANGAN_JIA
-        var dz = DiZhi.DIZHI_ZI
-        //tiangan
-        tg = baziInfo.yearTiangan
-        if (baziInfo.yearTgShiShen == ss) {
-            str = str + stringResource(R.string.bazi_year) + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ")"
-        }
-        tg = baziInfo.monthTiangan
-        if (baziInfo.monthTgShiShen == ss) {
-            str = str + stringResource(R.string.bazi_month) + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ")"
-        }
-        tg = baziInfo.hourTiangan
-        if (baziInfo.hourDzShiShen == ss) {
-            str = str + stringResource(R.string.bazi_hour) + getTianganStr(
-                baziInfo,
-                tg
-            ) + WuXingUtil().getTianGanWuxingText(tg) + "(" + ShiShenUtil().getShiShenText(
-                tg,
-                baziInfo.dayTiangan
-            ) + ")"
-        }
-        //dizhi
-        dz = baziInfo.yearDizhi
-        if (baziInfo.yearDzShiShen == ss) {
-            str = str + stringResource(R.string.bazi_year) + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ")"
-        }
-        dz = baziInfo.monthDizhi
-        if (baziInfo.monthDzShiShen == ss) {
-            str = str + stringResource(R.string.bazi_month) + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ")"
-        }
-        dz = baziInfo.dayDizhi
-        if (baziInfo.dayDzShiShen == ss) {
-            str = str + stringResource(R.string.bazi_day) + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ")"
-        }
-        dz = baziInfo.hourDizhi
-        if (baziInfo.hourDzShiShen == ss) {
-            str = str + stringResource(R.string.bazi_hour) + getDizhiStr(
-                baziInfo,
-                dz
-            ) + WuXingUtil().getDiZhiWuxingText(dz) + "(" + ShiShenUtil().getDiZhiShiShenText(
-                dz,
-                baziInfo.dayTiangan
-            ) + ")"
-        }
-
-        return str
-    }
-
-    @Composable
-    fun getBaziWeakSummary(baziInfo: BaziInfo, baziModel: BaziViewModel): String {
         var summary = ""
-//        summary = summary + stringResource(R.string.app_bazi_weak_2_desc) + "\n "
-        summary = summary + stringResource(R.string.app_bazi_xiyong_shen) + ": "
-
-        var guanshaCount = baziInfo.guanshaCount
-        var shishangCount = baziInfo.shishangCount
-        var caiCount = baziInfo.caiCount
-
-        var yinStr = "[" + WuXingUtil().getYinWuXingText(
-            baziInfo.dayTiangan
-        ) + "] " + getBaziYongshenStr(
-            baziInfo,
-            baziModel,
-            ShiShen.SHISHEN_ZHENG_YIN
-        ) + getBaziYongshenStr(baziInfo, baziModel, ShiShen.SHISHEN_PIAN_YIN)
-
-        var bijieStr =
-            "[" + WuXingUtil().getBiJieWuXingText(baziInfo.dayTiangan) + getBaziYongshenStr(
-                baziInfo,
-                baziModel,
-                ShiShen.SHISHEN_BI_JIAN
-            ) + getBaziYongshenStr(baziInfo, baziModel, ShiShen.SHISHEN_JIE_CAI) + "]"
-//        summary = summary + stringResource(R.string.app_bazi_xiyong_shen) + ": "
-        if (guanshaCount > shishangCount && guanshaCount > caiCount) {
-            summary = summary + "(1)" + yinStr
-            summary = summary + "(2)" + bijieStr
-
-        } else if (caiCount > guanshaCount && caiCount > shishangCount) {
-            summary = summary + "(1)" + bijieStr
-            summary = summary + "(2)" + yinStr
-        } else if (shishangCount > guanshaCount && shishangCount > caiCount) {
-            summary = summary + "(1)" + yinStr
-            summary = summary + "(2)" + bijieStr
-        } else {
-            summary = summary + "(1)" + yinStr
-            summary = summary + "(2)" + bijieStr
+        var sb = StringBuilder()
+        var guanshaStr = ""
+        var shishangStr = ""
+        var caiStr = ""
+//        var shiShangCount = 0
+//        var guanShaCount = 0
+//        var caiCount = 0
+//
+//        shiShangCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
+//        guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
+//        caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
+//
+//        guanshaStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_QI_SHA)
+//        shishangStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_SHANG_GUAN)
+//        caiStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_PIAN_CAI)
+        //check yongshen in Bazi
+        for(ss in data.yongShenList){
+            str = ShiShenUtil().getBaziShiShenStatString(data, ss)
+            if(str.length > 0){
+                sb.append(str)
+            }
         }
-        summary = summary + "\n"
-        summary =
-            summary + stringResource(R.string.app_bazi_ji_shen) + ": (1)[" + WuXingUtil().getGuanshaWuXingText(
-                baziInfo.dayTiangan
-            ) + "] (2)[" + WuXingUtil().getShishangWuXingText(baziInfo.dayTiangan) + "] (3)[" + WuXingUtil().getCaiWuXingText(
-                baziInfo.dayTiangan
-            ) + "]\n"
-        return summary
-    }
-
-    @Composable
-    fun getXiJiSummary(baziInfo: BaziInfo, baziModel: BaziViewModel): String {
-        var summary = ""
-        var xiyongShenList: List<WuXing> = arrayListOf<WuXing>()
-        var jiShenList: List<WuXing> = arrayListOf<WuXing>()
-
-        var strenthLevel = baziInfo.baziStrength
-        if (strenthLevel == BaziStrength.BAZI_STRONG_SUPER) {
-            summary = summary + stringResource(R.string.app_bazi_gj_congqian_desc) + "\n "
-            summary =
-                summary + stringResource(R.string.app_bazi_xiyong_shen) + ": (1)[" + WuXingUtil().getYinWuXingText(
-                    baziInfo.dayTiangan
-                ) + "] (2)[" + WuXingUtil().getBiJieWuXingText(baziInfo.dayTiangan) + "] \n"
-            summary =
-                summary + stringResource(R.string.app_bazi_ji_shen) + ": (1)[" + WuXingUtil().getGuanshaWuXingText(
-                    baziInfo.dayTiangan
-                ) + "] (2)[" + WuXingUtil().getShishangWuXingText(baziInfo.dayTiangan) + "] (3)[" + WuXingUtil().getCaiWuXingText(
-                    baziInfo.dayTiangan
-                ) + "]\n"
-            xiyongShenList = arrayListOf<WuXing>(
-                WuXingUtil().getYinWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getBiJieWuXing(baziInfo.dayTiangan)
-            )
-            jiShenList = arrayListOf<WuXing>(
-                WuXingUtil().getGuanshaWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getShishangWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getCaiWuXing(baziInfo.dayTiangan)
-            )
-        } else if (strenthLevel == BaziStrength.BAZI_STRONG) {
-            summary = summary + stringResource(R.string.app_bazi_strong_2_desc) + "\n "
-
-            summary = summary + getBaziStrongSummary(baziInfo, baziModel)
-            xiyongShenList = arrayListOf<WuXing>(
-                WuXingUtil().getGuanshaWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getShishangWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getCaiWuXing(baziInfo.dayTiangan)
-            )
-            jiShenList = arrayListOf<WuXing>(
-                WuXingUtil().getYinWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getBiJieWuXing(baziInfo.dayTiangan)
-            )
-        } else if (strenthLevel == BaziStrength.BAZI_STRONG_MILD) {
-            summary = summary + stringResource(R.string.app_bazi_strong_1_desc) + "\n "
-            summary = summary + getBaziStrongSummary(baziInfo, baziModel)
-            xiyongShenList = arrayListOf<WuXing>(
-                WuXingUtil().getGuanshaWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getShishangWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getCaiWuXing(baziInfo.dayTiangan)
-            )
-            jiShenList = arrayListOf<WuXing>(
-                WuXingUtil().getYinWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getBiJieWuXing(baziInfo.dayTiangan)
-            )
-        } else if (strenthLevel == BaziStrength.BAZI_BALANCED) {
-            summary = summary + stringResource(R.string.app_bazi_balanced_desc) + "\n "
-        } else if (strenthLevel == BaziStrength.BAZI_WEAK_MILD) {
-            summary = summary + stringResource(R.string.app_bazi_weak_1_desc) + "\n "
-            summary = summary + getBaziWeakSummary(baziInfo, baziModel)
-            xiyongShenList = arrayListOf<WuXing>(
-                WuXingUtil().getYinWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getBiJieWuXing(baziInfo.dayTiangan)
-            )
-            jiShenList = arrayListOf<WuXing>(
-                WuXingUtil().getGuanshaWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getShishangWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getCaiWuXing(baziInfo.dayTiangan)
-            )
-        } else if (strenthLevel == BaziStrength.BAZI_WEAK) {
-            summary = summary + stringResource(R.string.app_bazi_weak_2_desc) + "\n "
-            summary = summary + getBaziWeakSummary(baziInfo, baziModel)
-            xiyongShenList = arrayListOf<WuXing>(
-                WuXingUtil().getYinWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getBiJieWuXing(baziInfo.dayTiangan)
-            )
-            jiShenList = arrayListOf<WuXing>(
-                WuXingUtil().getGuanshaWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getShishangWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getCaiWuXing(baziInfo.dayTiangan)
-            )
-        } else if (strenthLevel == BaziStrength.BAZI_WEAK_SUPER) {
-            summary = summary + stringResource(R.string.app_bazi_gj_congruo_desc) + "\n "
-            summary =
-                summary + stringResource(R.string.app_bazi_xiyong_shen) + ": (1)[" + WuXingUtil().getGuanshaWuXingText(
-                    baziInfo.dayTiangan
-                ) + "] (2)[" + WuXingUtil().getShishangWuXingText(baziInfo.dayTiangan) + "] (3)[" + WuXingUtil().getCaiWuXingText(
-                    baziInfo.dayTiangan
-                ) + "]\n"
-            summary =
-                summary + stringResource(R.string.app_bazi_ji_shen) + ": (1)[" + WuXingUtil().getYinWuXingText(
-                    baziInfo.dayTiangan
-                ) + "] (2)[" + WuXingUtil().getBiJieWuXingText(baziInfo.dayTiangan) + "] \n"
-
-            //todo, check which one to follow
-//                xiyongShenList = arrayListOf<WuXing>(WuXingUtil().getYinWuXing(baziInfo.dayTiangan),WuXingUtil().getBiJieWuXing(baziInfo.dayTiangan))
-//                jiShenList = arrayListOf<WuXing>(WuXingUtil().getGuanshaWuXing(baziInfo.dayTiangan),WuXingUtil().getShishangWuXing(baziInfo.dayTiangan),WuXingUtil().getCaiWuXing(baziInfo.dayTiangan))
-
-            jiShenList = arrayListOf<WuXing>(
-                WuXingUtil().getYinWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getBiJieWuXing(baziInfo.dayTiangan)
-            )
-            xiyongShenList = arrayListOf<WuXing>(
-                WuXingUtil().getGuanshaWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getShishangWuXing(baziInfo.dayTiangan),
-                WuXingUtil().getCaiWuXing(baziInfo.dayTiangan)
-            )
+        if(sb.length > 0){
+            summary = sb.toString()
+            return summary
         }
 
-        summary =
-            summary + stringResource(R.string.app_bazi_tiaohou_shen) + ":" + WuXingUtil().getTiaohouWuXingText(
-                baziInfo, baziModel
-            ) + ""
-
-        baziModel.setBaziXiyongShenList(xiyongShenList)
-        baziModel.setBaziJiShenList(jiShenList)
-        baziModel.setBaziXiJiSummary(summary)
+        //check xishen in Bazi
+        for(ss in data.xiShenList){
+            str = ShiShenUtil().getBaziShiShenStatString(data, ss)
+            if(str.length > 0){
+                sb.append(str)
+            }
+        }
+        if(sb.length > 0){
+            summary = sb.toString()
+            return summary
+        }
+        //check tiaohou
+        for(wx in data.tiaohouList){
+            str = WuXingUtil().getBaziWuxingStatString(data, wx)
+            if(str.length > 0){
+                sb.append(str)
+            }
+        }
+        summary = sb.toString()
         return summary
     }
 }

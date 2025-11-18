@@ -11,7 +11,7 @@ fun getTianganStr(
     baziInfo: BaziInfo,
     tiangan: TianGan
 ): String {
-    val tianganStrMap: Map<TianGan, Int> = baziInfo.tianganStrMap
+    val tianganStrMap: Map<TianGan, Int> = BaziUtil().tianganStrMap
     var tianganStrKey = tianganStrMap.getValue(tiangan)
     val str = stringResource(tianganStrKey)
     return str
@@ -22,7 +22,7 @@ fun getDizhiStr(
     baziInfo: BaziInfo,
     diZhi: DiZhi
 ): String {
-    val dizhiStrMap: Map<DiZhi, Int> = baziInfo.dizhiStrMap
+    val dizhiStrMap: Map<DiZhi, Int> = BaziUtil().dizhiStrMap
     var dizhiStrKey = dizhiStrMap.getValue(diZhi)
     val str = stringResource(dizhiStrKey)
     return str

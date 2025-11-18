@@ -1416,7 +1416,7 @@ class BaziUtil {
         baziInfo: BaziInfo,
         tiangan: TianGan
     ): String {
-        val tianganStrMap: Map<TianGan, Int> = baziInfo.tianganStrMap
+//        val tianganStrMap: Map<TianGan, Int> = baziInfo.tianganStrMap
         var tianganStrKey = tianganStrMap.getValue(tiangan)
         val str = stringResource(tianganStrKey)
         return str
@@ -1436,16 +1436,33 @@ class BaziUtil {
 
     @Composable
     fun createBaziStringOneLine(baziInfo: BaziInfo) : String{
-        var baziStr = " " + getTianganText(baziInfo, baziInfo.yearTiangan) +
-                getDizhiText(baziInfo, baziInfo.yearDizhi) +
-                " " + getTianganText(baziInfo, baziInfo.monthTiangan) +
-                getDizhiText(baziInfo, baziInfo.monthDizhi) + " " +
-                getTianganText(baziInfo, baziInfo.dayTiangan) +
-                getDizhiText(baziInfo, baziInfo.dayDizhi) + " " +
-                getTianganText(baziInfo, baziInfo.hourTiangan) +
-                getDizhiText(baziInfo, baziInfo.hourDizhi)
+        var data = baziInfo.baziData
+        var baziStr = " " + getTianganText(data.yearTiangan) +
+                getDizhiText(data.yearDizhi) +
+                " " + getTianganText(data.monthTiangan) +
+                getDizhiText(data.monthDizhi) + " " +
+                getTianganText(data.dayTiangan) +
+                getDizhiText(data.dayDizhi) + " " +
+                getTianganText(data.hourTiangan) +
+                getDizhiText(data.hourDizhi)
 
         return baziStr
+    }
+
+    @Composable
+    fun getTianganText(
+        tg: TianGan
+    ): String {
+        var tianganStrKey = tianganStrMap.getValue(tg)
+        return stringResource(tianganStrKey)
+    }
+
+    @Composable
+    fun getDizhiText(
+        dz: DiZhi
+    ): String {
+        var dizhiStrKey = dizhiStrMap.getValue(dz)
+        return stringResource(dizhiStrKey)
     }
 }
 

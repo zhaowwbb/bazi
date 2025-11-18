@@ -6,15 +6,10 @@ import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.TianGan
 
 @Composable
-fun xxxxx(
+fun test(
     baziInfo: BaziInfo,
     tiangan : TianGan
 ): String{
-    val tianganStrMap : Map<TianGan, Int> = baziInfo.tianganStrMap
-    var tianganStrKey = tianganStrMap.getValue(tiangan)
-    val str = stringResource(tianganStrKey)
-//        val str = baziInfo.tianganStrMap.get(baziInfo.monthTiangan)
-//            ?.let { stringResource(it) }
-    return str
-//    return ""
+
+    return ""
 }

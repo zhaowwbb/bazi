@@ -317,10 +317,11 @@
     <string name="app_bazi_analyze_label5">五、大运作用分析</string>
     <string name="app_bazi_analyze_label6">四、命局综合解读</string>
 
-    <string name="app_bazi_deling_label">1.得令：</string>
-    <string name="app_bazi_dedi_label">2.得地：</string>
-    <string name="app_bazi_dezhu_label">3.得助：</string>
-    <string name="app_bazi_kexiehao_label">4.克泄耗：</string>
+    <string name="app_bazi_deling_label">得令：</string>
+    <string name="app_bazi_dedi_label">得地：</string>
+    <string name="app_bazi_dezhu_label">得助：</string>
+    <string name="app_bazi_kexiehao_label">克泄耗：</string>
+    <string name="app_bazi_strength_label">综合判断：</string>
     <string name="app_bazi_born_label">生于</string>
     <string name="app_bazi_wangxiang_label">旺相</string>
     <string name="app_bazi_xiuqiu_label">休囚</string>
@@ -353,15 +354,21 @@
     <string name="app_bazi_weak_1">偏弱</string>
     <string name="app_bazi_weak_2">弱</string>
     <string name="app_bazi_weak_3">极弱</string>
-    <string name="app_bazi_strength_label">综合判断：</string>
+
 
     <string name="app_bazi_xiyong_shen">喜用神</string>
     <string name="app_bazi_yong_shen">用神</string>
     <string name="app_bazi_xi_shen">喜神</string>
     <string name="app_bazi_ji_shen">忌神</string>
-    <string name="app_bazi_tiaohou_shen">调候用神</string>
+
 
     <string name="app_bazi_gj_label">格局</string>
+    <string name="app_bazi_gj_yong_shen">格局用神</string>
+    <string name="app_bazi_gj_xi_shen">格局喜神</string>
+    <string name="app_bazi_gj_ji_shen">格局忌神</string>
+    <string name="app_bazi_tiaohou_shen">调候用神</string>
+    <string name="app_bazi_final_yong_shen">八字用神</string>
+
     <string name="app_bazi_gj_job">职业</string>
     <string name="app_bazi_gj_xiji">格局运途喜忌</string>
     <string name="app_bazi_gj_no_label">没有格局</string>
@@ -392,6 +399,7 @@
     <string name="app_bazi_gj_job_gs">适合从事管理方面岗位</string>
     <string name="app_bazi_gj_job_cai">适合从事商业金融需要情商的职业岗位</string>
     <string name="app_bazi_gj_job_tbd">建设中。。。</string>
+    <string name="app_bazi_gj_job_jianlu">从事与木五行相关的行业，如木制、家具、花艺、茶叶、医药、教育等，以及与才华和人际关系相关的职业，例如文化、艺术、教育、设计、咨询、律师、外交官等。此外，也适合“禄”所代表的稳定性职业，如公务员或在大型企业中从事稳定岗位。 </string>
 
     <string name="app_bazi_gj_zhengguan_desc">重名誉、守规则、适合公职</string>
     <string name="app_bazi_gj_qisha_desc">有魄力、有野心、适合竞争性行业</string>
@@ -412,12 +420,12 @@
     <string name="app_bazi_gj_runxia_desc">智慧聪颖，流动性强。</string>
 
 
-    <string name="app_bazi_gj_congruo_desc">从弱格: 日主极弱，整个八字都顺从弱日主，需要泄耗。</string>
-    <string name="app_bazi_gj_congqian_desc">从强格: 日主极强，整个八字都顺从日主，需要继续生扶。</string>
-    <string name="app_bazi_strong_2_desc">身强（日主旺）: 日主力量过强，需要克制或泄耗。</string>
-    <string name="app_bazi_weak_2_desc">身弱（日主弱）: 日主力量过弱，需要生扶。</string>
-    <string name="app_bazi_strong_1_desc">身强（日主旺）: 日主力量偏强，需要克制或泄耗。</string>
-    <string name="app_bazi_weak_1_desc">身弱（日主弱）: 日主力量偏弱，需要生扶。</string>
+    <string name="app_bazi_gj_congruo_desc">日主极弱，整个八字都顺从弱日主，需要泄耗。</string>
+    <string name="app_bazi_gj_congqian_desc">日主极强，整个八字都顺从日主，需要继续生扶。</string>
+    <string name="app_bazi_strong_2_desc">日主力量过强，需要克制或泄耗。</string>
+    <string name="app_bazi_weak_2_desc">日主力量过弱，需要生扶。</string>
+    <string name="app_bazi_strong_1_desc">日主力量偏强，需要克制或泄耗。</string>
+    <string name="app_bazi_weak_1_desc">日主力量偏弱，需要生扶。</string>
     <string name="app_bazi_balanced_desc">日主五行力量均衡，无法用旺衰法取喜用神，还需要查看调侯用神和格局用神，还要看大运的变化。</string>
 
     <string name="app_bazi_tiaohou_cold">寒局，水冷金寒，最需要火来暖局。</string>
@@ -426,6 +434,9 @@
     <string name="app_bazi_tiaohou_wet">湿局，湿土重重，最需要火土来调候。</string>
     <string name="app_bazi_tiaohou_mild">温和局，寒暖适中，命局本身寒暖较为均衡，不一定非要调候，重点看五行旺衰平衡。</string>
 
+    <string name="app_bazi_ji">喜</string>
+    <string name="app_bazi_xiong">忌</string>
+    <string name="app_bazi_jixiong_0">不吉不凶</string>
     <string name="app_bazi_jixiong_1">大吉</string>
     <string name="app_bazi_jixiong_2">小吉</string>
     <string name="app_bazi_jixiong_3">吉凶参半</string>
