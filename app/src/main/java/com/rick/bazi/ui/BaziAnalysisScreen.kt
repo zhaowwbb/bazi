@@ -119,7 +119,7 @@ fun BaziAppAnalysisScreen(
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
                         append(" " + WuXingUtil().getOwnerWuXingString(baziInfo, baziModel) + "\n")
                     }
-                    withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.ten_shen) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
