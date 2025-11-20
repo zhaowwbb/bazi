@@ -16,6 +16,7 @@ import com.rick.bazi.data.FEMALE
 import com.rick.bazi.data.MALE
 import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
+import com.rick.bazi.data.TianGanDiZhi
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -29,6 +30,150 @@ import java.util.GregorianCalendar
 import java.util.TimeZone
 
 class BaziUtil {
+
+    val jiaJi5TigerMap : Map<DiZhi, TianGanDiZhi> = mapOf(
+        DiZhi.DIZHI_YIN to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_YIN),
+        DiZhi.DIZHI_MOU to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_MOU),
+        DiZhi.DIZHI_CHEN to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_CHEN),
+        DiZhi.DIZHI_SI to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_SI),
+        DiZhi.DIZHI_WU to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_WU),
+        DiZhi.DIZHI_WEI to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_WEI),
+        DiZhi.DIZHI_SHEN to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_SHEN),
+        DiZhi.DIZHI_YOU to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_YOU),
+        DiZhi.DIZHI_XU to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_XU),
+        DiZhi.DIZHI_HAI to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_HAI),
+        DiZhi.DIZHI_ZI to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_ZI),
+        DiZhi.DIZHI_CHOU to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_CHOU)
+        )
+
+    val yiGeng5TigerMap : Map<DiZhi, TianGanDiZhi> = mapOf(
+        DiZhi.DIZHI_YIN to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_YIN),
+        DiZhi.DIZHI_MOU to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_MOU),
+        DiZhi.DIZHI_CHEN to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_CHEN),
+        DiZhi.DIZHI_SI to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_SI),
+        DiZhi.DIZHI_WU to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_WU),
+        DiZhi.DIZHI_WEI to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_WEI),
+        DiZhi.DIZHI_SHEN to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_SHEN),
+        DiZhi.DIZHI_YOU to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_YOU),
+        DiZhi.DIZHI_XU to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_XU),
+        DiZhi.DIZHI_HAI to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_HAI),
+        DiZhi.DIZHI_ZI to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_ZI),
+        DiZhi.DIZHI_CHOU to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_CHOU)
+    )
+
+    val bingXin5TigerMap : Map<DiZhi, TianGanDiZhi> = mapOf(
+        DiZhi.DIZHI_YIN to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_YIN),
+        DiZhi.DIZHI_MOU to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_MOU),
+        DiZhi.DIZHI_CHEN to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_CHEN),
+        DiZhi.DIZHI_SI to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_SI),
+        DiZhi.DIZHI_WU to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_WU),
+        DiZhi.DIZHI_WEI to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_WEI),
+        DiZhi.DIZHI_SHEN to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_SHEN),
+        DiZhi.DIZHI_YOU to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_YOU),
+        DiZhi.DIZHI_XU to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_XU),
+        DiZhi.DIZHI_HAI to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_HAI),
+        DiZhi.DIZHI_ZI to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_ZI),
+        DiZhi.DIZHI_CHOU to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_CHOU)
+    )
+
+    val dingRen5TigerMap : Map<DiZhi, TianGanDiZhi> = mapOf(
+        DiZhi.DIZHI_YIN to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_YIN),
+        DiZhi.DIZHI_MOU to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_MOU),
+        DiZhi.DIZHI_CHEN to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_CHEN),
+        DiZhi.DIZHI_SI to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_SI),
+        DiZhi.DIZHI_WU to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_WU),
+        DiZhi.DIZHI_WEI to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_WEI),
+        DiZhi.DIZHI_SHEN to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_SHEN),
+        DiZhi.DIZHI_YOU to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_YOU),
+        DiZhi.DIZHI_XU to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_XU),
+        DiZhi.DIZHI_HAI to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_HAI),
+        DiZhi.DIZHI_ZI to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_ZI),
+        DiZhi.DIZHI_CHOU to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_CHOU)
+    )
+
+    val wuGui5TigerMap : Map<DiZhi, TianGanDiZhi> = mapOf(
+        DiZhi.DIZHI_YIN to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_YIN),
+        DiZhi.DIZHI_MOU to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_MOU),
+        DiZhi.DIZHI_CHEN to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_CHEN),
+        DiZhi.DIZHI_SI to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_SI),
+        DiZhi.DIZHI_WU to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_WU),
+        DiZhi.DIZHI_WEI to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_WEI),
+        DiZhi.DIZHI_SHEN to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_SHEN),
+        DiZhi.DIZHI_YOU to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_YOU),
+        DiZhi.DIZHI_XU to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_XU),
+        DiZhi.DIZHI_HAI to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_HAI),
+        DiZhi.DIZHI_ZI to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_ZI),
+        DiZhi.DIZHI_CHOU to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_CHOU)
+    )
+
+    val jiazi60Map : Map<Int, TianGanDiZhi> = mapOf(
+        1 to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_ZI),
+        2 to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_CHOU),
+        3 to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_YIN),
+        4 to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_MOU),
+        5 to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_CHEN),
+        6 to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_SI),
+        7 to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_WU),
+        8 to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_WEI),
+        9 to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_SHEN),
+        10 to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_YOU),
+
+        11 to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_XU),
+        12 to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_HAI),
+        13 to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_ZI),
+        14 to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_CHOU),
+        15 to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_YIN),
+        16 to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_MOU),
+        17 to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_CHEN),
+        18 to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_SI),
+        19 to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_WU),
+        20 to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_WEI),
+
+        21 to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_SHEN),
+        22 to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_YOU),
+        23 to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_XU),
+        24 to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_HAI),
+        25 to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_ZI),
+        26 to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_CHOU),
+        27 to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_YIN),
+        28 to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_MOU),
+        29 to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_CHEN),
+        30 to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_SI),
+
+        31 to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_WU),
+        32 to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_WEI),
+        33 to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_SHEN),
+        34 to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_YOU),
+        35 to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_XU),
+        36 to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_HAI),
+        37 to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_ZI),
+        38 to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_CHOU),
+        39 to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_YIN),
+        40 to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_MOU),
+
+        41 to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_CHEN),
+        42 to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_SI),
+        43 to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_WU),
+        44 to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_WEI),
+        45 to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_SHEN),
+        46 to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_YOU),
+        47 to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_XU),
+        48 to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_HAI),
+        49 to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_ZI),
+        50 to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_CHOU),
+
+        51 to TianGanDiZhi(TianGan.TIANGAN_JIA, DiZhi.DIZHI_YIN),
+        52 to TianGanDiZhi(TianGan.TIANGAN_YI, DiZhi.DIZHI_MOU),
+        53 to TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_CHEN),
+        54 to TianGanDiZhi(TianGan.TIANGAN_DING, DiZhi.DIZHI_SI),
+        55 to TianGanDiZhi(TianGan.TIANGAN_WU, DiZhi.DIZHI_WU),
+        56 to TianGanDiZhi(TianGan.TIANGAN_JI, DiZhi.DIZHI_WEI),
+        57 to TianGanDiZhi(TianGan.TIANGAN_GENG, DiZhi.DIZHI_SHEN),
+        58 to TianGanDiZhi(TianGan.TIANGAN_XIN, DiZhi.DIZHI_YOU),
+        59 to TianGanDiZhi(TianGan.TIANGAN_REN, DiZhi.DIZHI_XU),
+        60 to TianGanDiZhi(TianGan.TIANGAN_GUI, DiZhi.DIZHI_HAI)
+
+    )
 
     val tianganStrMap: Map<TianGan, Int> = mapOf(
         TianGan.TIANGAN_JIA to R.string.tiangan_jia,
@@ -490,7 +635,7 @@ class BaziUtil {
         index: Int
     ): Int {
         val date: Date = getSolarTermCalendar(calendar, solarYear, index)
-        println("getSolarTermDay date=$date, solarYear=$solarYear, index=$index")
+//        println("getSolarTermDay date=$date, solarYear=$solarYear, index=$index")
         return getUTCDay(calendar, date)
     }
 
@@ -500,7 +645,7 @@ class BaziUtil {
         index: Int
     ): Date {
         val date: Date = getSolarTermCalendar(calendar, solarYear, index)
-        println("getSolarTermDay date=$date, solarYear=$solarYear, index=$index")
+//        println("getSolarTermDay date=$date, solarYear=$solarYear, index=$index")
         return date
     }
 
@@ -562,7 +707,11 @@ class BaziUtil {
 
         //last year
         if(solarDate < lichunTime){
-            cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 12) % 60;
+            if(solarDate > xiaohanTime){
+                cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 12) % 60;
+            }else{
+                cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 12) % 60;
+            }
         }else if(solarDate > lichunTime && solarDate < jingzheTime){
             //yin month
             cyclicalMonth = (((solarYear - 1900) * 12) + solarMonth + 13) % 60;

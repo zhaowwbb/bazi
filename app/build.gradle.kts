@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.androidx.media3.common.ktx)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.ui.test.junit4.android)
+    implementation("cn.6tail:tyme4j:1.3.8")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -6,7 +6,10 @@ import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
+import com.rick.bazi.data.TianGanDiZhi
 import com.rick.bazi.ui.BaziViewModel
+import com.tyme.solar.SolarTerm
+import com.tyme.solar.SolarTime
 import java.util.Calendar
 
 class BaziPaiPanUtil {
@@ -21,50 +24,31 @@ class BaziPaiPanUtil {
         baziModel: BaziViewModel,
         baziInfo: BaziInfo
     )  : BaziData {
-//        println("Bazi Paipan: year=$year,month=$month,day=$day,hour=$hour ")
-        var yearTG = 1
-        var yearDZ = 1
-        var monthTG = 1
-        var monthDZ = 1
+        println("Bazi Paipan: year=$year,month=$month,day=$day,hour=$hour ")
         var dayTG = 1
         var dayDZ = 1
-        var hourTG = 1
-        var hourDZ = 1
         var tg: TianGan = TianGan.TIANGAN_JIA
         var dz: DiZhi = DiZhi.DIZHI_ZI
-        var tmp = 0
+
+//        for( i in 1982..2048){
+//            calculateBazi(i, month, day, hour, baziInfo.baziData)
+//        }
+        var data = BaziData(year, month, day, hour, gender)
+        //calculate year and month
+        calculateBazi(year, month, day, hour, data)
 
         val tgLookupMap: Map<Int, TianGan> = baziInfo.tgLookupMap
         val dzLookupMap: Map<Int, DiZhi> = baziInfo.dzLookupMap
 
-        var data = BaziData(year, month, day, hour, gender)
-
-        //calculate Year Tiangan & Dizhi
-        var yearBase = BaziUtil().getCyclicalYearBase(year, month, day, hour)
-        baziModel.setYearBase(yearBase)
-        data.yearBase = yearBase
-
-        yearTG = yearBase % 10
-        tg = tgLookupMap[yearTG]!!
+        tg = data.yearTiangan
+        dz = data.yearDizhi
         baziModel.setYearTiangan(tg)
-        yearDZ = yearBase % 12
-        dz = dzLookupMap[yearDZ]!!
         baziModel.setYearDiZhi(dz)
-        data.yearTiangan = tg
-        data.yearDizhi = dz
 
-        //calculate Month Tiangan & Dizhi
-        var monthBase = BaziUtil().getCyclicalMonthBase(year, month, day, hour)
-        baziModel.setMonthBase(monthBase)
-        data.monthBase = monthBase
-        monthTG = monthBase % 10
-        tg = tgLookupMap[monthTG]!!
+        tg = data.monthTiangan
+        dz = data.monthDizhi
         baziModel.setMonthTiangan(tg)
-        monthDZ = monthBase % 12
-        dz = dzLookupMap.get(monthDZ)!!
         baziModel.setMonthDiZhi(dz)
-        data.monthTiangan = tg
-        data.monthDizhi = dz
 
         //calculate Day Tiangan & Dizhi
         var r = 0
@@ -101,6 +85,188 @@ class BaziPaiPanUtil {
 
         println("Bazi Paipan: year=$year,month=$month,day=$day,hour=$hour, Bazi data=$data")
         return data
+    }
+
+    fun testTyme(){
+        var termName = "立春"
+        val year = 2025
+        val term = SolarTerm.fromName(year, termName)
+
+        // 获取精确到秒的时刻
+        val solarTime: SolarTime = term.julianDay.solarTime
+        println("$year 年 $termName 节气在：$solarTime")
+
+        // 示例2：获取某一年的全部24个节气
+        val allTerms = SolarTerm.NAMES.map { name ->
+            val t = SolarTerm.fromName(year, name)
+            val time = t.julianDay.solarTime
+            "$name: $time"
+        }
+        allTerms.forEach { println(it) }
+    }
+
+    fun calculateBazi(
+        year: Int,
+        month: Int,
+        day: Int,
+        hour: Int,
+        data : BaziData){
+        //184年 - 黄巾之乱的农民起义口号是“苍天已死，黄天当立，岁在甲子，天下大吉”。
+        val startYear = 184
+        var yearBase = (year - startYear) % 60
+        //map start from 1
+        yearBase = yearBase + 1
+
+        var ownerSolarTime: SolarTime = SolarTime(year, month, day, hour, 30, 30)
+
+        var termName = "立春"
+        var term = SolarTerm.fromName(year, termName)
+
+        // 获取精确到秒的时刻
+        var lichunTime: SolarTime = term.julianDay.solarTime
+        println("$year 年 $termName 节气在：$lichunTime, ownerSolarTime:$ownerSolarTime")
+        if(ownerSolarTime.isBefore(lichunTime)){
+            //belong to previous
+            yearBase = yearBase - 1
+            if(yearBase == 0){
+                yearBase = 60
+            }
+        }
+
+        var gz = BaziUtil().jiazi60Map[yearBase]!!
+
+        var tg = gz.tg
+        var dz = gz.dz
+
+        //year
+        data.yearTiangan =  tg
+        data.yearDizhi = dz
+
+        termName = "小寒"
+        term = SolarTerm.fromName(year, termName)
+        var xiaohanTime: SolarTime = term.julianDay.solarTime
+
+        termName = "惊蛰"
+        term = SolarTerm.fromName(year, termName)
+        var jingzheTime: SolarTime = term.julianDay.solarTime
+
+        termName = "清明"
+        term = SolarTerm.fromName(year, termName)
+        var qingmingTime: SolarTime = term.julianDay.solarTime
+
+        termName = "立夏"
+        term = SolarTerm.fromName(year, termName)
+        var lixiaTime: SolarTime = term.julianDay.solarTime
+
+        termName = "芒种"
+        term = SolarTerm.fromName(year, termName)
+        var mangzhongTime: SolarTime = term.julianDay.solarTime
+
+        termName = "小暑"
+        term = SolarTerm.fromName(year, termName)
+        var xiaoshuTime: SolarTime = term.julianDay.solarTime
+
+        termName = "立秋"
+        term = SolarTerm.fromName(year, termName)
+        var liqiuTime: SolarTime = term.julianDay.solarTime
+
+        termName = "白露"
+        term = SolarTerm.fromName(year, termName)
+        var bailuTime: SolarTime = term.julianDay.solarTime
+
+        termName = "寒露"
+        term = SolarTerm.fromName(year, termName)
+        var hanluTime: SolarTime = term.julianDay.solarTime
+
+        termName = "立冬"
+        term = SolarTerm.fromName(year, termName)
+        var lidongTime: SolarTime = term.julianDay.solarTime
+
+        termName = "大雪"
+        term = SolarTerm.fromName(year, termName)
+        var daxueTime: SolarTime = term.julianDay.solarTime
+
+        //month
+        //1 month
+        if(ownerSolarTime.isAfter(lichunTime) && ownerSolarTime.isBefore(jingzheTime)){
+            data.monthDizhi = DiZhi.DIZHI_YIN
+        }
+        //2 month
+        if(ownerSolarTime.isAfter(jingzheTime) && ownerSolarTime.isBefore(qingmingTime)){
+            data.monthDizhi = DiZhi.DIZHI_MOU
+        }
+        //3
+        if(ownerSolarTime.isAfter(qingmingTime) && ownerSolarTime.isBefore(lixiaTime)){
+            data.monthDizhi = DiZhi.DIZHI_CHEN
+        }
+        //4
+        if(ownerSolarTime.isAfter(lixiaTime) && ownerSolarTime.isBefore(mangzhongTime)){
+            data.monthDizhi = DiZhi.DIZHI_SI
+        }
+        //5
+        if(ownerSolarTime.isAfter(mangzhongTime) && ownerSolarTime.isBefore(xiaoshuTime)){
+            data.monthDizhi = DiZhi.DIZHI_WU
+        }
+        //6
+        if(ownerSolarTime.isAfter(xiaoshuTime) && ownerSolarTime.isBefore(liqiuTime)){
+            data.monthDizhi = DiZhi.DIZHI_WEI
+        }
+        //7
+        if(ownerSolarTime.isAfter(liqiuTime) && ownerSolarTime.isBefore(bailuTime)){
+            data.monthDizhi = DiZhi.DIZHI_SHEN
+        }
+        //8
+        if(ownerSolarTime.isAfter(bailuTime) && ownerSolarTime.isBefore(hanluTime)){
+            data.monthDizhi = DiZhi.DIZHI_YOU
+        }
+        //9
+        if(ownerSolarTime.isAfter(hanluTime) && ownerSolarTime.isBefore(lidongTime)){
+            data.monthDizhi = DiZhi.DIZHI_XU
+        }
+        //10
+        if(ownerSolarTime.isAfter(lidongTime) && ownerSolarTime.isBefore(daxueTime)){
+            data.monthDizhi = DiZhi.DIZHI_HAI
+        }
+        //11
+        if(ownerSolarTime.isAfter(daxueTime)){
+            data.monthDizhi = DiZhi.DIZHI_ZI
+        }
+        //12
+        if(ownerSolarTime.isAfter(xiaohanTime) && ownerSolarTime.isBefore(lichunTime)){
+            data.monthDizhi = DiZhi.DIZHI_CHOU
+        }
+
+        if(ownerSolarTime.isBefore(xiaohanTime)){
+            data.monthDizhi = DiZhi.DIZHI_ZI
+        }
+        calculateMonthTianGan(data)
+
+        println("year=$year, tg=$tg, dz=$dz, yearBase=$yearBase ")
+    }
+
+    fun calculateMonthTianGan(data : BaziData){
+        var tgdz = TianGanDiZhi(TianGan.TIANGAN_BING, DiZhi.DIZHI_YIN)
+        //“五虎遁”口诀
+        if(data.yearTiangan == TianGan.TIANGAN_JIA || data.yearTiangan == TianGan.TIANGAN_JI){
+            tgdz = BaziUtil().jiaJi5TigerMap.get(data.monthDizhi)!!
+            data.monthTiangan = tgdz.tg
+        }
+        if(data.yearTiangan == TianGan.TIANGAN_YI || data.yearTiangan == TianGan.TIANGAN_GENG){
+            tgdz = BaziUtil().yiGeng5TigerMap.get(data.monthDizhi)!!
+            data.monthTiangan = tgdz.tg
+        }
+        if(data.yearTiangan == TianGan.TIANGAN_BING || data.yearTiangan == TianGan.TIANGAN_XIN){
+            tgdz = BaziUtil().bingXin5TigerMap.get(data.monthDizhi)!!
+            data.monthTiangan = tgdz.tg
+        }
+        if(data.yearTiangan == TianGan.TIANGAN_DING || data.yearTiangan == TianGan.TIANGAN_REN){
+            tgdz = BaziUtil().dingRen5TigerMap.get(data.monthDizhi)!!
+            data.monthTiangan = tgdz.tg
+        }
+        if(data.yearTiangan == TianGan.TIANGAN_WU || data.yearTiangan == TianGan.TIANGAN_GUI){
+            tgdz = BaziUtil().wuGui5TigerMap.get(data.monthDizhi)!!
+            data.monthTiangan = tgdz.tg
+        }
     }
 
 }
