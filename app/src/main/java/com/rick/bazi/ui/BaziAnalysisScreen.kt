@@ -33,6 +33,7 @@ import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziUtil
+import com.rick.bazi.util.DiZhiUtil
 import com.rick.bazi.util.GeJuUtil
 import com.rick.bazi.util.TianGanUtil
 import com.rick.bazi.util.WuXingUtil
@@ -136,22 +137,24 @@ fun BaziAppAnalysisScreen(
                         append("    " + baziInfo.shishenHourStr + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_tiangan_hehua) + ":\n")
+                        append(stringResource(R.string.app_bazi_tiangan_5he) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
                         append(TianGanUtil().getTianGanHeString(baziInfo.baziData) + "\n")
                     }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_dizhi_3he_label) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(DiZhiUtil().getDiZhi3HeString(baziInfo.baziData) + "\n")
+                    }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_dizhi_3hui_label) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(DiZhiUtil().getDiZhi3HuiString(baziInfo.baziData) + "\n")
+                    }
 
-//                    //test
-//                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp)) {
-//                        append(stringResource(R.string.app_bazi_tiangan_hehua)+ "\n")
-//                    }
-//                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-//                        append(stringResource(R.string.app_bazi_tiangan_5he) + " ")
-//                    }
-//                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
-//                        append(TianGanUtil().getTianGanHeString(baziInfo.baziData) + "\n")
-//                    }
 
                     //2
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp)) {

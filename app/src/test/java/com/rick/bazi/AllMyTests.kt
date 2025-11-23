@@ -1,5 +1,6 @@
 package com.rick.bazi
 import com.rick.bazi.util.BaziPaiPanUtilTest
+import com.rick.bazi.util.DiZhiUtilTest
 import com.rick.bazi.util.GeJuUtilTest
 import com.rick.bazi.util.TianGanUtilTest
 import com.rick.bazi.util.WuXingUtilTest
@@ -12,6 +13,7 @@ import org.junit.runners.Suite.SuiteClasses
     BaziPaiPanUtilTest::class,
     WuXingUtilTest::class,
     GeJuUtilTest::class,
+    DiZhiUtilTest::class,
     TianGanUtilTest::class
 )
 class AllMyTests

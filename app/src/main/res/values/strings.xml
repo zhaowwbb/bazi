@@ -449,7 +449,7 @@
     <string name="app_bazi_tiangan_month_label">月干</string>
     <string name="app_bazi_tiangan_day_label">日干</string>
     <string name="app_bazi_tiangan_hour_label">时干</string>
-    <string name="app_bazi_tiangan_hehua_no">无天干合化</string>
+    <string name="app_bazi_tiangan_hehua_no">天干没有合化</string>
     <string name="app_bazi_tiangan_hehua_success">合化成功</string>
     <string name="app_bazi_tiangan_hehua_failed">合而不化</string>
     <string name="app_bazi_tiangan_he_personality">命局中有天干五合之人，异性缘较好，易接纳他人，可能缺乏主见，容易人云亦云，随大流。</string>
@@ -461,4 +461,18 @@
     <string name="app_bazi_tiangan_hehua_wg_desc">【戊癸合化火】：无情之合。戊为癸之官，癸为戊之财。为人重情调，翻脸像翻书，较会有一夜情，夫妻选择易有女大男小，或年龄差距较大。1.容易翻脸，易生气，气过就算。2.喜欢成熟的异性，本身外型也不错。3.重情趣，但无情。给人有点冷的感觉。4.不要激怒他，激怒他什么都不用说。5.冷静理智，礼节周到，也较现实。</string>
 
     <string name="app_bazi_dayun_intro">大运是命理学的重要概念，指以十年为周期的人生运程变化体系，是大运与流年共同构成人生运程。大运的排法分顺行和逆行两种，并根据生辰的阴阳属性、月柱的五行旺衰来推算，它对人生各阶段境遇有直接影响。</string>
+
+    <string name="app_bazi_dizhi_3he_label">地支三合</string>
+    <string name="app_bazi_dizhi_3hui_label">地支三会</string>
+    <string name="app_bazi_dizhi_3he_no_label">地支没有三合局</string>
+    <string name="app_bazi_dizhi_3hui_no_label">地支没有三会局</string>
+    <string name="app_bazi_dizhi_3he_huo_desc">寅午戌三合火局</string>
+    <string name="app_bazi_dizhi_3he_shui_desc">申子辰三合水局</string>
+    <string name="app_bazi_dizhi_3he_mu_desc">亥卯未三合木局</string>
+    <string name="app_bazi_dizhi_3he_jin_desc">巳酉丑三合金局</string>
+
+    <string name="app_bazi_dizhi_3hui_huo_desc">巳午未会成南方火</string>
+    <string name="app_bazi_dizhi_3hui_shui_desc">亥子丑会成北方水</string>
+    <string name="app_bazi_dizhi_3hui_mu_desc">寅卯辰会成东方木</string>
+    <string name="app_bazi_dizhi_3hui_jin_desc">申酉戌会成西方金</string>
 </resources>
