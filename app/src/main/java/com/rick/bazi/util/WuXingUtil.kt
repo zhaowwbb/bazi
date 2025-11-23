@@ -181,9 +181,9 @@ class WuXingUtil {
         return isWuXingBorn(tgWuXing, dzWuXing)
     }
 
-    fun isDangling(monthDz: DiZhi, dayTg: TianGan): Boolean {
+    fun isWXDangLing(monthDz: DiZhi, wx: WuXing): Boolean {
         var isDangLing = false
-        var tgWuXing = getTianGanWuxing(dayTg)
+        var tgWuXing = wx
         var dzWuXing = getDiZhiWuxing(monthDz)
         if (tgWuXing == dzWuXing){
             isDangLing = true
@@ -191,8 +191,23 @@ class WuXingUtil {
         if (isWuXingBorn(tgWuXing, dzWuXing)){
             isDangLing = true
         }
-        println("Bazi isDangling: $isDangLing")
+        println("On monthDz:$monthDz, WuXing:$wx dangling flag=$isDangLing")
         return isDangLing
+    }
+
+    fun isDangling(monthDz: DiZhi, dayTg: TianGan): Boolean {
+//        var isDangLing = false
+        var tgWuXing = getTianGanWuxing(dayTg)
+        return isWXDangLing(monthDz, tgWuXing)
+//        var dzWuXing = getDiZhiWuxing(monthDz)
+//        if (tgWuXing == dzWuXing){
+//            isDangLing = true
+//        }
+//        if (isWuXingBorn(tgWuXing, dzWuXing)){
+//            isDangLing = true
+//        }
+//        println("Bazi isDangling: $isDangLing")
+//        return isDangLing
     }
 
     fun getTgWX(tg : TianGan) : WuXing{

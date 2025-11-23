@@ -325,12 +325,11 @@ class GeJuUtilTest {
 
     @Test
     fun test_gj_checkQiShaGJXiJi1(){
-        //阳历：2027年06月1日 0:36
         //偏官格
-        var year = 2027
-        var month = 6
-        var day = 1
-        var hour = 0
+        var year = 1980
+        var month = 8
+        var day = 19
+        var hour = 11
         var baziModel = BaziViewModel()
         var baziInfo = BaziInfo()
         var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male",baziModel, baziInfo)
