@@ -157,4 +157,24 @@ class DiZhiUtilTest {
         hasSanHui = DiZhiUtil().hasDiZhiSanHui(data)
         assertEquals(false, hasSanHui)
     }
+
+    @Test
+    fun testDiZhi6He1() {
+        var year = 2000
+        var month = 2
+        var day = 11
+        var hour = 17
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male",baziModel, baziInfo)
+
+        var hasSanHui = DiZhiUtil().hasDiZhiSanHui(data)
+        assertEquals(true, hasSanHui)
+        assertEquals(WuXing.WUXING_MU, DiZhiUtil().getSanHuiWuXing(data))
+
+        hour = 12
+        data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male",baziModel, baziInfo)
+        hasSanHui = DiZhiUtil().hasDiZhiSanHui(data)
+        assertEquals(false, hasSanHui)
+    }
 }

@@ -154,6 +154,30 @@ fun BaziAppAnalysisScreen(
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
                         append(DiZhiUtil().getDiZhi3HuiString(baziInfo.baziData) + "\n")
                     }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_dizhi_6he_label) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(DiZhiUtil().getDiZhi6HeString(baziInfo.baziData) + "\n")
+                    }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_dizhi_6chong_label) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(DiZhiUtil().getDiZhi6ChongString(baziInfo.baziData) + "\n")
+                    }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_dizhi_6hai_label) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(DiZhiUtil().getDiZhi6HaiString(baziInfo.baziData) + "\n")
+                    }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_dizhi_xing_label) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(DiZhiUtil().getDiZhiXingString(baziInfo.baziData) + "\n")
+                    }
 
 
                     //2

@@ -449,6 +449,11 @@
     <string name="app_bazi_tiangan_month_label">月干</string>
     <string name="app_bazi_tiangan_day_label">日干</string>
     <string name="app_bazi_tiangan_hour_label">时干</string>
+    <string name="app_bazi_dizhi_year_label">年支</string>
+    <string name="app_bazi_dizhi_month_label">月支</string>
+    <string name="app_bazi_dizhi_day_label">日支</string>
+    <string name="app_bazi_dizhi_hour_label">时支</string>
+
     <string name="app_bazi_tiangan_hehua_no">天干没有合化</string>
     <string name="app_bazi_tiangan_hehua_success">合化成功</string>
     <string name="app_bazi_tiangan_hehua_failed">合而不化</string>
@@ -463,8 +468,18 @@
     <string name="app_bazi_dayun_intro">大运是命理学的重要概念，指以十年为周期的人生运程变化体系，是大运与流年共同构成人生运程。大运的排法分顺行和逆行两种，并根据生辰的阴阳属性、月柱的五行旺衰来推算，它对人生各阶段境遇有直接影响。</string>
 
     <string name="app_bazi_dizhi_3he_label">地支三合</string>
+    <string name="app_bazi_dizhi_6he_label">地支六合</string>
+    <string name="app_bazi_dizhi_6chong_label">地支六冲</string>
+    <string name="app_bazi_hai_label">害</string>
+    <string name="app_bazi_xing_label">刑</string>
+    <string name="app_bazi_dizhi_6hai_label">地支六害</string>
+    <string name="app_bazi_dizhi_xing_label">地支相刑</string>
     <string name="app_bazi_dizhi_3hui_label">地支三会</string>
     <string name="app_bazi_dizhi_3he_no_label">地支没有三合局</string>
+    <string name="app_bazi_dizhi_6he_no_label">地支没有六合</string>
+    <string name="app_bazi_dizhi_6chong_no_label">地支没有六冲</string>
+    <string name="app_bazi_dizhi_6hai_no_label">地支没有六害</string>
+    <string name="app_bazi_dizhi_xing_no_label">地支没有相刑</string>
     <string name="app_bazi_dizhi_3hui_no_label">地支没有三会局</string>
     <string name="app_bazi_dizhi_3he_huo_desc">寅午戌三合火局</string>
     <string name="app_bazi_dizhi_3he_shui_desc">申子辰三合水局</string>
@@ -475,4 +490,60 @@
     <string name="app_bazi_dizhi_3hui_shui_desc">亥子丑会成北方水</string>
     <string name="app_bazi_dizhi_3hui_mu_desc">寅卯辰会成东方木</string>
     <string name="app_bazi_dizhi_3hui_jin_desc">申酉戌会成西方金</string>
+
+    <string name="app_bazi_dizhi_6he_zichou_desc">子丑合化土</string>
+    <string name="app_bazi_dizhi_6he_yinhai_desc">寅亥合化木</string>
+    <string name="app_bazi_dizhi_6he_mouxu_desc">卯戌合化火</string>
+    <string name="app_bazi_dizhi_6he_chenyou_desc">辰酉合化金</string>
+    <string name="app_bazi_dizhi_6he_sishen_desc">巳申合化水</string>
+    <string name="app_bazi_dizhi_6he_wuwei_desc">午未合化土</string>
+
+    <string name="app_bazi_dizhi_6chong_ziwu">子午冲</string>
+    <string name="app_bazi_dizhi_6chong_chouwei">丑未冲</string>
+    <string name="app_bazi_dizhi_6chong_yinshen">寅申冲</string>
+    <string name="app_bazi_dizhi_6chong_mouyou">卯酉冲</string>
+    <string name="app_bazi_dizhi_6chong_chenxu">辰戍冲</string>
+    <string name="app_bazi_dizhi_6chong_sishai">巳亥冲</string>
+
+    <string name="app_bazi_dizhi_6he_zichou_detail">子丑合化土 性格特征：\n
+积极面：这是一个“以土克水”的合局，代表将智慧（子水）与务实（丑土）相结合。这类人通常稳重、守信、有责任感。他们心思缜密，能将灵活的思维落实到实际行动中，是很好的执行者和策划者。外表可能显得安静，但内心有自己的一套原则和计划。\n
+消极面：有时会显得过于固执、保守，容易钻牛角尖。内心的想法复杂，可能因为顾虑太多而错失良机，或显得有些阴郁。</string>
+    <string name="app_bazi_dizhi_6he_yinhai_detail">寅亥合化木 性格特征：\n
+积极面：这是一个“水生木”的生机之合。亥水（雨露之水）生助寅木（参天大树），代表仁慈、善良、充满生机。这类人通常心胸宽广，有同情心，人缘好。他们既有寅木的积极进取心，又有亥水的柔和与智慧，是刚柔并济的类型。\n
+消极面：可能因为过于善良而显得缺乏主见，容易轻信他人。有时会过于理想主义，在现实中遇到挫折时容易感到失落。</string>
+    <string name="app_bazi_dizhi_6he_mouxu_detail">卯戌合化火 性格特征：\n
+积极面：这是一个“木生火”的合局，被称为“淫合”（主要指人缘关系复杂）。这类人通常热情奔放、重情重义、非常有感染力。他们擅长人际交往，异性缘可能不错，对朋友慷慨大方。\n
+消极面：情绪和欲望可能比较强烈，容易冲动、急躁。在感情上可能不够理智，有时会因为过于注重表面关系而显得不够真诚，或陷入复杂的感情纠葛。</string>
+    <string name="app_bazi_dizhi_6he_chenyou_detail">辰酉合化金 性格特征： \n
+积极面：这是一个“土生金”的融合之合。辰土（水库）滋养酉金（珠宝之金），代表重诺守信、言行一致、有原则。这类人非常讲义气，答应的事情一定会做到。他们在艺术、技术领域可能有较高的天赋，注重细节和品质。\n
+消极面：性格可能比较刚愎自用、固执己见。对他人和自己的要求都很高，容易因为过于坚持原则而显得不近人情。</string>
+    <string name="app_bazi_dizhi_6he_sishen_detail">巳申合化水 性格特征：\n
+积极面：这是一个“刑合”，既有合作也有争斗，是矛盾统一的结合。巳火（变化之火）与申金（刚锐之金）相合化水（智慧），代表这个人思维敏捷、善于应变、富有谋略。他们能在复杂的局面中找到出路，具备将矛盾转化为动力的能力。\n
+消极面：性格反复无常，内心矛盾冲突较多。可能一会儿一个想法，让人捉摸不定。关系中容易忽冷忽热，有时会因利益而结合，也因利益而分开。</string>
+    <string name="app_bazi_dizhi_6he_wuwei_detail">午未合化土 性格特征：\n
+积极面：这是一个“火生土”的日月之合，最为稳定。午火（太阳之火）生助未土（燥土），代表热情开朗、待人真诚、有礼貌。这类人通常心胸宽广，不拘小节，有奉献精神，人缘非常好。\n
+消极面：有时会因为过于“要面子”而打肿脸充胖子。内心可能缺乏安全感，需要外界的认可来肯定自己的价值。</string>
+
+    <string name="app_bazi_dizhi_xing_zimou_desc">无礼之刑（子卯相刑）\n
+    代表无礼之刑，以下犯上，不懂人情世故。\n
+    容易因言语、礼节问题得罪人，或因此招致灾祸。\n
+    象征内部的伤害，如母子、上下级之间因不守礼法而产生矛盾。\n
+    在身体上，可能对应肾脏、肝胆、泌尿系统的问题。
+    </string>
+    <string name="app_bazi_dizhi_xing_yisishen_desc">无恩之刑（寅巳申三刑）\n
+    代表忘恩负义、恩将仇报，或遭遇背信弃义之事。\n
+    主官司、是非、道路凶险、意外受伤（尤其是车祸、金属利器所伤）。\n
+    命运多舛，事情进展曲折反复，容易有突如其来的变化和打击。\n
+    如果一个人的八字中同时出现寅、巳、申三个地支，称为“无恩三刑全”，其凶象更为明显。
+    </string>
+    <string name="app_bazi_dizhi_xing_chouweixu_desc"> 恃势之刑（丑未戌三刑）\n
+    代表倚仗势力互相争斗，持势凌人，内部矛盾。\n
+    主口舌是非、竞争激烈、财务纠纷、官司诉讼。\n
+    在身体上，多主脾胃、皮肤、消化系统疾病。\n
+    如果八字中三者俱全，称为“恃势三刑全”，内部争斗的象义更强。
+    </string>
+    <string name="app_bazi_dizhi_xing_chenchen_desc">辰辰自刑： 辰为水库，水火库的相刑，容易导致精神上的压抑和身体上的水土失衡，尤其是肠胃、皮肤等问题。</string>
+    <string name="app_bazi_dizhi_xing_wuwu_desc">午午自刑： 午火为离，火性空明，午午自刑容易导致情绪波动大、心率过快、失眠、近视等问题，过分羞愧或打击易导致抑郁。</string>
+    <string name="app_bazi_dizhi_xing_youyou_desc">酉酉自刑： 酉金为阴金，阴金代表肺、呼吸系统等，酉酉自刑容易导致呼吸系统、肝胆问题，以及人际关系中的封闭和压抑。</string>
+    <string name="app_bazi_dizhi_xing_haihai_desc">亥亥自刑： 亥水为阴水，阴水代表肾脏、血液循环等，亥亥自刑容易导致肾脏、生殖系统问题，以及精神上的困顿和不振。 </string>
 </resources>
