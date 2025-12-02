@@ -546,4 +546,14 @@
     <string name="app_bazi_dizhi_xing_wuwu_desc">午午自刑： 午火为离，火性空明，午午自刑容易导致情绪波动大、心率过快、失眠、近视等问题，过分羞愧或打击易导致抑郁。</string>
     <string name="app_bazi_dizhi_xing_youyou_desc">酉酉自刑： 酉金为阴金，阴金代表肺、呼吸系统等，酉酉自刑容易导致呼吸系统、肝胆问题，以及人际关系中的封闭和压抑。</string>
     <string name="app_bazi_dizhi_xing_haihai_desc">亥亥自刑： 亥水为阴水，阴水代表肾脏、血液循环等，亥亥自刑容易导致肾脏、生殖系统问题，以及精神上的困顿和不振。 </string>
+
+    <string name="app_bazi_wuxing_weight_label">五行权重</string>
+    <string name="app_bazi_yongshen_tongguan_label">通关用神</string>
+    <string name="app_bazi_yongshen_tongguan_no_desc">命局没有通关用神。</string>
+
+    <string name="app_bazi_tongguan_jinmu_desc">金木相战，取[水]通关。使金生水，水生木，两行流通。</string>
+    <string name="app_bazi_tongguan_huojin_desc">火金相战，取[土]通关。使火生土，土生金，两行流通。</string>
+    <string name="app_bazi_tongguan_shuihuo_desc">水火相战，取[木]通关。使水生木，木生火而得流通。</string>
+    <string name="app_bazi_tongguan_tushui_desc">土水相战，取[金]通关。使土生金，金生水而得流通。</string>
+    <string name="app_bazi_tongguan_mutu_desc">木土相战，取[火]通关。使木生火，火生土而得流通。</string>
 </resources>

@@ -37,6 +37,7 @@ import com.rick.bazi.util.DiZhiUtil
 import com.rick.bazi.util.GeJuUtil
 import com.rick.bazi.util.TianGanUtil
 import com.rick.bazi.util.WuXingUtil
+import com.rick.bazi.util.YongShenUtil
 
 @Composable
 fun BaziAppAnalysisScreen(
@@ -120,6 +121,12 @@ fun BaziAppAnalysisScreen(
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
                         append(" " + WuXingUtil().getOwnerWuXingString(baziInfo, baziModel) + "\n")
+                    }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_wuxing_weight_label) + ":")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(" " + YongShenUtil().getWuXingWeightString(baziInfo.baziData) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.ten_shen) + ":\n")
@@ -277,8 +284,15 @@ fun BaziAppAnalysisScreen(
                         append(stringResource(R.string.app_bazi_tiaohou_shen) + ":")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(WuXingUtil().getTiaohouWuXingText(baziInfo.baziData) + "\n")
+                        append(YongShenUtil().getTiaohouString(baziInfo.baziData) + "\n")
                     }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_yongshen_tongguan_label) + ":")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(YongShenUtil().getTongGuanYongshenString(baziInfo.baziData) + "\n")
+                    }
+
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.app_bazi_final_yong_shen) + ":")
                     }

@@ -187,34 +187,6 @@ class TianGanUtil {
         return ret
     }
 
-//    fun isTianGanHeHua(data : BaziData, wx : WuXing) : Boolean{
-//        var ret = false
-//
-//        var isDangLing = false
-//        var isAdjecent = false
-//        var hasRoot = false
-//
-//        isDangLing = WuXingUtil().isWXDangLing(data.monthDizhi, wx)
-//        isAdjecent = isTianGanAdjecent(info)
-//        //san he, san hui, todo
-//
-//        if(info.wx == WuXing.WUXING_TU){
-//            hasRoot =  WuXingUtil().checkRootToTianGan(data, TianGan.TIANGAN_WU)
-//        }else if(info.wx == WuXing.WUXING_JIN){
-//            hasRoot =  WuXingUtil().checkRootToTianGan(data, TianGan.TIANGAN_GENG)
-//        }else if(info.wx == WuXing.WUXING_SHUI){
-//            hasRoot =  WuXingUtil().checkRootToTianGan(data, TianGan.TIANGAN_REN)
-//        }else if(info.wx == WuXing.WUXING_MU){
-//            hasRoot =  WuXingUtil().checkRootToTianGan(data, TianGan.TIANGAN_JIA)
-//        }else if(info.wx == WuXing.WUXING_HUO){
-//            hasRoot =  WuXingUtil().checkRootToTianGan(data, TianGan.TIANGAN_BING)
-//        }
-//        if(isDangLing && isAdjecent && hasRoot){
-//            ret = true
-//        }
-//        return ret
-//    }
-
     fun isTianGanHeHua(data: BaziData, info: TianGanaHeInfo): Boolean {
         var ret = false
 

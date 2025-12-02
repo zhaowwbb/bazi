@@ -42,4 +42,12 @@ data class BaziData(
     var jiShenList : List<ShiShen> = listOf(),
     var xiShenList : List<ShiShen> = listOf(),
     var tiaohouList : List<WuXing> = listOf(),
+
+    var jinWeight : Float = 0f,
+    var muWeight : Float = 0f,
+    var shuiWeight : Float = 0f,
+    var huoWeight : Float = 0f,
+    var tuWeight : Float = 0f,
+    var tongguanYongShen : TongGuanYongShen = TongGuanYongShen.TONG_GUAN_NONE,
+    var tiaohouYongShen : TiaoHouYongShen = TiaoHouYongShen.TIAO_HOU_NONE,
 )

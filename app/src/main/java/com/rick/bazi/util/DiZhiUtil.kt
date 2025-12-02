@@ -5,10 +5,27 @@ import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
 import com.rick.bazi.data.BaziColumnPosition
 import com.rick.bazi.data.BaziData
+import com.rick.bazi.data.ColumnPosition
 import com.rick.bazi.data.DiZhi
+import com.rick.bazi.data.DiZhiSanHeInfo
+import com.rick.bazi.data.DiZhiSanHuiInfo
+import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
+import com.rick.bazi.util.TianGanUtil.TianGanPos
+import com.rick.bazi.util.TianGanUtil.TianGanaHeInfo
 
 class DiZhiUtil {
+//
+//    data class DiZhiSanHuiInfo(
+//        val dz1Pos: ColumnPosition,
+//        val dz1: DiZhi,
+//        val dz1Pos: ColumnPosition,
+//        val dz1: DiZhi,
+//        val dz1Pos: ColumnPosition,
+//        val dz1: DiZhi,
+//        val wx: WuXing
+//    )
+
     val sixHeWuXingMap: Map<DiZhi, WuXing> = mapOf(
         DiZhi.DIZHI_ZI to WuXing.WUXING_TU,
         DiZhi.DIZHI_CHOU to WuXing.WUXING_TU,
@@ -170,7 +187,7 @@ class DiZhiUtil {
         DiZhi.DIZHI_WU to DiZhi.DIZHI_WU,
         DiZhi.DIZHI_YOU to DiZhi.DIZHI_YOU,
         DiZhi.DIZHI_HAI to DiZhi.DIZHI_HAI
-        )
+    )
 
     val dizhiXingStrMap: Map<DiZhi, Int> = mapOf(
         DiZhi.DIZHI_ZI to R.string.app_bazi_dizhi_xing_zimou_desc,
@@ -188,12 +205,12 @@ class DiZhiUtil {
         DiZhi.DIZHI_WU to R.string.app_bazi_dizhi_xing_wuwu_desc,
         DiZhi.DIZHI_YOU to R.string.app_bazi_dizhi_xing_youyou_desc,
         DiZhi.DIZHI_HAI to R.string.app_bazi_dizhi_xing_haihai_desc
-        )
+    )
 
-    fun isDiZhiXiangXing(dz1: DiZhi, dz2: DiZhi) : Boolean{
+    fun isDiZhiXiangXing(dz1: DiZhi, dz2: DiZhi): Boolean {
         var ret = false
         var dz = dizhiXingMap.get(dz1)!!
-        if(dz == dz2) {
+        if (dz == dz2) {
             ret = true
         }
         return ret
@@ -203,7 +220,7 @@ class DiZhiUtil {
     fun isDiZhiHai(dz1: DiZhi, dz2: DiZhi): Boolean {
         var ret = false
         var dz = dizhiHaiMap.get(dz1)!!
-        if(dz == dz2) {
+        if (dz == dz2) {
             ret = true
         }
         return ret
@@ -212,7 +229,7 @@ class DiZhiUtil {
     fun isDiZhiChong(dz1: DiZhi, dz2: DiZhi): Boolean {
         var ret = false
         var dz = dizhiChongMap.get(dz1)!!
-        if(dz == dz2) {
+        if (dz == dz2) {
             ret = true
         }
         return ret
@@ -423,6 +440,146 @@ class DiZhiUtil {
         return sb.toString()
     }
 
+    fun getDiZhi3He(data: BaziData): MutableList<DiZhiSanHeInfo> {
+        var isSanHe = false
+        var wx = WuXing.WUXING_MU
+        val heList: MutableList<DiZhiSanHeInfo> = mutableListOf()
+        isSanHe = isDiZhiSanHe(data.yearDizhi, data.monthDizhi, data.dayDizhi)
+        if (isSanHe) {
+            wx = sanHeMap.get(data.yearDizhi)!!
+            heList.add(
+                DiZhiSanHeInfo(
+                    ColumnPosition.COLUMN_YEAR,
+                    data.yearDizhi,
+                    ColumnPosition.COLUMN_MONTH,
+                    data.monthDizhi,
+                    ColumnPosition.COLUMN_DAY,
+                    data.dayDizhi,
+                    wx
+                )
+            )
+        }
+
+        isSanHe = isDiZhiSanHe(data.yearDizhi, data.monthDizhi, data.hourDizhi)
+        if (isSanHe) {
+            wx = sanHeMap.get(data.yearDizhi)!!
+            heList.add(
+                DiZhiSanHeInfo(
+                    ColumnPosition.COLUMN_YEAR,
+                    data.yearDizhi,
+                    ColumnPosition.COLUMN_MONTH,
+                    data.monthDizhi,
+                    ColumnPosition.COLUMN_HOUR,
+                    data.hourDizhi,
+                    wx
+                )
+            )
+        }
+
+        isSanHe = isDiZhiSanHe(data.monthDizhi, data.dayDizhi, data.hourDizhi)
+        if (isSanHe) {
+            wx = sanHeMap.get(data.monthDizhi)!!
+            heList.add(
+                DiZhiSanHeInfo(
+                    ColumnPosition.COLUMN_MONTH,
+                    data.monthDizhi,
+                    ColumnPosition.COLUMN_DAY,
+                    data.dayDizhi,
+                    ColumnPosition.COLUMN_HOUR,
+                    data.hourDizhi,
+                    wx
+                )
+            )
+        }
+
+        isSanHe = isDiZhiSanHe(data.yearDizhi, data.dayDizhi, data.hourDizhi)
+        if (isSanHe) {
+            wx = sanHeMap.get(data.yearDizhi)!!
+            heList.add(
+                DiZhiSanHeInfo(
+                    ColumnPosition.COLUMN_YEAR,
+                    data.yearDizhi,
+                    ColumnPosition.COLUMN_DAY,
+                    data.dayDizhi,
+                    ColumnPosition.COLUMN_HOUR,
+                    data.hourDizhi,
+                    wx
+                )
+            )
+        }
+        return heList
+    }
+
+    fun getDiZhi3Hui(data: BaziData): MutableList<DiZhiSanHuiInfo> {
+        var isSanHui = false
+        var wx = WuXing.WUXING_MU
+        val huiList: MutableList<DiZhiSanHuiInfo> = mutableListOf()
+        isSanHui = isDiZhiSanHui(data.yearDizhi, data.monthDizhi, data.dayDizhi)
+        if (isSanHui) {
+            wx = sanHuiMap.get(data.yearDizhi)!!
+            huiList.add(
+                DiZhiSanHuiInfo(
+                    ColumnPosition.COLUMN_YEAR,
+                    data.yearDizhi,
+                    ColumnPosition.COLUMN_MONTH,
+                    data.monthDizhi,
+                    ColumnPosition.COLUMN_DAY,
+                    data.dayDizhi,
+                    wx
+                )
+            )
+        }
+
+        isSanHui = isDiZhiSanHui(data.yearDizhi, data.monthDizhi, data.hourDizhi)
+        if (isSanHui) {
+            wx = sanHuiMap.get(data.yearDizhi)!!
+            huiList.add(
+                DiZhiSanHuiInfo(
+                    ColumnPosition.COLUMN_YEAR,
+                    data.yearDizhi,
+                    ColumnPosition.COLUMN_MONTH,
+                    data.monthDizhi,
+                    ColumnPosition.COLUMN_HOUR,
+                    data.hourDizhi,
+                    wx
+                )
+            )
+        }
+
+        isSanHui = isDiZhiSanHui(data.monthDizhi, data.dayDizhi, data.hourDizhi)
+        if (isSanHui) {
+            wx = sanHuiMap.get(data.monthDizhi)!!
+            huiList.add(
+                DiZhiSanHuiInfo(
+                    ColumnPosition.COLUMN_MONTH,
+                    data.monthDizhi,
+                    ColumnPosition.COLUMN_DAY,
+                    data.dayDizhi,
+                    ColumnPosition.COLUMN_HOUR,
+                    data.hourDizhi,
+                    wx
+                )
+            )
+        }
+
+        isSanHui = isDiZhiSanHui(data.yearDizhi, data.dayDizhi, data.hourDizhi)
+        if (isSanHui) {
+            wx = sanHuiMap.get(data.yearDizhi)!!
+            huiList.add(
+                DiZhiSanHuiInfo(
+                    ColumnPosition.COLUMN_YEAR,
+                    data.yearDizhi,
+                    ColumnPosition.COLUMN_DAY,
+                    data.dayDizhi,
+                    ColumnPosition.COLUMN_HOUR,
+                    data.hourDizhi,
+                    wx
+                )
+            )
+        }
+        return huiList
+    }
+
     @Composable
     fun getDiZhi3HeString(data: BaziData): String {
         var sb = StringBuilder()
@@ -593,7 +750,7 @@ class DiZhiUtil {
     fun getDiZhi6HeString(data: BaziData): String {
         var dz1 = data.yearDizhi
         var dz2 = data.monthDizhi
-        var detailSet : MutableSet<Int> = mutableSetOf()
+        var detailSet: MutableSet<Int> = mutableSetOf()
         var strId = 0
         var detailId = 0
         var sb = StringBuilder()
@@ -688,11 +845,11 @@ class DiZhiUtil {
         if (sb.length == 0) {
             sb.append("    ")
             sb.append(stringResource(R.string.app_bazi_dizhi_6he_no_label))
-        }else{
+        } else {
             sb.append("\n")
             var sbb = StringBuilder()
-            for(descId in detailSet){
-                if(sbb.length > 0){
+            for (descId in detailSet) {
+                if (sbb.length > 0) {
                     sbb.append("\n")
                 }
                 detailId = sixHeDetailMap.get(descId)!!
@@ -705,10 +862,12 @@ class DiZhiUtil {
     }
 
     @Composable
-    fun getDiZhi6ChongText(        dz1: DiZhi,
-                                   dz1Column: BaziColumnPosition,
-                                   dz2: DiZhi,
-                                   dz2Column: BaziColumnPosition) : String{
+    fun getDiZhi6ChongText(
+        dz1: DiZhi,
+        dz1Column: BaziColumnPosition,
+        dz2: DiZhi,
+        dz2Column: BaziColumnPosition
+    ): String {
         var sb = StringBuilder()
         var dz1StrId = 0
         var dz2StrId = 0
@@ -750,7 +909,7 @@ class DiZhiUtil {
         var dz1 = data.yearDizhi
         var dz2 = data.monthDizhi
         var sb = StringBuilder()
-        if(isDiZhiChong(dz1, dz2)){
+        if (isDiZhiChong(dz1, dz2)) {
             sb.append(
                 getDiZhi6ChongText(
                     dz1,
@@ -830,7 +989,7 @@ class DiZhiUtil {
         if (sb.length == 0) {
             sb.append("    ")
             sb.append(stringResource(R.string.app_bazi_dizhi_6chong_no_label))
-        }else{
+        } else {
 //            sb.append("\n")
 //            var sbb = StringBuilder()
 //            for(descId in detailSet){
@@ -847,10 +1006,12 @@ class DiZhiUtil {
     }
 
     @Composable
-    fun getDiZhi6HaiText(        dz1: DiZhi,
-                                   dz1Column: BaziColumnPosition,
-                                   dz2: DiZhi,
-                                   dz2Column: BaziColumnPosition) : String{
+    fun getDiZhi6HaiText(
+        dz1: DiZhi,
+        dz1Column: BaziColumnPosition,
+        dz2: DiZhi,
+        dz2Column: BaziColumnPosition
+    ): String {
         var sb = StringBuilder()
         var dz1StrId = 0
         var dz2StrId = 0
@@ -895,7 +1056,7 @@ class DiZhiUtil {
         var dz1 = data.yearDizhi
         var dz2 = data.monthDizhi
         var sb = StringBuilder()
-        if(isDiZhiHai(dz1, dz2)){
+        if (isDiZhiHai(dz1, dz2)) {
             sb.append(
                 getDiZhi6HaiText(
                     dz1,
@@ -980,10 +1141,12 @@ class DiZhiUtil {
     }
 
     @Composable
-    fun getDiZhiXingText(        dz1: DiZhi,
-                                 dz1Column: BaziColumnPosition,
-                                 dz2: DiZhi,
-                                 dz2Column: BaziColumnPosition) : String{
+    fun getDiZhiXingText(
+        dz1: DiZhi,
+        dz1Column: BaziColumnPosition,
+        dz2: DiZhi,
+        dz2Column: BaziColumnPosition
+    ): String {
         var sb = StringBuilder()
         var dz1StrId = 0
         var dz2StrId = 0
@@ -1028,7 +1191,7 @@ class DiZhiUtil {
         var dz1 = data.yearDizhi
         var dz2 = data.monthDizhi
         var sb = StringBuilder()
-        if(isDiZhiXiangXing(dz1, dz2)){
+        if (isDiZhiXiangXing(dz1, dz2)) {
             sb.append(
                 getDiZhiXingText(
                     dz1,

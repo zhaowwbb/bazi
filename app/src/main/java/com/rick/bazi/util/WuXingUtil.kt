@@ -15,9 +15,9 @@ import com.rick.bazi.ui.BaziViewModel
 
 class WuXingUtil {
 
-    @Composable
+//    @Composable
     fun getJinNumber(
-        baziInfo: BaziInfo
+        baziInfo: BaziData
     ): Int {
         var total = 0
         if (isTianGanJin(baziInfo.yearTiangan)) total++
@@ -33,9 +33,9 @@ class WuXingUtil {
         return total
     }
 
-    @Composable
+//    @Composable
     fun getMuNumber(
-        baziInfo: BaziInfo
+        baziInfo: BaziData
     ): Int {
         var total = 0
         if (isTianGanMu(baziInfo.yearTiangan)) total++
@@ -51,9 +51,9 @@ class WuXingUtil {
         return total
     }
 
-    @Composable
+//    @Composable
     fun getShuiNumber(
-        baziInfo: BaziInfo
+        baziInfo: BaziData
     ): Int {
         var total = 0
         if (isTianGanShui(baziInfo.yearTiangan)) total++
@@ -69,9 +69,9 @@ class WuXingUtil {
         return total
     }
 
-    @Composable
+//    @Composable
     fun getHuoNumber(
-        baziInfo: BaziInfo
+        baziInfo: BaziData
     ): Int {
         var total = 0
         if (isTianGanHuo(baziInfo.yearTiangan)) total++
@@ -87,9 +87,9 @@ class WuXingUtil {
         return total
     }
 
-    @Composable
+//    @Composable
     fun getTuNumber(
-        baziInfo: BaziInfo
+        baziInfo: BaziData
     ): Int {
         var total = 0
         if (isTianGanTu(baziInfo.yearTiangan)) total++
@@ -185,10 +185,10 @@ class WuXingUtil {
         var isDangLing = false
         var tgWuXing = wx
         var dzWuXing = getDiZhiWuxing(monthDz)
-        if (tgWuXing == dzWuXing){
+        if (tgWuXing == dzWuXing) {
             isDangLing = true
         }
-        if (isWuXingBorn(tgWuXing, dzWuXing)){
+        if (isWuXingBorn(tgWuXing, dzWuXing)) {
             isDangLing = true
         }
         println("On monthDz:$monthDz, WuXing:$wx dangling flag=$isDangLing")
@@ -210,62 +210,62 @@ class WuXingUtil {
 //        return isDangLing
     }
 
-    fun getTgWX(tg : TianGan) : WuXing{
+    fun getTgWX(tg: TianGan): WuXing {
         var wx = WuXing.WUXING_SHUI
-        if(tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI){
+        if (tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI) {
             wx = WuXing.WUXING_MU
         }
-        if(tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_DING){
+        if (tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_DING) {
             wx = WuXing.WUXING_HUO
         }
-        if(tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_JI){
+        if (tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_JI) {
             wx = WuXing.WUXING_TU
         }
-        if(tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_XIN){
+        if (tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_XIN) {
             wx = WuXing.WUXING_JIN
         }
-        if(tg == TianGan.TIANGAN_REN || tg == TianGan.TIANGAN_GUI){
+        if (tg == TianGan.TIANGAN_REN || tg == TianGan.TIANGAN_GUI) {
             wx = WuXing.WUXING_SHUI
         }
         return wx
     }
 
     @Composable
-    fun getWuXingText(wx : WuXing) : String {
+    fun getWuXingText(wx: WuXing): String {
         var str = ""
-        if(wx == WuXing.WUXING_JIN){
+        if (wx == WuXing.WUXING_JIN) {
             str = stringResource(R.string.app_bazi_metal)
         }
-        if(wx == WuXing.WUXING_MU){
+        if (wx == WuXing.WUXING_MU) {
             str = stringResource(R.string.app_bazi_wood)
         }
-        if(wx == WuXing.WUXING_SHUI){
+        if (wx == WuXing.WUXING_SHUI) {
             str = stringResource(R.string.app_bazi_water)
         }
-        if(wx == WuXing.WUXING_HUO){
+        if (wx == WuXing.WUXING_HUO) {
             str = stringResource(R.string.app_bazi_fire)
         }
-        if(wx == WuXing.WUXING_TU){
+        if (wx == WuXing.WUXING_TU) {
             str = stringResource(R.string.app_bazi_soil)
         }
         return str
     }
 
     @Composable
-    fun getTianGanWuxingText(tg : TianGan) : String {
+    fun getTianGanWuxingText(tg: TianGan): String {
         var tgWX = WuXing.WUXING_MU
         tgWX = getTianGanWuxing(tg)
         return getWuXingText(tgWX)
     }
 
     @Composable
-    fun getDiZhiWuxingText(dz : DiZhi) : String {
+    fun getDiZhiWuxingText(dz: DiZhi): String {
         var wx = getDiZhiWuxing(dz)
         return getWuXingText(wx)
     }
 
-//    @Composable
-    fun getDiZhiWuxing(dz : DiZhi) : WuXing {
+    //    @Composable
+    fun getDiZhiWuxing(dz: DiZhi): WuXing {
         var ret = WuXing.WUXING_MU
         if (dz == DiZhi.DIZHI_HAI || dz == DiZhi.DIZHI_ZI) {
             ret = WuXing.WUXING_SHUI
@@ -298,40 +298,45 @@ class WuXingUtil {
     fun getOwnerString(tg: TianGan): String {
         var tianganStrKey = BaziUtil().tianganStrMap.getValue(tg)
         var str = stringResource(tianganStrKey)
-        var ownerStr = str + WuXingUtil().getTianGanWuxingText(tg) + stringResource(R.string.bazi_owner_brief)
+        var ownerStr =
+            str + WuXingUtil().getTianGanWuxingText(tg) + stringResource(R.string.bazi_owner_brief)
         return ownerStr
     }
 
     @Composable
-    fun getTiaohouWuXingText(data: BaziData) : String{
+    fun getTiaohouWuXingText(data: BaziData): String {
         var summary = ""
-        var tiaohouShenList : List<WuXing> = arrayListOf<WuXing>()
-        var monthDz : DiZhi = data.monthDizhi
+        var tiaohouShenList: List<WuXing> = arrayListOf<WuXing>()
+        var monthDz: DiZhi = data.monthDizhi
         //cold
-        if(monthDz == DiZhi.DIZHI_HAI || monthDz == DiZhi.DIZHI_ZI || monthDz == DiZhi.DIZHI_CHOU){
-            summary = stringResource(R.string.app_bazi_tiaohou_cold)  + "[" + getWuXingText(WuXing.WUXING_HUO) + "]"
+        if (monthDz == DiZhi.DIZHI_HAI || monthDz == DiZhi.DIZHI_ZI || monthDz == DiZhi.DIZHI_CHOU) {
+            summary =
+                stringResource(R.string.app_bazi_tiaohou_cold) + "[" + getWuXingText(WuXing.WUXING_HUO) + "]"
             tiaohouShenList = arrayListOf<WuXing>(WuXing.WUXING_HUO)
         }
         //hot
-        if(monthDz == DiZhi.DIZHI_SI || monthDz == DiZhi.DIZHI_WU || monthDz == DiZhi.DIZHI_WEI){
-            summary = stringResource(R.string.app_bazi_tiaohou_hot) + "[" + getWuXingText(WuXing.WUXING_SHUI) + "]"
+        if (monthDz == DiZhi.DIZHI_SI || monthDz == DiZhi.DIZHI_WU || monthDz == DiZhi.DIZHI_WEI) {
+            summary =
+                stringResource(R.string.app_bazi_tiaohou_hot) + "[" + getWuXingText(WuXing.WUXING_SHUI) + "]"
             tiaohouShenList = arrayListOf<WuXing>(WuXing.WUXING_SHUI)
         }
 
         //dry
-        if(monthDz == DiZhi.DIZHI_WEI || monthDz == DiZhi.DIZHI_XU){
-            summary = stringResource(R.string.app_bazi_tiaohou_dry) + "[" + getWuXingText(WuXing.WUXING_SHUI) + "]"
+        if (monthDz == DiZhi.DIZHI_WEI || monthDz == DiZhi.DIZHI_XU) {
+            summary =
+                stringResource(R.string.app_bazi_tiaohou_dry) + "[" + getWuXingText(WuXing.WUXING_SHUI) + "]"
             tiaohouShenList = arrayListOf<WuXing>(WuXing.WUXING_SHUI)
         }
 
         //wet
-        if(monthDz == DiZhi.DIZHI_CHOU || monthDz == DiZhi.DIZHI_CHEN){
-            summary = stringResource(R.string.app_bazi_tiaohou_wet) + "[" + getWuXingText(WuXing.WUXING_HUO) + "]"
+        if (monthDz == DiZhi.DIZHI_CHOU || monthDz == DiZhi.DIZHI_CHEN) {
+            summary =
+                stringResource(R.string.app_bazi_tiaohou_wet) + "[" + getWuXingText(WuXing.WUXING_HUO) + "]"
             tiaohouShenList = arrayListOf<WuXing>(WuXing.WUXING_HUO)
         }
 
         //mild
-        if(monthDz == DiZhi.DIZHI_YIN || monthDz == DiZhi.DIZHI_MOU || monthDz == DiZhi.DIZHI_SHEN || monthDz == DiZhi.DIZHI_YOU){
+        if (monthDz == DiZhi.DIZHI_YIN || monthDz == DiZhi.DIZHI_MOU || monthDz == DiZhi.DIZHI_SHEN || monthDz == DiZhi.DIZHI_YOU) {
             summary = stringResource(R.string.app_bazi_tiaohou_mild)
         }
         data.tiaohouList = tiaohouShenList
@@ -341,134 +346,134 @@ class WuXingUtil {
     }
 
     @Composable
-    fun getBiJieWuXing(tg : TianGan) : WuXing{
+    fun getBiJieWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
-        if(ownerWX == WuXing.WUXING_MU){
+        if (ownerWX == WuXing.WUXING_MU) {
             return WuXing.WUXING_MU
         }
-        if(ownerWX == WuXing.WUXING_SHUI){
+        if (ownerWX == WuXing.WUXING_SHUI) {
             return WuXing.WUXING_SHUI
         }
-        if(ownerWX == WuXing.WUXING_TU){
+        if (ownerWX == WuXing.WUXING_TU) {
             return WuXing.WUXING_TU
         }
-        if(ownerWX == WuXing.WUXING_HUO){
+        if (ownerWX == WuXing.WUXING_HUO) {
             return WuXing.WUXING_HUO
         }
-        if(ownerWX == WuXing.WUXING_JIN){
+        if (ownerWX == WuXing.WUXING_JIN) {
             return WuXing.WUXING_JIN
         }
         return ret
     }
 
     @Composable
-    fun getGuanshaWuXing(tg : TianGan) : WuXing{
+    fun getGuanshaWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
-        if(ownerWX == WuXing.WUXING_MU){
+        if (ownerWX == WuXing.WUXING_MU) {
             return WuXing.WUXING_JIN
         }
-        if(ownerWX == WuXing.WUXING_SHUI){
+        if (ownerWX == WuXing.WUXING_SHUI) {
             return WuXing.WUXING_TU
         }
-        if(ownerWX == WuXing.WUXING_TU){
+        if (ownerWX == WuXing.WUXING_TU) {
             return WuXing.WUXING_MU
         }
-        if(ownerWX == WuXing.WUXING_HUO){
+        if (ownerWX == WuXing.WUXING_HUO) {
             return WuXing.WUXING_SHUI
         }
-        if(ownerWX == WuXing.WUXING_JIN){
+        if (ownerWX == WuXing.WUXING_JIN) {
             return WuXing.WUXING_HUO
         }
         return ret
     }
 
     @Composable
-    fun getShishangWuXing(tg : TianGan) : WuXing{
+    fun getShishangWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
-        if(ownerWX == WuXing.WUXING_MU){
+        if (ownerWX == WuXing.WUXING_MU) {
             return WuXing.WUXING_HUO
         }
-        if(ownerWX == WuXing.WUXING_SHUI){
+        if (ownerWX == WuXing.WUXING_SHUI) {
             return WuXing.WUXING_MU
         }
-        if(ownerWX == WuXing.WUXING_TU){
+        if (ownerWX == WuXing.WUXING_TU) {
             return WuXing.WUXING_JIN
         }
-        if(ownerWX == WuXing.WUXING_HUO){
+        if (ownerWX == WuXing.WUXING_HUO) {
             return WuXing.WUXING_TU
         }
-        if(ownerWX == WuXing.WUXING_JIN){
+        if (ownerWX == WuXing.WUXING_JIN) {
             return WuXing.WUXING_SHUI
         }
         return ret
     }
 
     @Composable
-    fun getCaiWuXing(tg : TianGan) : WuXing{
+    fun getCaiWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
-        if(ownerWX == WuXing.WUXING_MU){
+        if (ownerWX == WuXing.WUXING_MU) {
             return WuXing.WUXING_TU
         }
-        if(ownerWX == WuXing.WUXING_SHUI){
+        if (ownerWX == WuXing.WUXING_SHUI) {
             return WuXing.WUXING_HUO
         }
-        if(ownerWX == WuXing.WUXING_TU){
+        if (ownerWX == WuXing.WUXING_TU) {
             return WuXing.WUXING_SHUI
         }
-        if(ownerWX == WuXing.WUXING_HUO){
+        if (ownerWX == WuXing.WUXING_HUO) {
             return WuXing.WUXING_JIN
         }
-        if(ownerWX == WuXing.WUXING_JIN){
+        if (ownerWX == WuXing.WUXING_JIN) {
             return WuXing.WUXING_MU
         }
         return ret
     }
 
     @Composable
-    fun getCaiWuXingText(tg : TianGan) : String{
+    fun getCaiWuXingText(tg: TianGan): String {
         var wx = getCaiWuXing(tg)
         return getWuXingText(wx)
     }
 
     @Composable
-    fun getShishangWuXingText(tg : TianGan) : String{
+    fun getShishangWuXingText(tg: TianGan): String {
         var wx = getShishangWuXing(tg)
         return getWuXingText(wx)
     }
 
     @Composable
-    fun getGuanshaWuXingText(tg : TianGan) : String{
+    fun getGuanshaWuXingText(tg: TianGan): String {
         var wx = getGuanshaWuXing(tg)
         return getWuXingText(wx)
     }
 
     @Composable
-    fun getBiJieWuXingText(tg : TianGan) : String{
+    fun getBiJieWuXingText(tg: TianGan): String {
         var wx = getBiJieWuXing(tg)
         return getWuXingText(wx)
     }
 
     @Composable
-    fun getYinWuXing(tg : TianGan) : WuXing{
+    fun getYinWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
-        if(ownerWX == WuXing.WUXING_MU){
+        if (ownerWX == WuXing.WUXING_MU) {
             return WuXing.WUXING_SHUI
         }
-        if(ownerWX == WuXing.WUXING_SHUI){
+        if (ownerWX == WuXing.WUXING_SHUI) {
             return WuXing.WUXING_JIN
         }
-        if(ownerWX == WuXing.WUXING_TU){
+        if (ownerWX == WuXing.WUXING_TU) {
             return WuXing.WUXING_HUO
         }
-        if(ownerWX == WuXing.WUXING_HUO){
+        if (ownerWX == WuXing.WUXING_HUO) {
             return WuXing.WUXING_MU
         }
-        if(ownerWX == WuXing.WUXING_JIN){
+        if (ownerWX == WuXing.WUXING_JIN) {
             return WuXing.WUXING_TU
         }
         return ret
@@ -484,11 +489,17 @@ class WuXingUtil {
                 getDizhiStr(baziInfo, baziInfo.monthDizhi) +
                 stringResource(R.string.app_label_month)
 
-        if(WuXingUtil().isDangling(baziInfo.monthDizhi, baziInfo.dayTiangan)){
-            result = result + stringResource(R.string.bazi_owner) + stringResource(R.string.app_bazi_wangxiang_label) + " " + stringResource(R.string.app_bazi_dangling_yes)
+        if (WuXingUtil().isDangling(baziInfo.monthDizhi, baziInfo.dayTiangan)) {
+            result =
+                result + stringResource(R.string.bazi_owner) + stringResource(R.string.app_bazi_wangxiang_label) + " " + stringResource(
+                    R.string.app_bazi_dangling_yes
+                )
             baziModel.setDangLing(true)
-        }else{
-            result = result + stringResource(R.string.bazi_owner) + stringResource(R.string.app_bazi_xiuqiu_label) + " " + stringResource(R.string.app_bazi_dangling_no)
+        } else {
+            result =
+                result + stringResource(R.string.bazi_owner) + stringResource(R.string.app_bazi_xiuqiu_label) + " " + stringResource(
+                    R.string.app_bazi_dangling_no
+                )
             baziModel.setDangLing(false)
         }
         baziModel.setDeLingCheckStr(result)
@@ -497,7 +508,8 @@ class WuXingUtil {
 
     @Composable
     fun getDeDiDescription(
-        baziInfo: BaziData) : String{
+        baziInfo: BaziData
+    ): String {
         var deDiStr = ""
         var isDedi = isBaziDedi(baziInfo)
 
@@ -505,30 +517,30 @@ class WuXingUtil {
                 baziInfo.strongRootCount + stringResource(R.string.app_bazi_strong_root) + " " +
                 baziInfo.mediumRootCount + stringResource(R.string.app_bazi_weak_root) + " " +
                 baziInfo.weakRootCount + stringResource(R.string.app_bazi_tiny_root)
-        if(isDedi) {
+        if (isDedi) {
             deDiStr = deDiStr + " " + stringResource(R.string.app_bazi_dedi_yes)
-        }else{
+        } else {
             deDiStr = deDiStr + " " + stringResource(R.string.app_bazi_dedi_no)
         }
 
         return deDiStr
     }
 
-    fun checkMuRoot(dz: DiZhi) : RootLevel{
+    fun checkMuRoot(dz: DiZhi): RootLevel {
         var rootLevel = RootLevel.NO_ROOT
-            if (dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU) {
-                rootLevel = RootLevel.STRONG_ROOT
-            } else if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_HAI) {
-                rootLevel = RootLevel.MEDIUM_ROOT
-            } else if (dz == DiZhi.DIZHI_WEI) {
-                rootLevel = RootLevel.WEAK_ROOT
-            } else {
-                rootLevel = RootLevel.NO_ROOT
-            }
+        if (dz == DiZhi.DIZHI_YIN || dz == DiZhi.DIZHI_MOU) {
+            rootLevel = RootLevel.STRONG_ROOT
+        } else if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_HAI) {
+            rootLevel = RootLevel.MEDIUM_ROOT
+        } else if (dz == DiZhi.DIZHI_WEI) {
+            rootLevel = RootLevel.WEAK_ROOT
+        } else {
+            rootLevel = RootLevel.NO_ROOT
+        }
         return rootLevel
     }
 
-    fun checkHuoRoot(dz: DiZhi) : RootLevel{
+    fun checkHuoRoot(dz: DiZhi): RootLevel {
         var rootLevel = RootLevel.NO_ROOT
         if (dz == DiZhi.DIZHI_SI || dz == DiZhi.DIZHI_WU) {
             rootLevel = RootLevel.STRONG_ROOT
@@ -542,7 +554,7 @@ class WuXingUtil {
         return rootLevel
     }
 
-    fun checkShuiRoot(dz: DiZhi) : RootLevel{
+    fun checkShuiRoot(dz: DiZhi): RootLevel {
         var rootLevel = RootLevel.NO_ROOT
         if (dz == DiZhi.DIZHI_ZI || dz == DiZhi.DIZHI_HAI) {
             rootLevel = RootLevel.STRONG_ROOT
@@ -556,7 +568,7 @@ class WuXingUtil {
         return rootLevel
     }
 
-    fun checkJinRoot(dz: DiZhi) : RootLevel{
+    fun checkJinRoot(dz: DiZhi): RootLevel {
         var rootLevel = RootLevel.NO_ROOT
         if (dz == DiZhi.DIZHI_SHEN || dz == DiZhi.DIZHI_YOU) {
             rootLevel = RootLevel.STRONG_ROOT
@@ -570,7 +582,7 @@ class WuXingUtil {
         return rootLevel
     }
 
-    fun checkTuRoot(dz: DiZhi) : RootLevel{
+    fun checkTuRoot(dz: DiZhi): RootLevel {
         var rootLevel = RootLevel.NO_ROOT
         if (dz == DiZhi.DIZHI_CHEN || dz == DiZhi.DIZHI_XU || dz == DiZhi.DIZHI_CHOU || dz == DiZhi.DIZHI_WEI) {
             rootLevel = RootLevel.STRONG_ROOT
@@ -584,7 +596,7 @@ class WuXingUtil {
         return rootLevel
     }
 
-    fun checkRootToTianGan(baziInfo: BaziData, tg : TianGan): Boolean{
+    fun checkRootToTianGan(baziInfo: BaziData, tg: TianGan): Boolean {
         var ret = false
         var tg = baziInfo.dayTiangan
         var dz = baziInfo.yearDizhi
@@ -592,7 +604,7 @@ class WuXingUtil {
         var strongRootCount = 0
         var mediumRootCount = 0
         var weakRootCount = 0
-        if(tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI) {
+        if (tg == TianGan.TIANGAN_JIA || tg == TianGan.TIANGAN_YI) {
             dz = baziInfo.yearDizhi
             baziInfo.yearDzRootLevel = checkMuRoot(dz)
             dz = baziInfo.monthDizhi
@@ -602,7 +614,7 @@ class WuXingUtil {
             dz = baziInfo.hourDizhi
             baziInfo.hourDzRootLevel = checkMuRoot(dz)
         }
-        if(tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_DING){
+        if (tg == TianGan.TIANGAN_BING || tg == TianGan.TIANGAN_DING) {
             dz = baziInfo.yearDizhi
             baziInfo.yearDzRootLevel = checkHuoRoot(dz)
             dz = baziInfo.monthDizhi
@@ -612,7 +624,7 @@ class WuXingUtil {
             dz = baziInfo.hourDizhi
             baziInfo.hourDzRootLevel = checkHuoRoot(dz)
         }
-        if(tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_JI) {
+        if (tg == TianGan.TIANGAN_WU || tg == TianGan.TIANGAN_JI) {
             dz = baziInfo.yearDizhi
             baziInfo.yearDzRootLevel = checkTuRoot(dz)
             dz = baziInfo.monthDizhi
@@ -622,7 +634,7 @@ class WuXingUtil {
             dz = baziInfo.hourDizhi
             baziInfo.hourDzRootLevel = checkTuRoot(dz)
         }
-        if(tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_XIN) {
+        if (tg == TianGan.TIANGAN_GENG || tg == TianGan.TIANGAN_XIN) {
             dz = baziInfo.yearDizhi
             baziInfo.yearDzRootLevel = checkJinRoot(dz)
             dz = baziInfo.monthDizhi
@@ -632,7 +644,7 @@ class WuXingUtil {
             dz = baziInfo.hourDizhi
             baziInfo.hourDzRootLevel = checkJinRoot(dz)
         }
-        if(tg == TianGan.TIANGAN_REN || tg == TianGan.TIANGAN_GUI) {
+        if (tg == TianGan.TIANGAN_REN || tg == TianGan.TIANGAN_GUI) {
             dz = baziInfo.yearDizhi
             baziInfo.yearDzRootLevel = checkShuiRoot(dz)
             dz = baziInfo.monthDizhi
@@ -642,17 +654,18 @@ class WuXingUtil {
             dz = baziInfo.hourDizhi
             baziInfo.hourDzRootLevel = checkShuiRoot(dz)
         }
-        if( baziInfo.yearDzRootLevel != RootLevel.NO_ROOT ||
+        if (baziInfo.yearDzRootLevel != RootLevel.NO_ROOT ||
             baziInfo.monthDzRootLevel != RootLevel.NO_ROOT ||
             baziInfo.dayDzRootLevel != RootLevel.NO_ROOT ||
-            baziInfo.hourDzRootLevel != RootLevel.NO_ROOT){
+            baziInfo.hourDzRootLevel != RootLevel.NO_ROOT
+        ) {
             ret = true
         }
 
         return ret
     }
 
-    fun isBaziStrong(data: BaziData) : Boolean{
+    fun isBaziStrong(data: BaziData): Boolean {
         var ret = false
         var danglingWeight = 0
         var dediWeight = 0
@@ -661,7 +674,7 @@ class WuXingUtil {
 //        var baziStrength = BaziStrength.BAZI_BALANCED
 //        var goodElementCount =
 
-            if (isDangling(data.monthDizhi, data.dayTiangan)) {
+        if (isDangling(data.monthDizhi, data.dayTiangan)) {
             danglingWeight = 3
         } else {
             danglingWeight = -3
@@ -676,14 +689,14 @@ class WuXingUtil {
         totalWeight = danglingWeight + dediWeight + elementDiffWeight
 
         //todo, for balanced case,
-        if(totalWeight > 0){
+        if (totalWeight > 0) {
             ret = true
         }
         return ret
     }
 
     //return total good element - bad element
-    fun getBaziHelpCount(data: BaziData): Int{
+    fun getBaziHelpCount(data: BaziData): Int {
         var ret = false
         var yinCount = 0
         var shiShangCount = 0
@@ -691,17 +704,32 @@ class WuXingUtil {
         var guanShaCount = 0
         var caiCount = 0
         var goodCount = 0
-        yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
-        shiShangCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
-        biJieCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
-        guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
-        caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
+        yinCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_ZHENG_YIN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
+        shiShangCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_SHI_SHEN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
+        biJieCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_BI_JIAN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
+        guanShaCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_ZHENG_GUAN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
+        caiCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_ZHENG_CAI
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
 
         goodCount = yinCount + biJieCount - guanShaCount - shiShangCount - caiCount
         return goodCount
     }
 
-    fun isBaziDedi(baziInfo: BaziData): Boolean{
+    fun isBaziDedi(baziInfo: BaziData): Boolean {
         var strongRootCount = 0
         var mediumRootCount = 0
         var weakRootCount = 0
@@ -712,50 +740,50 @@ class WuXingUtil {
         var hourRootLevel = RootLevel.NO_ROOT
 
         //found root, check root strength
-        if(checkRootToTianGan(baziInfo, baziInfo.dayTiangan)){
+        if (checkRootToTianGan(baziInfo, baziInfo.dayTiangan)) {
             yearRootLevel = baziInfo.yearDzRootLevel
             monthRootLevel = baziInfo.monthDzRootLevel
             dayRootLevel = baziInfo.dayDzRootLevel
             hourRootLevel = baziInfo.hourDzRootLevel
             //strong
-            if(yearRootLevel == RootLevel.STRONG_ROOT){
+            if (yearRootLevel == RootLevel.STRONG_ROOT) {
                 strongRootCount++
             }
-            if(monthRootLevel == RootLevel.STRONG_ROOT){
+            if (monthRootLevel == RootLevel.STRONG_ROOT) {
                 strongRootCount++
             }
-            if(dayRootLevel == RootLevel.STRONG_ROOT){
+            if (dayRootLevel == RootLevel.STRONG_ROOT) {
                 strongRootCount++
             }
-            if(hourRootLevel == RootLevel.STRONG_ROOT){
+            if (hourRootLevel == RootLevel.STRONG_ROOT) {
                 strongRootCount++
             }
 
             //medium
-            if(yearRootLevel == RootLevel.MEDIUM_ROOT){
+            if (yearRootLevel == RootLevel.MEDIUM_ROOT) {
                 mediumRootCount++
             }
-            if(monthRootLevel == RootLevel.MEDIUM_ROOT){
+            if (monthRootLevel == RootLevel.MEDIUM_ROOT) {
                 mediumRootCount++
             }
-            if(dayRootLevel == RootLevel.MEDIUM_ROOT){
+            if (dayRootLevel == RootLevel.MEDIUM_ROOT) {
                 mediumRootCount++
             }
-            if(hourRootLevel == RootLevel.MEDIUM_ROOT){
+            if (hourRootLevel == RootLevel.MEDIUM_ROOT) {
                 mediumRootCount++
             }
 
             //weak
-            if(yearRootLevel == RootLevel.WEAK_ROOT){
+            if (yearRootLevel == RootLevel.WEAK_ROOT) {
                 weakRootCount++
             }
-            if(monthRootLevel == RootLevel.WEAK_ROOT){
+            if (monthRootLevel == RootLevel.WEAK_ROOT) {
                 weakRootCount++
             }
-            if(dayRootLevel == RootLevel.WEAK_ROOT){
+            if (dayRootLevel == RootLevel.WEAK_ROOT) {
                 weakRootCount++
             }
-            if(hourRootLevel == RootLevel.WEAK_ROOT){
+            if (hourRootLevel == RootLevel.WEAK_ROOT) {
                 weakRootCount++
             }
 
@@ -764,7 +792,7 @@ class WuXingUtil {
             baziInfo.weakRootCount = weakRootCount
             println("strongRootCount=$strongRootCount, mediumRootCount=$mediumRootCount, weakRootCount=$weakRootCount")
             //2 weak root is dedi, other root 1 is dedi
-            if(strongRootCount > 0 || mediumRootCount > 0 || weakRootCount> 1 ){
+            if (strongRootCount > 0 || mediumRootCount > 0 || weakRootCount > 1) {
                 isDeDi = true
             }
         }
@@ -777,15 +805,16 @@ class WuXingUtil {
         baziInfo: BaziInfo,
         baziModel: BaziViewModel
     ): String {
+        var data = baziInfo.baziData
         var wuxingStr =
-            stringResource(R.string.app_bazi_metal) + "(" + WuXingUtil().getJinNumber(baziInfo) + ") " + stringResource(
+            stringResource(R.string.app_bazi_metal) + "(" + WuXingUtil().getJinNumber(data) + ") " + stringResource(
                 R.string.app_bazi_wood
-            ) + "(" + WuXingUtil().getMuNumber(baziInfo) + ") " + stringResource(R.string.app_bazi_water) + "(" + WuXingUtil().getShuiNumber(
-                baziInfo
+            ) + "(" + WuXingUtil().getMuNumber(data) + ") " + stringResource(R.string.app_bazi_water) + "(" + WuXingUtil().getShuiNumber(
+                data
             ) + ") " + stringResource(R.string.app_bazi_fire) + "(" + WuXingUtil().getHuoNumber(
-                baziInfo
+                data
             ) + ") " + stringResource(R.string.app_bazi_soil) + "(" + WuXingUtil().getTuNumber(
-                baziInfo
+                data
             ) + ")"
         baziModel.setWuxingSummaryStr(wuxingStr)
         return wuxingStr
@@ -793,7 +822,7 @@ class WuXingUtil {
 
     @Composable
     fun getTianGanWuXingText(
-        tg : TianGan
+        tg: TianGan
     ): String {
         var str = BaziUtil().getTianGanLabel(tg)
         str = str + WuXingUtil().getTianGanWuxingText(tg)
@@ -801,14 +830,14 @@ class WuXingUtil {
     }
 
     @Composable
-    fun getBaziWuxingStatString(data : BaziData, targetWx : WuXing) : String{
+    fun getBaziWuxingStatString(data: BaziData, targetWx: WuXing): String {
         val sb = StringBuilder()
         var tg = data.yearTiangan
         var dz = data.yearDizhi
         var tgWx = WuXing.WUXING_TU
         var dzWx = WuXing.WUXING_TU
         tgWx = getTianGanWuxing(tg)
-        if(tgWx == targetWx){
+        if (tgWx == targetWx) {
             sb.append(stringResource(R.string.app_label_year))
             sb.append(stringResource(R.string.app_label_gan))
             sb.append(" ")
@@ -819,7 +848,7 @@ class WuXingUtil {
         }
         tg = data.monthTiangan
         tgWx = getTianGanWuxing(tg)
-        if(tgWx == targetWx){
+        if (tgWx == targetWx) {
             sb.append(stringResource(R.string.app_label_month))
             sb.append(stringResource(R.string.app_label_gan))
             sb.append(" ")
@@ -830,7 +859,7 @@ class WuXingUtil {
         }
         tg = data.hourTiangan
         tgWx = getTianGanWuxing(tg)
-        if(tgWx == targetWx){
+        if (tgWx == targetWx) {
             sb.append(stringResource(R.string.app_label_hour))
             sb.append(stringResource(R.string.app_label_gan))
             sb.append(" ")
@@ -843,7 +872,7 @@ class WuXingUtil {
         //check dizhi
         dz = data.yearDizhi
         dzWx = getDiZhiWuxing(dz)
-        if(dzWx == targetWx){
+        if (dzWx == targetWx) {
             sb.append(stringResource(R.string.app_label_year))
             sb.append(stringResource(R.string.app_label_zhi))
             sb.append(" ")
@@ -855,7 +884,7 @@ class WuXingUtil {
         }
         dz = data.monthDizhi
         dzWx = getDiZhiWuxing(dz)
-        if(dzWx == targetWx){
+        if (dzWx == targetWx) {
             sb.append(stringResource(R.string.app_label_month))
             sb.append(stringResource(R.string.app_label_zhi))
             sb.append(" ")
@@ -867,7 +896,7 @@ class WuXingUtil {
         }
         dz = data.dayDizhi
         dzWx = getDiZhiWuxing(dz)
-        if(dzWx == targetWx){
+        if (dzWx == targetWx) {
             sb.append(stringResource(R.string.app_label_day))
             sb.append(stringResource(R.string.app_label_zhi))
             sb.append(" ")
@@ -879,7 +908,7 @@ class WuXingUtil {
         }
         dz = data.hourDizhi
         dzWx = getDiZhiWuxing(dz)
-        if(dzWx == targetWx){
+        if (dzWx == targetWx) {
             sb.append(stringResource(R.string.app_label_hour))
             sb.append(stringResource(R.string.app_label_zhi))
             sb.append(" ")
