@@ -318,36 +318,36 @@ class BaziUtil {
         return label
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getDizhiByLunarMonth(lunarMonth: Int): DiZhi {
-        var dz: DiZhi = DiZhi.DIZHI_ZI
-        if (lunarMonth == 11) {
-            dz = DiZhi.DIZHI_ZI
-        } else if (lunarMonth == 12) {
-            dz = DiZhi.DIZHI_CHOU
-        } else if (lunarMonth == 1) {
-            dz = DiZhi.DIZHI_YIN
-        } else if (lunarMonth == 2) {
-            dz = DiZhi.DIZHI_MOU
-        } else if (lunarMonth == 3) {
-            dz = DiZhi.DIZHI_CHEN
-        } else if (lunarMonth == 4) {
-            dz = DiZhi.DIZHI_SI
-        } else if (lunarMonth == 5) {
-            dz = DiZhi.DIZHI_WU
-        } else if (lunarMonth == 6) {
-            dz = DiZhi.DIZHI_WEI
-        } else if (lunarMonth == 7) {
-            dz = DiZhi.DIZHI_SHEN
-        } else if (lunarMonth == 8) {
-            dz = DiZhi.DIZHI_YOU
-        } else if (lunarMonth == 9) {
-            dz = DiZhi.DIZHI_XU
-        } else if (lunarMonth == 10) {
-            dz = DiZhi.DIZHI_HAI
-        }
-        return dz;
-    }
+//    @RequiresApi(Build.VERSION_CODES.O)
+//    fun getDizhiByLunarMonth(lunarMonth: Int): DiZhi {
+//        var dz: DiZhi = DiZhi.DIZHI_ZI
+//        if (lunarMonth == 11) {
+//            dz = DiZhi.DIZHI_ZI
+//        } else if (lunarMonth == 12) {
+//            dz = DiZhi.DIZHI_CHOU
+//        } else if (lunarMonth == 1) {
+//            dz = DiZhi.DIZHI_YIN
+//        } else if (lunarMonth == 2) {
+//            dz = DiZhi.DIZHI_MOU
+//        } else if (lunarMonth == 3) {
+//            dz = DiZhi.DIZHI_CHEN
+//        } else if (lunarMonth == 4) {
+//            dz = DiZhi.DIZHI_SI
+//        } else if (lunarMonth == 5) {
+//            dz = DiZhi.DIZHI_WU
+//        } else if (lunarMonth == 6) {
+//            dz = DiZhi.DIZHI_WEI
+//        } else if (lunarMonth == 7) {
+//            dz = DiZhi.DIZHI_SHEN
+//        } else if (lunarMonth == 8) {
+//            dz = DiZhi.DIZHI_YOU
+//        } else if (lunarMonth == 9) {
+//            dz = DiZhi.DIZHI_XU
+//        } else if (lunarMonth == 10) {
+//            dz = DiZhi.DIZHI_HAI
+//        }
+//        return dz;
+//    }
 
     fun getHourDZ(hour: Int): DiZhi {
         //calculate HourDizhi
@@ -754,35 +754,35 @@ class BaziUtil {
         return yearBase
     }
 
-    fun getCanggan(dz: DiZhi): Array<TianGan> {
-        var tgArray = arrayOf(TianGan.TIANGAN_JIA)
-        if (dz == DiZhi.DIZHI_ZI) {
-            tgArray = arrayOf(TianGan.TIANGAN_GUI)
-        } else if (dz == DiZhi.DIZHI_CHOU) {
-            tgArray = arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_GUI, TianGan.TIANGAN_XIN)
-        } else if (dz == DiZhi.DIZHI_YIN) {
-            tgArray = arrayOf(TianGan.TIANGAN_JIA, TianGan.TIANGAN_BING, TianGan.TIANGAN_WU)
-        } else if (dz == DiZhi.DIZHI_MOU) {
-            tgArray = arrayOf(TianGan.TIANGAN_YI)
-        } else if (dz == DiZhi.DIZHI_CHEN) {
-            tgArray = arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_YI, TianGan.TIANGAN_GUI)
-        } else if (dz == DiZhi.DIZHI_SI) {
-            tgArray = arrayOf(TianGan.TIANGAN_BING, TianGan.TIANGAN_GENG, TianGan.TIANGAN_WU)
-        } else if (dz == DiZhi.DIZHI_WU) {
-            tgArray = arrayOf(TianGan.TIANGAN_DING, TianGan.TIANGAN_JI)
-        } else if (dz == DiZhi.DIZHI_WEI) {
-            tgArray = arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_DING, TianGan.TIANGAN_YI)
-        } else if (dz == DiZhi.DIZHI_SHEN) {
-            tgArray = arrayOf(TianGan.TIANGAN_GENG, TianGan.TIANGAN_REN, TianGan.TIANGAN_WU)
-        } else if (dz == DiZhi.DIZHI_YOU) {
-            tgArray = arrayOf(TianGan.TIANGAN_XIN)
-        } else if (dz == DiZhi.DIZHI_XU) {
-            tgArray = arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_XIN, TianGan.TIANGAN_DING)
-        } else if (dz == DiZhi.DIZHI_HAI) {
-            tgArray = arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
-        }
-        return tgArray
-    }
+//    fun getCanggan(dz: DiZhi): Array<TianGan> {
+//        var tgArray = arrayOf(TianGan.TIANGAN_JIA)
+//        if (dz == DiZhi.DIZHI_ZI) {
+//            tgArray = arrayOf(TianGan.TIANGAN_GUI)
+//        } else if (dz == DiZhi.DIZHI_CHOU) {
+//            tgArray = arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_GUI, TianGan.TIANGAN_XIN)
+//        } else if (dz == DiZhi.DIZHI_YIN) {
+//            tgArray = arrayOf(TianGan.TIANGAN_JIA, TianGan.TIANGAN_BING, TianGan.TIANGAN_WU)
+//        } else if (dz == DiZhi.DIZHI_MOU) {
+//            tgArray = arrayOf(TianGan.TIANGAN_YI)
+//        } else if (dz == DiZhi.DIZHI_CHEN) {
+//            tgArray = arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_YI, TianGan.TIANGAN_GUI)
+//        } else if (dz == DiZhi.DIZHI_SI) {
+//            tgArray = arrayOf(TianGan.TIANGAN_BING, TianGan.TIANGAN_GENG, TianGan.TIANGAN_WU)
+//        } else if (dz == DiZhi.DIZHI_WU) {
+//            tgArray = arrayOf(TianGan.TIANGAN_DING, TianGan.TIANGAN_JI)
+//        } else if (dz == DiZhi.DIZHI_WEI) {
+//            tgArray = arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_DING, TianGan.TIANGAN_YI)
+//        } else if (dz == DiZhi.DIZHI_SHEN) {
+//            tgArray = arrayOf(TianGan.TIANGAN_GENG, TianGan.TIANGAN_REN, TianGan.TIANGAN_WU)
+//        } else if (dz == DiZhi.DIZHI_YOU) {
+//            tgArray = arrayOf(TianGan.TIANGAN_XIN)
+//        } else if (dz == DiZhi.DIZHI_XU) {
+//            tgArray = arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_XIN, TianGan.TIANGAN_DING)
+//        } else if (dz == DiZhi.DIZHI_HAI) {
+//            tgArray = arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
+//        }
+//        return tgArray
+//    }
 
     @Composable
     fun getCangganLabel(tgArray: Array<TianGan>): String {

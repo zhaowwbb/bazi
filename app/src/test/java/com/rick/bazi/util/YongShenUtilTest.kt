@@ -1,9 +1,11 @@
 package com.rick.bazi.util
 
+import com.rick.bazi.data.BaziGeJu
 import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.ColumnPosition
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.DiZhiSanHeInfo
+import com.rick.bazi.data.TongGuanYongShen
 import com.rick.bazi.data.WuXing
 import com.rick.bazi.ui.BaziViewModel
 import org.junit.Assert.assertEquals
@@ -69,5 +71,19 @@ class YongShenUtilTest {
         YongShenUtil().calculateWuXingWeight(data)
         var ret = YongShenUtil().isBaziWet(data)
         assertEquals(true, ret)
+    }
+
+    @Test
+    fun test_jin_mu_fight() {
+        var year = 2005
+        var month = 9
+        var day = 18
+        var hour = 15
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        YongShenUtil().calculateWuXingWeight(data)
+        assertEquals(TongGuanYongShen.TONG_GUAN_JIN_MU, data.tongguanYongShen)
     }
 }

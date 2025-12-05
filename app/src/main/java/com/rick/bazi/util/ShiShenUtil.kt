@@ -318,7 +318,7 @@ class ShiShenUtil {
     }
 
 
-    @Composable
+//    @Composable
     fun getDiZhiMainTianGan(dz: DiZhi, dayTg: TianGan) : TianGan{
         var dzMainStar = TianGan.TIANGAN_JIA
         if(dz == DiZhi.DIZHI_ZI){
@@ -366,7 +366,7 @@ class ShiShenUtil {
         return getShiShen(dzMainStar, dayTg)
     }
 
-    @Composable
+//    @Composable
     fun getDiZhiShiShen(dz: DiZhi, dayTg: TianGan) : ShiShen{
         var ss : ShiShen = ShiShen.SHISHEN_BI_JIAN
         var dzMainStar = getDiZhiMainTianGan(dz, dayTg)

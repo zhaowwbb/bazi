@@ -50,4 +50,5 @@ data class BaziData(
     var tuWeight : Float = 0f,
     var tongguanYongShen : TongGuanYongShen = TongGuanYongShen.TONG_GUAN_NONE,
     var tiaohouYongShen : TiaoHouYongShen = TiaoHouYongShen.TIAO_HOU_NONE,
+    var gj : BaziGeJu = BaziGeJu.GJ_NONE,
 )

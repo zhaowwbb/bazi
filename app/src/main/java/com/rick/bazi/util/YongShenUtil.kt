@@ -62,7 +62,7 @@ class YongShenUtil {
         }
 
         //dizhi cang gan
-        var cangganArray = BaziUtil().getCanggan(data.yearDizhi)
+        var cangganArray = DiZhiUtil().getCanggan(data.yearDizhi)
         if (cangganArray.size == 2) {
             if (wx == WuXingUtil().getTianGanWuxing(cangganArray[1])) {
                 weight += DIZHI_YUQI_WEIGHT
@@ -76,7 +76,7 @@ class YongShenUtil {
                 weight += DIZHI_YUQI_WEIGHT
             }
         }
-        cangganArray = BaziUtil().getCanggan(data.monthDizhi)
+        cangganArray = DiZhiUtil().getCanggan(data.monthDizhi)
         if (cangganArray.size == 2) {
             if (wx == WuXingUtil().getTianGanWuxing(cangganArray[1])) {
                 weight += DIZHI_YUQI_WEIGHT
@@ -90,7 +90,7 @@ class YongShenUtil {
                 weight += DIZHI_YUQI_WEIGHT
             }
         }
-        cangganArray = BaziUtil().getCanggan(data.dayDizhi)
+        cangganArray = DiZhiUtil().getCanggan(data.dayDizhi)
         if (cangganArray.size == 2) {
             if (wx == WuXingUtil().getTianGanWuxing(cangganArray[1])) {
                 weight += DIZHI_YUQI_WEIGHT
@@ -104,7 +104,7 @@ class YongShenUtil {
                 weight += DIZHI_YUQI_WEIGHT
             }
         }
-        cangganArray = BaziUtil().getCanggan(data.hourDizhi)
+        cangganArray = DiZhiUtil().getCanggan(data.hourDizhi)
         if (cangganArray.size == 2) {
             if (wx == WuXingUtil().getTianGanWuxing(cangganArray[1])) {
                 weight += DIZHI_YUQI_WEIGHT
@@ -140,9 +140,9 @@ class YongShenUtil {
             if (!tgSet.contains(info.srcTgPos) && !tgSet.contains(info.dstTgPos)) {
                 isHeHua = TianGanUtil().isTianGanHeHua(data, info)
                 if (isHeHua) {
-                    increaseTianGanHeHuaWeight(data, info)
+//                    increaseTianGanHeHuaWeight(data, info)
                 } else {
-                    reduceTianGanHeWeight(data, info, TIANGAN_HEBAN_WEIGHT, TIANGAN_HEBAN_WEIGHT)
+//                    reduceTianGanHeWeight(data, info, TIANGAN_HEBAN_WEIGHT, TIANGAN_HEBAN_WEIGHT)
                 }
                 tgSet.add(info.srcTgPos)
                 tgSet.add(info.dstTgPos)

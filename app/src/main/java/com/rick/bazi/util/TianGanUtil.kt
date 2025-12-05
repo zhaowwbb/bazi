@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
 import com.rick.bazi.data.BaziData
+import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
 
@@ -22,6 +23,23 @@ class TianGanUtil {
         val dstTg: TianGan,
         val wx: WuXing
     )
+
+    val tgLuLookupMap: Map<TianGan, DiZhi> = mapOf(
+        TianGan.TIANGAN_JIA to DiZhi.DIZHI_YIN,
+        TianGan.TIANGAN_YI to DiZhi.DIZHI_MOU,
+        TianGan.TIANGAN_BING to DiZhi.DIZHI_SI,
+        TianGan.TIANGAN_DING to DiZhi.DIZHI_WU,
+        TianGan.TIANGAN_WU to DiZhi.DIZHI_SI,
+        TianGan.TIANGAN_JI to DiZhi.DIZHI_WU,
+        TianGan.TIANGAN_GENG to DiZhi.DIZHI_SHEN,
+        TianGan.TIANGAN_XIN to DiZhi.DIZHI_YOU,
+        TianGan.TIANGAN_REN to DiZhi.DIZHI_HAI,
+        TianGan.TIANGAN_GUI to DiZhi.DIZHI_ZI
+    )
+
+    fun getTianGanLu(tg : TianGan) : DiZhi{
+        return tgLuLookupMap.get(tg)!!
+    }
 
     val tianGanHeMap: Map<TianGan, TianGan> = mapOf(
         TianGan.TIANGAN_JIA to TianGan.TIANGAN_JI,

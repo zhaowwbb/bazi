@@ -52,6 +52,7 @@ import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.DateUtils
+import com.rick.bazi.util.DiZhiUtil
 import com.rick.bazi.util.ShiShenUtil
 
 
@@ -360,13 +361,13 @@ fun BaziPaipanScreen(
 
             //show cang gan
             val yearCangganLabel =
-                BaziUtil().getCangganLabel(BaziUtil().getCanggan(baziInfo.yearDizhi))
+                BaziUtil().getCangganLabel(DiZhiUtil().getCanggan(baziInfo.yearDizhi))
             val monthCangganLabel =
-                BaziUtil().getCangganLabel(BaziUtil().getCanggan(baziInfo.monthDizhi))
+                BaziUtil().getCangganLabel(DiZhiUtil().getCanggan(baziInfo.monthDizhi))
             val dayCangganLabel =
-                BaziUtil().getCangganLabel(BaziUtil().getCanggan(baziInfo.dayDizhi))
+                BaziUtil().getCangganLabel(DiZhiUtil().getCanggan(baziInfo.dayDizhi))
             val hourCangganLabel =
-                BaziUtil().getCangganLabel(BaziUtil().getCanggan(baziInfo.hourDizhi))
+                BaziUtil().getCangganLabel(DiZhiUtil().getCanggan(baziInfo.hourDizhi))
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -416,19 +417,19 @@ fun BaziPaipanScreen(
 
             //second star
             val yearCangganStarLabel = ShiShenUtil().getCangganStarLabel(
-                BaziUtil().getCanggan(baziInfo.yearDizhi),
+                DiZhiUtil().getCanggan(baziInfo.yearDizhi),
                 baziInfo.dayTiangan
             )
             val monthCangganStarLabel = ShiShenUtil().getCangganStarLabel(
-                BaziUtil().getCanggan(baziInfo.monthDizhi),
+                DiZhiUtil().getCanggan(baziInfo.monthDizhi),
                 baziInfo.dayTiangan
             )
             val dayCangganStarLabel = ShiShenUtil().getCangganStarLabel(
-                BaziUtil().getCanggan(baziInfo.dayDizhi),
+                DiZhiUtil().getCanggan(baziInfo.dayDizhi),
                 baziInfo.dayTiangan
             )
             val hourCangganStarLabel = ShiShenUtil().getCangganStarLabel(
-                BaziUtil().getCanggan(baziInfo.hourDizhi),
+                DiZhiUtil().getCanggan(baziInfo.hourDizhi),
                 baziInfo.dayTiangan
             )
             Row(

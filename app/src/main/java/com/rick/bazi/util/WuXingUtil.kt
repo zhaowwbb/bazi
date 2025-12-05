@@ -345,7 +345,7 @@ class WuXingUtil {
         return summary
     }
 
-    @Composable
+//    @Composable
     fun getBiJieWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
@@ -367,7 +367,7 @@ class WuXingUtil {
         return ret
     }
 
-    @Composable
+//    @Composable
     fun getGuanshaWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
@@ -389,7 +389,7 @@ class WuXingUtil {
         return ret
     }
 
-    @Composable
+//    @Composable
     fun getShishangWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
@@ -411,7 +411,7 @@ class WuXingUtil {
         return ret
     }
 
-    @Composable
+//    @Composable
     fun getCaiWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)
@@ -457,7 +457,7 @@ class WuXingUtil {
         return getWuXingText(wx)
     }
 
-    @Composable
+//    @Composable
     fun getYinWuXing(tg: TianGan): WuXing {
         var ret = WuXing.WUXING_MU
         var ownerWX = getTianGanWuxing(tg)

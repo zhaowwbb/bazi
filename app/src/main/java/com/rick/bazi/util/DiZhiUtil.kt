@@ -15,16 +15,24 @@ import com.rick.bazi.util.TianGanUtil.TianGanPos
 import com.rick.bazi.util.TianGanUtil.TianGanaHeInfo
 
 class DiZhiUtil {
-//
-//    data class DiZhiSanHuiInfo(
-//        val dz1Pos: ColumnPosition,
-//        val dz1: DiZhi,
-//        val dz1Pos: ColumnPosition,
-//        val dz1: DiZhi,
-//        val dz1Pos: ColumnPosition,
-//        val dz1: DiZhi,
-//        val wx: WuXing
-//    )
+    val diZhiCangGanMap : Map<DiZhi, Array<TianGan>> = mapOf(
+        DiZhi.DIZHI_ZI to arrayOf(TianGan.TIANGAN_GUI),
+        DiZhi.DIZHI_CHOU to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_GUI,TianGan.TIANGAN_XIN ),
+        DiZhi.DIZHI_YIN to arrayOf(TianGan.TIANGAN_JIA, TianGan.TIANGAN_BING, TianGan.TIANGAN_WU),
+        DiZhi.DIZHI_MOU to arrayOf(TianGan.TIANGAN_YI),
+        DiZhi.DIZHI_CHEN to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_YI, TianGan.TIANGAN_GUI),
+        DiZhi.DIZHI_SI to arrayOf(TianGan.TIANGAN_BING, TianGan.TIANGAN_GENG, TianGan.TIANGAN_WU),
+        DiZhi.DIZHI_WU to arrayOf(TianGan.TIANGAN_DING, TianGan.TIANGAN_JI),
+        DiZhi.DIZHI_WEI to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_DING, TianGan.TIANGAN_YI),
+        DiZhi.DIZHI_SHEN to arrayOf(TianGan.TIANGAN_GENG, TianGan.TIANGAN_REN, TianGan.TIANGAN_WU),
+        DiZhi.DIZHI_YOU to arrayOf(TianGan.TIANGAN_XIN),
+        DiZhi.DIZHI_XU to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_XIN, TianGan.TIANGAN_DING),
+        DiZhi.DIZHI_HAI to arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
+    )
+
+    fun getCanggan(dz: DiZhi): Array<TianGan> {
+        return diZhiCangGanMap.get(dz)!!
+    }
 
     val sixHeWuXingMap: Map<DiZhi, WuXing> = mapOf(
         DiZhi.DIZHI_ZI to WuXing.WUXING_TU,
