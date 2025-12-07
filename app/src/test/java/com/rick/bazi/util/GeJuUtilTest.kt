@@ -52,15 +52,15 @@ class GeJuUtilTest {
     @Test
     fun test_gj_pianyin1(){
         var data = BaziData()
-        data.yearTiangan = TianGan.TIANGAN_YI
-        data.monthTiangan = TianGan.TIANGAN_GENG
-        data.dayTiangan = TianGan.TIANGAN_DING
-        data.hourTiangan = TianGan.TIANGAN_JI
+        data.yearTiangan = TianGan.TIANGAN_DING
+        data.monthTiangan = TianGan.TIANGAN_JIA
+        data.dayTiangan = TianGan.TIANGAN_GENG
+        data.hourTiangan = TianGan.TIANGAN_WU
 
-        data.yearDizhi = DiZhi.DIZHI_HAI
+        data.yearDizhi = DiZhi.DIZHI_MOU
         data.monthDizhi = DiZhi.DIZHI_CHEN
-        data.dayDizhi = DiZhi.DIZHI_HAI
-        data.hourDizhi = DiZhi.DIZHI_YOU
+        data.dayDizhi = DiZhi.DIZHI_XU
+        data.hourDizhi = DiZhi.DIZHI_YIN
         var gj = GeJuUtil().getGJ(data)
         assertEquals(BaziGeJu.GJ_PIAN_YIN, gj)
     }
@@ -182,7 +182,7 @@ class GeJuUtilTest {
     fun test_gj_checkZhengGuanGJXiJi1(){
         var data = BaziData()
         data.yearTiangan = TianGan.TIANGAN_JIA
-        data.monthTiangan = TianGan.TIANGAN_BING
+        data.monthTiangan = TianGan.TIANGAN_DING
         data.dayTiangan = TianGan.TIANGAN_JI
         data.hourTiangan = TianGan.TIANGAN_JIA
 
@@ -212,7 +212,7 @@ class GeJuUtilTest {
     @Test
     fun test_gj_checkCaiGJXiJi1(){
         var data = BaziData()
-        data.yearTiangan = TianGan.TIANGAN_WU
+        data.yearTiangan = TianGan.TIANGAN_JI
         data.monthTiangan = TianGan.TIANGAN_GUI
         data.dayTiangan = TianGan.TIANGAN_XIN
         data.hourTiangan = TianGan.TIANGAN_JIA
@@ -515,5 +515,133 @@ class GeJuUtilTest {
         var gj = GeJuUtil().getGJ(data)
         assertEquals(BaziGeJu.GJ_CONG_ER, gj)
 //        GeJuUtil().checkQiShaGJXiJi(gj, data)
+    }
+
+    @Test
+    fun test_gj_zhengyin02() {
+        //从儿格
+        var year = 1978
+        var month = 8
+        var day = 29
+        var hour = 9
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_ZHENG_YIN, gj)
+    }
+
+    @Test
+    fun test_gj_zhengyin04() {
+        //从儿格
+        var year = 1978
+        var month = 8
+        var day = 9
+        var hour = 0
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_ZHENG_YIN, gj)
+    }
+
+    @Test
+    fun test_gj_pianyin02() {
+        var year = 1987
+        var month = 4
+        var day = 21
+        var hour = 12
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_PIAN_YIN, gj)
+    }
+
+    @Test
+    fun test_gj_zhengguan02() {
+        var year = 1986
+        var month = 7
+        var day = 23
+        var hour = 3
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_ZHENG_GUAN, gj)
+    }
+
+    @Test
+    fun test_gj_qisha02() {
+        var year = 1954
+        var month = 2
+        var day = 21
+        var hour = 3
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_QI_SHA, gj)
+    }
+
+    @Test
+    fun test_gj_shishen02() {
+        var year = 1990
+        var month = 8
+        var day = 21
+        var hour = 15
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_SHI_SHEN, gj)
+    }
+
+    @Test
+    fun test_gj_shangguan02() {
+        var year = 1990
+        var month = 8
+        var day = 22
+        var hour = 15
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_SHANG_GUAN, gj)
+    }
+
+    @Test
+    fun test_gj_zhengcai02() {
+        var year = 1976
+        var month = 7
+        var day = 17
+        var hour = 13
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_ZHENG_CAI, gj)
+    }
+
+    @Test
+    fun test_gj_piancai02() {
+        var year = 1976
+        var month = 7
+        var day = 18
+        var hour = 13
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_PIAN_CAI, gj)
     }
 }

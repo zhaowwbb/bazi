@@ -30,11 +30,11 @@ class BaziMeasureUtil {
         yinStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_PIAN_YIN)
         bijieStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_JIE_CAI)
 
-        sb.append("\n")
-        sb.append("    " + stringResource(R.string.app_bazi_have) + yinCount + stringResource(R.string.app_bazi_yin_label) + stringResource(R.string.app_bazi_shengshen))
+//        sb.append("\n")
+        sb.append("    " + stringResource(R.string.app_bazi_have) + "(" + yinCount + ")" + stringResource(R.string.app_bazi_yin_label) + stringResource(R.string.app_bazi_shengshen))
         sb.append("  " + yinStr)
         sb.append("\n")
-        sb.append("    " + stringResource(R.string.app_bazi_have) + biJieCount + stringResource(R.string.app_bazi_bj_label) + stringResource(R.string.app_bazi_bangfu))
+        sb.append("    " + stringResource(R.string.app_bazi_have) + "(" + biJieCount + ")" + stringResource(R.string.app_bazi_bj_label) + stringResource(R.string.app_bazi_bangfu))
         sb.append(" " + bijieStr)
 
         return sb.toString()
@@ -59,11 +59,11 @@ class BaziMeasureUtil {
         caiStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_PIAN_CAI)
 
         sb.append("\n")
-        sb.append("    " + stringResource(R.string.app_bazi_have) + guanShaCount + stringResource(R.string.app_bazi_gs_label) + stringResource(R.string.app_bazi_ke))
+        sb.append("    " + stringResource(R.string.app_bazi_have) + "(" + guanShaCount + ")" + stringResource(R.string.app_bazi_gs_label) + stringResource(R.string.app_bazi_ke))
         sb.append(" ").append(guanshaStr).append("\n")
-        sb.append("    " + stringResource(R.string.app_bazi_have) + shiShangCount + stringResource(R.string.app_bazi_ss_label) + stringResource(R.string.app_bazi_xie))
+        sb.append("    " + stringResource(R.string.app_bazi_have) + "(" + shiShangCount + ")" + stringResource(R.string.app_bazi_ss_label) + stringResource(R.string.app_bazi_xie))
         sb.append(" ").append(shishangStr).append("\n")
-        sb.append("    " + stringResource(R.string.app_bazi_have) + caiCount + stringResource(R.string.app_bazi_cai_label) + stringResource(R.string.app_bazi_hao))
+        sb.append("    " + stringResource(R.string.app_bazi_have) + "(" + caiCount + ")" + stringResource(R.string.app_bazi_cai_label) + stringResource(R.string.app_bazi_hao))
         sb.append("  ").append(caiStr).append("")
 
         return sb.toString()

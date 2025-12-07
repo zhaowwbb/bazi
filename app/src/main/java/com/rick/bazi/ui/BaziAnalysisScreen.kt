@@ -98,6 +98,7 @@ fun BaziAppAnalysisScreen(
                 modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
 //                val bullet = "\u2022" // Unicode bullet character
+                val SPACE = "    "
                 val analysisResult = buildAnnotatedString {
 
                     //1.
@@ -105,43 +106,43 @@ fun BaziAppAnalysisScreen(
                         append(stringResource(R.string.app_bazi_analyze_label1)+ "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append("" + stringResource(R.string.app_bazi_str) + ":")
+                        append("" + stringResource(R.string.app_bazi_str) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(BaziUtil().createBaziStringOneLine(baziInfo) + "\n")
+                        append(SPACE + BaziUtil().createBaziStringOneLine(baziInfo) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.bazi_owner) + ":")
+                        append(stringResource(R.string.bazi_owner) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(" " + WuXingUtil().getOwnerString(baziInfo.baziData.dayTiangan) + "\n")
+                        append(SPACE + WuXingUtil().getOwnerString(baziInfo.baziData.dayTiangan) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_wuxing_fenbu) + ":")
+                        append(stringResource(R.string.app_wuxing_fenbu) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(" " + WuXingUtil().getOwnerWuXingString(baziInfo, baziModel) + "\n")
+                        append(SPACE + WuXingUtil().getOwnerWuXingString(baziInfo, baziModel) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_wuxing_weight_label) + ":")
+                        append(stringResource(R.string.app_bazi_wuxing_weight_label) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(" " + YongShenUtil().getWuXingWeightString(baziInfo.baziData) + "\n")
+                        append(SPACE + YongShenUtil().getWuXingWeightString(baziInfo.baziData) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.ten_shen) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append("    " + baziInfo.shishenYearStr + "\n")
+                        append(SPACE + baziInfo.shishenYearStr + "\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append("    " + baziInfo.shishenMonthStr + "\n")
+                        append(SPACE + baziInfo.shishenMonthStr + "\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append("    " + baziInfo.shishenDayStr + "\n")
+                        append(SPACE + baziInfo.shishenDayStr + "\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append("    " + baziInfo.shishenHourStr + "\n")
+                        append(SPACE + baziInfo.shishenHourStr + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
                         append(stringResource(R.string.app_bazi_tiangan_5he) + ":\n")
@@ -192,21 +193,21 @@ fun BaziAppAnalysisScreen(
                         append(stringResource(R.string.app_bazi_analyze_label2)+ "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_deling_label) + " ")
+                        append(stringResource(R.string.app_bazi_deling_label) + "\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(WuXingUtil().getDangLingStr(baziInfo, baziModel) + "\n")
+                        append(SPACE + WuXingUtil().getDangLingStr(baziInfo, baziModel) + "\n")
                     }
 
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_dedi_label) + " ")
+                        append(stringResource(R.string.app_bazi_dedi_label) + "\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(WuXingUtil().getDeDiDescription(baziInfo.baziData) + "\n")
+                        append(SPACE + WuXingUtil().getDeDiDescription(baziInfo.baziData) + "\n")
                     }
 
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_dezhu_label) + " ")
+                        append(stringResource(R.string.app_bazi_dezhu_label) + "\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
                         append(BaziMeasureUtil().getHelpElementString(baziInfo.baziData) + "\n")
@@ -220,10 +221,10 @@ fun BaziAppAnalysisScreen(
                     }
 
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_strength_label) + " ")
+                        append(stringResource(R.string.app_bazi_strength_label) + "\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(BaziMeasureUtil().getBaziStrengthSummary(baziInfo, baziModel) + "\n")
+                        append(SPACE + BaziMeasureUtil().getBaziStrengthSummary(baziInfo, baziModel) + "\n")
                     }
 
                     //3
@@ -234,70 +235,70 @@ fun BaziAppAnalysisScreen(
                         append(stringResource(R.string.app_bazi_analyze_label3)+ "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_gj_label) + ":")
+                        append(stringResource(R.string.app_bazi_gj_label) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(GeJuUtil().getGJText(gj) + "\n")
+                        append(SPACE + GeJuUtil().getGJText(gj) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_gj_personality) + ":")
+                        append(stringResource(R.string.app_bazi_gj_analysis) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(GeJuUtil().getGJSummary(gj) + "\n")
+                        append(SPACE + GeJuUtil().getGeJuAnalysis(gj, baziInfo.baziData) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_gj_job) + ":")
+                        append(stringResource(R.string.app_bazi_gj_personality) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(GeJuUtil().getJobDescription(gj) + "\n")
+                        append(SPACE + GeJuUtil().getGJSummary(gj) + "\n")
                     }
-//                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-//                        append(stringResource(R.string.app_bazi_gj_xiji) + ":\n")
-//                    }
-//                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
-//                        append(GeJuUtil().getGeJuXiJi(gj, baziInfo.baziData) + "\n")
-//                    }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
+                        append(stringResource(R.string.app_bazi_gj_job) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 16.sp)) {
+                        append(SPACE + GeJuUtil().getJobDescription(gj) + "\n")
+                    }
 
                     //4
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp)) {
                         append(stringResource(R.string.app_bazi_analyze_label4)+ "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_gj_yong_shen) + ":")
+                        append(stringResource(R.string.app_bazi_gj_yong_shen) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(GeJuUtil().getYongShenString(baziInfo.baziData) + "\n")
+                        append(SPACE + GeJuUtil().getYongShenString(baziInfo.baziData) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_gj_xi_shen) + ":")
+                        append(stringResource(R.string.app_bazi_gj_xi_shen) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(GeJuUtil().getXiShenString(baziInfo.baziData) + "\n")
+                        append(SPACE + GeJuUtil().getXiShenString(baziInfo.baziData) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_gj_ji_shen) + ":")
+                        append(stringResource(R.string.app_bazi_gj_ji_shen) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(GeJuUtil().getJiShenString(baziInfo.baziData) + "\n")
+                        append(SPACE + GeJuUtil().getJiShenString(baziInfo.baziData) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_tiaohou_shen) + ":")
+                        append(stringResource(R.string.app_bazi_tiaohou_shen) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(YongShenUtil().getTiaohouString(baziInfo.baziData) + "\n")
+                        append(SPACE + YongShenUtil().getTiaohouString(baziInfo.baziData) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_yongshen_tongguan_label) + ":")
+                        append(stringResource(R.string.app_bazi_yongshen_tongguan_label) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(YongShenUtil().getTongGuanYongshenString(baziInfo.baziData) + "\n")
+                        append(SPACE + YongShenUtil().getTongGuanYongshenString(baziInfo.baziData) + "\n")
                     }
 
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp)) {
-                        append(stringResource(R.string.app_bazi_final_yong_shen) + ":")
+                        append(stringResource(R.string.app_bazi_final_yong_shen) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 16.sp)) {
-                        append(BaziMeasureUtil().getBaziYongshenSummary(baziInfo.baziData) + "\n")
+                        append(SPACE + BaziMeasureUtil().getBaziYongshenSummary(baziInfo.baziData) + "\n")
                     }
 
 

@@ -513,10 +513,10 @@ class WuXingUtil {
         var deDiStr = ""
         var isDedi = isBaziDedi(baziInfo)
 
-        deDiStr = deDiStr + stringResource(R.string.dizhi) + " " +
-                baziInfo.strongRootCount + stringResource(R.string.app_bazi_strong_root) + " " +
-                baziInfo.mediumRootCount + stringResource(R.string.app_bazi_weak_root) + " " +
-                baziInfo.weakRootCount + stringResource(R.string.app_bazi_tiny_root)
+        deDiStr = deDiStr + stringResource(R.string.dizhi) + " (" +
+                baziInfo.strongRootCount + ")" + stringResource(R.string.app_bazi_strong_root) + " (" +
+                baziInfo.mediumRootCount + ")" + stringResource(R.string.app_bazi_weak_root) + " (" +
+                baziInfo.weakRootCount + ")" + stringResource(R.string.app_bazi_tiny_root)
         if (isDedi) {
             deDiStr = deDiStr + " " + stringResource(R.string.app_bazi_dedi_yes)
         } else {
