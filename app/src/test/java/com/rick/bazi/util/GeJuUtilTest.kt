@@ -644,4 +644,18 @@ class GeJuUtilTest {
         var gj = GeJuUtil().getGJ(data)
         assertEquals(BaziGeJu.GJ_PIAN_CAI, gj)
     }
+
+    @Test
+    fun test_gj_jianlu02() {
+        var year = 1978
+        var month = 11
+        var day = 16
+        var hour = 5
+        var baziModel = BaziViewModel()
+        var baziInfo = BaziInfo()
+        var data = BaziPaiPanUtil().paipan(year, month, day, hour, "Male", baziModel, baziInfo)
+
+        var gj = GeJuUtil().getGJ(data)
+        assertEquals(BaziGeJu.GJ_JIAN_LU, gj)
+    }
 }

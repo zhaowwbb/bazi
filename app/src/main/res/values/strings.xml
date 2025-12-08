@@ -1019,4 +1019,12 @@
     <string name="app_bazi_gj_zhengyin_desc4">正印坐正印，过于自信。女命则感情内敛，迟婚。母长寿。</string>
     <string name="app_bazi_gj_zhengyin_desc5">正印坐偏印专位，正带偏，兼职之象。子息迟；眷属有疾或特别嗜好；女命双重性格，今日否定昨日。</string>
     <string name="app_bazi_gj_analysis_no">无</string>
+
+    <string name="app_bazi_gj_piancai_desc1">偏财多，为人慷慨，对人亲近。</string>
+    <string name="app_bazi_gj_piancai_desc2">对男人讲，妻财同宫，财多女人也多。</string>
+    <string name="app_bazi_gj_piancai_desc3">女命偏财，孝女，听爸爸话。</string>
+    <string name="app_bazi_gj_piancai_desc4">日坐偏财，日乃妻宫之位，应坐正财才对，坐了偏财，有同居不婚或不回家的意思。</string>
+    <string name="app_bazi_gj_piancai_desc5">偏财通根时支，一辈子有钱有女人。</string>
+
+    <string name="app_bazi_gj_zhengcai_desc1">年上正财，若为喜用，祖上富有。</string>
 </resources>

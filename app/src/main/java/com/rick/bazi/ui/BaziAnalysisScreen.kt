@@ -231,6 +231,9 @@ fun BaziAppAnalysisScreen(
                     var gj = GeJuUtil().getGJ(baziInfo.baziData)
                     //calculate GeJu xiji stat
                     GeJuUtil().getGeJuXiJi(gj, baziInfo.baziData)
+//                    YongShenUtil().calculateTiaoHouYongShen(baziInfo.baziData)
+//                    YongShenUtil().calculateTongGuanShen(baziInfo.baziData)
+
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp)) {
                         append(stringResource(R.string.app_bazi_analyze_label3)+ "\n")
                     }

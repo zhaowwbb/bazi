@@ -7,6 +7,8 @@ import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.BaziGeJu
 import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.DiZhi
+import com.rick.bazi.data.FEMALE
+import com.rick.bazi.data.MALE
 import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
@@ -120,26 +122,25 @@ class GeJuUtil {
             str = stringResource(R.string.app_bazi_gj_piancai_desc)
         } else if (gj == BaziGeJu.GJ_JIAN_LU) {
             str = stringResource(R.string.app_bazi_gj_jianlu_desc)
-        }  else if (gj == BaziGeJu.GJ_QU_ZHI) {
+        } else if (gj == BaziGeJu.GJ_QU_ZHI) {
             str = stringResource(R.string.app_bazi_gj_quzhi_desc)
         } else if (gj == BaziGeJu.GJ_YAN_SHANG) {
             str = stringResource(R.string.app_bazi_gj_yanshang_desc)
-        }else if (gj == BaziGeJu.GJ_RUN_XIA) {
+        } else if (gj == BaziGeJu.GJ_RUN_XIA) {
             str = stringResource(R.string.app_bazi_gj_runxia_desc)
-        }else if (gj == BaziGeJu.GJ_JIA_SE) {
+        } else if (gj == BaziGeJu.GJ_JIA_SE) {
             str = stringResource(R.string.app_bazi_gj_jiase_desc)
-        }else if (gj == BaziGeJu.GJ_CONG_GE) {
+        } else if (gj == BaziGeJu.GJ_CONG_GE) {
             str = stringResource(R.string.app_bazi_gj_congge_desc)
-        }else if (gj == BaziGeJu.GJ_YANG_REN) {
+        } else if (gj == BaziGeJu.GJ_YANG_REN) {
             str = stringResource(R.string.app_bazi_gj_yangren_desc)
-        }else if (gj == BaziGeJu.GJ_CONG_CAI) {
+        } else if (gj == BaziGeJu.GJ_CONG_CAI) {
             str = stringResource(R.string.app_bazi_gj_congcai_desc)
-        }else if (gj == BaziGeJu.GJ_CONG_SHA) {
+        } else if (gj == BaziGeJu.GJ_CONG_SHA) {
             str = stringResource(R.string.app_bazi_gj_congsha_desc)
-        }else if (gj == BaziGeJu.GJ_CONG_ER) {
+        } else if (gj == BaziGeJu.GJ_CONG_ER) {
             str = stringResource(R.string.app_bazi_gj_conger_desc)
-        }
-        else {
+        } else {
             str = "todo"
         }
 
@@ -198,7 +199,7 @@ class GeJuUtil {
     fun isQuZhiGJ(data: BaziData): Boolean {
         var ret = false
         if (data.dayTiangan == TianGan.TIANGAN_JIA || data.dayTiangan == TianGan.TIANGAN_YI) {
-            if(WuXingUtil().getJinNumber(data) == 0 && data.muWeight >=7f){
+            if (WuXingUtil().getJinNumber(data) == 0 && data.muWeight >= 7f) {
                 ret = true
             }
         }
@@ -208,7 +209,7 @@ class GeJuUtil {
     fun isYanShangGJ(data: BaziData): Boolean {
         var ret = false
         if (data.dayTiangan == TianGan.TIANGAN_BING || data.dayTiangan == TianGan.TIANGAN_DING) {
-            if(WuXingUtil().getShuiNumber(data) == 0 && data.huoWeight >=7f){
+            if (WuXingUtil().getShuiNumber(data) == 0 && data.huoWeight >= 7f) {
                 ret = true
             }
         }
@@ -218,8 +219,8 @@ class GeJuUtil {
     fun isRunXiaGJ(data: BaziData): Boolean {
         var ret = false
         if (data.dayTiangan == TianGan.TIANGAN_REN || data.dayTiangan == TianGan.TIANGAN_GUI) {
-            if(data.monthDizhi == DiZhi.DIZHI_HAI || data.monthDizhi == DiZhi.DIZHI_ZI){
-                if(WuXingUtil().getHuoNumber(data) == 0 && WuXingUtil().getTuNumber(data) == 0 && data.shuiWeight >=5f){
+            if (data.monthDizhi == DiZhi.DIZHI_HAI || data.monthDizhi == DiZhi.DIZHI_ZI) {
+                if (WuXingUtil().getHuoNumber(data) == 0 && WuXingUtil().getTuNumber(data) == 0 && data.shuiWeight >= 5f) {
                     ret = true
                 }
             }
@@ -230,7 +231,7 @@ class GeJuUtil {
     fun isJiaSeGJ(data: BaziData): Boolean {
         var ret = false
         if (data.dayTiangan == TianGan.TIANGAN_WU || data.dayTiangan == TianGan.TIANGAN_JI) {
-            if(WuXingUtil().getMuNumber(data) == 0 && data.tuWeight >=7f){
+            if (WuXingUtil().getMuNumber(data) == 0 && data.tuWeight >= 7f) {
                 ret = true
             }
         }
@@ -240,7 +241,7 @@ class GeJuUtil {
     fun isCongGeGJ(data: BaziData): Boolean {
         var ret = false
         if (data.dayTiangan == TianGan.TIANGAN_GENG || data.dayTiangan == TianGan.TIANGAN_XIN) {
-            if(WuXingUtil().getHuoNumber(data) == 0 && data.jinWeight >=6f){
+            if (WuXingUtil().getHuoNumber(data) == 0 && data.jinWeight >= 6f) {
                 ret = true
             }
         }
@@ -253,7 +254,7 @@ class GeJuUtil {
         var dayTg = data.dayTiangan
         var yangrenDz = BaziUtil().getYangren(dayTg)
         var wx = WuXingUtil().getTgWX(dayTg)
-        if(yangrenDz == data.monthDizhi){
+        if (yangrenDz == data.monthDizhi) {
             ret = true
         }
         return ret
@@ -262,23 +263,23 @@ class GeJuUtil {
     fun isJianLuGJ(data: BaziData): Boolean {
         var ret = false
         var luDz = TianGanUtil().getTianGanLu(data.dayTiangan)
-        if(luDz == data.monthDizhi){
+        if (luDz == data.monthDizhi) {
             ret = true
         }
         return ret
     }
 
-    fun getBaziWuXingWeight(data: BaziData, wx : WuXing): Float{
+    fun getBaziWuXingWeight(data: BaziData, wx: WuXing): Float {
         var weight = 0f
-        if(wx == WuXing.WUXING_SHUI){
+        if (wx == WuXing.WUXING_SHUI) {
             weight = data.shuiWeight
-        }else if(wx == WuXing.WUXING_MU){
+        } else if (wx == WuXing.WUXING_MU) {
             weight = data.muWeight
-        }else if(wx == WuXing.WUXING_TU){
+        } else if (wx == WuXing.WUXING_TU) {
             weight = data.tuWeight
-        }else if(wx == WuXing.WUXING_HUO){
+        } else if (wx == WuXing.WUXING_HUO) {
             weight = data.huoWeight
-        }else if(wx == WuXing.WUXING_JIN){
+        } else if (wx == WuXing.WUXING_JIN) {
             weight = data.jinWeight
         }
         return weight
@@ -287,9 +288,11 @@ class GeJuUtil {
     fun isCaiWeightStrong(data: BaziData): Boolean {
         var ret = false
         val caiWeight = getBaziWuXingWeight(data, WuXingUtil().getCaiWuXing(data.dayTiangan))
-        val guanshaWeight = getBaziWuXingWeight(data, WuXingUtil().getGuanshaWuXing(data.dayTiangan))
-        val shishangWeight = getBaziWuXingWeight(data, WuXingUtil().getShishangWuXing(data.dayTiangan))
-        if(caiWeight > guanshaWeight && caiWeight > shishangWeight){
+        val guanshaWeight =
+            getBaziWuXingWeight(data, WuXingUtil().getGuanshaWuXing(data.dayTiangan))
+        val shishangWeight =
+            getBaziWuXingWeight(data, WuXingUtil().getShishangWuXing(data.dayTiangan))
+        if (caiWeight > guanshaWeight && caiWeight > shishangWeight) {
             ret = true
         }
         return ret
@@ -298,9 +301,11 @@ class GeJuUtil {
     fun isShaWeightStrong(data: BaziData): Boolean {
         var ret = false
         val caiWeight = getBaziWuXingWeight(data, WuXingUtil().getCaiWuXing(data.dayTiangan))
-        val guanshaWeight = getBaziWuXingWeight(data, WuXingUtil().getGuanshaWuXing(data.dayTiangan))
-        val shishangWeight = getBaziWuXingWeight(data, WuXingUtil().getShishangWuXing(data.dayTiangan))
-        if(guanshaWeight > caiWeight && guanshaWeight > shishangWeight){
+        val guanshaWeight =
+            getBaziWuXingWeight(data, WuXingUtil().getGuanshaWuXing(data.dayTiangan))
+        val shishangWeight =
+            getBaziWuXingWeight(data, WuXingUtil().getShishangWuXing(data.dayTiangan))
+        if (guanshaWeight > caiWeight && guanshaWeight > shishangWeight) {
             ret = true
         }
         return ret
@@ -311,8 +316,8 @@ class GeJuUtil {
         var yinWeight = getBaziWuXingWeight(data, WuXingUtil().getYinWuXing(data.dayTiangan))
         var bijieWeight = getBaziWuXingWeight(data, WuXingUtil().getBiJieWuXing(data.dayTiangan))
 
-        if(yinWeight <= 2f && bijieWeight <= 2f){
-            if(isCaiWeightStrong(data)){
+        if (yinWeight <= 2f && bijieWeight <= 2f) {
+            if (isCaiWeightStrong(data)) {
                 ret = true
             }
         }
@@ -324,8 +329,8 @@ class GeJuUtil {
         var yinWeight = getBaziWuXingWeight(data, WuXingUtil().getYinWuXing(data.dayTiangan))
         var bijieWeight = getBaziWuXingWeight(data, WuXingUtil().getBiJieWuXing(data.dayTiangan))
 
-        if(yinWeight <= 2f && bijieWeight <= 2f){
-            if(isShaWeightStrong(data)){
+        if (yinWeight <= 2f && bijieWeight <= 2f) {
+            if (isShaWeightStrong(data)) {
                 ret = true
             }
         }
@@ -336,14 +341,21 @@ class GeJuUtil {
         var ret = false
         var yinWeight = getBaziWuXingWeight(data, WuXingUtil().getYinWuXing(data.dayTiangan))
         var bijieWeight = getBaziWuXingWeight(data, WuXingUtil().getBiJieWuXing(data.dayTiangan))
-        var yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
-        var caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
+        var yinCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_ZHENG_YIN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
+        var caiCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_ZHENG_CAI
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
         var monthDzShiShen = ShiShenUtil().getDiZhiShiShen(data.monthDizhi, data.dayTiangan)
-        var shishangWeight = getBaziWuXingWeight(data, WuXingUtil().getShishangWuXing(data.dayTiangan))
+        var shishangWeight =
+            getBaziWuXingWeight(data, WuXingUtil().getShishangWuXing(data.dayTiangan))
 
-        if(monthDzShiShen == ShiShen.SHISHEN_SHI_SHEN ||monthDzShiShen == ShiShen.SHISHEN_SHANG_GUAN){
-            if(yinCount == 0 && caiCount > 0 ){
-                if(shishangWeight > 3f){
+        if (monthDzShiShen == ShiShen.SHISHEN_SHI_SHEN || monthDzShiShen == ShiShen.SHISHEN_SHANG_GUAN) {
+            if (yinCount == 0 && caiCount > 0) {
+                if (shishangWeight > 3f) {
                     ret = true
                 }
             }
@@ -356,43 +368,43 @@ class GeJuUtil {
         var ret = false
         var zhengYinTG = ShiShenUtil().getZhengyin(data.dayTiangan)
         var cangganArray = DiZhiUtil().getCanggan(data.monthDizhi)
-        if(zhengYinTG == cangganArray[0]){
+        if (zhengYinTG == cangganArray[0]) {
             ret = true
-        }else{
-            if(zhengYinTG == data.yearTiangan || zhengYinTG == data.monthTiangan || zhengYinTG == data.hourTiangan){
+        } else {
+            if (zhengYinTG == data.yearTiangan || zhengYinTG == data.monthTiangan || zhengYinTG == data.hourTiangan) {
                 //check year
                 cangganArray = DiZhiUtil().getCanggan(data.yearDizhi)
-                for( tg in cangganArray){
-                    if(tg == zhengYinTG){
+                for (tg in cangganArray) {
+                    if (tg == zhengYinTG) {
                         ret = true
                         break
                     }
                 }
-                if(!ret){
+                if (!ret) {
                     //check month
                     cangganArray = DiZhiUtil().getCanggan(data.monthDizhi)
-                    for( tg in cangganArray){
-                        if(tg == zhengYinTG){
+                    for (tg in cangganArray) {
+                        if (tg == zhengYinTG) {
                             ret = true
                             break
                         }
                     }
                 }
-                if(!ret){
+                if (!ret) {
                     //check day
                     cangganArray = DiZhiUtil().getCanggan(data.dayDizhi)
-                    for( tg in cangganArray){
-                        if(tg == zhengYinTG){
+                    for (tg in cangganArray) {
+                        if (tg == zhengYinTG) {
                             ret = true
                             break
                         }
                     }
                 }
-                if(!ret){
+                if (!ret) {
                     //check hour
                     cangganArray = DiZhiUtil().getCanggan(data.hourDizhi)
-                    for( tg in cangganArray){
-                        if(tg == zhengYinTG){
+                    for (tg in cangganArray) {
+                        if (tg == zhengYinTG) {
                             ret = true
                             break
                         }
@@ -403,10 +415,10 @@ class GeJuUtil {
         return ret
     }
 
-    fun isMonthDzTouTiangan(tg : TianGan, data : BaziData) : Boolean{
-        if(tg == data.yearTiangan)return true
-        if(tg == data.monthTiangan)return true
-        if(tg == data.hourTiangan)return true
+    fun isMonthDzTouTiangan(tg: TianGan, data: BaziData): Boolean {
+        if (tg == data.yearTiangan) return true
+        if (tg == data.monthTiangan) return true
+        if (tg == data.hourTiangan) return true
         return false
     }
 
@@ -481,7 +493,7 @@ class GeJuUtil {
         var cangganArray = DiZhiUtil().diZhiCangGanMap[monthDz]!!
 
         //benqi touchu
-        if(isMonthDzTouTiangan(cangganArray[0], baziData)){
+        if (isMonthDzTouTiangan(cangganArray[0], baziData)) {
             gjTG = cangganArray[0]
             foundGJ = true
         }
@@ -583,15 +595,15 @@ class GeJuUtil {
             str = stringResource(R.string.app_bazi_gj_job_zhengyin)
         } else if (gj == BaziGeJu.GJ_PIAN_YIN) {
             str = stringResource(R.string.app_bazi_gj_job_pianyin)
-        } else if (gj == BaziGeJu.GJ_SHI_SHEN){
+        } else if (gj == BaziGeJu.GJ_SHI_SHEN) {
             str = stringResource(R.string.app_bazi_gj_job_shishen)
         } else if (gj == BaziGeJu.GJ_SHANG_GUAN) {
             str = stringResource(R.string.app_bazi_gj_job_shangguan)
-        } else if (gj == BaziGeJu.GJ_ZHENG_GUAN){
+        } else if (gj == BaziGeJu.GJ_ZHENG_GUAN) {
             str = stringResource(R.string.app_bazi_gj_job_zhengguan)
         } else if (gj == BaziGeJu.GJ_QI_SHA) {
             str = stringResource(R.string.app_bazi_gj_job_qisha)
-        } else if (gj == BaziGeJu.GJ_ZHENG_CAI){
+        } else if (gj == BaziGeJu.GJ_ZHENG_CAI) {
             str = stringResource(R.string.app_bazi_gj_job_zhengcai)
         } else if (gj == BaziGeJu.GJ_PIAN_CAI) {
             str = stringResource(R.string.app_bazi_gj_job_piancai)
@@ -599,21 +611,21 @@ class GeJuUtil {
             str = stringResource(R.string.app_bazi_gj_job_jianlu)
         } else if (gj == BaziGeJu.GJ_QU_ZHI) {
             str = stringResource(R.string.app_bazi_gj_job_quzhi)
-        }else if (gj == BaziGeJu.GJ_YAN_SHANG) {
+        } else if (gj == BaziGeJu.GJ_YAN_SHANG) {
             str = stringResource(R.string.app_bazi_gj_job_yanshang)
-        }else if (gj == BaziGeJu.GJ_RUN_XIA) {
+        } else if (gj == BaziGeJu.GJ_RUN_XIA) {
             str = stringResource(R.string.app_bazi_gj_job_runxia)
-        }else if (gj == BaziGeJu.GJ_JIA_SE) {
+        } else if (gj == BaziGeJu.GJ_JIA_SE) {
             str = stringResource(R.string.app_bazi_gj_job_jiase)
-        }else if (gj == BaziGeJu.GJ_CONG_GE) {
+        } else if (gj == BaziGeJu.GJ_CONG_GE) {
             str = stringResource(R.string.app_bazi_gj_job_congge)
-        }else if (gj == BaziGeJu.GJ_YANG_REN) {
+        } else if (gj == BaziGeJu.GJ_YANG_REN) {
             str = stringResource(R.string.app_bazi_gj_job_yangren)
-        }else if (gj == BaziGeJu.GJ_CONG_CAI) {
+        } else if (gj == BaziGeJu.GJ_CONG_CAI) {
             str = stringResource(R.string.app_bazi_gj_job_congcai)
-        }else if (gj == BaziGeJu.GJ_CONG_SHA) {
+        } else if (gj == BaziGeJu.GJ_CONG_SHA) {
             str = stringResource(R.string.app_bazi_gj_job_congsha)
-        }else if (gj == BaziGeJu.GJ_CONG_ER) {
+        } else if (gj == BaziGeJu.GJ_CONG_ER) {
             str = stringResource(R.string.app_bazi_gj_job_conger)
         } else {
             str = stringResource(R.string.app_bazi_gj_job_tbd)
@@ -743,7 +755,7 @@ class GeJuUtil {
                 ShiShen.SHISHEN_ZHENG_CAI,
                 ShiShen.SHISHEN_PIAN_CAI
             )
-        }else{
+        } else {
             data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
             data.xiShenList = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
             data.jiShenList = listOf(
@@ -1277,19 +1289,34 @@ class GeJuUtil {
         var yinCount = 0
         var biJieCount = 0
 
-        shiShangCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
-        guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
-        caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
-        yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
-        biJieCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
+        shiShangCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_SHI_SHEN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
+        guanShaCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_ZHENG_GUAN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
+        caiCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_ZHENG_CAI
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
+        yinCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_ZHENG_YIN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
+        biJieCount = ShiShenUtil().getShiShenCount(
+            data,
+            ShiShen.SHISHEN_BI_JIAN
+        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
 
         var goodElements = yinCount + biJieCount
         var badElements = shiShangCount + guanShaCount + caiCount
         var isStrong = false
-        if(goodElements >= 3){
+        if (goodElements >= 3) {
             isStrong = true
         }
-        if(isStrong){
+        if (isStrong) {
             data.yongShenList = listOf(ShiShen.SHISHEN_QI_SHA)
             data.xiShenList = listOf(
                 ShiShen.SHISHEN_ZHENG_GUAN
@@ -1298,10 +1325,10 @@ class GeJuUtil {
                 ShiShen.SHISHEN_SHI_SHEN,
                 ShiShen.SHISHEN_SHANG_GUAN
             )
-        }else{
+        } else {
             data.yongShenList = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
             data.xiShenList = listOf(
-                ShiShen.SHISHEN_BI_JIAN,ShiShen.SHISHEN_JIE_CAI
+                ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI
             )
             data.jiShenList = listOf(
                 ShiShen.SHISHEN_ZHENG_CAI,
@@ -1364,7 +1391,7 @@ class GeJuUtil {
             checkYinGJXiJi(gj, data)
         } else if (gj == BaziGeJu.GJ_ZHENG_YIN) {
             checkZhengYinGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_ZHENG_GUAN) {
+        } else if (gj == BaziGeJu.GJ_ZHENG_GUAN) {
             checkZhengGuanGJXiJi(gj, data)
         } else if (gj == BaziGeJu.GJ_ZHENG_CAI || gj == BaziGeJu.GJ_PIAN_CAI) {
             checkCaiGJXiJi(gj, data)
@@ -1376,23 +1403,23 @@ class GeJuUtil {
             checkJianLuGJXiJi(gj, data)
         } else if (gj == BaziGeJu.GJ_QU_ZHI) {
             checkQuZhiGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_YAN_SHANG) {
+        } else if (gj == BaziGeJu.GJ_YAN_SHANG) {
             checkYanShangGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_RUN_XIA) {
+        } else if (gj == BaziGeJu.GJ_RUN_XIA) {
             checkRunXiaGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_JIA_SE) {
+        } else if (gj == BaziGeJu.GJ_JIA_SE) {
             checkJiaSeGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_CONG_GE) {
+        } else if (gj == BaziGeJu.GJ_CONG_GE) {
             checkCongGeGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_YANG_REN) {
+        } else if (gj == BaziGeJu.GJ_YANG_REN) {
             checkYangRenGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_CONG_CAI) {
+        } else if (gj == BaziGeJu.GJ_CONG_CAI) {
             checkCongCaiGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_CONG_SHA) {
+        } else if (gj == BaziGeJu.GJ_CONG_SHA) {
             checkCongShaGJXiJi(data)
-        }else if (gj == BaziGeJu.GJ_CONG_ER) {
+        } else if (gj == BaziGeJu.GJ_CONG_ER) {
             checkCongErGJXiJi(data)
-        }else {
+        } else {
             str = "ToDo"
         }
         str = getXiJiString(data)
@@ -1404,97 +1431,237 @@ class GeJuUtil {
     }
 
     @Composable
+    fun getZhengYinAnalysisString(data: BaziData): String {
+        var tgArray: Array<TianGan> = arrayOf()
+        //1
+        if (ShiShenUtil().getZhengcai(data.dayTiangan) == data.yearTiangan || ShiShenUtil().getPiancai(
+                data.dayTiangan
+            ) == data.yearTiangan
+        ) {
+            if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan || ShiShenUtil().getZhengyin(
+                    data.dayTiangan
+                ) == data.hourTiangan
+            ) {
+                return stringResource(R.string.app_bazi_gj_zhengyin_desc1)
+            }
+        }
+        if (ShiShenUtil().getZhengcai(data.dayTiangan) == data.monthTiangan || ShiShenUtil().getPiancai(
+                data.dayTiangan
+            ) == data.monthTiangan
+        ) {
+            if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.hourTiangan) {
+                return stringResource(R.string.app_bazi_gj_zhengyin_desc1)
+            }
+        }
+        //2
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.yearTiangan) {
+            if (ShiShenUtil().getZhengcai(data.dayTiangan) == data.monthTiangan || ShiShenUtil().getPiancai(
+                    data.dayTiangan
+                ) == data.monthTiangan
+            ) {
+                return stringResource(R.string.app_bazi_gj_zhengyin_desc2)
+            }
+            if (ShiShenUtil().getZhengcai(data.dayTiangan) == data.hourTiangan || ShiShenUtil().getPiancai(
+                    data.dayTiangan
+                ) == data.hourTiangan
+            ) {
+                return stringResource(R.string.app_bazi_gj_zhengyin_desc2)
+            }
+        }
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan) {
+            if (ShiShenUtil().getZhengcai(data.dayTiangan) == data.hourTiangan || ShiShenUtil().getPiancai(
+                    data.dayTiangan
+                ) == data.hourTiangan
+            ) {
+                return stringResource(R.string.app_bazi_gj_zhengyin_desc2)
+            }
+        }
+        //3
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan) {
+            tgArray = DiZhiUtil().getCanggan(data.monthDizhi)
+            for (tg in tgArray) {
+                if (ShiShenUtil().getZhengcai(data.dayTiangan) == tg) {
+                    return stringResource(R.string.app_bazi_gj_zhengyin_desc3)
+                }
+            }
+        }
+        //4
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.yearTiangan) {
+            tgArray = DiZhiUtil().getCanggan(data.yearDizhi)
+            for (tg in tgArray) {
+                if (ShiShenUtil().getZhengyin(data.dayTiangan) == tg) {
+                    return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
+                }
+            }
+        }
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan) {
+            tgArray = DiZhiUtil().getCanggan(data.monthDizhi)
+            for (tg in tgArray) {
+                if (ShiShenUtil().getZhengyin(data.dayTiangan) == tg) {
+                    return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
+                }
+            }
+        }
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.hourTiangan) {
+            tgArray = DiZhiUtil().getCanggan(data.hourDizhi)
+            for (tg in tgArray) {
+                if (ShiShenUtil().getZhengyin(data.dayTiangan) == tg) {
+                    return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
+                }
+            }
+        }
+        //5
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.yearTiangan) {
+            tgArray = DiZhiUtil().getCanggan(data.yearDizhi)
+            for (tg in tgArray) {
+                if (ShiShenUtil().getPianyin(data.dayTiangan) == tg) {
+                    return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
+                }
+            }
+        }
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan) {
+            tgArray = DiZhiUtil().getCanggan(data.monthDizhi)
+            for (tg in tgArray) {
+                if (ShiShenUtil().getPianyin(data.dayTiangan) == tg) {
+                    return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
+                }
+            }
+        }
+        if (ShiShenUtil().getZhengyin(data.dayTiangan) == data.hourTiangan) {
+            tgArray = DiZhiUtil().getCanggan(data.hourDizhi)
+            for (tg in tgArray) {
+                if (ShiShenUtil().getPianyin(data.dayTiangan) == tg) {
+                    return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
+                }
+            }
+        }
+        return ""
+    }
+
+    fun isXiYongShen(data: BaziData, ss: ShiShen): Boolean {
+        var ret = false
+
+        for (shishen in data.yongShenList) {
+            if (shishen == ss) return true
+        }
+        for (shishen in data.xiShenList) {
+            if (shishen == ss) return true
+        }
+        for (shishen in data.tiaohouShenList) {
+            if (shishen == ss) return true
+        }
+        for (shishen in data.tongguanShenList) {
+            if (shishen == ss) return true
+        }
+        return ret
+    }
+
+    fun isJiShen(data: BaziData, ss: ShiShen): Boolean {
+        var ret = false
+        for (shishen in data.jiShenList) {
+            if (shishen == ss) return true
+        }
+        return ret
+    }
+
+    @Composable
+    fun getZhengCaiAnalysisString(gj: BaziGeJu, data: BaziData): String {
+        var sb = StringBuilder()
+        var zhengCaiTG = ShiShenUtil().getZhengcai(data.dayTiangan)
+        var isYearZhengCai = false
+        for (tg in DiZhiUtil().getCanggan(data.yearDizhi)) {
+            if (tg == zhengCaiTG) {
+                isYearZhengCai = true
+                break
+            }
+        }
+        if (!isYearZhengCai) {
+            if (zhengCaiTG == data.yearTiangan) {
+                isYearZhengCai = true
+
+            }
+        }
+        if(isYearZhengCai){
+            if (isXiYongShen(data, ShiShen.SHISHEN_ZHENG_CAI)) {
+                sb.append(stringResource(R.string.app_bazi_gj_zhengcai_desc1))
+                sb.append(" ")
+            }
+        }
+
+        return sb.toString()
+    }
+
+    @Composable
+    fun getPianCaiAnalysisString(gj: BaziGeJu, data: BaziData): String {
+        var count = 0
+        var isTGPianCai = false
+        var sb = StringBuilder()
+        var pianCaiTG = ShiShenUtil().getPiancai(data.dayTiangan)
+        var cangganArray = DiZhiUtil().getCanggan(data.yearDizhi)
+        if (data.yearTiangan == pianCaiTG) count += 1
+        if (data.monthTiangan == pianCaiTG) count += 1
+        if (data.hourTiangan == pianCaiTG) count += 1
+
+        if (count > 0) isTGPianCai = true
+
+        for (tg in cangganArray) {
+            if (tg == pianCaiTG) count += 1
+        }
+        cangganArray = DiZhiUtil().getCanggan(data.monthDizhi)
+        for (tg in cangganArray) {
+            if (tg == pianCaiTG) count += 1
+        }
+        cangganArray = DiZhiUtil().getCanggan(data.dayDizhi)
+        if (pianCaiTG == cangganArray[0]) {
+            if (data.gender == MALE) {
+                sb.append(stringResource(R.string.app_bazi_gj_piancai_desc4))
+                sb.append(" ")
+            }
+        }
+
+        for (tg in cangganArray) {
+            if (tg == pianCaiTG) count += 1
+        }
+        cangganArray = DiZhiUtil().getCanggan(data.hourDizhi)
+        for (tg in cangganArray) {
+            if (tg == pianCaiTG) count += 1
+        }
+        if (isTGPianCai && cangganArray[0] == pianCaiTG) {
+            sb.append(stringResource(R.string.app_bazi_gj_piancai_desc5))
+            sb.append(" ")
+        }
+
+        if (gj == BaziGeJu.GJ_PIAN_CAI && data.gender == FEMALE) {
+            sb.append(stringResource(R.string.app_bazi_gj_piancai_desc3))
+            sb.append(" ")
+        }
+
+        if (count >= 2) {
+            sb.append(stringResource(R.string.app_bazi_gj_piancai_desc1))
+            sb.append(" ")
+            if (data.gender == MALE) {
+                sb.append(stringResource(R.string.app_bazi_gj_piancai_desc2))
+                sb.append(" ")
+            }
+        }
+        return sb.toString()
+    }
+
+    @Composable
     fun getGeJuAnalysis(gj: BaziGeJu, data: BaziData): String {
         var str = stringResource(R.string.app_bazi_gj_analysis_no)
         var tg = data.yearTiangan
-        var tgArray : Array<TianGan> = arrayOf()
-        if (gj == BaziGeJu.GJ_ZHENG_YIN) {
-            //1
-            if(ShiShenUtil().getZhengcai(data.dayTiangan) == data.yearTiangan || ShiShenUtil().getPiancai(data.dayTiangan) == data.yearTiangan){
-                if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan || ShiShenUtil().getZhengyin(data.dayTiangan) == data.hourTiangan){
-                    return stringResource(R.string.app_bazi_gj_zhengyin_desc1)
-                }
-            }
-            if(ShiShenUtil().getZhengcai(data.dayTiangan) == data.monthTiangan || ShiShenUtil().getPiancai(data.dayTiangan) == data.monthTiangan){
-                if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.hourTiangan){
-                    return stringResource(R.string.app_bazi_gj_zhengyin_desc1)
-                }
-            }
-            //2
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.yearTiangan){
-                if(ShiShenUtil().getZhengcai(data.dayTiangan) == data.monthTiangan || ShiShenUtil().getPiancai(data.dayTiangan) == data.monthTiangan){
-                    return stringResource(R.string.app_bazi_gj_zhengyin_desc2)
-                }
-                if(ShiShenUtil().getZhengcai(data.dayTiangan) == data.hourTiangan || ShiShenUtil().getPiancai(data.dayTiangan) == data.hourTiangan){
-                    return stringResource(R.string.app_bazi_gj_zhengyin_desc2)
-                }
-            }
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan){
-                if(ShiShenUtil().getZhengcai(data.dayTiangan) == data.hourTiangan || ShiShenUtil().getPiancai(data.dayTiangan) == data.hourTiangan){
-                    return stringResource(R.string.app_bazi_gj_zhengyin_desc2)
-                }
-            }
-            //3
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan){
-                tgArray = DiZhiUtil().getCanggan(data.monthDizhi)
-                for(tg in tgArray){
-                    if(ShiShenUtil().getZhengcai(data.dayTiangan) == tg){
-                        return stringResource(R.string.app_bazi_gj_zhengyin_desc3)
-                    }
-                }
-            }
-            //4
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.yearTiangan){
-                tgArray = DiZhiUtil().getCanggan(data.yearDizhi)
-                for(tg in tgArray){
-                    if(ShiShenUtil().getZhengyin(data.dayTiangan) == tg){
-                        return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
-                    }
-                }
-            }
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan){
-                tgArray = DiZhiUtil().getCanggan(data.monthDizhi)
-                for(tg in tgArray){
-                    if(ShiShenUtil().getZhengyin(data.dayTiangan) == tg){
-                        return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
-                    }
-                }
-            }
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.hourTiangan){
-                tgArray = DiZhiUtil().getCanggan(data.hourDizhi)
-                for(tg in tgArray){
-                    if(ShiShenUtil().getZhengyin(data.dayTiangan) == tg){
-                        return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
-                    }
-                }
-            }
-            //5
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.yearTiangan){
-                tgArray = DiZhiUtil().getCanggan(data.yearDizhi)
-                for(tg in tgArray){
-                    if(ShiShenUtil().getPianyin(data.dayTiangan) == tg){
-                        return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
-                    }
-                }
-            }
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.monthTiangan){
-                tgArray = DiZhiUtil().getCanggan(data.monthDizhi)
-                for(tg in tgArray){
-                    if(ShiShenUtil().getPianyin(data.dayTiangan) == tg){
-                        return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
-                    }
-                }
-            }
-            if(ShiShenUtil().getZhengyin(data.dayTiangan) == data.hourTiangan){
-                tgArray = DiZhiUtil().getCanggan(data.hourDizhi)
-                for(tg in tgArray){
-                    if(ShiShenUtil().getPianyin(data.dayTiangan) == tg){
-                        return stringResource(R.string.app_bazi_gj_zhengyin_desc4)
-                    }
-                }
-            }
+        var sb = StringBuilder()
 
+        sb.append(getZhengYinAnalysisString(data))
+        if (sb.length > 0) sb.append(" ")
+        sb.append(getPianCaiAnalysisString(gj, data))
+        sb.append(getZhengCaiAnalysisString(gj, data))
+
+        if (sb.length > 0) {
+            return sb.toString()
+        } else {
+            return str
         }
-        return str
     }
 }

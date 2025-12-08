@@ -7,6 +7,7 @@ import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.DiZhiSanHeInfo
 import com.rick.bazi.data.DiZhiSanHuiInfo
+import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.TiaoHouYongShen
 import com.rick.bazi.data.TongGuanYongShen
@@ -270,6 +271,27 @@ class YongShenUtil {
         if (data.muWeight >= WUXING_STRONG_WEIGHT && data.tuWeight >= WUXING_STRONG_WEIGHT) {
             data.tongguanYongShen = TongGuanYongShen.TONG_GUAN_MU_TU
         }
+
+        //tiaohou
+        calculateTiaoHouYongShen(data)
+        //tongguan
+        calculateTongGuanShen(data)
+    }
+
+    fun calculateTongGuanShen(data: BaziData){
+        if (data.tongguanYongShen == TongGuanYongShen.TONG_GUAN_JIN_MU) {
+            data.tongguanShenList = getShiShenByWuXing(data, WuXing.WUXING_SHUI)
+        } else if (data.tongguanYongShen == TongGuanYongShen.TONG_GUAN_HUO_JIN) {
+            data.tongguanShenList = getShiShenByWuXing(data, WuXing.WUXING_TU)
+        } else if (data.tongguanYongShen == TongGuanYongShen.TONG_GUAN_SHUI_HUO) {
+            data.tongguanShenList = getShiShenByWuXing(data, WuXing.WUXING_MU)
+        } else if (data.tongguanYongShen == TongGuanYongShen.TONG_GUAN_TU_SHUI) {
+            data.tongguanShenList = getShiShenByWuXing(data, WuXing.WUXING_JIN)
+        } else if (data.tongguanYongShen == TongGuanYongShen.TONG_GUAN_MU_TU) {
+            data.tongguanShenList = getShiShenByWuXing(data, WuXing.WUXING_HUO)
+        } else {
+            data.tongguanShenList = listOf()
+        }
     }
 
     @Composable
@@ -447,11 +469,44 @@ class YongShenUtil {
         return ret
     }
 
+    fun getShiShenByWuXing(data: BaziData, wx : WuXing) : List<ShiShen>{
+        var wx = WuXingUtil().getTgWX(data.dayTiangan)
+        var list : List<ShiShen> = listOf()
+        if(WuXingUtil().getYinWuXing(data.dayTiangan) == wx){
+            list = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+        }else if(WuXingUtil().getShishangWuXing(data.dayTiangan) == wx){
+            list = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+        }else if(WuXingUtil().getBiJieWuXing(data.dayTiangan) == wx){
+            list = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+        }else if(WuXingUtil().getGuanshaWuXing(data.dayTiangan) == wx){
+            list = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
+        }else if(WuXingUtil().getCaiWuXing(data.dayTiangan) == wx){
+            list = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+        }
+        return list
+    }
+
+    fun calculateTiaoHouYongShen(data: BaziData){
+//        YongShenUtil().calculateWuXingWeight(data)
+        if(isBaziCold(data)){
+            data.tiaohouShenList = getShiShenByWuXing(data, WuXing.WUXING_HUO)
+        }else if(isBaziHot(data)){
+            data.tiaohouShenList = getShiShenByWuXing(data, WuXing.WUXING_SHUI)
+        }else if(isBaziDry(data)){
+            data.tiaohouShenList = getShiShenByWuXing(data, WuXing.WUXING_SHUI)
+        }else if(isBaziWet(data)){
+            data.tiaohouShenList = getShiShenByWuXing(data, WuXing.WUXING_HUO)
+        }else{
+            data.tiaohouShenList = listOf()
+        }
+    }
+
     @Composable
     fun getTiaohouString(data: BaziData): String {
         var summary = ""
         var sb = StringBuilder()
         YongShenUtil().calculateWuXingWeight(data)
+
         if(isBaziCold(data)){
             summary =
                 stringResource(R.string.app_bazi_tiaohou_cold) + "[" + WuXingUtil().getWuXingText(WuXing.WUXING_HUO) + "]"
