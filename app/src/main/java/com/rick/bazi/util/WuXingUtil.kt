@@ -830,6 +830,21 @@ class WuXingUtil {
     }
 
     @Composable
+    fun getTianGanWuXingString(
+        tg: TianGan
+    ): String {
+        var str = BaziUtil().getTianGanLabel(tg)
+        str = str + WuXingUtil().getTianGanWuxingText(tg)
+        return str
+    }
+
+    @Composable
+    fun getDiZhiWuXingString(dz: DiZhi): String {
+        var wx = getDiZhiWuxing(dz)
+        return BaziUtil().getDizhiText(dz) + getWuXingText(wx)
+    }
+
+    @Composable
     fun getBaziWuxingStatString(data: BaziData, targetWx: WuXing): String {
         val sb = StringBuilder()
         var tg = data.yearTiangan
@@ -922,5 +937,6 @@ class WuXingUtil {
         val finalString = sb.toString()
         return finalString
     }
+
 
 }

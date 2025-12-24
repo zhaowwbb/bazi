@@ -44,13 +44,30 @@ data class BaziData(
     var tiaohouShenList : List<ShiShen> = listOf(),
     var tongguanShenList : List<ShiShen> = listOf(),
     var tiaohouList : List<WuXing> = listOf(),
+    var allYongShenList : List<ShiShen> = listOf(),
 
     var jinWeight : Float = 0f,
     var muWeight : Float = 0f,
     var shuiWeight : Float = 0f,
     var huoWeight : Float = 0f,
     var tuWeight : Float = 0f,
+
+    var yinWeight : Float = 0f,
+    var bijieWeight : Float = 0f,
+    var caiWeight : Float = 0f,
+    var shishangWeight : Float = 0f,
+    var guanshaWeight : Float = 0f,
+
     var tongguanYongShen : TongGuanYongShen = TongGuanYongShen.TONG_GUAN_NONE,
     var tiaohouYongShen : TiaoHouYongShen = TiaoHouYongShen.TIAO_HOU_NONE,
     var gj : BaziGeJu = BaziGeJu.GJ_NONE,
+    var daYunStartSeconds : Int = 0,
+    var daYunStartYear : Int = 0,
+    var daYunStartMonth : Int = 0,
+    var daYunStartDay : Int = 0,
+    var daYunFirstYear : Int = 0,
+    var daYunFirstMonth : Int = 0,
+    var daYunWeight : Int = 0,
+
+    var baziYongShenList :  List<BaziYongShen> = listOf(),
 )

@@ -7,6 +7,8 @@
     <string name="app_label_hour">时</string>
     <string name="app_label_gan">干</string>
     <string name="app_label_zhi">支</string>
+    <string name="tiangan_sheng_label">生助</string>
+    <string name="tiangan_ke_label">克</string>
     <string name="app_bazi_title">八字排盘软件</string>
     <string name="app_bazi_confirm_privacy">隐私政策</string>
     <string name="app_bazi_confirm_privacy_yes">同意</string>
@@ -76,6 +78,7 @@
     <string name="bazi_quit">退出程序</string>
     <string name="app_after_birth">出生后</string>
     <string name="app_start_dayun">起大运</string>
+    <string name="app_dayun_start_time">起运时间</string>
     <string name="age_unit">岁</string>
     <string name="app_bazi_taohua_query">桃花</string>
     <string name="app_taohua_bazi">八字桃花</string>
@@ -217,6 +220,9 @@
     <string name="tiangan_gui">癸</string>
 
     <string name="dizhi">地支</string>
+    <string name="dayun_tiangan_label">(运干)</string>
+    <string name="dayun_dizhi_label">(运支)</string>
+    <string name="dizhi_touchu_label">透出</string>
     <string name="dizhi_zi">子</string>
     <string name="dizhi_chou">丑</string>
     <string name="dizhi_yin">寅</string>
@@ -314,7 +320,7 @@
     <string name="app_bazi_analyze_label2">二、日主旺衰分析</string>
     <string name="app_bazi_analyze_label3">三、日主格局</string>
     <string name="app_bazi_analyze_label4">四、喜用神与忌神</string>
-    <string name="app_bazi_analyze_label5">五、大运作用分析</string>
+    <string name="app_bazi_analyze_label5">大运作用分析</string>
     <string name="app_bazi_analyze_label6">四、命局综合解读</string>
 
     <string name="app_bazi_deling_label">得令：</string>
@@ -360,6 +366,7 @@
     <string name="app_bazi_yong_shen">用神</string>
     <string name="app_bazi_xi_shen">喜神</string>
     <string name="app_bazi_ji_shen">忌神</string>
+    <string name="app_bazi_xian_shen">闲神</string>
 
 
     <string name="app_bazi_gj_label">格局</string>
@@ -920,12 +927,13 @@
     <string name="app_bazi_tiangan_hehua_bx_desc">【丙辛合化水】：威制之合。丙为辛之官，辛为丙之财。为人人缘好，易偷情，重情趣，气质好，爱名牌，爱别人听他的。1.个性强，仪表威严。2.重情趣，重视心灵的感受。3.气质好，很聪明。4.喜欢年轻的异性。5.如果地支逢冲，容易纵情纵欲。</string>
     <string name="app_bazi_tiangan_hehua_dr_desc">【丁壬合化木】：淫暱之合。壬为丁之官，丁为壬之财。心软，注重穿着，较无心机，人缘好。1.重品味，风情万种，婀娜多姿，心地善良。2.讲究穿着，非常有异性缘。3.重情调，懂生活情趣。4.心慈性善，长命多寿。</string>
     <string name="app_bazi_tiangan_hehua_wg_desc">【戊癸合化火】：无情之合。戊为癸之官，癸为戊之财。为人重情调，翻脸像翻书，较会有一夜情，夫妻选择易有女大男小，或年龄差距较大。1.容易翻脸，易生气，气过就算。2.喜欢成熟的异性，本身外型也不错。3.重情趣，但无情。给人有点冷的感觉。4.不要激怒他，激怒他什么都不用说。5.冷静理智，礼节周到，也较现实。</string>
-
+    <string name="app_bazi_dayun_intro_label">大运介绍</string>
     <string name="app_bazi_dayun_intro">大运是命理学的重要概念，指以十年为周期的人生运程变化体系，是大运与流年共同构成人生运程。大运的排法分顺行和逆行两种，并根据生辰的阴阳属性、月柱的五行旺衰来推算，它对人生各阶段境遇有直接影响。</string>
 
     <string name="app_bazi_dizhi_3he_label">地支三合</string>
     <string name="app_bazi_dizhi_6he_label">地支六合</string>
     <string name="app_bazi_dizhi_6chong_label">地支六冲</string>
+    <string name="dizhi_chong_label">冲动</string>
     <string name="app_bazi_hai_label">害</string>
     <string name="app_bazi_xing_label">刑</string>
     <string name="app_bazi_dizhi_6hai_label">地支六害</string>
@@ -1004,6 +1012,7 @@
     <string name="app_bazi_dizhi_xing_haihai_desc">亥亥自刑： 亥水为阴水，阴水代表肾脏、血液循环等，亥亥自刑容易导致肾脏、生殖系统问题，以及精神上的困顿和不振。 </string>
 
     <string name="app_bazi_wuxing_weight_label">五行权重</string>
+    <string name="app_bazi_weight_label">权重</string>
     <string name="app_bazi_yongshen_tongguan_label">通关用神</string>
     <string name="app_bazi_yongshen_tongguan_no_desc">命局没有通关用神。</string>
 
@@ -1018,6 +1027,7 @@
     <string name="app_bazi_gj_zhengyin_desc3">正印坐正财，离婚之兆。月令为主。</string>
     <string name="app_bazi_gj_zhengyin_desc4">正印坐正印，过于自信。女命则感情内敛，迟婚。母长寿。</string>
     <string name="app_bazi_gj_zhengyin_desc5">正印坐偏印专位，正带偏，兼职之象。子息迟；眷属有疾或特别嗜好；女命双重性格，今日否定昨日。</string>
+    <string name="app_bazi_gj_zhengyin_desc6">命局中出现了多个印绶，那么这个人一定孤僻清高。</string>
     <string name="app_bazi_gj_analysis_no">无</string>
 
     <string name="app_bazi_gj_piancai_desc1">偏财多，为人慷慨，对人亲近。</string>
@@ -1027,4 +1037,6 @@
     <string name="app_bazi_gj_piancai_desc5">偏财通根时支，一辈子有钱有女人。</string>
 
     <string name="app_bazi_gj_zhengcai_desc1">年上正财，若为喜用，祖上富有。</string>
+    <string name="app_bazi_gj_zhengcai_desc2">命局中不见财星，地支藏干中也不见财星的称为命中无财，这样的八字，就是身旺财星为喜用神者也发不了大财，就是行到财运之年，也是空喜一场。</string>
+    <string name="app_bazi_gj_zhengcai_desc3">正财不宜太多，如超过三位以上者，其财则不易守住，所谓财星过多者，乃富家穷人也。</string>
 </resources>

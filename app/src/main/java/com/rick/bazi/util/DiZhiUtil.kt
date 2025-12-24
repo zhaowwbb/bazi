@@ -30,6 +30,32 @@ class DiZhiUtil {
         DiZhi.DIZHI_HAI to arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
     )
 
+    private val nextDiZhiMap : Map<DiZhi, DiZhi> = mapOf(
+        DiZhi.DIZHI_ZI to DiZhi.DIZHI_CHOU,
+        DiZhi.DIZHI_CHOU to DiZhi.DIZHI_YIN,
+        DiZhi.DIZHI_YIN to DiZhi.DIZHI_MOU,
+        DiZhi.DIZHI_MOU to DiZhi.DIZHI_CHEN,
+        DiZhi.DIZHI_CHEN to DiZhi.DIZHI_SI,
+        DiZhi.DIZHI_SI to DiZhi.DIZHI_WU,
+        DiZhi.DIZHI_WU to DiZhi.DIZHI_WEI,
+        DiZhi.DIZHI_WEI to DiZhi.DIZHI_SHEN,
+        DiZhi.DIZHI_SHEN to DiZhi.DIZHI_YOU,
+        DiZhi.DIZHI_YOU to DiZhi.DIZHI_XU,
+        DiZhi.DIZHI_XU to DiZhi.DIZHI_HAI,
+        DiZhi.DIZHI_HAI to DiZhi.DIZHI_ZI,
+    )
+
+    fun getNextDiZhi(dz: DiZhi) : DiZhi{
+        return nextDiZhiMap[dz]!!
+    }
+
+    fun getPrevDiZhi(dz: DiZhi) : DiZhi{
+        for((key, value) in nextDiZhiMap){
+            if(value == dz)return key
+        }
+        return dz
+    }
+
     fun getCanggan(dz: DiZhi): Array<TianGan> {
         return diZhiCangGanMap.get(dz)!!
     }
@@ -214,6 +240,14 @@ class DiZhiUtil {
         DiZhi.DIZHI_YOU to R.string.app_bazi_dizhi_xing_youyou_desc,
         DiZhi.DIZHI_HAI to R.string.app_bazi_dizhi_xing_haihai_desc
     )
+
+    fun isDiZhiTouTianGan(tg: TianGan, data: BaziData): Boolean {
+        if (tg == data.yearTiangan) return true
+        if (tg == data.monthTiangan) return true
+//        if (tg == baziInfo.dayTiangan) return true
+        if (tg == data.hourTiangan) return true
+        return false
+    }
 
     fun isDiZhiXiangXing(dz1: DiZhi, dz2: DiZhi): Boolean {
         var ret = false

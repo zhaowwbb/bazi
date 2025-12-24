@@ -29,7 +29,9 @@ import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziUtil
+import com.rick.bazi.util.DaYunUtil
 import com.rick.bazi.util.getDizhiStr
+import com.rick.bazi.util.DaYunUtil.DayunRecord
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -403,8 +405,8 @@ fun getDayunHorseString(baziInfo: BaziInfo, dz : DiZhi) : String {
 }
 
 @Composable
-fun getDayunHorseList(baziInfo: BaziInfo) : MutableList<DayunRecord>{
-    var records: MutableList<DayunRecord> = arrayListOf()
+fun getDayunHorseList(baziInfo: BaziInfo) : MutableList<DaYunUtil.DayunRecord>{
+    var records: MutableList<DaYunUtil.DayunRecord> = arrayListOf()
     var startIndex = 1
     var endIndex = 12
     var base = baziInfo.monthBase

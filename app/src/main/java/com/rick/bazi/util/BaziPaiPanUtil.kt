@@ -81,6 +81,9 @@ class BaziPaiPanUtil {
         baziModel.setHourDiZhi(dz)
         data.hourTiangan = tg
         data.hourDizhi = dz
+
+        GeJuUtil().getGJ(data)
+
         baziModel.setBaziData(data)
 
         println("Bazi Paipan: year=$year,month=$month,day=$day,hour=$hour, Bazi data=$data")
@@ -123,7 +126,7 @@ class BaziPaiPanUtil {
         var term = SolarTerm.fromName(year, termName)
 
         // 获取精确到秒的时刻
-        var lichunTime: SolarTime = term.julianDay.solarTime
+        val lichunTime: SolarTime = term.julianDay.solarTime
         println("$year 年 $termName 节气在：$lichunTime, ownerSolarTime:$ownerSolarTime")
         if(ownerSolarTime.isBefore(lichunTime)){
             //belong to previous
@@ -133,10 +136,10 @@ class BaziPaiPanUtil {
             }
         }
 
-        var gz = BaziUtil().jiazi60Map[yearBase]!!
+        val gz = BaziUtil().jiazi60Map[yearBase]!!
 
-        var tg = gz.tg
-        var dz = gz.dz
+        val tg = gz.tg
+        val dz = gz.dz
 
         //year
         data.yearTiangan =  tg
@@ -144,100 +147,120 @@ class BaziPaiPanUtil {
 
         termName = "小寒"
         term = SolarTerm.fromName(year, termName)
-        var xiaohanTime: SolarTime = term.julianDay.solarTime
+        val xiaohanTime: SolarTime = term.julianDay.solarTime
+        term = SolarTerm.fromName(year + 1, termName)
+        val xiaohanNextTime: SolarTime = term.julianDay.solarTime
 
         termName = "惊蛰"
         term = SolarTerm.fromName(year, termName)
-        var jingzheTime: SolarTime = term.julianDay.solarTime
+        val jingzheTime: SolarTime = term.julianDay.solarTime
 
         termName = "清明"
         term = SolarTerm.fromName(year, termName)
-        var qingmingTime: SolarTime = term.julianDay.solarTime
+        val qingmingTime: SolarTime = term.julianDay.solarTime
 
         termName = "立夏"
         term = SolarTerm.fromName(year, termName)
-        var lixiaTime: SolarTime = term.julianDay.solarTime
+        val lixiaTime: SolarTime = term.julianDay.solarTime
 
         termName = "芒种"
         term = SolarTerm.fromName(year, termName)
-        var mangzhongTime: SolarTime = term.julianDay.solarTime
+        val mangzhongTime: SolarTime = term.julianDay.solarTime
 
         termName = "小暑"
         term = SolarTerm.fromName(year, termName)
-        var xiaoshuTime: SolarTime = term.julianDay.solarTime
+        val xiaoshuTime: SolarTime = term.julianDay.solarTime
 
         termName = "立秋"
         term = SolarTerm.fromName(year, termName)
-        var liqiuTime: SolarTime = term.julianDay.solarTime
+        val liqiuTime: SolarTime = term.julianDay.solarTime
 
         termName = "白露"
         term = SolarTerm.fromName(year, termName)
-        var bailuTime: SolarTime = term.julianDay.solarTime
+        val bailuTime: SolarTime = term.julianDay.solarTime
 
         termName = "寒露"
         term = SolarTerm.fromName(year, termName)
-        var hanluTime: SolarTime = term.julianDay.solarTime
+        val hanluTime: SolarTime = term.julianDay.solarTime
 
         termName = "立冬"
         term = SolarTerm.fromName(year, termName)
-        var lidongTime: SolarTime = term.julianDay.solarTime
+        val lidongTime: SolarTime = term.julianDay.solarTime
 
         termName = "大雪"
         term = SolarTerm.fromName(year, termName)
-        var daxueTime: SolarTime = term.julianDay.solarTime
+        val daxueTime: SolarTime = term.julianDay.solarTime
+        term = SolarTerm.fromName(year - 1, termName)
+        val daxuePrevTime: SolarTime = term.julianDay.solarTime
+
+        DaYunUtil().calculateDaYunStartSeconds(qingmingTime, lidongTime, ownerSolarTime, data)
+//        println("daYunStartSeconds=${data.daYunStartSeconds}")
 
         //month
         //1 month
         if(ownerSolarTime.isAfter(lichunTime) && ownerSolarTime.isBefore(jingzheTime)){
             data.monthDizhi = DiZhi.DIZHI_YIN
+            DaYunUtil().calculateDaYunStartSeconds(lichunTime, jingzheTime, ownerSolarTime, data)
         }
         //2 month
         if(ownerSolarTime.isAfter(jingzheTime) && ownerSolarTime.isBefore(qingmingTime)){
             data.monthDizhi = DiZhi.DIZHI_MOU
+            DaYunUtil().calculateDaYunStartSeconds(jingzheTime, qingmingTime, ownerSolarTime, data)
         }
         //3
         if(ownerSolarTime.isAfter(qingmingTime) && ownerSolarTime.isBefore(lixiaTime)){
             data.monthDizhi = DiZhi.DIZHI_CHEN
+            DaYunUtil().calculateDaYunStartSeconds(qingmingTime, lixiaTime, ownerSolarTime, data)
         }
         //4
         if(ownerSolarTime.isAfter(lixiaTime) && ownerSolarTime.isBefore(mangzhongTime)){
             data.monthDizhi = DiZhi.DIZHI_SI
+            DaYunUtil().calculateDaYunStartSeconds(lixiaTime, mangzhongTime, ownerSolarTime, data)
         }
         //5
         if(ownerSolarTime.isAfter(mangzhongTime) && ownerSolarTime.isBefore(xiaoshuTime)){
             data.monthDizhi = DiZhi.DIZHI_WU
+            DaYunUtil().calculateDaYunStartSeconds(mangzhongTime, xiaoshuTime, ownerSolarTime, data)
         }
         //6
         if(ownerSolarTime.isAfter(xiaoshuTime) && ownerSolarTime.isBefore(liqiuTime)){
             data.monthDizhi = DiZhi.DIZHI_WEI
+            DaYunUtil().calculateDaYunStartSeconds(xiaoshuTime, liqiuTime, ownerSolarTime, data)
         }
         //7
         if(ownerSolarTime.isAfter(liqiuTime) && ownerSolarTime.isBefore(bailuTime)){
             data.monthDizhi = DiZhi.DIZHI_SHEN
+            DaYunUtil().calculateDaYunStartSeconds(liqiuTime, bailuTime, ownerSolarTime, data)
         }
         //8
         if(ownerSolarTime.isAfter(bailuTime) && ownerSolarTime.isBefore(hanluTime)){
             data.monthDizhi = DiZhi.DIZHI_YOU
+            DaYunUtil().calculateDaYunStartSeconds(bailuTime, hanluTime, ownerSolarTime, data)
         }
         //9
         if(ownerSolarTime.isAfter(hanluTime) && ownerSolarTime.isBefore(lidongTime)){
             data.monthDizhi = DiZhi.DIZHI_XU
+            DaYunUtil().calculateDaYunStartSeconds(hanluTime, lidongTime, ownerSolarTime, data)
         }
         //10
         if(ownerSolarTime.isAfter(lidongTime) && ownerSolarTime.isBefore(daxueTime)){
             data.monthDizhi = DiZhi.DIZHI_HAI
+            DaYunUtil().calculateDaYunStartSeconds(lidongTime, daxueTime, ownerSolarTime, data)
         }
         //11
         if(ownerSolarTime.isAfter(daxueTime)){
             data.monthDizhi = DiZhi.DIZHI_ZI
+            DaYunUtil().calculateDaYunStartSeconds(daxueTime, xiaohanNextTime, ownerSolarTime, data)
         }
         //12
         if(ownerSolarTime.isAfter(xiaohanTime) && ownerSolarTime.isBefore(lichunTime)){
             data.monthDizhi = DiZhi.DIZHI_CHOU
+            DaYunUtil().calculateDaYunStartSeconds(xiaohanTime, lichunTime, ownerSolarTime, data)
         }
 
         if(ownerSolarTime.isBefore(xiaohanTime)){
             data.monthDizhi = DiZhi.DIZHI_ZI
+            DaYunUtil().calculateDaYunStartSeconds(daxuePrevTime, xiaohanTime, ownerSolarTime, data)
         }
         calculateMonthTianGan(data)
 

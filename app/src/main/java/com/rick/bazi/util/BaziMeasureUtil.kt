@@ -12,6 +12,7 @@ import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
 import com.rick.bazi.data.BaziGeJu
+import com.rick.bazi.data.TianGanDiZhi
 import com.rick.bazi.ui.BaziViewModel
 
 class BaziMeasureUtil {
@@ -121,14 +122,15 @@ class BaziMeasureUtil {
         baziModel.setDayunForward(dayunForward)
         baziModel.setDayunDays(days)
 
+        str = str + DaYunUtil().getDaYunStartTimeString(baziInfo.baziData) + "\n"
+
+        var tgdz : TianGanDiZhi
+
         for (i in startIndex..endIndex) {
-            if (dayunForward) {
-                base = baziInfo.monthBase + i
-            } else {
-                base = baziInfo.monthBase - i
-            }
-            tg = BaziUtil().getTianganFromBase(base)
-            dz = BaziUtil().getDizhiFromBase(base)
+            tgdz = DaYunUtil().getDaYun(i, baziInfo.baziData)
+            tg = tgdz.tg
+            dz = tgdz.dz
+
             builder = StringBuilder()
             builder.append(BaziUtil().getTianGanLabel(tg))
             builder.append(BaziUtil().getDizhiLabel(dz))
@@ -142,7 +144,6 @@ class BaziMeasureUtil {
 
             builder.append("\n")
             str = str + builder.toString()
-
         }
 
         baziModel.setBaziDayunSummary(str)
@@ -443,20 +444,10 @@ class BaziMeasureUtil {
         var str = ""
         var summary = ""
         var sb = StringBuilder()
-        var guanshaStr = ""
-        var shishangStr = ""
-        var caiStr = ""
-//        var shiShangCount = 0
-//        var guanShaCount = 0
-//        var caiCount = 0
-//
-//        shiShangCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
-//        guanShaCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
-//        caiCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
-//
-//        guanshaStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_GUAN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_QI_SHA)
-//        shishangStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_SHI_SHEN) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_SHANG_GUAN)
-//        caiStr = ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_ZHENG_CAI) + ShiShenUtil().getBaziShiShenStatString(data, ShiShen.SHISHEN_PIAN_CAI)
+//        var guanshaStr = ""
+//        var shishangStr = ""
+//        var caiStr = ""
+
         //check yongshen in Bazi
         for(ss in data.yongShenList){
             str = ShiShenUtil().getBaziShiShenStatString(data, ss)
@@ -480,9 +471,22 @@ class BaziMeasureUtil {
             summary = sb.toString()
             return summary
         }
+
         //check tiaohou
         for(wx in data.tiaohouList){
             str = WuXingUtil().getBaziWuxingStatString(data, wx)
+            if(str.length > 0){
+                sb.append(str)
+            }
+        }
+        if(sb.length > 0){
+            summary = sb.toString()
+            return summary
+        }
+
+        //check tongguan
+        for(ss in data.tongguanShenList){
+            str = ShiShenUtil().getBaziShiShenStatString(data, ss)
             if(str.length > 0){
                 sb.append(str)
             }

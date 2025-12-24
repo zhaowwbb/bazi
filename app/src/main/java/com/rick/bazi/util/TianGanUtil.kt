@@ -23,6 +23,27 @@ class TianGanUtil {
         val dstTg: TianGan,
         val wx: WuXing
     )
+//
+//    val tianGanShengMap : Map<TianGan,TianGan> = mapOf(
+//
+//    )
+//
+//    val tianGanKeMap : Map<TianGan,TianGan> = mapOf(
+//
+//    )
+
+    val nextTianGanMap: Map<TianGan,TianGan> = mapOf(
+        TianGan.TIANGAN_JIA to TianGan.TIANGAN_YI,
+        TianGan.TIANGAN_YI to TianGan.TIANGAN_BING,
+        TianGan.TIANGAN_BING to TianGan.TIANGAN_DING,
+        TianGan.TIANGAN_DING to TianGan.TIANGAN_WU,
+        TianGan.TIANGAN_WU to TianGan.TIANGAN_JI,
+        TianGan.TIANGAN_JI to TianGan.TIANGAN_GENG,
+        TianGan.TIANGAN_GENG to TianGan.TIANGAN_XIN,
+        TianGan.TIANGAN_XIN to TianGan.TIANGAN_REN,
+        TianGan.TIANGAN_REN to TianGan.TIANGAN_GUI,
+        TianGan.TIANGAN_GUI to TianGan.TIANGAN_JIA,
+    )
 
     val tgLuLookupMap: Map<TianGan, DiZhi> = mapOf(
         TianGan.TIANGAN_JIA to DiZhi.DIZHI_YIN,
@@ -39,6 +60,28 @@ class TianGanUtil {
 
     fun getTianGanLu(tg : TianGan) : DiZhi{
         return tgLuLookupMap.get(tg)!!
+    }
+
+    fun isTianGanYang(tg : TianGan) : Boolean{
+        if(tg == TianGan.TIANGAN_JIA ||
+            tg == TianGan.TIANGAN_BING ||
+            tg == TianGan.TIANGAN_WU ||
+            tg == TianGan.TIANGAN_GENG ||
+            tg == TianGan.TIANGAN_REN){
+            return true
+        }
+        return false
+    }
+
+    fun getNextTianGan(tg : TianGan) : TianGan{
+        return nextTianGanMap.get(tg)!!
+    }
+
+    fun getPrevTianGan(tg : TianGan) : TianGan{
+        for((key, value) in nextTianGanMap){
+            if(value == tg)return key
+        }
+        return tg
     }
 
     val tianGanHeMap: Map<TianGan, TianGan> = mapOf(
@@ -68,6 +111,10 @@ class TianGanUtil {
         TianGan.TIANGAN_REN to WuXing.WUXING_MU,
         TianGan.TIANGAN_GUI to WuXing.WUXING_HUO
     )
+
+    fun getTianGanHeWuXing(tg : TianGan) : WuXing{
+        return tianGanHeWuXingMap.get(tg)!!
+    }
 
 
     val tianGanPosStrMap: Map<TianGanPos, Int> = mapOf(
@@ -310,5 +357,43 @@ class TianGanUtil {
             sb.append(stringResource(R.string.app_bazi_tiangan_hehua_no))
         }
         return sb.toString()
+    }
+
+    fun isTianGanSheng(srcTG : TianGan, dstTG : TianGan) : Boolean{
+        if(srcTG == TianGan.TIANGAN_JIA || srcTG == TianGan.TIANGAN_YI){
+            if(dstTG == TianGan.TIANGAN_BING || dstTG == TianGan.TIANGAN_DING)return true
+        }
+        if(srcTG == TianGan.TIANGAN_BING || srcTG == TianGan.TIANGAN_DING){
+            if(dstTG == TianGan.TIANGAN_WU || dstTG == TianGan.TIANGAN_JI)return true
+        }
+        if(srcTG == TianGan.TIANGAN_WU || srcTG == TianGan.TIANGAN_JI){
+            if(dstTG == TianGan.TIANGAN_GENG || dstTG == TianGan.TIANGAN_XIN)return true
+        }
+        if(srcTG == TianGan.TIANGAN_GENG || srcTG == TianGan.TIANGAN_XIN){
+            if(dstTG == TianGan.TIANGAN_REN || dstTG == TianGan.TIANGAN_GUI)return true
+        }
+        if(srcTG == TianGan.TIANGAN_REN || srcTG == TianGan.TIANGAN_GUI){
+            if(dstTG == TianGan.TIANGAN_JIA || dstTG == TianGan.TIANGAN_YI)return true
+        }
+        return false
+    }
+
+    fun isTianGanKe(srcTG : TianGan, dstTG : TianGan) : Boolean{
+        if(srcTG == TianGan.TIANGAN_JIA || srcTG == TianGan.TIANGAN_YI){
+            if(dstTG == TianGan.TIANGAN_WU || dstTG == TianGan.TIANGAN_JI)return true
+        }
+        if(srcTG == TianGan.TIANGAN_BING || srcTG == TianGan.TIANGAN_DING){
+            if(dstTG == TianGan.TIANGAN_GENG || dstTG == TianGan.TIANGAN_XIN)return true
+        }
+        if(srcTG == TianGan.TIANGAN_WU || srcTG == TianGan.TIANGAN_JI){
+            if(dstTG == TianGan.TIANGAN_REN || dstTG == TianGan.TIANGAN_GUI)return true
+        }
+        if(srcTG == TianGan.TIANGAN_GENG || srcTG == TianGan.TIANGAN_XIN){
+            if(dstTG == TianGan.TIANGAN_JIA || dstTG == TianGan.TIANGAN_YI)return true
+        }
+        if(srcTG == TianGan.TIANGAN_REN || srcTG == TianGan.TIANGAN_GUI){
+            if(dstTG == TianGan.TIANGAN_BING || dstTG == TianGan.TIANGAN_DING)return true
+        }
+        return false
     }
 }

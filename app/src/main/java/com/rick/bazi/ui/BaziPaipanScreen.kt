@@ -55,12 +55,6 @@ import com.rick.bazi.util.DateUtils
 import com.rick.bazi.util.DiZhiUtil
 import com.rick.bazi.util.ShiShenUtil
 
-
-data class DayunRecord(
-    val dyLabel: String,
-    val dyAgeLabel: String
-)
-
 @Composable
 fun BaziPaipanScreen(
     subtotal: String,
@@ -664,52 +658,52 @@ fun BaziPaipanPreview() {
     }
 }
 
-@Composable
-fun getDayunList(baziInfo: BaziInfo) : MutableList<DayunRecord>{
-    var records: MutableList<DayunRecord> = arrayListOf()
-    var startIndex = 1
-    var endIndex = 10
-    var base = baziInfo.monthBase
-    var tg = TianGan.TIANGAN_JIA
-    var dz = DiZhi.DIZHI_ZI
-    var builder = StringBuilder()
-    var days = baziInfo.dayunDays
-    var dayunStartYear = BaziUtil().getDayunStartYear(baziInfo.birthDateYear, days)
-    var isDYForward = baziInfo.dayunForward
-    var yearOffet = BaziUtil().getDayunStartOffset(days)
-    var labelstr = ""
-    var ageStr = ""
-    for (i in startIndex..endIndex) {
-        if(isDYForward){
-            base = baziInfo.monthBase + i
-        }else{
-            base = baziInfo.monthBase - i
-        }
-        tg = BaziUtil().getTianganFromBase(base)
-        dz = BaziUtil().getDizhiFromBase(base)
-        builder = StringBuilder()
-        builder.append(BaziUtil().getTianGanLabel(tg))
-        builder.append(BaziUtil().getDizhiLabel(dz))
-        builder.append("(")
-        builder.append(stringResource(R.string.bazi_tkdc_dayun))
-        builder.append(")")
-        builder.append(" ")
-
-        builder.append(dayunStartYear + (i - 1) * 10)
-        builder.append(stringResource(R.string.app_to))
-        builder.append(dayunStartYear + (i - 1) * 10 + 9)
-
-        labelstr = builder.toString()
-
-        builder = StringBuilder()
-        builder.append((i - 1) * 10 + yearOffet + 1)
-        builder.append(stringResource(R.string.app_to))
-        builder.append((i - 1) * 10 + yearOffet + 10)
-        builder.append(stringResource(R.string.age_unit))
-
-        ageStr = builder.toString()
-        val r = DayunRecord(labelstr, ageStr)
-        records.add(r)
-    }
-    return records
-}
+//@Composable
+//fun getDayunList(baziInfo: BaziInfo) : MutableList<DayunRecord>{
+//    var records: MutableList<DayunRecord> = arrayListOf()
+//    var startIndex = 1
+//    var endIndex = 10
+//    var base = baziInfo.monthBase
+//    var tg = TianGan.TIANGAN_JIA
+//    var dz = DiZhi.DIZHI_ZI
+//    var builder = StringBuilder()
+//    var days = baziInfo.dayunDays
+//    var dayunStartYear = BaziUtil().getDayunStartYear(baziInfo.birthDateYear, days)
+//    var isDYForward = baziInfo.dayunForward
+//    var yearOffet = BaziUtil().getDayunStartOffset(days)
+//    var labelstr = ""
+//    var ageStr = ""
+//    for (i in startIndex..endIndex) {
+//        if(isDYForward){
+//            base = baziInfo.monthBase + i
+//        }else{
+//            base = baziInfo.monthBase - i
+//        }
+//        tg = BaziUtil().getTianganFromBase(base)
+//        dz = BaziUtil().getDizhiFromBase(base)
+//        builder = StringBuilder()
+//        builder.append(BaziUtil().getTianGanLabel(tg))
+//        builder.append(BaziUtil().getDizhiLabel(dz))
+//        builder.append("(")
+//        builder.append(stringResource(R.string.bazi_tkdc_dayun))
+//        builder.append(")")
+//        builder.append(" ")
+//
+//        builder.append(dayunStartYear + (i - 1) * 10)
+//        builder.append(stringResource(R.string.app_to))
+//        builder.append(dayunStartYear + (i - 1) * 10 + 9)
+//
+//        labelstr = builder.toString()
+//
+//        builder = StringBuilder()
+//        builder.append((i - 1) * 10 + yearOffet + 1)
+//        builder.append(stringResource(R.string.app_to))
+//        builder.append((i - 1) * 10 + yearOffet + 10)
+//        builder.append(stringResource(R.string.age_unit))
+//
+//        ageStr = builder.toString()
+//        val r = DayunRecord(labelstr, ageStr)
+//        records.add(r)
+//    }
+//    return records
+//}

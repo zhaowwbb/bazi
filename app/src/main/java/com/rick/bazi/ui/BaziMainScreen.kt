@@ -78,6 +78,7 @@ import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziPaiPanUtil
 import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.DateUtils
+import com.rick.bazi.util.GeJuUtil
 import com.rick.bazi.util.VietCalendar.convertSolar2Lunar
 import com.rick.bazi.util.VietCalendar.jdFromDate
 import com.rick.bazi.util.VietCalendar.jdToDate
@@ -391,6 +392,7 @@ fun BaziStartScreen(
 
                         var data = BaziPaiPanUtil().paipan(year, month, day, hour, selectedGenderValue, baziModel, baziInfo)
                         baziModel.setBaziData(data)
+
                         navController.navigate(BaziScreen.Paipan.name)
                     }
                 ) {

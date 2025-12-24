@@ -4,9 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
 import com.rick.bazi.data.BaziData
+import com.rick.bazi.data.BaziYongShen
+import com.rick.bazi.data.ColumnPosition
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.DiZhiSanHeInfo
 import com.rick.bazi.data.DiZhiSanHuiInfo
+import com.rick.bazi.data.RootLevel
 import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.TiaoHouYongShen
@@ -276,9 +279,46 @@ class YongShenUtil {
         calculateTiaoHouYongShen(data)
         //tongguan
         calculateTongGuanShen(data)
+        //shishen weight
+        calculateShiShenWeight(data)
     }
 
-    fun calculateTongGuanShen(data: BaziData){
+    fun calculateShiShenWeight(data: BaziData) {
+        var wx = WuXingUtil().getTgWX(data.dayTiangan)
+        if (wx == WuXing.WUXING_MU) {
+            data.yinWeight = data.shuiWeight
+            data.bijieWeight = data.muWeight
+            data.guanshaWeight = data.jinWeight
+            data.shishangWeight = data.huoWeight
+            data.caiWeight = data.tuWeight
+        } else if (wx == WuXing.WUXING_HUO) {
+            data.yinWeight = data.muWeight
+            data.bijieWeight = data.huoWeight
+            data.guanshaWeight = data.shuiWeight
+            data.shishangWeight = data.tuWeight
+            data.caiWeight = data.jinWeight
+        } else if (wx == WuXing.WUXING_SHUI) {
+            data.yinWeight = data.jinWeight
+            data.bijieWeight = data.shuiWeight
+            data.guanshaWeight = data.tuWeight
+            data.shishangWeight = data.muWeight
+            data.caiWeight = data.huoWeight
+        } else if (wx == WuXing.WUXING_JIN) {
+            data.yinWeight = data.tuWeight
+            data.bijieWeight = data.jinWeight
+            data.guanshaWeight = data.huoWeight
+            data.shishangWeight = data.shuiWeight
+            data.caiWeight = data.muWeight
+        } else if (wx == WuXing.WUXING_TU) {
+            data.yinWeight = data.huoWeight
+            data.bijieWeight = data.tuWeight
+            data.guanshaWeight = data.muWeight
+            data.shishangWeight = data.jinWeight
+            data.caiWeight = data.shuiWeight
+        }
+    }
+
+    fun calculateTongGuanShen(data: BaziData) {
         if (data.tongguanYongShen == TongGuanYongShen.TONG_GUAN_JIN_MU) {
             data.tongguanShenList = getShiShenByWuXing(data, WuXing.WUXING_SHUI)
         } else if (data.tongguanYongShen == TongGuanYongShen.TONG_GUAN_HUO_JIN) {
@@ -469,34 +509,34 @@ class YongShenUtil {
         return ret
     }
 
-    fun getShiShenByWuXing(data: BaziData, wx : WuXing) : List<ShiShen>{
-        var wx = WuXingUtil().getTgWX(data.dayTiangan)
-        var list : List<ShiShen> = listOf()
-        if(WuXingUtil().getYinWuXing(data.dayTiangan) == wx){
+    fun getShiShenByWuXing(data: BaziData, wx: WuXing): List<ShiShen> {
+//        var wx = WuXingUtil().getTgWX(data.dayTiangan)
+        var list: List<ShiShen> = listOf()
+        if (WuXingUtil().getYinWuXing(data.dayTiangan) == wx) {
             list = listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
-        }else if(WuXingUtil().getShishangWuXing(data.dayTiangan) == wx){
+        } else if (WuXingUtil().getShishangWuXing(data.dayTiangan) == wx) {
             list = listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
-        }else if(WuXingUtil().getBiJieWuXing(data.dayTiangan) == wx){
+        } else if (WuXingUtil().getBiJieWuXing(data.dayTiangan) == wx) {
             list = listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
-        }else if(WuXingUtil().getGuanshaWuXing(data.dayTiangan) == wx){
+        } else if (WuXingUtil().getGuanshaWuXing(data.dayTiangan) == wx) {
             list = listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
-        }else if(WuXingUtil().getCaiWuXing(data.dayTiangan) == wx){
+        } else if (WuXingUtil().getCaiWuXing(data.dayTiangan) == wx) {
             list = listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
         }
         return list
     }
 
-    fun calculateTiaoHouYongShen(data: BaziData){
+    fun calculateTiaoHouYongShen(data: BaziData) {
 //        YongShenUtil().calculateWuXingWeight(data)
-        if(isBaziCold(data)){
+        if (isBaziCold(data)) {
             data.tiaohouShenList = getShiShenByWuXing(data, WuXing.WUXING_HUO)
-        }else if(isBaziHot(data)){
+        } else if (isBaziHot(data)) {
             data.tiaohouShenList = getShiShenByWuXing(data, WuXing.WUXING_SHUI)
-        }else if(isBaziDry(data)){
+        } else if (isBaziDry(data)) {
             data.tiaohouShenList = getShiShenByWuXing(data, WuXing.WUXING_SHUI)
-        }else if(isBaziWet(data)){
+        } else if (isBaziWet(data)) {
             data.tiaohouShenList = getShiShenByWuXing(data, WuXing.WUXING_HUO)
-        }else{
+        } else {
             data.tiaohouShenList = listOf()
         }
     }
@@ -507,24 +547,381 @@ class YongShenUtil {
         var sb = StringBuilder()
         YongShenUtil().calculateWuXingWeight(data)
 
-        if(isBaziCold(data)){
+        if (isBaziCold(data)) {
             summary =
-                stringResource(R.string.app_bazi_tiaohou_cold) + "[" + WuXingUtil().getWuXingText(WuXing.WUXING_HUO) + "]"
-        }else if(isBaziHot(data)){
+                stringResource(R.string.app_bazi_tiaohou_cold) + "[" + WuXingUtil().getWuXingText(
+                    WuXing.WUXING_HUO
+                ) + "]"
+        } else if (isBaziHot(data)) {
             summary =
-                stringResource(R.string.app_bazi_tiaohou_hot) + "[" + WuXingUtil().getWuXingText(WuXing.WUXING_SHUI) + "]"
-        }else if(isBaziDry(data)){
+                stringResource(R.string.app_bazi_tiaohou_hot) + "[" + WuXingUtil().getWuXingText(
+                    WuXing.WUXING_SHUI
+                ) + "]"
+        } else if (isBaziDry(data)) {
             summary =
-                stringResource(R.string.app_bazi_tiaohou_dry) + "[" + WuXingUtil().getWuXingText(WuXing.WUXING_SHUI) + "]"
-        }else if(isBaziWet(data)){
+                stringResource(R.string.app_bazi_tiaohou_dry) + "[" + WuXingUtil().getWuXingText(
+                    WuXing.WUXING_SHUI
+                ) + "]"
+        } else if (isBaziWet(data)) {
             summary =
-                stringResource(R.string.app_bazi_tiaohou_wet) + "[" + WuXingUtil().getWuXingText(WuXing.WUXING_HUO) + "]"
-        }else{
+                stringResource(R.string.app_bazi_tiaohou_wet) + "[" + WuXingUtil().getWuXingText(
+                    WuXing.WUXING_HUO
+                ) + "]"
+        } else {
             summary = stringResource(R.string.app_bazi_tiaohou_mild)
         }
 
         sb.append(summary)
 
         return sb.toString()
+    }
+
+//    fun getYongshen(data: BaziData, )
+
+    fun getRootWeight(rootLevel: RootLevel): Int {
+        if (rootLevel == RootLevel.STRONG_ROOT) return 3
+        if (rootLevel == RootLevel.MEDIUM_ROOT) return 2
+        if (rootLevel == RootLevel.WEAK_ROOT) return 1
+        return 0
+    }
+
+    fun addTianGanYongShen(data: BaziData, tg: TianGan, columnPosition: ColumnPosition, yongshenList : MutableList<BaziYongShen>) {
+        var isYongShen = false
+        var dz = data.yearDizhi
+        var hasRoot = false
+        var weight = 0
+        var yongshen: BaziYongShen
+
+        for (ss in data.allYongShenList) {
+            if (ShiShenUtil().getShiShen(tg, data.dayTiangan) == ss) {
+                isYongShen = true
+                break
+            }
+        }
+        if (isYongShen) {
+            weight += 1
+            hasRoot = WuXingUtil().checkRootToTianGan(data, tg)
+            if (hasRoot) {
+                weight += getRootWeight(data.yearDzRootLevel)
+                weight += getRootWeight(data.monthDzRootLevel)
+                weight += getRootWeight(data.dayDzRootLevel)
+                weight += getRootWeight(data.hourDzRootLevel)
+            }
+            yongshen = BaziYongShen(
+                columnPosition = columnPosition,
+                tg = tg,
+                dz = dz,
+                isTianGan = true,
+                weight = weight,
+                isTongGen = hasRoot,
+                isTouchu = false
+            )
+            yongshenList.add(yongshen)
+        }
+    }
+
+    fun addDiZhiYongShen(data: BaziData, dz: DiZhi, columnPosition: ColumnPosition, yongshenList : MutableList<BaziYongShen>) {
+        var isYongShen = false
+        var tg = data.yearTiangan
+        var yongShenTG = TianGan.TIANGAN_JIA
+//        var dz = data.yearDizhi
+        var isTouGan = false
+        var isCangGan = false
+        var weight = 0
+        var yongshen: BaziYongShen
+        var tgArray = DiZhiUtil().getCanggan(dz)
+        for (ss in data.allYongShenList) {
+            tg = tgArray[0]
+            if (ShiShenUtil().getShiShen(tg, data.dayTiangan) == ss) {
+                isYongShen = true
+                yongShenTG = tg
+                weight += 2
+                isTouGan = DiZhiUtil().isDiZhiTouTianGan(tg, data)
+                if(isTouGan)weight += 3
+                break
+            }
+            if(tgArray.size == 2){
+                tg = tgArray[1]
+                if (ShiShenUtil().getShiShen(tg, data.dayTiangan) == ss) {
+                    isYongShen = true
+                    weight += 1
+                    isCangGan = true
+                    yongShenTG = tg
+                    isTouGan = DiZhiUtil().isDiZhiTouTianGan(tg, data)
+                    if(isTouGan)weight += 2
+                    break
+                }
+            }
+            if(tgArray.size == 3){
+                tg = tgArray[2]
+                if (ShiShenUtil().getShiShen(tg, data.dayTiangan) == ss) {
+                    isYongShen = true
+                    weight += 1
+                    isCangGan = true
+                    yongShenTG = tg
+                    isTouGan = DiZhiUtil().isDiZhiTouTianGan(tg, data)
+                    if(isTouGan)weight += 1
+                    break
+                }
+            }
+        }
+        if (isYongShen) {
+            yongshen = BaziYongShen(
+                columnPosition = columnPosition,
+                tg = tg,
+                dz = dz,
+                isTianGan = false,
+                weight = weight,
+                isTongGen = false,
+                isTouchu = isTouGan,
+                isCangGan = isCangGan,
+                yongshenTG = yongShenTG
+            )
+            yongshenList.add(yongshen)
+        }
+    }
+
+    fun checkBaziYongShen(data: BaziData) {
+        val yongshenList: MutableList<BaziYongShen> = mutableListOf()
+        var isYongShen = false
+        var tg = data.yearTiangan
+        var dz = data.yearDizhi
+//        var hasRoot = false
+//        var weight = 0
+//        var yongshen: BaziYongShen = null
+        data.allYongShenList =
+            (data.yongShenList + data.xiShenList + data.tiaohouShenList + data.tongguanShenList).distinct()
+
+        //check year tiangan
+        addTianGanYongShen(data, data.yearTiangan, ColumnPosition.COLUMN_YEAR, yongshenList)
+        addTianGanYongShen(data, data.monthTiangan, ColumnPosition.COLUMN_MONTH, yongshenList)
+        addTianGanYongShen(data, data.hourTiangan, ColumnPosition.COLUMN_HOUR, yongshenList)
+
+        addDiZhiYongShen(data, data.yearDizhi, ColumnPosition.COLUMN_YEAR, yongshenList)
+        addDiZhiYongShen(data, data.monthDizhi, ColumnPosition.COLUMN_MONTH, yongshenList)
+        addDiZhiYongShen(data, data.dayDizhi, ColumnPosition.COLUMN_DAY, yongshenList)
+        addDiZhiYongShen(data, data.hourDizhi, ColumnPosition.COLUMN_HOUR, yongshenList)
+
+        //sort yongshenList by weight
+        val sortedYongshenList = yongshenList.sortedByDescending { it.weight }
+        data.baziYongShenList = sortedYongshenList
+    }
+
+    @Composable
+    fun getYongshenString(data: BaziData): String {
+        val sb = StringBuilder()
+        for(ys in data.baziYongShenList){
+            sb.append("    ")
+            if(ys.columnPosition == ColumnPosition.COLUMN_YEAR){
+                sb.append(stringResource(R.string.bazi_year))
+            } else if(ys.columnPosition == ColumnPosition.COLUMN_MONTH){
+                sb.append(stringResource(R.string.bazi_month))
+            }else if(ys.columnPosition == ColumnPosition.COLUMN_DAY){
+                sb.append(stringResource(R.string.bazi_day))
+            }else if(ys.columnPosition == ColumnPosition.COLUMN_HOUR){
+                sb.append(stringResource(R.string.bazi_hour))
+            }
+            sb.append(" ")
+            if(ys.isTianGan){
+                sb.append(WuXingUtil().getTianGanWuXingText(ys.tg))
+                sb.append("(")
+                sb.append(ShiShenUtil().getShiShenText(ys.tg, data.dayTiangan))
+                sb.append(") ")
+            }else{
+                if(ys.isCangGan){
+                    sb.append(BaziUtil().getDizhiText(ys.dz))
+                    sb.append(WuXingUtil().getDiZhiWuxingText(ys.dz))
+                    sb.append("(")
+                    sb.append(stringResource(R.string.bazi_canggan))
+                    sb.append(WuXingUtil().getTianGanWuXingText(ys.yongshenTG))
+                    sb.append(" ")
+                    sb.append(ShiShenUtil().getShiShenText(ys.yongshenTG, data.dayTiangan))
+                    sb.append(") ")
+                }else{
+                    sb.append(BaziUtil().getDizhiText(ys.dz))
+                    sb.append(WuXingUtil().getDiZhiWuxingText(ys.dz))
+                    sb.append("(")
+                    sb.append(ShiShenUtil().getDiZhiShiShenText(ys.dz, data.dayTiangan))
+                    sb.append(") ")
+                }
+            }
+            sb.append(" ")
+            sb.append(stringResource(R.string.app_bazi_weight_label))
+            sb.append("(")
+            sb.append(ys.weight)
+            sb.append(") ")
+            sb.append("\n")
+        }
+        return sb.toString()
+    }
+
+    fun isWuXingXiYongShen(wx : WuXing, data: BaziData) : Boolean{
+        var tg1 = TianGan.TIANGAN_JIA
+        var tg2 = TianGan.TIANGAN_JIA
+        if(wx == WuXing.WUXING_MU){
+            tg1 = TianGan.TIANGAN_JIA
+            tg2 = TianGan.TIANGAN_YI
+        }
+        if(wx == WuXing.WUXING_JIN){
+            tg1 = TianGan.TIANGAN_GENG
+            tg2 = TianGan.TIANGAN_XIN
+        }
+        if(wx == WuXing.WUXING_HUO){
+            tg1 = TianGan.TIANGAN_BING
+            tg2 = TianGan.TIANGAN_DING
+        }
+        if(wx == WuXing.WUXING_TU){
+            tg1 = TianGan.TIANGAN_WU
+            tg2 = TianGan.TIANGAN_JI
+        }
+        if(wx == WuXing.WUXING_SHUI){
+            tg1 = TianGan.TIANGAN_REN
+            tg2 = TianGan.TIANGAN_GUI
+        }
+
+        var ss = ShiShenUtil().getShiShen(tg1, data.dayTiangan)
+        for(ys in data.allYongShenList){
+            if(ys == ss){
+                return true
+            }
+        }
+        ss = ShiShenUtil().getShiShen(tg2, data.dayTiangan)
+        for(ys in data.allYongShenList){
+            if(ys == ss){
+                return true
+            }
+        }
+        return false
+    }
+
+    fun isWuXingJiShen(wx : WuXing, data: BaziData) : Boolean{
+        var tg1 = TianGan.TIANGAN_JIA
+        var tg2 = TianGan.TIANGAN_JIA
+        if(wx == WuXing.WUXING_MU){
+            tg1 = TianGan.TIANGAN_JIA
+            tg2 = TianGan.TIANGAN_YI
+        }
+        if(wx == WuXing.WUXING_JIN){
+            tg1 = TianGan.TIANGAN_GENG
+            tg2 = TianGan.TIANGAN_XIN
+        }
+        if(wx == WuXing.WUXING_HUO){
+            tg1 = TianGan.TIANGAN_BING
+            tg2 = TianGan.TIANGAN_DING
+        }
+        if(wx == WuXing.WUXING_TU){
+            tg1 = TianGan.TIANGAN_WU
+            tg2 = TianGan.TIANGAN_JI
+        }
+        if(wx == WuXing.WUXING_SHUI){
+            tg1 = TianGan.TIANGAN_REN
+            tg2 = TianGan.TIANGAN_GUI
+        }
+
+        if(!isWuXingXiYongShen(wx, data)){
+            var ss = ShiShenUtil().getShiShen(tg1, data.dayTiangan)
+            for(ys in data.jiShenList){
+                if(ys == ss){
+                    return true
+                }
+            }
+            ss = ShiShenUtil().getShiShen(tg2, data.dayTiangan)
+            for(ys in data.jiShenList){
+                if(ys == ss){
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun isTianGanYongShen(tg : TianGan, data: BaziData) : Boolean{
+        var ret = false
+
+        if(data.baziYongShenList.size > 0){
+            var ys = data.baziYongShenList[0]
+            if(ys.isTianGan && ys.tg == tg){
+                return true
+            }
+        }
+        return ret
+    }
+
+    fun isTianGanXiShen(tg : TianGan, data: BaziData) : Boolean{
+        var ret = false
+        var ss = ShiShenUtil().getShiShen(tg, data.dayTiangan)
+        if(!isTianGanYongShen(tg, data)){
+            for(ys in data.allYongShenList){
+                if(ys == ss){
+                    ret = true
+                    break
+                }
+            }
+        }
+        return ret
+    }
+
+    fun isTianGanJiShen(tg : TianGan, data: BaziData) : Boolean{
+        var ss = ShiShenUtil().getShiShen(tg, data.dayTiangan)
+        for(ys in data.allYongShenList){
+            if(ys == ss){
+                return false
+            }
+        }
+
+        for(js in data.jiShenList){
+            if(js == ss){
+                return true
+            }
+        }
+        return false
+    }
+
+    fun isDiZhiJiShen(dz : DiZhi, data: BaziData) : Boolean{
+        var tgArray =  DiZhiUtil().getCanggan(dz)
+        var tg = tgArray[0]
+
+        var ss = ShiShenUtil().getShiShen(tg, data.dayTiangan)
+        //skip if it is in xi yong shen list
+        for(ys in data.allYongShenList){
+            if(ys == ss){
+                return false
+            }
+        }
+
+        for(ys in data.jiShenList){
+            if(ys == ss){
+                return true
+            }
+        }
+       return false
+    }
+
+    fun isDiZhiXiShen(dz : DiZhi, data: BaziData) : Boolean{
+        var tgArray =  DiZhiUtil().getCanggan(dz)
+        var tg = tgArray[0]
+        if(isDiZhiYongShen(dz, data)){
+            return false
+        }
+
+        var ss = ShiShenUtil().getShiShen(tg, data.dayTiangan)
+        for(ys in data.allYongShenList){
+            if(ys == ss){
+                return true
+            }
+        }
+        return false
+    }
+
+    fun isDiZhiYongShen(dz : DiZhi, data: BaziData) : Boolean{
+        var ys : BaziYongShen
+
+        if(data.baziYongShenList.size > 0){
+            ys = data.baziYongShenList.get(0)
+            if(!ys.isTianGan && dz == ys.dz){
+                return true
+            }
+        }
+        return false
     }
 }
