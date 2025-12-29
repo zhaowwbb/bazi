@@ -5,9 +5,10 @@ data class BaziYongShen(
     var tg: TianGan = TianGan.TIANGAN_JIA,
     var dz: DiZhi = DiZhi.DIZHI_ZI,
     var isTianGan : Boolean = true,
-    var weight : Int = 0,
+    var weight : Float = 0f,
     var isTongGen : Boolean = false,
     var isTouchu : Boolean = false,
     var isCangGan : Boolean = false,
     var yongshenTG: TianGan = TianGan.TIANGAN_JIA,
+    var xiYongWeight : Float = 0f,
     )

@@ -67,7 +67,10 @@ data class BaziData(
     var daYunStartDay : Int = 0,
     var daYunFirstYear : Int = 0,
     var daYunFirstMonth : Int = 0,
-    var daYunWeight : Int = 0,
+    var daYunWeight : Float = 0f,
+    var liuNianWeight : Float = 0f,
 
     var baziYongShenList :  List<BaziYongShen> = listOf(),
+    var xiyongShenSet : Set<ShiShen> = setOf(),
+    var jiShenSet : Set<ShiShen> = setOf(),
 )

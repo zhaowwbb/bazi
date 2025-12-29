@@ -33,6 +33,8 @@ import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziUtil
+import com.rick.bazi.util.ConstUtil
+import com.rick.bazi.util.ConstUtil.Companion.SPACE
 import com.rick.bazi.util.DiZhiUtil
 import com.rick.bazi.util.GeJuUtil
 import com.rick.bazi.util.TianGanUtil
@@ -98,7 +100,7 @@ fun BaziAppAnalysisScreen(
                 modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
 //                val bullet = "\u2022" // Unicode bullet character
-                val SPACE = "    "
+//                val SPACE = "    "
                 val analysisResult = buildAnnotatedString {
 
                     //1.
@@ -290,12 +292,12 @@ fun BaziAppAnalysisScreen(
                     withStyle(style = SpanStyle(fontSize = 18.sp)) {
                         append(SPACE + YongShenUtil().getTiaohouString(baziInfo.baziData) + "\n")
                     }
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
-                        append(stringResource(R.string.app_bazi_yongshen_tongguan_label) + ":\n")
-                    }
-                    withStyle(style = SpanStyle(fontSize = 18.sp)) {
-                        append(SPACE + YongShenUtil().getTongGuanYongshenString(baziInfo.baziData) + "\n")
-                    }
+//                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
+//                        append(stringResource(R.string.app_bazi_yongshen_tongguan_label) + ":\n")
+//                    }
+//                    withStyle(style = SpanStyle(fontSize = 18.sp)) {
+//                        append(SPACE + YongShenUtil().getTongGuanYongshenString(baziInfo.baziData) + "\n")
+//                    }
 
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
                         append(stringResource(R.string.app_bazi_final_yong_shen) + ":\n")

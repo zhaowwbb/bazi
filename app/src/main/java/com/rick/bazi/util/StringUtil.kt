@@ -8,29 +8,36 @@ import com.rick.bazi.data.TianGan
 
 val SPACE = "    "
 
-@Composable
-fun getTianganStr(
-    baziInfo: BaziInfo,
-    tiangan: TianGan
-): String {
-    val tianganStrMap: Map<TianGan, Int> = BaziUtil().tianganStrMap
-    var tianganStrKey = tianganStrMap.getValue(tiangan)
-    val str = stringResource(tianganStrKey)
-    return str
-}
+class StringUtil {
+//    @Composable
+//    fun getTianganStr(
+//        baziInfo: BaziInfo, tiangan: TianGan
+//    ): String {
+//        val tianganStrMap: Map<TianGan, Int> = BaziUtil().tianganStrMap
+//        var tianganStrKey = tianganStrMap.getValue(tiangan)
+//        val str = stringResource(tianganStrKey)
+//        return str
+//    }
+//
+//    @Composable
+//    fun getDizhiStr(
+//        baziInfo: BaziInfo, diZhi: DiZhi
+//    ): String {
+//        val dizhiStrMap: Map<DiZhi, Int> = BaziUtil().dizhiStrMap
+//        var dizhiStrKey = dizhiStrMap.getValue(diZhi)
+//        val str = stringResource(dizhiStrKey)
+//        return str
+//    }
 
-@Composable
-fun getDizhiStr(
-    baziInfo: BaziInfo,
-    diZhi: DiZhi
-): String {
-    val dizhiStrMap: Map<DiZhi, Int> = BaziUtil().dizhiStrMap
-    var dizhiStrKey = dizhiStrMap.getValue(diZhi)
-    val str = stringResource(dizhiStrKey)
-    return str
-}
+    fun addString(sb: StringBuilder, str: String): String {
+        if (str != null && str.length > 0) return str
+        return ""
+    }
 
-fun addString(sb : StringBuilder, str : String) : String{
-    if(str != null && str.length > 0)return str
-    return ""
+    fun appendToEmpty(sb: StringBuilder, str: String): String {
+        if (sb != null && sb.isEmpty()) {
+            return str
+        }
+        return ""
+    }
 }

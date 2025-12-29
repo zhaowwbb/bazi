@@ -80,8 +80,8 @@ fun BaziSampleScreen(
                 Text(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 28.sp,
                     text = stringResource(R.string.app_bazi_sample)
                 )
             }
@@ -101,8 +101,8 @@ fun BaziSampleScreen(
                     Text(
                         textAlign = TextAlign.Left,
                         modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Light,
+                        fontSize = 22.sp,
                         text = stringResource(sample.nameId)
                     )
                 }
@@ -113,8 +113,8 @@ fun BaziSampleScreen(
                     Text(
                         textAlign = TextAlign.End,
                         modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Light,
+                        fontSize = 22.sp,
                         text = stringResource(sample.baziDateStrId)
                     )
                 }
@@ -138,31 +138,6 @@ fun BaziSampleScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 HorizontalDivider(thickness = 2.dp)
-            }
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedButton(
-                    modifier = Modifier.weight(1f),
-                    onClick = onCancelButtonClicked
-                ) {
-                    Text(
-                        text = stringResource(R.string.back_button),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
             }
         }
     }

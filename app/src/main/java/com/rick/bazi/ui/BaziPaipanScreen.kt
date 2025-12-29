@@ -46,14 +46,15 @@ import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.MALE
 import com.rick.bazi.data.TianGan
-import com.rick.bazi.util.getTianganStr
-import com.rick.bazi.util.getDizhiStr
+//import com.rick.bazi.util.getTianganStr
+//import com.rick.bazi.util.getDizhiStr
 import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.DateUtils
 import com.rick.bazi.util.DiZhiUtil
 import com.rick.bazi.util.ShiShenUtil
+import com.rick.bazi.util.TianGanUtil
 
 @Composable
 fun BaziPaipanScreen(
@@ -71,6 +72,7 @@ fun BaziPaipanScreen(
 //    val preProcessBazi = mutableStateOf(false)
 
     val preProcessBazi = remember { mutableStateOf(false) }
+    val data = baziInfo.baziData
 
 //    preProcessBazi.value
 
@@ -272,7 +274,7 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = getTianganStr(baziInfo, baziInfo.yearTiangan),
+                    text = TianGanUtil().getTianGanText(data.yearTiangan),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -280,7 +282,7 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = getTianganStr(baziInfo, baziInfo.monthTiangan),
+                    text = TianGanUtil().getTianGanText(data.monthTiangan),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -288,7 +290,7 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = getTianganStr(baziInfo, baziInfo.dayTiangan),
+                    text = TianGanUtil().getTianGanText(data.dayTiangan),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -296,7 +298,7 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = getTianganStr(baziInfo, baziInfo.hourTiangan),
+                    text = TianGanUtil().getTianGanText(data.hourTiangan),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -320,7 +322,7 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = getDizhiStr(baziInfo, baziInfo.yearDizhi),
+                    text = DiZhiUtil().getDiZhiText(data.yearDizhi),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -328,7 +330,7 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = getDizhiStr(baziInfo, baziInfo.monthDizhi),
+                    text = DiZhiUtil().getDiZhiText(data.monthDizhi),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -336,7 +338,7 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = getDizhiStr(baziInfo, baziInfo.dayDizhi),
+                    text = DiZhiUtil().getDiZhiText(data.dayDizhi),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -344,7 +346,7 @@ fun BaziPaipanScreen(
                     style = MaterialTheme.typography.headlineLarge
                 )
                 Text(
-                    text = getDizhiStr(baziInfo, baziInfo.hourDizhi),
+                    text = DiZhiUtil().getDiZhiText(data.hourDizhi),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                     fontWeight = FontWeight(500),
@@ -516,7 +518,36 @@ fun BaziPaipanScreen(
                     navController.navigate(BaziScreen.DaYun.name)
                 }) {
                     Text(
-                        text = stringResource(R.string.app_bazi_dayun),
+                        text = stringResource(R.string.dayun_analysis_label),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.LiuNian.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.bazi_liunian_jixiong_label),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.TaoHua.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.taohua_label),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight(500),
@@ -535,45 +566,16 @@ fun BaziPaipanScreen(
                     )
                 }
             }
-
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.Summary.name)
-                }) {
-                    Text(
-                        text = stringResource(R.string.app_bazi_taohua_query),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
                 OutlinedButton(modifier = Modifier.weight(1f), onClick = {
                     navController.navigate(BaziScreen.TianKeDiChong.name)
                 }) {
                     Text(
                         text = stringResource(R.string.bazi_tkdc),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
-            }
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.Sample.name)
-                }) {
-                    Text(
-                        text = stringResource(R.string.app_bazi_sample),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight(500),
@@ -631,6 +633,17 @@ fun BaziPaipanScreen(
                 }) {
                     Text(
                         text = stringResource(R.string.app_introduction),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    navController.navigate(BaziScreen.Sample.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_sample),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight(500),

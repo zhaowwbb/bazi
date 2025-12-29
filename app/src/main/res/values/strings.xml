@@ -7,6 +7,8 @@
     <string name="app_label_hour">时</string>
     <string name="app_label_gan">干</string>
     <string name="app_label_zhi">支</string>
+    <string name="app_and_label">与</string>
+    <string name="app_he_label">合</string>
     <string name="tiangan_sheng_label">生助</string>
     <string name="tiangan_ke_label">克</string>
     <string name="app_bazi_title">八字排盘软件</string>
@@ -61,8 +63,10 @@
     <string name="app_bazi_result">桃花</string>
     <string name="app_bazi_suanming">八字分析</string>
     <string name="app_bazi_dayun">大运</string>
+    <string name="dayun_analysis_label">大运分析</string>
     <string name="app_bazi_10yeardayun">十年大运</string>
     <string name="app_bazi_yima">驿马</string>
+    <string name="yima_intro_label">驿马介绍</string>
     <string name="app_bazi_sample">八字案例</string>
     <string name="app_bazi_version">版本信息</string>
     <string name="app_bazi_analysis">命盘分析</string>
@@ -81,6 +85,8 @@
     <string name="app_dayun_start_time">起运时间</string>
     <string name="age_unit">岁</string>
     <string name="app_bazi_taohua_query">桃花</string>
+    <string name="taohua_label">桃花</string>
+    <string name="taohua_intro_label">桃花介绍</string>
     <string name="app_taohua_bazi">八字桃花</string>
     <string name="app_taohua_dayun">大运桃花</string>
     <string name="app_taohua_liunian">流年桃花</string>
@@ -125,7 +131,11 @@
     <string name="bz_version_1_5_time">2025年9月8日</string>
     <string name="bz_version_1_5_item1">(1)更新界面布局</string>
     <string name="bz_version_1_5_item2">(2)增加驿马检测</string>
-
+    <string name="bz_version_1_7">1.7</string>
+    <string name="bz_version_1_7_time">2025年12月28日</string>
+    <string name="bz_version_1_7_item1">(1)增加命盘分析</string>
+    <string name="bz_version_1_7_item2">(2)增加大运分析</string>
+    <string name="bz_version_1_7_item3">(3)增加流年吉凶检测</string>
 
     <string name="bazi_sample_introduction">在八字计算方面，我做了很多测试，用这个应用的排盘结果和其他几款在线排盘软件进行比较，经过多轮的Bugfix，准确率还行。可以用这个作为工具来计算八字，时辰的时间如果不确定，就扩大范围，2个小时一个时辰，一天推算12个八字来验证那个最符合自己，最终精准定位个人八字。\n 桃花预测算法来源网上搜集，总结了多方资料，应该有一定的准确率，但不够精确，里面没有日主强弱判断或喜用神选择，也没有考虑刑冲克害，想要更精确的结果，还是要找专业人士，术术门派众多，八字子平，盲派，紫微斗数，铁板神数，面相，手相，占星，占卜，风水，六爻等等，总有一款合适你。\n
 下面是一些桃花预测的用例，这个应用还是以娱乐为主，如果算的结果好，就是准，要是结果不好，就是不准，要算命，更要相信科学。</string>
@@ -201,6 +211,10 @@
     <string name="bazi_birth_day">出生日</string>
     <string name="bazi_birth_hour">出生时</string>
     <string name="bazi_liunian">流年</string>
+    <string name="bazi_liunian_jixiong_label">流年吉凶</string>
+    <string name="bazi_liunian_intro_label">流年介绍</string>
+    <string name="bazi_liunian_intro">八字中的“流年”指命理学中某一特定年份的天干地支（如2024甲辰年），代表该年的具体运势走向，即一年的祸福吉凶。</string>
+    <string name="bazi_liu_month">流月</string>
     <string name="bazi_dayun">大运</string>
     <string name="bazi_main_star">主星</string>
     <string name="bazi_canggan">藏干</string>
@@ -222,6 +236,8 @@
     <string name="dizhi">地支</string>
     <string name="dayun_tiangan_label">(运干)</string>
     <string name="dayun_dizhi_label">(运支)</string>
+    <string name="liunian_tiangan_label">(流干)</string>
+    <string name="liunian_dizhi_label">(流支)</string>
     <string name="dizhi_touchu_label">透出</string>
     <string name="dizhi_zi">子</string>
     <string name="dizhi_chou">丑</string>
@@ -295,6 +311,7 @@
     <string name="msg_lady_se4">《壶中子》有云：“太乙多淫”，这句话表达的意思为女命巳多者好色，巳火为“太乙”是为何呢？巳火在巽卦，大六壬里称之为“太乙”。您有四个巳，这个好色程度，玩斗地主都是王炸。</string>
 
     <string name="bazi_tkdc">天克地冲</string>
+    <string name="bazi_tkdc_label">天克地冲介绍</string>
     <string name="bazi_tkdc_introduction">天克地冲，指的是大运或流年的干支与命局中的某柱干支发生天干相克、地支相冲的关系，通常被视为不吉之兆，但并非所有情况下都预示着灾祸。</string>
     <string name="bazi_tkdc_dayun">大运</string>
     <string name="bazi_tkdc_liunian">流年</string>
@@ -921,6 +938,12 @@
     <string name="app_bazi_tiangan_hehua_success">合化成功</string>
     <string name="app_bazi_tiangan_hehua_failed">合而不化</string>
     <string name="app_bazi_tiangan_he_personality">命局中有天干五合之人，异性缘较好，易接纳他人，可能缺乏主见，容易人云亦云，随大流。</string>
+
+    <string name="tiangan_hehua_jiaji_label">甲己合土</string>
+    <string name="tiangan_hehua_yigeng_label">乙庚合金</string>
+    <string name="tiangan_hehua_bingxin_label">丙辛合水</string>
+    <string name="tiangan_hehua_dingren_label">丁壬合木</string>
+    <string name="tiangan_hehua_wugui_label">戊癸合火</string>
 
     <string name="app_bazi_tiangan_hehua_jj_desc">【甲己合化土】：中正之合，正义之合。甲为己之官，己为甲之财。1.讲信用，重信用，较固执。2.好好先生，不会乱来，不会说好听的话。3.一板一眼，不懂生活情趣，不解风情。4.人缘很好。</string>
     <string name="app_bazi_tiangan_hehua_yg_desc">【乙庚合化金】：仁义之合，正义之合。庚为乙之官，乙为庚之财。1.重义气，有仁德，刚强个性，果断力强。2.个性刚强果断，积极进取。3.不懂生活情趣，重视规律。4.人人好，不会去得罪别人，看到不高兴的，他会忍下来。</string>

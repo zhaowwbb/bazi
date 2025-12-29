@@ -8,15 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -30,18 +27,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rick.bazi.R
 import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.ui.theme.BaziTheme
-import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziUtil
 import com.rick.bazi.util.ConstUtil
-import com.rick.bazi.util.ConstUtil.Companion
 import com.rick.bazi.util.DaYunUtil
 import com.rick.bazi.util.GeJuUtil
+import com.rick.bazi.util.LiuNianUtil
 import com.rick.bazi.util.WuXingUtil
 import com.rick.bazi.util.YongShenUtil
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BaziDayunScreen(
+fun BaziLiuNianScreen(
     onCancelButtonClicked: () -> Unit,
     onSendButtonClicked: (String, String) -> Unit,
     baziInfo: BaziInfo,
@@ -93,7 +89,7 @@ fun BaziDayunScreen(
 //                        append(stringResource(R.string.app_bazi_analyze_label1) + "\n")
 //                    }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
-                        append("" + stringResource(R.string.app_bazi_str) + ":\n")
+                        append(stringResource(R.string.app_bazi_str) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 18.sp)) {
                         append(ConstUtil.SPACE + BaziUtil().createBaziStringOneLine(baziInfo) + "\n")
@@ -119,10 +115,10 @@ fun BaziDayunScreen(
                     }
 
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
-                        append(stringResource(R.string.app_bazi_dayun_intro_label) + ":\n")
+                        append(stringResource(R.string.bazi_liunian_intro_label) + ":\n")
                     }
                     withStyle(style = SpanStyle(fontSize = 18.sp)) {
-                        append(ConstUtil.SPACE + stringResource(R.string.app_bazi_dayun_intro) + "\n")
+                        append(ConstUtil.SPACE + stringResource(R.string.bazi_liunian_intro) + "\n")
                     }
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
                         append(stringResource(R.string.app_bazi_gj_yong_shen) + ":\n")
@@ -165,13 +161,13 @@ fun BaziDayunScreen(
 
                     //5
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
-                        append(stringResource(R.string.app_bazi_analyze_label5)+ "\n")
+                        append(stringResource(R.string.bazi_liunian_jixiong_label)+ "\n")
                     }
 //                    withStyle(style = SpanStyle(color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
 //                        append(stringResource(R.string.app_bazi_dayun) + ":")
 //                    }
                     withStyle(style = SpanStyle(fontSize = 18.sp)) {
-                        append(DaYunUtil().getDaYunSummaryString(baziInfo.baziData) + "\n")
+                        append(LiuNianUtil().getDaYunLiuNianSummaryString(baziInfo.baziData) + "\n")
                     }
                 }
 
@@ -189,7 +185,7 @@ fun BaziDayunScreen(
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun BaziDayunScreenPreview() {
+fun BaziLiuNianScreenPreview() {
     BaziTheme {
         BaziDayunScreen(
             onSendButtonClicked = { subject: String, summary: String -> },

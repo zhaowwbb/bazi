@@ -214,6 +214,16 @@ class ShiShenUtil {
         return ret
     }
 
+    fun isHelpShiShen(tg1 : TianGan, tg2 : TianGan) : Boolean{
+        if(getBijian(tg1) == tg2 ||
+            getJiecai(tg1) == tg2 ||
+            getZhengyin(tg1) == tg2 ||
+            getPianyin(tg1) == tg2 ){
+            return true
+        }
+        return false
+    }
+
     fun getShiShen(tg: TianGan, dayTg: TianGan): ShiShen {
         var ss : ShiShen = ShiShen.SHISHEN_BI_JIAN
         if (tg == getBijian(dayTg)) {
@@ -239,7 +249,6 @@ class ShiShenUtil {
         }
         return ss
     }
-
 
     @Composable
     fun getShiShenLabel(ss : ShiShen) : String{
@@ -433,16 +442,10 @@ class ShiShenUtil {
     fun getBaziShiShengString(baziInfo: BaziInfo, baziModel: BaziViewModel) : String{
         var str = ""
         var data = baziInfo.baziData
-        var shishenYearStr = stringResource(R.string.bazi_year) + ": " + getTianganStr(
-            baziInfo,
-            baziInfo.yearTiangan
-        ) + "(" + ShiShenUtil().getShiShenText(
+        var shishenYearStr = stringResource(R.string.bazi_year) + ": " + TianGanUtil().getTianGanText(data.yearTiangan) + "(" + ShiShenUtil().getShiShenText(
             baziInfo.yearTiangan,
             baziInfo.dayTiangan
-        ) + ") 、 " + getDizhiStr(
-            baziInfo,
-            baziInfo.yearDizhi
-        ) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.yearDizhi, baziInfo.dayTiangan) + ")"
+        ) + ") 、 " + DiZhiUtil().getDiZhiText(data.yearDizhi) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.yearDizhi, baziInfo.dayTiangan) + ")"
         baziModel.setShishenYearStr(shishenYearStr)
         baziModel.setYearTgShiShen(
             ShiShenUtil().getShiShen(
@@ -457,10 +460,7 @@ class ShiShenUtil {
             )
         )
 
-        var shishenMonthStr = stringResource(R.string.bazi_month) + ": " + getTianganStr(
-            baziInfo,
-            baziInfo.monthTiangan
-        ) + "(" + ShiShenUtil().getShiShenText(
+        var shishenMonthStr = stringResource(R.string.bazi_month) + ": " + TianGanUtil().getTianGanText(data.monthTiangan) + "(" + ShiShenUtil().getShiShenText(
             baziInfo.monthTiangan,
             baziInfo.dayTiangan
         ) + ") 、 " + BaziUtil().getDizhiText(
@@ -481,13 +481,7 @@ class ShiShenUtil {
             )
         )
 
-        var shishenDayStr = stringResource(R.string.bazi_day) + ": " + getTianganStr(
-            baziInfo,
-            baziInfo.dayTiangan
-        ) + "(" + stringResource(R.string.bazi_owner) + ") 、 " + getDizhiStr(
-            baziInfo,
-            baziInfo.dayDizhi
-        ) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.dayDizhi, baziInfo.dayTiangan) + ")"
+        var shishenDayStr = stringResource(R.string.bazi_day) + ": " + TianGanUtil().getTianGanText(data.dayTiangan) + "(" + stringResource(R.string.bazi_owner) + ") 、 " + DiZhiUtil().getDiZhiText(data.dayDizhi) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.dayDizhi, baziInfo.dayTiangan) + ")"
         baziModel.setShishenDayStr(shishenDayStr)
         baziModel.setDayDzShiShen(
             ShiShenUtil().getDiZhiShiShen(
@@ -497,16 +491,10 @@ class ShiShenUtil {
         )
 
 
-        var shishenHourStr = stringResource(R.string.bazi_hour) + ": " + getTianganStr(
-            baziInfo,
-            baziInfo.hourTiangan
-        ) + "(" + ShiShenUtil().getShiShenText(
+        var shishenHourStr = stringResource(R.string.bazi_hour) + ": " + TianGanUtil().getTianGanText(data.hourTiangan) + "(" + ShiShenUtil().getShiShenText(
             baziInfo.hourTiangan,
             baziInfo.dayTiangan
-        ) + ") 、 " + getDizhiStr(
-            baziInfo,
-            baziInfo.hourDizhi
-        ) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.hourDizhi, baziInfo.dayTiangan) + ")"
+        ) + ") 、 " + DiZhiUtil().getDiZhiText(data.hourDizhi) + "(" + ShiShenUtil().getDiZhiShiShenText(baziInfo.hourDizhi, baziInfo.dayTiangan) + ")"
         baziModel.setShishenHourStr(shishenHourStr)
         baziModel.setHourTgShiShen(
             ShiShenUtil().getShiShen(

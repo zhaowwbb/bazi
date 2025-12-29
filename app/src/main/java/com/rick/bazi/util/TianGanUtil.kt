@@ -32,6 +32,26 @@ class TianGanUtil {
 //
 //    )
 
+    val tianganStrMap: Map<TianGan, Int> = mapOf(
+        TianGan.TIANGAN_JIA to R.string.tiangan_jia,
+        TianGan.TIANGAN_YI to R.string.tiangan_yi,
+        TianGan.TIANGAN_BING to R.string.tiangan_bing,
+        TianGan.TIANGAN_DING to R.string.tiangan_ding,
+        TianGan.TIANGAN_WU to R.string.tiangan_wu,
+        TianGan.TIANGAN_JI to R.string.tiangan_ji,
+        TianGan.TIANGAN_GENG to R.string.tiangan_geng,
+        TianGan.TIANGAN_XIN to R.string.tiangan_xin,
+        TianGan.TIANGAN_REN to R.string.tiangan_ren,
+        TianGan.TIANGAN_GUI to R.string.tiangan_gui
+    )
+
+    @Composable
+    fun getTianGanText(tg : TianGan) : String{
+//        var tianganStrKey = tianganStrMap.getValue(tg)
+        return stringResource(tianganStrMap.getValue(tg))
+//        return str
+    }
+
     val nextTianGanMap: Map<TianGan,TianGan> = mapOf(
         TianGan.TIANGAN_JIA to TianGan.TIANGAN_YI,
         TianGan.TIANGAN_YI to TianGan.TIANGAN_BING,
@@ -111,6 +131,25 @@ class TianGanUtil {
         TianGan.TIANGAN_REN to WuXing.WUXING_MU,
         TianGan.TIANGAN_GUI to WuXing.WUXING_HUO
     )
+
+    val tianGan5HeLabelMap: Map<TianGan, Int> = mapOf(
+        TianGan.TIANGAN_JIA to R.string.tiangan_hehua_jiaji_label,
+        TianGan.TIANGAN_YI to R.string.tiangan_hehua_yigeng_label,
+        TianGan.TIANGAN_BING to R.string.tiangan_hehua_bingxin_label,
+        TianGan.TIANGAN_DING to R.string.tiangan_hehua_dingren_label,
+        TianGan.TIANGAN_WU to R.string.tiangan_hehua_wugui_label,
+
+        TianGan.TIANGAN_JI to R.string.tiangan_hehua_jiaji_label,
+        TianGan.TIANGAN_GENG to R.string.tiangan_hehua_yigeng_label,
+        TianGan.TIANGAN_XIN to R.string.tiangan_hehua_bingxin_label,
+        TianGan.TIANGAN_REN to R.string.tiangan_hehua_dingren_label,
+        TianGan.TIANGAN_GUI to R.string.tiangan_hehua_wugui_label
+    )
+
+    @Composable
+    fun getTianGan5HeLabel(tg : TianGan) : String{
+        return stringResource(tianGan5HeLabelMap.get(tg)!!)
+    }
 
     fun getTianGanHeWuXing(tg : TianGan) : WuXing{
         return tianGanHeWuXingMap.get(tg)!!

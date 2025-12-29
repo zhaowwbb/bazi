@@ -40,11 +40,12 @@ import com.rick.bazi.ui.BaziConfirmPrivacyScreen
 import com.rick.bazi.ui.BaziPaipanScreen
 import com.rick.bazi.ui.BaziSampleScreen
 import com.rick.bazi.ui.BaziStartScreen
-import com.rick.bazi.ui.BaziSummaryScreen
+import com.rick.bazi.ui.BaziTaoHuaScreen
 import com.rick.bazi.ui.BaziTianKeDiChongScreen
 import com.rick.bazi.ui.BaziVersionScreen
 import com.rick.bazi.ui.BaziViewModel
 import com.rick.bazi.ui.BaziDayunScreen
+import com.rick.bazi.ui.BaziLiuNianScreen
 import com.rick.bazi.ui.BaziPrivacyPolicyScreen
 import com.rick.bazi.ui.BaziUserAgreementScreen
 import com.rick.bazi.ui.BaziYimaScreen
@@ -59,10 +60,11 @@ enum class BaziScreen(@StringRes val title: Int) {
     Version(title = R.string.app_bazi_version),
     Introduction(title = R.string.app_introduction),
     TianKeDiChong(title = R.string.bazi_tkdc),
-    DaYun(title = R.string.app_bazi_dayun),
+    DaYun(title = R.string.dayun_analysis_label),
     YiMa(title = R.string.app_bazi_yima),
-    Summary(title = R.string.app_bazi_result),
-    Analysis(title = R.string.app_bazi_analysis)
+    TaoHua(title = R.string.app_bazi_result),
+    Analysis(title = R.string.app_bazi_analysis),
+    LiuNian(title = R.string.bazi_liunian_jixiong_label)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -206,7 +208,7 @@ fun BaziApp(
             composable(route = BaziScreen.Paipan.name) {
                 BaziPaipanScreen(
                     subtotal = "13.0",
-                    onNextButtonClicked = { navController.navigate(BaziScreen.Summary.name) },
+                    onNextButtonClicked = { navController.navigate(BaziScreen.TaoHua.name) },
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(baziModel, navController)
                     },
@@ -219,9 +221,9 @@ fun BaziApp(
                     modifier = Modifier.fillMaxHeight()
                 )
             }
-            composable(route = BaziScreen.Summary.name) {
+            composable(route = BaziScreen.TaoHua.name) {
                 val context = LocalContext.current
-                BaziSummaryScreen(
+                BaziTaoHuaScreen(
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(baziModel, navController)
                     },
@@ -310,6 +312,19 @@ fun BaziApp(
             }
             composable(route = BaziScreen.Analysis.name) {
                 BaziAppAnalysisScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    baziInfo = baziUIInfo,
+                    baziModel = baziModel,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = BaziScreen.LiuNian.name) {
+                BaziLiuNianScreen(
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(baziModel, navController)
                     },

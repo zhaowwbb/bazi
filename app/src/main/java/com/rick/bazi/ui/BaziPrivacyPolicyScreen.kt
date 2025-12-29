@@ -41,7 +41,11 @@ fun BaziPrivacyPolicyScreen(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Row(
                 modifier = Modifier
                     .padding(5.dp)
@@ -52,8 +56,8 @@ fun BaziPrivacyPolicyScreen(
                 Text(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 28.sp,
                     text = stringResource(R.string.app_bazi_privacy_policy)
                 )
             }
@@ -62,15 +66,6 @@ fun BaziPrivacyPolicyScreen(
             ) {
                 HorizontalDivider(thickness = 2.dp)
             }
-
-
-
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                HorizontalDivider(thickness = 2.dp)
-//            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -78,17 +73,11 @@ fun BaziPrivacyPolicyScreen(
                 Text(
                     textAlign = TextAlign.Left,
                     modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 22.sp,
                     text = stringResource(R.string.app_bazi_privacy_policy_content)
                 )
             }
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                HorizontalDivider(thickness = 2.dp)
-//            }
         }
     }
 }

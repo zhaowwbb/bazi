@@ -3,9 +3,8 @@ package com.rick.bazi.util
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
-import com.rick.bazi.data.BaziColumnPosition
-import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.ColumnPosition
+import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.DiZhiSanHeInfo
 import com.rick.bazi.data.DiZhiSanHuiInfo
@@ -15,6 +14,26 @@ import com.rick.bazi.util.TianGanUtil.TianGanPos
 import com.rick.bazi.util.TianGanUtil.TianGanaHeInfo
 
 class DiZhiUtil {
+    val dizhiStrMap: Map<DiZhi, Int> = mapOf(
+        DiZhi.DIZHI_ZI to R.string.dizhi_zi,
+        DiZhi.DIZHI_CHOU to R.string.dizhi_chou,
+        DiZhi.DIZHI_YIN to R.string.dizhi_yin,
+        DiZhi.DIZHI_MOU to R.string.dizhi_mou,
+        DiZhi.DIZHI_CHEN to R.string.dizhi_chen,
+        DiZhi.DIZHI_SI to R.string.dizhi_si,
+        DiZhi.DIZHI_WU to R.string.dizhi_wu,
+        DiZhi.DIZHI_WEI to R.string.dizhi_wei,
+        DiZhi.DIZHI_SHEN to R.string.dizhi_shen,
+        DiZhi.DIZHI_YOU to R.string.dizhi_you,
+        DiZhi.DIZHI_XU to R.string.dizhi_xu,
+        DiZhi.DIZHI_HAI to R.string.dizhi_hai
+    )
+
+    @Composable
+    fun getDiZhiText(dz : DiZhi) : String{
+        return stringResource(dizhiStrMap.getValue(dz))
+    }
+
     val diZhiCangGanMap : Map<DiZhi, Array<TianGan>> = mapOf(
         DiZhi.DIZHI_ZI to arrayOf(TianGan.TIANGAN_GUI),
         DiZhi.DIZHI_CHOU to arrayOf(TianGan.TIANGAN_JI, TianGan.TIANGAN_GUI,TianGan.TIANGAN_XIN ),
@@ -29,6 +48,10 @@ class DiZhiUtil {
         DiZhi.DIZHI_XU to arrayOf(TianGan.TIANGAN_WU, TianGan.TIANGAN_XIN, TianGan.TIANGAN_DING),
         DiZhi.DIZHI_HAI to arrayOf(TianGan.TIANGAN_REN, TianGan.TIANGAN_JIA)
     )
+
+    fun getTianGan(dz : DiZhi) : TianGan{
+        return diZhiCangGanMap.get(dz)?.get(0)!!
+    }
 
     private val nextDiZhiMap : Map<DiZhi, DiZhi> = mapOf(
         DiZhi.DIZHI_ZI to DiZhi.DIZHI_CHOU,
@@ -79,6 +102,9 @@ class DiZhiUtil {
         DiZhi.DIZHI_SI to WuXing.WUXING_SHUI,
         DiZhi.DIZHI_SHEN to WuXing.WUXING_SHUI
     )
+    fun get6HeWuXingByDiZhi(dz : DiZhi) : WuXing{
+        return sixHeWuXingMap.get(dz)!!
+    }
 
     val sixHeDetailMap: Map<Int, Int> = mapOf(
         R.string.app_bazi_dizhi_6he_zichou_desc to R.string.app_bazi_dizhi_6he_zichou_detail,
@@ -127,6 +153,10 @@ class DiZhiUtil {
         DiZhi.DIZHI_CHOU to WuXing.WUXING_JIN
     )
 
+    fun get3HeWuXingByDiZhi(dz : DiZhi) : WuXing{
+        return sanHeMap.get(dz)!!
+    }
+
     val sanHuiMap: Map<DiZhi, WuXing> = mapOf(
         DiZhi.DIZHI_SI to WuXing.WUXING_HUO,
         DiZhi.DIZHI_WU to WuXing.WUXING_HUO,
@@ -144,6 +174,10 @@ class DiZhiUtil {
         DiZhi.DIZHI_YOU to WuXing.WUXING_JIN,
         DiZhi.DIZHI_XU to WuXing.WUXING_JIN
     )
+
+    fun get3HuiWuXingByDiZhi(dz : DiZhi) : WuXing{
+        return sanHuiMap.get(dz)!!
+    }
 
     val dizhiChongMap: Map<DiZhi, DiZhi> = mapOf(
         DiZhi.DIZHI_ZI to DiZhi.DIZHI_WU,
@@ -453,7 +487,7 @@ class DiZhiUtil {
     @Composable
     fun getSanHeStringByWuXing(wx: WuXing): String {
         var sb = StringBuilder()
-        sb.append("    ")
+//        sb.append("    ")
         if (wx == WuXing.WUXING_HUO) {
             sb.append(stringResource(R.string.app_bazi_dizhi_3he_huo_desc))
         } else if (wx == WuXing.WUXING_SHUI) {
@@ -469,7 +503,7 @@ class DiZhiUtil {
     @Composable
     fun getSanHuiStringByWuXing(wx: WuXing): String {
         var sb = StringBuilder()
-        sb.append("    ")
+//        sb.append("    ")
         if (wx == WuXing.WUXING_HUO) {
             sb.append(stringResource(R.string.app_bazi_dizhi_3hui_huo_desc))
         } else if (wx == WuXing.WUXING_SHUI) {
@@ -631,30 +665,34 @@ class DiZhiUtil {
         isSanHe = isDiZhiSanHe(data.yearDizhi, data.monthDizhi, data.dayDizhi)
         if (isSanHe) {
             wx = sanHeMap.get(data.yearDizhi)!!
+            sb.append(ConstUtil.SPACE)
             sb.append(getSanHeStringByWuXing(wx))
         }
 
         isSanHe = isDiZhiSanHe(data.yearDizhi, data.monthDizhi, data.hourDizhi)
         if (isSanHe) {
             wx = sanHeMap.get(data.yearDizhi)!!
+            sb.append(ConstUtil.SPACE)
             sb.append(getSanHeStringByWuXing(wx))
         }
 
         isSanHe = isDiZhiSanHe(data.monthDizhi, data.dayDizhi, data.hourDizhi)
         if (isSanHe) {
             wx = sanHeMap.get(data.monthDizhi)!!
+            sb.append(ConstUtil.SPACE)
             sb.append(getSanHeStringByWuXing(wx))
         }
 
         isSanHe = isDiZhiSanHe(data.yearDizhi, data.dayDizhi, data.hourDizhi)
         if (isSanHe) {
             wx = sanHeMap.get(data.yearDizhi)!!
+            sb.append(ConstUtil.SPACE)
             sb.append(getSanHeStringByWuXing(wx))
         }
 
         //no sanhe
         if (sb.length == 0) {
-            sb.append("    ")
+            sb.append(ConstUtil.SPACE)
             sb.append(stringResource(R.string.app_bazi_dizhi_3he_no_label))
         }
         return sb.toString()
@@ -669,30 +707,34 @@ class DiZhiUtil {
         isSanHui = isDiZhiSanHui(data.yearDizhi, data.monthDizhi, data.dayDizhi)
         if (isSanHui) {
             wx = sanHuiMap.get(data.yearDizhi)!!
+            sb.append(ConstUtil.SPACE)
             sb.append(getSanHuiStringByWuXing(wx))
         }
 
         isSanHui = isDiZhiSanHui(data.yearDizhi, data.monthDizhi, data.hourDizhi)
         if (isSanHui) {
             wx = sanHuiMap.get(data.yearDizhi)!!
+            sb.append(ConstUtil.SPACE)
             sb.append(getSanHuiStringByWuXing(wx))
         }
 
         isSanHui = isDiZhiSanHui(data.monthDizhi, data.dayDizhi, data.hourDizhi)
         if (isSanHui) {
             wx = sanHuiMap.get(data.monthDizhi)!!
+            sb.append(ConstUtil.SPACE)
             sb.append(getSanHuiStringByWuXing(wx))
         }
 
         isSanHui = isDiZhiSanHui(data.yearDizhi, data.dayDizhi, data.hourDizhi)
         if (isSanHui) {
             wx = sanHuiMap.get(data.yearDizhi)!!
+            sb.append(ConstUtil.SPACE)
             sb.append(getSanHuiStringByWuXing(wx))
         }
 
         //no sanhui
         if (sb.length == 0) {
-            sb.append("    ")
+            sb.append(ConstUtil.SPACE)
             sb.append(stringResource(R.string.app_bazi_dizhi_3hui_no_label))
         }
         return sb.toString()
@@ -748,41 +790,53 @@ class DiZhiUtil {
     @Composable
     fun getDiZhi6HeText(
         dz1: DiZhi,
-        dz1Column: BaziColumnPosition,
+        dz1Column: ColumnPosition,
         dz2: DiZhi,
-        dz2Column: BaziColumnPosition
+        dz2Column: ColumnPosition
     ): String {
         var sb = StringBuilder()
         var dz1StrId = 0
         var dz2StrId = 0
-        if (dz1Column == BaziColumnPosition.COLUMN_YEAR) {
+        if (dz1Column == ColumnPosition.COLUMN_YEAR) {
             dz1StrId = R.string.app_bazi_dizhi_year_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_MONTH) {
+        } else if (dz1Column == ColumnPosition.COLUMN_MONTH) {
             dz1StrId = R.string.app_bazi_dizhi_month_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_DAY) {
+        } else if (dz1Column == ColumnPosition.COLUMN_DAY) {
             dz1StrId = R.string.app_bazi_dizhi_day_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_HOUR) {
+        } else if (dz1Column == ColumnPosition.COLUMN_HOUR) {
             dz1StrId = R.string.app_bazi_dizhi_hour_label
+        } else if (dz1Column == ColumnPosition.COLUMN_DA_YUN) {
+//            dz1StrId = R.string.dayun_dizhi_label
+        } else if (dz1Column == ColumnPosition.COLUMN_LIU_YEAR) {
+            dz1StrId = R.string.liunian_dizhi_label
         }
 
-        if (dz2Column == BaziColumnPosition.COLUMN_YEAR) {
+        if (dz2Column == ColumnPosition.COLUMN_YEAR) {
             dz2StrId = R.string.app_bazi_dizhi_year_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_MONTH) {
+        } else if (dz2Column == ColumnPosition.COLUMN_MONTH) {
             dz2StrId = R.string.app_bazi_dizhi_month_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_DAY) {
+        } else if (dz2Column == ColumnPosition.COLUMN_DAY) {
             dz2StrId = R.string.app_bazi_dizhi_day_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_HOUR) {
+        } else if (dz2Column == ColumnPosition.COLUMN_HOUR) {
             dz2StrId = R.string.app_bazi_dizhi_hour_label
+        }else if (dz2Column == ColumnPosition.COLUMN_DA_YUN) {
+            dz2StrId = R.string.dayun_dizhi_label
+        }else if (dz2Column == ColumnPosition.COLUMN_LIU_YEAR) {
+            dz2StrId = R.string.liunian_dizhi_label
         }
-        sb.append("    ")
-        sb.append(stringResource(dz1StrId))
-        sb.append("[")
-        sb.append(BaziUtil().getDizhiText(dz1))
-        sb.append("] ")
+
+        if(dz1Column != ColumnPosition.COLUMN_DA_YUN) {
+            sb.append(ConstUtil.SPACE)
+            sb.append(stringResource(dz1StrId))
+            sb.append("[")
+            sb.append(BaziUtil().getDizhiText(dz1))
+            sb.append("] ")
+        }
         sb.append(stringResource(dz2StrId))
-        sb.append("[")
-        sb.append(BaziUtil().getDizhiText(dz2))
-        sb.append("] ")
+//        sb.append("[")
+//        sb.append(BaziUtil().getDizhiText(dz2))
+//        sb.append("] ")
+        sb.append(" ")
         sb.append(stringResource(sixHeDescMap.get(dz1)!!))
         sb.append(" ")
         return sb.toString()
@@ -802,9 +856,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HeText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_MONTH
+                    ColumnPosition.COLUMN_MONTH
                 )
             )
         }
@@ -816,9 +870,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HeText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_DAY
+                    ColumnPosition.COLUMN_DAY
                 )
             )
         }
@@ -830,9 +884,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HeText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -845,9 +899,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HeText(
                     dz1,
-                    BaziColumnPosition.COLUMN_MONTH,
+                    ColumnPosition.COLUMN_MONTH,
                     dz2,
-                    BaziColumnPosition.COLUMN_DAY
+                    ColumnPosition.COLUMN_DAY
                 )
             )
         }
@@ -861,9 +915,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HeText(
                     dz1,
-                    BaziColumnPosition.COLUMN_MONTH,
+                    ColumnPosition.COLUMN_MONTH,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -877,9 +931,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HeText(
                     dz1,
-                    BaziColumnPosition.COLUMN_DAY,
+                    ColumnPosition.COLUMN_DAY,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -906,30 +960,30 @@ class DiZhiUtil {
     @Composable
     fun getDiZhi6ChongText(
         dz1: DiZhi,
-        dz1Column: BaziColumnPosition,
+        dz1Column: ColumnPosition,
         dz2: DiZhi,
-        dz2Column: BaziColumnPosition
+        dz2Column: ColumnPosition
     ): String {
         var sb = StringBuilder()
         var dz1StrId = 0
         var dz2StrId = 0
-        if (dz1Column == BaziColumnPosition.COLUMN_YEAR) {
+        if (dz1Column == ColumnPosition.COLUMN_YEAR) {
             dz1StrId = R.string.app_bazi_dizhi_year_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_MONTH) {
+        } else if (dz1Column == ColumnPosition.COLUMN_MONTH) {
             dz1StrId = R.string.app_bazi_dizhi_month_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_DAY) {
+        } else if (dz1Column == ColumnPosition.COLUMN_DAY) {
             dz1StrId = R.string.app_bazi_dizhi_day_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_HOUR) {
+        } else if (dz1Column == ColumnPosition.COLUMN_HOUR) {
             dz1StrId = R.string.app_bazi_dizhi_hour_label
         }
 
-        if (dz2Column == BaziColumnPosition.COLUMN_YEAR) {
+        if (dz2Column == ColumnPosition.COLUMN_YEAR) {
             dz2StrId = R.string.app_bazi_dizhi_year_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_MONTH) {
+        } else if (dz2Column == ColumnPosition.COLUMN_MONTH) {
             dz2StrId = R.string.app_bazi_dizhi_month_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_DAY) {
+        } else if (dz2Column == ColumnPosition.COLUMN_DAY) {
             dz2StrId = R.string.app_bazi_dizhi_day_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_HOUR) {
+        } else if (dz2Column == ColumnPosition.COLUMN_HOUR) {
             dz2StrId = R.string.app_bazi_dizhi_hour_label
         }
         sb.append("    ")
@@ -955,9 +1009,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6ChongText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_MONTH
+                    ColumnPosition.COLUMN_MONTH
                 )
             )
         }
@@ -968,9 +1022,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6ChongText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_DAY
+                    ColumnPosition.COLUMN_DAY
                 )
             )
         }
@@ -980,9 +1034,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6ChongText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -993,9 +1047,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6ChongText(
                     dz1,
-                    BaziColumnPosition.COLUMN_MONTH,
+                    ColumnPosition.COLUMN_MONTH,
                     dz2,
-                    BaziColumnPosition.COLUMN_DAY
+                    ColumnPosition.COLUMN_DAY
                 )
             )
         }
@@ -1007,9 +1061,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6ChongText(
                     dz1,
-                    BaziColumnPosition.COLUMN_MONTH,
+                    ColumnPosition.COLUMN_MONTH,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -1021,9 +1075,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6ChongText(
                     dz1,
-                    BaziColumnPosition.COLUMN_DAY,
+                    ColumnPosition.COLUMN_DAY,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -1050,30 +1104,30 @@ class DiZhiUtil {
     @Composable
     fun getDiZhi6HaiText(
         dz1: DiZhi,
-        dz1Column: BaziColumnPosition,
+        dz1Column: ColumnPosition,
         dz2: DiZhi,
-        dz2Column: BaziColumnPosition
+        dz2Column: ColumnPosition
     ): String {
         var sb = StringBuilder()
         var dz1StrId = 0
         var dz2StrId = 0
-        if (dz1Column == BaziColumnPosition.COLUMN_YEAR) {
+        if (dz1Column == ColumnPosition.COLUMN_YEAR) {
             dz1StrId = R.string.app_bazi_dizhi_year_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_MONTH) {
+        } else if (dz1Column == ColumnPosition.COLUMN_MONTH) {
             dz1StrId = R.string.app_bazi_dizhi_month_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_DAY) {
+        } else if (dz1Column == ColumnPosition.COLUMN_DAY) {
             dz1StrId = R.string.app_bazi_dizhi_day_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_HOUR) {
+        } else if (dz1Column == ColumnPosition.COLUMN_HOUR) {
             dz1StrId = R.string.app_bazi_dizhi_hour_label
         }
 
-        if (dz2Column == BaziColumnPosition.COLUMN_YEAR) {
+        if (dz2Column == ColumnPosition.COLUMN_YEAR) {
             dz2StrId = R.string.app_bazi_dizhi_year_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_MONTH) {
+        } else if (dz2Column == ColumnPosition.COLUMN_MONTH) {
             dz2StrId = R.string.app_bazi_dizhi_month_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_DAY) {
+        } else if (dz2Column == ColumnPosition.COLUMN_DAY) {
             dz2StrId = R.string.app_bazi_dizhi_day_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_HOUR) {
+        } else if (dz2Column == ColumnPosition.COLUMN_HOUR) {
             dz2StrId = R.string.app_bazi_dizhi_hour_label
         }
         sb.append("    ")
@@ -1102,9 +1156,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HaiText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_MONTH
+                    ColumnPosition.COLUMN_MONTH
                 )
             )
         }
@@ -1115,9 +1169,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HaiText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_DAY
+                    ColumnPosition.COLUMN_DAY
                 )
             )
         }
@@ -1127,9 +1181,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HaiText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -1140,9 +1194,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HaiText(
                     dz1,
-                    BaziColumnPosition.COLUMN_MONTH,
+                    ColumnPosition.COLUMN_MONTH,
                     dz2,
-                    BaziColumnPosition.COLUMN_DAY
+                    ColumnPosition.COLUMN_DAY
                 )
             )
         }
@@ -1154,9 +1208,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HaiText(
                     dz1,
-                    BaziColumnPosition.COLUMN_MONTH,
+                    ColumnPosition.COLUMN_MONTH,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -1168,9 +1222,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhi6HaiText(
                     dz1,
-                    BaziColumnPosition.COLUMN_DAY,
+                    ColumnPosition.COLUMN_DAY,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -1185,30 +1239,30 @@ class DiZhiUtil {
     @Composable
     fun getDiZhiXingText(
         dz1: DiZhi,
-        dz1Column: BaziColumnPosition,
+        dz1Column: ColumnPosition,
         dz2: DiZhi,
-        dz2Column: BaziColumnPosition
+        dz2Column: ColumnPosition
     ): String {
         var sb = StringBuilder()
         var dz1StrId = 0
         var dz2StrId = 0
-        if (dz1Column == BaziColumnPosition.COLUMN_YEAR) {
+        if (dz1Column == ColumnPosition.COLUMN_YEAR) {
             dz1StrId = R.string.app_bazi_dizhi_year_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_MONTH) {
+        } else if (dz1Column == ColumnPosition.COLUMN_MONTH) {
             dz1StrId = R.string.app_bazi_dizhi_month_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_DAY) {
+        } else if (dz1Column == ColumnPosition.COLUMN_DAY) {
             dz1StrId = R.string.app_bazi_dizhi_day_label
-        } else if (dz1Column == BaziColumnPosition.COLUMN_HOUR) {
+        } else if (dz1Column == ColumnPosition.COLUMN_HOUR) {
             dz1StrId = R.string.app_bazi_dizhi_hour_label
         }
 
-        if (dz2Column == BaziColumnPosition.COLUMN_YEAR) {
+        if (dz2Column == ColumnPosition.COLUMN_YEAR) {
             dz2StrId = R.string.app_bazi_dizhi_year_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_MONTH) {
+        } else if (dz2Column == ColumnPosition.COLUMN_MONTH) {
             dz2StrId = R.string.app_bazi_dizhi_month_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_DAY) {
+        } else if (dz2Column == ColumnPosition.COLUMN_DAY) {
             dz2StrId = R.string.app_bazi_dizhi_day_label
-        } else if (dz2Column == BaziColumnPosition.COLUMN_HOUR) {
+        } else if (dz2Column == ColumnPosition.COLUMN_HOUR) {
             dz2StrId = R.string.app_bazi_dizhi_hour_label
         }
         sb.append("    ")
@@ -1237,9 +1291,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhiXingText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_MONTH
+                    ColumnPosition.COLUMN_MONTH
                 )
             )
         }
@@ -1250,9 +1304,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhiXingText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_DAY
+                    ColumnPosition.COLUMN_DAY
                 )
             )
         }
@@ -1262,9 +1316,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhiXingText(
                     dz1,
-                    BaziColumnPosition.COLUMN_YEAR,
+                    ColumnPosition.COLUMN_YEAR,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -1275,9 +1329,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhiXingText(
                     dz1,
-                    BaziColumnPosition.COLUMN_MONTH,
+                    ColumnPosition.COLUMN_MONTH,
                     dz2,
-                    BaziColumnPosition.COLUMN_DAY
+                    ColumnPosition.COLUMN_DAY
                 )
             )
         }
@@ -1289,9 +1343,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhiXingText(
                     dz1,
-                    BaziColumnPosition.COLUMN_MONTH,
+                    ColumnPosition.COLUMN_MONTH,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }
@@ -1303,9 +1357,9 @@ class DiZhiUtil {
             sb.append(
                 getDiZhiXingText(
                     dz1,
-                    BaziColumnPosition.COLUMN_DAY,
+                    ColumnPosition.COLUMN_DAY,
                     dz2,
-                    BaziColumnPosition.COLUMN_HOUR
+                    ColumnPosition.COLUMN_HOUR
                 )
             )
         }

@@ -484,9 +484,10 @@ class WuXingUtil {
         baziInfo: BaziInfo,
         baziModel: BaziViewModel
     ): String {
+        var data = baziInfo.baziData
         var result = WuXingUtil().getTianGanWuXingText(baziInfo.baziData.dayTiangan) +
                 stringResource(R.string.app_bazi_born_label) +
-                getDizhiStr(baziInfo, baziInfo.monthDizhi) +
+                DiZhiUtil().getDiZhiText(data.monthDizhi) +
                 stringResource(R.string.app_label_month)
 
         if (WuXingUtil().isDangling(baziInfo.monthDizhi, baziInfo.dayTiangan)) {

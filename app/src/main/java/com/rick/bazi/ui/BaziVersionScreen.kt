@@ -79,6 +79,15 @@ fun BaziVersionScreen(
                 R.string.bz_version_1_5_item1,
                 R.string.bz_version_1_5_item2
             )
+        ),
+        Version(
+            R.string.bz_version_1_7,
+            R.string.bz_version_1_7_time,
+            listOf(
+                R.string.bz_version_1_7_item1,
+                R.string.bz_version_1_7_item2,
+                R.string.bz_version_1_7_item3
+            )
         )
     )
 
@@ -104,15 +113,15 @@ fun BaziVersionScreen(
                     Text(
                         textAlign = TextAlign.Left,
                         modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 28.sp,
                         text = stringResource(version.versionId)
                     )
                     Text(
                         textAlign = TextAlign.End,
                         modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Light,
+                        fontSize = 22.sp,
                         text = stringResource(version.releaseDateId)
                     )
                 }
@@ -130,8 +139,8 @@ fun BaziVersionScreen(
                         Text(
                             textAlign = TextAlign.Left,
                             modifier = Modifier.weight(1f),
-                            fontWeight = FontWeight(500),
-                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Light,
+                            fontSize = 22.sp,
                             text = stringResource(detail)
                         )
                     }
@@ -149,31 +158,6 @@ fun BaziVersionScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 HorizontalDivider(thickness = 2.dp)
-            }
-        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedButton(
-                    modifier = Modifier.weight(1f),
-                    onClick = onCancelButtonClicked
-                ) {
-                    Text(
-                        text = stringResource(R.string.back_button),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
             }
         }
     }

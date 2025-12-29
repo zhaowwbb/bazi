@@ -41,8 +41,11 @@ fun BaziUserAgreementScreen(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
-
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Row(
                 modifier = Modifier
                     .padding(5.dp)
@@ -53,8 +56,8 @@ fun BaziUserAgreementScreen(
                 Text(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 28.sp,
                     text = stringResource(R.string.app_bazi_user_agreement)
                 )
             }
@@ -64,14 +67,6 @@ fun BaziUserAgreementScreen(
                 HorizontalDivider(thickness = 2.dp)
             }
 
-
-
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                HorizontalDivider(thickness = 2.dp)
-//            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -79,17 +74,11 @@ fun BaziUserAgreementScreen(
                 Text(
                     textAlign = TextAlign.Left,
                     modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 22.sp,
                     text = stringResource(R.string.app_bazi_user_agreement_content)
                 )
             }
-//            Row(
-//                modifier = Modifier.fillMaxWidth(),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                HorizontalDivider(thickness = 2.dp)
-//            }
         }
     }
 }

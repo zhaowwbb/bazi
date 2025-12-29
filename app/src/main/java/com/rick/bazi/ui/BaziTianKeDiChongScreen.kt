@@ -19,8 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,8 +33,16 @@ import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziUtil
-import com.rick.bazi.util.getDizhiStr
-import com.rick.bazi.util.getTianganStr
+import com.rick.bazi.util.ConstUtil
+import com.rick.bazi.util.DaYunUtil
+import com.rick.bazi.util.DiZhiUtil
+import com.rick.bazi.util.GeJuUtil
+import com.rick.bazi.util.TianGanUtil
+import com.rick.bazi.util.WuXingUtil
+import com.rick.bazi.util.YongShenUtil
+
+//import com.rick.bazi.util.getDizhiStr
+//import com.rick.bazi.util.getTianganStr
 
 data class TianKeDiChongRecord(
     val tkdcLabel: String,
@@ -52,6 +63,7 @@ fun BaziTianKeDiChongScreen(
     var dayunLabel = stringResource(R.string.bazi_dayun)
     var dayunForward: Boolean =
         BaziUtil().isDayunDirectionForward(baziInfo.gender, baziInfo.yearDizhi)
+    var data = baziInfo.baziData
 
     Column(
         modifier = modifier,
@@ -85,186 +97,32 @@ fun BaziTianKeDiChongScreen(
             ) {
                 HorizontalDivider(thickness = 2.dp)
             }
-        }
+            Row(
+                modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+//                val SPACE = "    "
+                val analysisResult = buildAnnotatedString {
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
+                        append(stringResource(R.string.app_bazi_str) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 18.sp)) {
+                        append(ConstUtil.SPACE + BaziUtil().createBaziStringOneLine(baziInfo) + "\n")
+                    }
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)) {
+                        append(stringResource(R.string.bazi_tkdc_label) + ":\n")
+                    }
+                    withStyle(style = SpanStyle(fontSize = 18.sp)) {
+                        append(ConstUtil.SPACE + stringResource(R.string.bazi_tkdc_introduction) + "\n")
+                    }
+                }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-//            Row(
-//                modifier = Modifier.padding(5.dp),
-//                horizontalArrangement = Arrangement.SpaceBetween,
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Text(
-//                    text = BaziUtil().getTitleLable(baziInfo),
-//                    textAlign = TextAlign.Center,
-//                    modifier = Modifier.weight(1f),
+                Text(
+                    text = analysisResult,
+                    modifier = Modifier.weight(1f),
 //                    fontWeight = FontWeight(500),
-//                    style = MaterialTheme.typography.headlineMedium
-//                )
-//            }
-
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.bazi_tkdc_introduction),
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                HorizontalDivider(thickness = 2.dp)
-            }
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.bazi_date),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Red,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Text(
-                    text = stringResource(R.string.bazi_year),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Magenta,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Text(
-                    text = stringResource(R.string.bazi_month),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Blue,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Text(
-                    text = stringResource(R.string.bazi_day),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Green,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Text(
-                    text = stringResource(R.string.bazi_hour),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Cyan,
-                    style = MaterialTheme.typography.headlineMedium
-
-                )
-            }
-            //show bazi tiangan details
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.tiangan),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Red,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = getTianganStr(baziInfo, baziInfo.yearTiangan),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Magenta,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = getTianganStr(baziInfo, baziInfo.monthTiangan),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Blue,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = getTianganStr(baziInfo, baziInfo.dayTiangan),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Green,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = getTianganStr(baziInfo, baziInfo.hourTiangan),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Cyan,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-            }
-
-            //show bazi dizhi details
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.dizhi),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Red,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = getDizhiStr(baziInfo, baziInfo.yearDizhi),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Magenta,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = getDizhiStr(baziInfo, baziInfo.monthDizhi),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Blue,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = getDizhiStr(baziInfo, baziInfo.dayDizhi),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Green,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Text(
-                    text = getDizhiStr(baziInfo, baziInfo.hourDizhi),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                    fontWeight = FontWeight(500),
-//                    color = Color.Cyan,
-                    style = MaterialTheme.typography.headlineLarge
+//                    style = MaterialTheme.typography.headlineSmall
                 )
             }
             Row(
@@ -293,15 +151,15 @@ fun BaziTianKeDiChongScreen(
                     Text(
                         textAlign = TextAlign.Left,
                         modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
                         text = record.tkdcLabel
                     )
                     Text(
                         textAlign = TextAlign.End,
                         modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 18.sp,
                         text = record.ageLabel
                     )
                 }
@@ -316,8 +174,9 @@ fun BaziTianKeDiChongScreen(
                         Text(
                             textAlign = TextAlign.Left,
                             modifier = Modifier.weight(1f),
-                            fontWeight = FontWeight(500),
-                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 18.sp,
+//                            style = MaterialTheme.typography.headlineSmall,
                             text = desc
                         )
                     }
@@ -330,12 +189,224 @@ fun BaziTianKeDiChongScreen(
                 }
             }
         }
+    }
+}
 
+
+//    Column(
+//        modifier = modifier,
+//        verticalArrangement = Arrangement.SpaceBetween
+//    ) {
+//
+//        val birthDateStr = BaziUtil().getBirthDateLabel(baziInfo)
+//
 //        Column(
 //            horizontalAlignment = Alignment.CenterHorizontally,
 //            verticalArrangement = Arrangement.Center,
 //            modifier = Modifier.fillMaxWidth()
 //        ) {
+//            Row(
+//                modifier = Modifier
+//                    .padding(5.dp)
+//                    .fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = "${birthDateStr}",
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+//                    style = MaterialTheme.typography.headlineMedium
+//                )
+//            }
+//            Row(
+//                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                HorizontalDivider(thickness = 2.dp)
+//            }
+//        }
+//
+//        Column(
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+////            Row(
+////                modifier = Modifier.padding(5.dp),
+////                horizontalArrangement = Arrangement.SpaceBetween,
+////                verticalAlignment = Alignment.CenterVertically
+////            ) {
+////                Text(
+////                    text = BaziUtil().getTitleLable(baziInfo),
+////                    textAlign = TextAlign.Center,
+////                    modifier = Modifier.weight(1f),
+////                    fontWeight = FontWeight(500),
+////                    style = MaterialTheme.typography.headlineMedium
+////                )
+////            }
+//
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = stringResource(R.string.bazi_tkdc_introduction),
+//                    textAlign = TextAlign.Left,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+//                    style = MaterialTheme.typography.headlineSmall
+//                )
+//            }
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                HorizontalDivider(thickness = 2.dp)
+//            }
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = stringResource(R.string.bazi_date),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Red,
+//                    style = MaterialTheme.typography.headlineMedium
+//                )
+//                Text(
+//                    text = stringResource(R.string.bazi_year),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Magenta,
+//                    style = MaterialTheme.typography.headlineMedium
+//                )
+//                Text(
+//                    text = stringResource(R.string.bazi_month),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Blue,
+//                    style = MaterialTheme.typography.headlineMedium
+//                )
+//                Text(
+//                    text = stringResource(R.string.bazi_day),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Green,
+//                    style = MaterialTheme.typography.headlineMedium
+//                )
+//                Text(
+//                    text = stringResource(R.string.bazi_hour),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Cyan,
+//                    style = MaterialTheme.typography.headlineMedium
+//
+//                )
+//            }
+//            //show bazi tiangan details
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = stringResource(R.string.tiangan),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Red,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//                Text(
+//                    text = TianGanUtil().getTianGanText(data.yearTiangan),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Magenta,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//                Text(
+//                    text = TianGanUtil().getTianGanText(data.monthTiangan),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Blue,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//                Text(
+//                    text = TianGanUtil().getTianGanText(data.dayTiangan),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Green,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//                Text(
+//                    text = TianGanUtil().getTianGanText(data.hourTiangan),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Cyan,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//            }
+//
+//            //show bazi dizhi details
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Text(
+//                    text = stringResource(R.string.dizhi),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Red,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//                Text(
+//                    text = DiZhiUtil().getDiZhiText(data.yearDizhi),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Magenta,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//                Text(
+//                    text = DiZhiUtil().getDiZhiText(data.monthDizhi),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Blue,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//                Text(
+//                    text = DiZhiUtil().getDiZhiText(data.dayDizhi),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Green,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//                Text(
+//                    text = DiZhiUtil().getDiZhiText(data.hourDizhi),
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f),
+//                    fontWeight = FontWeight(500),
+////                    color = Color.Cyan,
+//                    style = MaterialTheme.typography.headlineLarge
+//                )
+//            }
 //            Row(
 //                modifier = Modifier.fillMaxWidth(),
 //                verticalAlignment = Alignment.CenterVertically
@@ -343,33 +414,100 @@ fun BaziTianKeDiChongScreen(
 //                HorizontalDivider(thickness = 2.dp)
 //            }
 //        }
-
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedButton(
-                    modifier = Modifier.weight(1f),
-                    onClick = onCancelButtonClicked
-                ) {
-                    Text(
-                        text = stringResource(R.string.back_button),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
-            }
-        }
-    }
-}
+//
+//        Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
+//            records.forEach { record ->
+////                Row(
+////                    modifier = Modifier.fillMaxWidth(),
+////                    verticalAlignment = Alignment.CenterVertically
+////                ) {
+////                    HorizontalDivider(thickness = 2.dp)
+////                }
+//                Row(
+//                    modifier = Modifier
+//                        .padding(5.dp)
+//                        .fillMaxWidth(),
+//                    horizontalArrangement = Arrangement.SpaceBetween,
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    Text(
+//                        textAlign = TextAlign.Left,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        style = MaterialTheme.typography.headlineSmall,
+//                        text = record.tkdcLabel
+//                    )
+//                    Text(
+//                        textAlign = TextAlign.End,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        style = MaterialTheme.typography.headlineSmall,
+//                        text = record.ageLabel
+//                    )
+//                }
+//                record.descriptionList.forEach { desc ->
+//                    Row(
+//                        modifier = Modifier
+//                            .padding(5.dp)
+//                            .fillMaxWidth(),
+//                        horizontalArrangement = Arrangement.SpaceBetween,
+//                        verticalAlignment = Alignment.CenterVertically
+//                    ) {
+//                        Text(
+//                            textAlign = TextAlign.Left,
+//                            modifier = Modifier.weight(1f),
+//                            fontWeight = FontWeight(500),
+//                            style = MaterialTheme.typography.headlineSmall,
+//                            text = desc
+//                        )
+//                    }
+//                }
+//                Row(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    verticalAlignment = Alignment.CenterVertically
+//                ) {
+//                    HorizontalDivider(thickness = 2.dp)
+//                }
+//            }
+//        }
+//
+////        Column(
+////            horizontalAlignment = Alignment.CenterHorizontally,
+////            verticalArrangement = Arrangement.Center,
+////            modifier = Modifier.fillMaxWidth()
+////        ) {
+////            Row(
+////                modifier = Modifier.fillMaxWidth(),
+////                verticalAlignment = Alignment.CenterVertically
+////            ) {
+////                HorizontalDivider(thickness = 2.dp)
+////            }
+////        }
+//
+//        Column(
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                OutlinedButton(
+//                    modifier = Modifier.weight(1f),
+//                    onClick = onCancelButtonClicked
+//                ) {
+//                    Text(
+//                        text = stringResource(R.string.back_button),
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        fontSize = 22.sp,
+//                    )
+//                }
+//            }
+//        }
 
 @Preview
 @Composable
