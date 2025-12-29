@@ -28,10 +28,20 @@ class BaziColumnUtil {
             sb.append(stringResource(R.string.app_label_hour))
         }
         if(columnPosition == ColumnPosition.COLUMN_DA_YUN){
-            sb.append(stringResource(R.string.app_bazi_dayun))
+            if(isTG){
+                return stringResource(R.string.dayun_tiangan_label)
+            }else{
+                return stringResource(R.string.dayun_dizhi_label)
+            }
+//            sb.append(stringResource(R.string.app_bazi_dayun))
         }
         if(columnPosition == ColumnPosition.COLUMN_LIU_YEAR){
-            sb.append(stringResource(R.string.bazi_liunian))
+            if(isTG){
+                return stringResource(R.string.liunian_tiangan_label)
+            }else{
+                return stringResource(R.string.liunian_dizhi_label)
+            }
+//            sb.append(stringResource(R.string.bazi_liunian))
         }
         if(columnPosition == ColumnPosition.COLUMN_LIU_MONTH){
             sb.append(stringResource(R.string.bazi_liu_month))

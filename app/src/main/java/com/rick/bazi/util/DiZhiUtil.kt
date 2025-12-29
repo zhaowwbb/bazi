@@ -808,7 +808,7 @@ class DiZhiUtil {
         } else if (dz1Column == ColumnPosition.COLUMN_DA_YUN) {
 //            dz1StrId = R.string.dayun_dizhi_label
         } else if (dz1Column == ColumnPosition.COLUMN_LIU_YEAR) {
-            dz1StrId = R.string.liunian_dizhi_label
+//            dz1StrId = R.string.liunian_dizhi_label
         }
 
         if (dz2Column == ColumnPosition.COLUMN_YEAR) {
@@ -825,7 +825,7 @@ class DiZhiUtil {
             dz2StrId = R.string.liunian_dizhi_label
         }
 
-        if(dz1Column != ColumnPosition.COLUMN_DA_YUN) {
+        if(dz1Column != ColumnPosition.COLUMN_DA_YUN && dz1Column != ColumnPosition.COLUMN_LIU_YEAR) {
             sb.append(ConstUtil.SPACE)
             sb.append(stringResource(dz1StrId))
             sb.append("[")

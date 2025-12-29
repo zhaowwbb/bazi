@@ -114,7 +114,7 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getTianGan6HeString(dyTG : TianGan, tg : TianGan, columnPosition: ColumnPosition, data: BaziData): String {
+    fun getTianGan5HeString(dyTG : TianGan, tg : TianGan, columnPosition: ColumnPosition, data: BaziData): String {
         val sb = StringBuilder()
         var wx = WuXing.WUXING_MU
         if(TianGanUtil().isTianGanHe(dyTG, tg)){
@@ -157,11 +157,11 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunTianGan6HeString(dyTG : TianGan, data: BaziData): String {
+    fun getDaYunTianGan5HeString(dyTG : TianGan, data: BaziData): String {
         val sb = StringBuilder()
-        sb.append(getTianGan6HeString(dyTG, data.yearTiangan, ColumnPosition.COLUMN_YEAR, data))
-        sb.append(getTianGan6HeString(dyTG, data.monthTiangan, ColumnPosition.COLUMN_MONTH, data))
-        sb.append(getTianGan6HeString(dyTG, data.hourTiangan, ColumnPosition.COLUMN_HOUR, data))
+        sb.append(getTianGan5HeString(dyTG, data.yearTiangan, ColumnPosition.COLUMN_YEAR, data))
+        sb.append(getTianGan5HeString(dyTG, data.monthTiangan, ColumnPosition.COLUMN_MONTH, data))
+        sb.append(getTianGan5HeString(dyTG, data.hourTiangan, ColumnPosition.COLUMN_HOUR, data))
         return sb.toString()
     }
 
@@ -272,11 +272,10 @@ class DaYunUtil {
                 sb.append(ConstUtil.ADD_SYMBOL)
                 sb.append(ConstUtil.DIZHI_SANHUI_WEIGHT)
                 sb.append(")")
-            }
-            if(YongShenUtil().isWuXingJiShen(wx, data)){
+            }else if(YongShenUtil().isWuXingJiShen(wx, data)){
                 data.daYunWeight-= ConstUtil.DIZHI_SANHUI_WEIGHT
                 sb.append("[")
-                sb.append(stringResource(R.string.app_bazi_xiyong_shen))
+                sb.append(stringResource(R.string.app_bazi_ji_shen))
                 sb.append("]")
                 sb.append(" ")
                 sb.append(stringResource(R.string.app_bazi_weight_label))
@@ -285,7 +284,7 @@ class DaYunUtil {
                 sb.append(ConstUtil.DIZHI_SANHUI_WEIGHT)
                 sb.append(")")
             }else{
-                data.daYunWeight-= ConstUtil.XIAN_SHEN_WEIGHT
+                data.daYunWeight+= ConstUtil.XIAN_SHEN_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_xian_shen))
                 sb.append("]")
@@ -326,12 +325,6 @@ class DaYunUtil {
             str = get3HuiCheckString(dyDZ, data.dayDizhi, data.hourDizhi, data)
             sb.append(str)
         }
-
-
-//        sb.append(get3HuiCheckString(dyDZ, data.yearDizhi, data.hourDizhi, data))
-//        sb.append(get3HuiCheckString(dyDZ, data.monthDizhi, data.dayDizhi, data))
-//        sb.append(get3HuiCheckString(dyDZ, data.monthDizhi, data.hourDizhi, data))
-//        sb.append(get3HuiCheckString(dyDZ, data.dayDizhi, data.hourDizhi, data))
         return sb.toString()
     }
 
@@ -357,8 +350,7 @@ class DaYunUtil {
                 sb.append(ConstUtil.ADD_SYMBOL)
                 sb.append(ConstUtil.DIZHI_SANHE_WEIGHT)
                 sb.append(")")
-            }
-            if (YongShenUtil().isWuXingJiShen(wx, data)) {
+            }else if (YongShenUtil().isWuXingJiShen(wx, data)) {
                 data.daYunWeight -= ConstUtil.DIZHI_SANHE_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_ji_shen))
@@ -370,7 +362,7 @@ class DaYunUtil {
                 sb.append(ConstUtil.DIZHI_SANHE_WEIGHT)
                 sb.append(")")
             } else {
-                data.daYunWeight -= ConstUtil.XIAN_SHEN_WEIGHT
+                data.daYunWeight += ConstUtil.XIAN_SHEN_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_xian_shen))
                 sb.append("]")
@@ -386,17 +378,38 @@ class DaYunUtil {
         return sb.toString()
     }
 
-
-
     @Composable
     fun getDaYunDiZhi3HeString(dyDZ : DiZhi, data: BaziData): String {
         val sb = StringBuilder()
-        sb.append(get3HeCheckString(dyDZ, data.yearDizhi, data.monthDizhi, data))
-        sb.append(get3HeCheckString(dyDZ, data.yearDizhi, data.dayDizhi, data))
-        sb.append(get3HeCheckString(dyDZ, data.yearDizhi, data.hourDizhi, data))
-        sb.append(get3HeCheckString(dyDZ, data.monthDizhi, data.dayDizhi, data))
-        sb.append(get3HeCheckString(dyDZ, data.monthDizhi, data.hourDizhi, data))
-        sb.append(get3HeCheckString(dyDZ, data.dayDizhi, data.hourDizhi, data))
+        var str = get3HeCheckString(dyDZ, data.yearDizhi, data.monthDizhi, data)
+        sb.append(str)
+        if(sb.isEmpty()){
+            str = get3HeCheckString(dyDZ, data.yearDizhi, data.dayDizhi, data)
+            sb.append(str)
+        }
+        if(sb.isEmpty()){
+            str = get3HeCheckString(dyDZ, data.yearDizhi, data.hourDizhi, data)
+            sb.append(str)
+        }
+        if(sb.isEmpty()){
+            str = get3HeCheckString(dyDZ, data.monthDizhi, data.dayDizhi, data)
+            sb.append(str)
+        }
+        if(sb.isEmpty()){
+            str = get3HeCheckString(dyDZ, data.monthDizhi, data.hourDizhi, data)
+            sb.append(str)
+        }
+        if(sb.isEmpty()){
+            str = get3HeCheckString(dyDZ, data.dayDizhi, data.hourDizhi, data)
+            sb.append(str)
+        }
+
+//        sb.append(get3HeCheckString(dyDZ, data.yearDizhi, data.monthDizhi, data))
+//        sb.append(get3HeCheckString(dyDZ, data.yearDizhi, data.dayDizhi, data))
+//        sb.append(get3HeCheckString(dyDZ, data.yearDizhi, data.hourDizhi, data))
+//        sb.append(get3HeCheckString(dyDZ, data.monthDizhi, data.dayDizhi, data))
+//        sb.append(get3HeCheckString(dyDZ, data.monthDizhi, data.hourDizhi, data))
+//        sb.append(get3HeCheckString(dyDZ, data.dayDizhi, data.hourDizhi, data))
         return sb.toString()
     }
 
@@ -467,7 +480,7 @@ class DaYunUtil {
 
         sb.append(YongShenUtil().getTianGanXiJiWeightString(dyTG, data))
         sb.append(YongShenUtil().getDiZhiXiJiWeightString(dyDZ, data))
-        sb.append(getDaYunTianGan6HeString(dyTG, data))
+        sb.append(getDaYunTianGan5HeString(dyTG, data))
 //        sb.append(getDaYunTianGanTouDiZhiString(dyTG, data))
 
         sb.append(getDaYunDiZhiTouchuCheckString(dyTG, dyDZ, data))
@@ -533,13 +546,6 @@ class DaYunUtil {
     }
 
     fun getDaYunFirstYear(data: BaziData) : TianGanDiZhi{
-//        var tgdz : TianGanDiZhi
-//        var year = data.daYunStartYear
-//        var month = data.birthDateMonth + data.daYunStartMonth
-//        if(month > 12){
-//            year+=1
-//            month = month - 12
-//        }
         val tmpData = BaziData(data.daYunFirstYear, data.daYunStartMonth, data.birthDateDay, data.birthHour, data.gender)
         //calculate year and month
         BaziPaiPanUtil().calculateBazi(data.daYunFirstYear, data.daYunStartMonth, data.birthDateDay, data.birthHour, tmpData)
