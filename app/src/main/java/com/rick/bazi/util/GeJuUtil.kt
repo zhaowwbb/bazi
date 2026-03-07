@@ -538,6 +538,7 @@ class GeJuUtil {
 
         baziData.gj = gj
         calculateGeJuXiJi(gj, baziData)
+        YongShenPickQTBJUtil().checkXiJi(baziData)
         YongShenUtil().checkBaziYongShen(baziData)
         return gj
     }

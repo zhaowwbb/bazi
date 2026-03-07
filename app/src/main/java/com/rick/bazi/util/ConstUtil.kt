@@ -2,6 +2,9 @@ package com.rick.bazi.util
 
 class ConstUtil {
     companion object {
+        const val YONGSHEN_PICKER_GEJU = "YONGSHEN_PICKER_GEJU"
+        const val YONGSHEN_PICKER_QTBJ = "YONGSHEN_PICKER_QTBJ"
+
         const val ZERO_WEIGHT: Float = 0f
 
         const val YONG_SHEN_WEIGHT: Float = 4.0f

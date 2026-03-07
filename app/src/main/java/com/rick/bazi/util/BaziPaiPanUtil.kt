@@ -82,7 +82,9 @@ class BaziPaiPanUtil {
         data.hourTiangan = tg
         data.hourDizhi = dz
 
+        data.yongShenPickMode = baziInfo.yongShenPickModeStr
         GeJuUtil().getGJ(data)
+
 
         baziModel.setBaziData(data)
 

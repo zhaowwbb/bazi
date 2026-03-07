@@ -220,7 +220,6 @@
     <string name="bazi_canggan">藏干</string>
     <string name="bazi_second_star">副星</string>
 
-
     <string name="tiangan">天干</string>
     <string name="tiangan_jia">甲</string>
     <string name="tiangan_yi">乙</string>
@@ -384,6 +383,9 @@
     <string name="app_bazi_xi_shen">喜神</string>
     <string name="app_bazi_ji_shen">忌神</string>
     <string name="app_bazi_xian_shen">闲神</string>
+    <string name="yong_shen_pick_label">用神选取:</string>
+    <string name="yong_shen_pick_label_gj">格局</string>
+    <string name="yong_shen_pick_label_qtbj">《穷通宝鉴》</string>
 
 
     <string name="app_bazi_gj_label">格局</string>

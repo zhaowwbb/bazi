@@ -77,6 +77,7 @@ import com.rick.bazi.data.TianGan
 import com.rick.bazi.util.BaziMeasureUtil
 import com.rick.bazi.util.BaziPaiPanUtil
 import com.rick.bazi.util.BaziUtil
+import com.rick.bazi.util.ConstUtil
 import com.rick.bazi.util.DateUtils
 import com.rick.bazi.util.GeJuUtil
 import com.rick.bazi.util.VietCalendar.convertSolar2Lunar
@@ -100,6 +101,7 @@ fun BaziStartScreen(
     modifier: Modifier = Modifier
 ) {
     var selectedGenderValue by rememberSaveable { mutableStateOf(MALE) }
+    var selectedYongShenMethodValue by rememberSaveable { mutableStateOf(ConstUtil.YONGSHEN_PICKER_GEJU) }
 
     Column(
         modifier = modifier,
@@ -349,6 +351,52 @@ fun BaziStartScreen(
                 )
             }
         }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.yong_shen_pick_label),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 20.sp
+                )
+                RadioButton(
+                    selected = selectedYongShenMethodValue == ConstUtil.YONGSHEN_PICKER_GEJU,
+                    onClick = {
+                        selectedYongShenMethodValue = ConstUtil.YONGSHEN_PICKER_GEJU
+                        baziModel.setBaziYongShenPickMode(ConstUtil.YONGSHEN_PICKER_GEJU)
+                        onSelectionChanged(ConstUtil.YONGSHEN_PICKER_GEJU)
+                    }
+                )
+                Text(
+                    text = stringResource(R.string.yong_shen_pick_label_gj),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 20.sp
+                )
+                RadioButton(
+                    selected = selectedYongShenMethodValue == ConstUtil.YONGSHEN_PICKER_QTBJ,
+                    onClick = {
+                        selectedYongShenMethodValue = ConstUtil.YONGSHEN_PICKER_QTBJ
+                        baziModel.setBaziYongShenPickMode(ConstUtil.YONGSHEN_PICKER_QTBJ)
+                        onSelectionChanged(ConstUtil.YONGSHEN_PICKER_QTBJ)
+                    }
+                )
+                Text(
+                    text = stringResource(R.string.yong_shen_pick_label_qtbj),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 20.sp
+                )
+
+            }
+        }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -435,24 +483,24 @@ fun BaziStartScreen(
             }
         }
 
-        //create bottom space
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Divider(
-                    thickness = dimensionResource(R.dimen.thickness_divider),
-                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
-                )
-            }
-
-        }
+//        //create bottom space
+//        Column(
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Divider(
+//                    thickness = dimensionResource(R.dimen.thickness_divider),
+//                    modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
+//                )
+//            }
+//
+//        }
     }
 }
 

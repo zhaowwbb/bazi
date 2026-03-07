@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.BaziGeJu
 import com.rick.bazi.data.BaziStrength
+import com.rick.bazi.data.BaziYongShenPickMode
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.RootLevel
 import com.rick.bazi.data.ShiShen
@@ -30,14 +31,14 @@ class BaziViewModel : ViewModel() {
             )
         }
     }
-
-    fun setBirthDate(dateMili: Long) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                birthDateMili = dateMili
-            )
-        }
-    }
+//
+//    fun setBirthDate(dateMili: Long) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                birthDateMili = dateMili
+//            )
+//        }
+//    }
 
     fun setBirthDateYear(year: Int) {
         _uiState.update { currentState ->
@@ -149,22 +150,22 @@ class BaziViewModel : ViewModel() {
             )
         }
     }
-
-    fun setYearBase(base: Int) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                yearBase = base
-            )
-        }
-    }
-
-    fun setMonthBase(base: Int) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                monthBase = base
-            )
-        }
-    }
+//
+//    fun setYearBase(base: Int) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                yearBase = base
+//            )
+//        }
+//    }
+//
+//    fun setMonthBase(base: Int) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                monthBase = base
+//            )
+//        }
+//    }
 
     fun setDayBase(base: Int) {
         _uiState.update { currentState ->
@@ -205,38 +206,38 @@ class BaziViewModel : ViewModel() {
             )
         }
     }
-
-    fun setMediumRootCount(n: Int) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                mediumRootCount = n
-            )
-        }
-    }
-
-    fun setWeakRootCount(n: Int) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                weakRootCount = n
-            )
-        }
-    }
-
-    fun setBaziStr(str: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                baziStr = str
-            )
-        }
-    }
-
-    fun setBaziOwnerStr(str: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                ownerStr = str
-            )
-        }
-    }
+//
+//    fun setMediumRootCount(n: Int) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                mediumRootCount = n
+//            )
+//        }
+//    }
+//
+//    fun setWeakRootCount(n: Int) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                weakRootCount = n
+//            )
+//        }
+//    }
+//
+//    fun setBaziStr(str: String) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                baziStr = str
+//            )
+//        }
+//    }
+//
+//    fun setBaziOwnerStr(str: String) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                ownerStr = str
+//            )
+//        }
+//    }
 
     fun setWuxingSummaryStr(str: String) {
         _uiState.update { currentState ->
@@ -254,29 +255,29 @@ class BaziViewModel : ViewModel() {
         }
     }
 
-    fun setDeDiCheckStr(str: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                deDiCheckStr = str
-            )
-        }
-    }
-
-    fun setDeHelpStr(str: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                deHelpStr = str
-            )
-        }
-    }
-
-    fun setKeXieHaoStr(str: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                keXieHaoStr = str
-            )
-        }
-    }
+//    fun setDeDiCheckStr(str: String) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                deDiCheckStr = str
+//            )
+//        }
+//    }
+//
+//    fun setDeHelpStr(str: String) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                deHelpStr = str
+//            )
+//        }
+//    }
+//
+//    fun setKeXieHaoStr(str: String) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                keXieHaoStr = str
+//            )
+//        }
+//    }
 
     fun setShishenYearStr(str: String) {
         _uiState.update { currentState ->
@@ -454,21 +455,21 @@ class BaziViewModel : ViewModel() {
         }
     }
 
-    fun setIsDedi(flag: Boolean) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                isDedi = flag
-            )
-        }
-    }
-
-    fun setBaziXiJiSummary(str: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                baziXiJiSummary = str
-            )
-        }
-    }
+//    fun setIsDedi(flag: Boolean) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                isDedi = flag
+//            )
+//        }
+//    }
+//
+//    fun setBaziXiJiSummary(str: String) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                baziXiJiSummary = str
+//            )
+//        }
+//    }
 
     fun setBaziGJ(gj: BaziGeJu) {
         _uiState.update { currentState ->
@@ -502,21 +503,21 @@ class BaziViewModel : ViewModel() {
         }
     }
 
-    fun setBaziXiyongShenList(list: List<WuXing>) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                xiyongShenList = list
-            )
-        }
-    }
-
-    fun setBaziJiShenList(list: List<WuXing>) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                jiShenList = list
-            )
-        }
-    }
+//    fun setBaziXiyongShenList(list: List<WuXing>) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                xiyongShenList = list
+//            )
+//        }
+//    }
+//
+//    fun setBaziJiShenList(list: List<WuXing>) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                jiShenList = list
+//            )
+//        }
+//    }
 
     fun setBaziTiaohouShenList(list: List<WuXing>) {
         _uiState.update { currentState ->
@@ -526,42 +527,50 @@ class BaziViewModel : ViewModel() {
         }
     }
 
-    fun setYearDzRootLevel(level: RootLevel) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                yearDzRootLevel = level
-            )
-        }
-    }
-
-    fun setMonthDzRootLevel(level: RootLevel) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                monthDzRootLevel = level
-            )
-        }
-    }
-
-    fun setDayDzRootLevel(level: RootLevel) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                dayDzRootLevel = level
-            )
-        }
-    }
-
-    fun setHourDzRootLevel(level: RootLevel) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                hourDzRootLevel = level
-            )
-        }
-    }
+//    fun setYearDzRootLevel(level: RootLevel) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                yearDzRootLevel = level
+//            )
+//        }
+//    }
+//
+//    fun setMonthDzRootLevel(level: RootLevel) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                monthDzRootLevel = level
+//            )
+//        }
+//    }
+//
+//    fun setDayDzRootLevel(level: RootLevel) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                dayDzRootLevel = level
+//            )
+//        }
+//    }
+//
+//    fun setHourDzRootLevel(level: RootLevel) {
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                hourDzRootLevel = level
+//            )
+//        }
+//    }
 
     fun setBaziData(data: BaziData) {
         _uiState.update { currentState ->
             currentState.copy(
                 baziData = data
+            )
+        }
+    }
+
+    fun setBaziYongShenPickMode(str: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                yongShenPickModeStr = str
             )
         }
     }

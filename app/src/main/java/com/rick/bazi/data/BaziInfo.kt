@@ -84,6 +84,7 @@ data class BaziInfo(
     val monthDzRootLevel : RootLevel = RootLevel.NO_ROOT,
     val dayDzRootLevel : RootLevel = RootLevel.NO_ROOT,
     val hourDzRootLevel : RootLevel = RootLevel.NO_ROOT,
+    val yongShenPickModeStr: String = "",
 
     val tianganStrMap: Map<TianGan, Int> = mapOf(
         TianGan.TIANGAN_JIA to R.string.tiangan_jia,

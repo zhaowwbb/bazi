@@ -73,4 +73,5 @@ data class BaziData(
     var baziYongShenList :  List<BaziYongShen> = listOf(),
     var xiyongShenSet : Set<ShiShen> = setOf(),
     var jiShenSet : Set<ShiShen> = setOf(),
+    var yongShenPickMode: String = "",
 )
