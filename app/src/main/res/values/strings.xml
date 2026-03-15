@@ -1064,4 +1064,6 @@
     <string name="app_bazi_gj_zhengcai_desc1">年上正财，若为喜用，祖上富有。</string>
     <string name="app_bazi_gj_zhengcai_desc2">命局中不见财星，地支藏干中也不见财星的称为命中无财，这样的八字，就是身旺财星为喜用神者也发不了大财，就是行到财运之年，也是空喜一场。</string>
     <string name="app_bazi_gj_zhengcai_desc3">正财不宜太多，如超过三位以上者，其财则不易守住，所谓财星过多者，乃富家穷人也。</string>
+
+    <string name="app_bazi_health">健康分析</string>
 </resources>

@@ -45,6 +45,7 @@ import com.rick.bazi.ui.BaziTianKeDiChongScreen
 import com.rick.bazi.ui.BaziVersionScreen
 import com.rick.bazi.ui.BaziViewModel
 import com.rick.bazi.ui.BaziDayunScreen
+import com.rick.bazi.ui.BaziHealthScreen
 import com.rick.bazi.ui.BaziLiuNianScreen
 import com.rick.bazi.ui.BaziPrivacyPolicyScreen
 import com.rick.bazi.ui.BaziUserAgreementScreen
@@ -64,6 +65,7 @@ enum class BaziScreen(@StringRes val title: Int) {
     YiMa(title = R.string.app_bazi_yima),
     TaoHua(title = R.string.app_bazi_result),
     Analysis(title = R.string.app_bazi_analysis),
+    Health(title = R.string.app_bazi_health),
     LiuNian(title = R.string.bazi_liunian_jixiong_label)
 }
 
@@ -325,6 +327,19 @@ fun BaziApp(
             }
             composable(route = BaziScreen.LiuNian.name) {
                 BaziLiuNianScreen(
+                    onCancelButtonClicked = {
+                        cancelOrderAndNavigateToStart(baziModel, navController)
+                    },
+                    onSendButtonClicked = { subject: String, summary: String -> {}
+
+                    },
+                    baziInfo = baziUIInfo,
+                    baziModel = baziModel,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+            composable(route = BaziScreen.Health.name) {
+                BaziHealthScreen(
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(baziModel, navController)
                     },

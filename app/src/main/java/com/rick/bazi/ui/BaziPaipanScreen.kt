@@ -507,6 +507,18 @@ fun BaziPaipanScreen(
                         fontSize = 22.sp,
                     )
                 }
+                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+                    preProcessBazi.value = true
+                    navController.navigate(BaziScreen.Health.name)
+                }) {
+                    Text(
+                        text = stringResource(R.string.app_bazi_health),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight(500),
+                        fontSize = 22.sp,
+                    )
+                }
             }
 
             Row(
