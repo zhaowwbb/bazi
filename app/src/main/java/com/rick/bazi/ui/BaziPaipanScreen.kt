@@ -550,34 +550,34 @@ fun BaziPaipanScreen(
                 }
             }
 
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.TaoHua.name)
-                }) {
-                    Text(
-                        text = stringResource(R.string.taohua_label),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
-                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.YiMa.name)
-                }) {
-                    Text(
-                        text = stringResource(R.string.app_bazi_yima),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
-            }
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+//                    navController.navigate(BaziScreen.TaoHua.name)
+//                }) {
+//                    Text(
+//                        text = stringResource(R.string.taohua_label),
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        fontSize = 22.sp,
+//                    )
+//                }
+//                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+//                    navController.navigate(BaziScreen.YiMa.name)
+//                }) {
+//                    Text(
+//                        text = stringResource(R.string.app_bazi_yima),
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        fontSize = 22.sp,
+//                    )
+//                }
+//            }
             Row(
                 modifier = Modifier.padding(5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -595,10 +595,10 @@ fun BaziPaipanScreen(
                     )
                 }
                 OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.Version.name)
+                    navController.navigate(BaziScreen.Summary.name)
                 }) {
                     Text(
-                        text = stringResource(R.string.app_bazi_version),
+                        text = stringResource(R.string.app_bazi_suanming),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.weight(1f),
                         fontWeight = FontWeight(500),
@@ -606,63 +606,63 @@ fun BaziPaipanScreen(
                     )
                 }
             }
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.PrivacyPolicy.name)
-                }) {
-                    Text(
-                        text = stringResource(R.string.app_bazi_privacy_policy),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
-                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.UserAgreement.name)
-                }) {
-                    Text(
-                        text = stringResource(R.string.app_bazi_user_agreement),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
-            }
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+//                    navController.navigate(BaziScreen.PrivacyPolicy.name)
+//                }) {
+//                    Text(
+//                        text = stringResource(R.string.app_bazi_privacy_policy),
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        fontSize = 22.sp,
+//                    )
+//                }
+//                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+//                    navController.navigate(BaziScreen.UserAgreement.name)
+//                }) {
+//                    Text(
+//                        text = stringResource(R.string.app_bazi_user_agreement),
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        fontSize = 22.sp,
+//                    )
+//                }
+//            }
 
-            Row(
-                modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.Introduction.name)
-                }) {
-                    Text(
-                        text = stringResource(R.string.app_introduction),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
-                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
-                    navController.navigate(BaziScreen.Sample.name)
-                }) {
-                    Text(
-                        text = stringResource(R.string.app_bazi_sample),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.weight(1f),
-                        fontWeight = FontWeight(500),
-                        fontSize = 22.sp,
-                    )
-                }
-            }
+//            Row(
+//                modifier = Modifier.padding(5.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+//                    navController.navigate(BaziScreen.Introduction.name)
+//                }) {
+//                    Text(
+//                        text = stringResource(R.string.app_introduction),
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        fontSize = 22.sp,
+//                    )
+//                }
+//                OutlinedButton(modifier = Modifier.weight(1f), onClick = {
+//                    navController.navigate(BaziScreen.Sample.name)
+//                }) {
+//                    Text(
+//                        text = stringResource(R.string.app_bazi_sample),
+//                        textAlign = TextAlign.Center,
+//                        modifier = Modifier.weight(1f),
+//                        fontWeight = FontWeight(500),
+//                        fontSize = 22.sp,
+//                    )
+//                }
+//            }
         }
     }
 }

@@ -54,7 +54,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.media3.common.ktx)
-    implementation(libs.androidx.compose.material)
+    implementation("androidx.wear.compose:compose-material:1.4.0") // Or your active BOM/latest version
+    // Foundation and Navigation support for Wear (highly recommended if not already there)
+    implementation("androidx.wear.compose:compose-foundation:1.4.0")
     implementation(libs.androidx.ui.test.junit4.android)
     implementation("cn.6tail:tyme4j:1.3.8")
     implementation(libs.androidx.compose.foundation)

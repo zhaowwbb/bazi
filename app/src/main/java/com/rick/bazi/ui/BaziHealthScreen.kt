@@ -1344,7 +1344,7 @@ fun BaziHealthReportScreen(baziData: BaziData,modifier: Modifier) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-//            .verticalScroll(scrollState)
+            .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
         // 报告标题
