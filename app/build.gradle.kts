@@ -57,6 +57,8 @@ dependencies {
     implementation("androidx.wear.compose:compose-material:1.4.0") // Or your active BOM/latest version
     // Foundation and Navigation support for Wear (highly recommended if not already there)
     implementation("androidx.wear.compose:compose-foundation:1.4.0")
+    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    implementation("androidx.compose.material:material-icons-extended")
     implementation(libs.androidx.ui.test.junit4.android)
     implementation("cn.6tail:tyme4j:1.3.8")
     implementation(libs.androidx.compose.foundation)

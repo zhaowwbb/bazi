@@ -58,6 +58,7 @@ enum class BaziScreen(@StringRes val title: Int) {
     PrivacyPolicy(title = R.string.app_bazi_privacy_policy),
     Start(title = R.string.app_bazi_title),
     Paipan(title = R.string.app_bazi_paipan),
+    Pan(title = R.string.app_bazi_paipan),
     Sample(title = R.string.app_bazi_sample),
     Version(title = R.string.app_bazi_version),
     Introduction(title = R.string.app_introduction),
@@ -108,7 +109,7 @@ fun BaziApp(
     val backStackEntry by navController.currentBackStackEntryAsState()
     // Get the name of the current screen
     val currentScreen = BaziScreen.valueOf(
-        backStackEntry?.destination?.route ?: BaziScreen.Start.name
+        backStackEntry?.destination?.route ?: BaziScreen.PrivacyPolicy.name
     )
 
     Scaffold(
@@ -124,7 +125,7 @@ fun BaziApp(
 
         NavHost(
             navController = navController,
-            startDestination = BaziScreen.ConfirmPrivacy.name,
+            startDestination = BaziScreen.PrivacyPolicy.name,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -175,7 +176,7 @@ fun BaziApp(
             composable(route = BaziScreen.PrivacyPolicy.name) {
                 BaziPrivacyPolicyScreen(
                     onNextButtonClicked = {
-                        navController.navigate(BaziScreen.Paipan.name)
+                        navController.navigate(BaziScreen.Start.name)
                     },
                     navController = navController,
                     baziInfo = baziUIInfo,
@@ -224,6 +225,23 @@ fun BaziApp(
                     modifier = Modifier.fillMaxHeight()
                 )
             }
+            composable(route = BaziScreen.Pan.name) {
+                BaZiPanScreen(
+//                    subtotal = "13.0",
+//                    onNextButtonClicked = { navController.navigate(BaziScreen.TaoHua.name) },
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    options = DataSource.strList,
+//                    onSelectionChanged = { //viewModel.setDate(it)
+//                    },
+                    navController = navController,
+                    baziModel = baziModel,
+                    baziInfo = baziUIInfo,
+                    modifier = Modifier.fillMaxHeight()
+                )
+            }
+
             composable(route = BaziScreen.TaoHua.name) {
                 val context = LocalContext.current
                 BaziTaoHuaScreen(
