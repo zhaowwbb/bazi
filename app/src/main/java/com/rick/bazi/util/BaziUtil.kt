@@ -1018,8 +1018,11 @@ class BaziUtil {
         } else {
             genderStr = stringResource(R.string.app_bazi_female)
         }
+//        val birthDateStr =
+//            "$calendarStr ${baziInfo.birthDateYear}$yearLabel ${baziInfo.birthDateMonth}$monthLabel ${baziInfo.birthDateDay}$dayLabel ${baziInfo.birthHour}$hourLabel  $genderStr"
+
         val birthDateStr =
-            "$calendarStr ${baziInfo.birthDateYear}$yearLabel ${baziInfo.birthDateMonth}$monthLabel ${baziInfo.birthDateDay}$dayLabel ${baziInfo.birthHour}$hourLabel  $genderStr"
+            "$calendarStr ${baziInfo.birthDateYear}$yearLabel ${baziInfo.birthDateMonth}$monthLabel ${baziInfo.birthDateDay}$dayLabel ${baziInfo.birthHour}$hourLabel"
 
         return birthDateStr
     }

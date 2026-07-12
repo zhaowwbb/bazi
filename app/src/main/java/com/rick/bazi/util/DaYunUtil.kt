@@ -15,41 +15,42 @@ import com.rick.bazi.data.TianGanDiZhi
 import com.rick.bazi.data.WuXing
 import com.rick.bazi.ui.BaziViewModel
 import com.tyme.solar.SolarTime
+import java.time.LocalDate
+import java.time.Year
 
 class DaYunUtil {
 
     data class DayunRecord(
-        val dyLabel: String,
-        val dyAgeLabel: String
+        val dyLabel: String, val dyAgeLabel: String
     )
 
-    fun isDaYunForward(data: BaziData) : Boolean{
+    fun isDaYunForward(data: BaziData): Boolean {
         if (data.gender == MALE) {
-            if(TianGanUtil().isTianGanYang(data.yearTiangan)){
+            if (TianGanUtil().isTianGanYang(data.yearTiangan)) {
                 return true
-            }else{
+            } else {
                 return false
             }
-        }else{
-            if(TianGanUtil().isTianGanYang(data.yearTiangan)){
+        } else {
+            if (TianGanUtil().isTianGanYang(data.yearTiangan)) {
                 return false
-            }else{
+            } else {
                 return true
             }
         }
     }
 
     //index start from 1
-    fun getDaYun(index : Int, data: BaziData) : TianGanDiZhi {
+    fun getDaYun(index: Int, data: BaziData): TianGanDiZhi {
         var tg = data.monthTiangan
         var dz = data.monthDizhi
-        if(isDaYunForward(data)){
-            for(i in 0 until index){
+        if (isDaYunForward(data)) {
+            for (i in 0 until index) {
                 tg = TianGanUtil().getNextTianGan(tg)
                 dz = DiZhiUtil().getNextDiZhi(dz)
             }
-        }else{
-            for(i in 0 until index){
+        } else {
+            for (i in 0 until index) {
                 tg = TianGanUtil().getPrevTianGan(tg)
                 dz = DiZhiUtil().getPrevDiZhi(dz)
             }
@@ -58,30 +59,32 @@ class DaYunUtil {
         return TianGanDiZhi(tg, dz)
     }
 
-    fun calculateDaYunStartSeconds(startJieQi : SolarTime, endJieQi : SolarTime, ownerTime : SolarTime, data: BaziData){
-        var seconds : Int = 0
-        if(isDaYunForward(data)){
+    fun calculateDaYunStartSeconds(
+        startJieQi: SolarTime, endJieQi: SolarTime, ownerTime: SolarTime, data: BaziData
+    ) {
+        var seconds: Int = 0
+        if (isDaYunForward(data)) {
             seconds = endJieQi.subtract(ownerTime)
-        }else{
+        } else {
             seconds = ownerTime.subtract(startJieQi)
         }
         data.daYunStartSeconds = seconds
 
-        var days = data.daYunStartSeconds/86400
-        var remainSeconds = data.daYunStartSeconds%86400
-        var hours = remainSeconds/3600
-        var remainTime = remainSeconds%3600
-        var year = days/3
-        var month = (days%3)*4
-        var day = hours*5
-        day = day + (remainTime/720)
-        if(day > 30){
-            month = month + day/30
+        var days = data.daYunStartSeconds / 86400
+        var remainSeconds = data.daYunStartSeconds % 86400
+        var hours = remainSeconds / 3600
+        var remainTime = remainSeconds % 3600
+        var year = days / 3
+        var month = (days % 3) * 4
+        var day = hours * 5
+        day = day + (remainTime / 720)
+        if (day > 30) {
+            month = month + day / 30
         }
-        day = day%30
+        day = day % 30
 
-        var remainHours = remainTime%720
-        var hour = remainHours/30
+        var remainHours = remainTime % 720
+        var hour = remainHours / 30
 
         data.daYunStartYear = year
         data.daYunStartMonth = month
@@ -89,8 +92,8 @@ class DaYunUtil {
 
         var startYear = data.birthDateYear + data.daYunStartYear
         var startMonth = data.birthDateMonth + data.daYunStartMonth
-        if(startMonth >= 13){
-            startYear+= 1
+        if (startMonth >= 13) {
+            startYear += 1
             startMonth -= 12
         }
         data.daYunFirstYear = startYear
@@ -100,7 +103,7 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunStartTimeString(data: BaziData) : String{
+    fun getDaYunStartTimeString(data: BaziData): String {
         val sb = StringBuilder()
         sb.append(stringResource(R.string.app_after_birth))
         sb.append(data.daYunStartYear).append(stringResource(R.string.app_label_year))
@@ -114,10 +117,12 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getTianGan5HeString(dyTG : TianGan, tg : TianGan, columnPosition: ColumnPosition, data: BaziData): String {
+    fun getTianGan5HeString(
+        dyTG: TianGan, tg: TianGan, columnPosition: ColumnPosition, data: BaziData
+    ): String {
         val sb = StringBuilder()
         var wx = WuXing.WUXING_MU
-        if(TianGanUtil().isTianGanHe(dyTG, tg)){
+        if (TianGanUtil().isTianGanHe(dyTG, tg)) {
             wx = TianGanUtil().getTianGanHeWuXing(dyTG)
             sb.append(ConstUtil.SPACE)
             sb.append(stringResource(R.string.dayun_tiangan_label))
@@ -126,24 +131,24 @@ class DaYunUtil {
             sb.append(" ")
             sb.append(TianGanUtil().getTianGan5HeLabel(dyTG))
 
-            if(YongShenUtil().isWuXingXiYongShen(wx, data)){
-                data.daYunWeight+= ConstUtil.TIANGAN_5HE_WEIGHT
+            if (YongShenUtil().isWuXingXiYongShen(wx, data)) {
+                data.daYunWeight += ConstUtil.TIANGAN_5HE_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_xiyong_shen))
                 sb.append("] ")
                 sb.append(stringResource(R.string.app_bazi_weight_label))
                 sb.append("(").append(ConstUtil.ADD_SYMBOL)
                 sb.append(ConstUtil.TIANGAN_5HE_WEIGHT).append(")")
-            }else if(YongShenUtil().isWuXingJiShen(wx, data)){
-                data.daYunWeight-= ConstUtil.TIANGAN_5HE_WEIGHT
+            } else if (YongShenUtil().isWuXingJiShen(wx, data)) {
+                data.daYunWeight -= ConstUtil.TIANGAN_5HE_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_ji_shen))
                 sb.append("] ")
                 sb.append(stringResource(R.string.app_bazi_weight_label))
                 sb.append("(").append(ConstUtil.SUB_SYMBOL)
                 sb.append(ConstUtil.TIANGAN_5HE_WEIGHT).append(")")
-            }else{
-                data.daYunWeight+= ConstUtil.XIAN_SHEN_WEIGHT
+            } else {
+                data.daYunWeight += ConstUtil.XIAN_SHEN_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_xian_shen))
                 sb.append("] ")
@@ -157,7 +162,7 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunTianGan5HeString(dyTG : TianGan, data: BaziData): String {
+    fun getDaYunTianGan5HeString(dyTG: TianGan, data: BaziData): String {
         val sb = StringBuilder()
         sb.append(getTianGan5HeString(dyTG, data.yearTiangan, ColumnPosition.COLUMN_YEAR, data))
         sb.append(getTianGan5HeString(dyTG, data.monthTiangan, ColumnPosition.COLUMN_MONTH, data))
@@ -166,10 +171,12 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunDiZhiTouCheckString(dyTG : TianGan, dz : DiZhi, position: ColumnPosition, data: BaziData): String {
+    fun getDaYunDiZhiTouCheckString(
+        dyTG: TianGan, dz: DiZhi, position: ColumnPosition, data: BaziData
+    ): String {
         val sb = StringBuilder()
         var tg = DiZhiUtil().getTianGan(dz)
-        if(tg == dyTG){
+        if (tg == dyTG) {
             sb.append(ConstUtil.SPACE)
             sb.append(BaziColumnUtil().getBaziColumnString(position, false))
             sb.append(WuXingUtil().getDiZhiWuXingString(dz))
@@ -182,20 +189,34 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunDiZhiTouchuCheckString(dyTG : TianGan, dyDZ : DiZhi, data: BaziData): String {
+    fun getDaYunDiZhiTouchuCheckString(dyTG: TianGan, dyDZ: DiZhi, data: BaziData): String {
         val sb = StringBuilder()
-        sb.append(getDaYunDiZhiTouCheckString(dyTG, data.yearDizhi, ColumnPosition.COLUMN_YEAR, data))
-        sb.append(getDaYunDiZhiTouCheckString(dyTG, data.monthDizhi, ColumnPosition.COLUMN_MONTH, data))
+        sb.append(
+            getDaYunDiZhiTouCheckString(
+                dyTG, data.yearDizhi, ColumnPosition.COLUMN_YEAR, data
+            )
+        )
+        sb.append(
+            getDaYunDiZhiTouCheckString(
+                dyTG, data.monthDizhi, ColumnPosition.COLUMN_MONTH, data
+            )
+        )
         sb.append(getDaYunDiZhiTouCheckString(dyTG, data.dayDizhi, ColumnPosition.COLUMN_DAY, data))
-        sb.append(getDaYunDiZhiTouCheckString(dyTG, data.hourDizhi, ColumnPosition.COLUMN_HOUR, data))
+        sb.append(
+            getDaYunDiZhiTouCheckString(
+                dyTG, data.hourDizhi, ColumnPosition.COLUMN_HOUR, data
+            )
+        )
         sb.append(getDaYunDiZhiTouCheckString(dyTG, dyDZ, ColumnPosition.COLUMN_DA_YUN, data))
         return sb.toString()
     }
 
     @Composable
-    fun getDaYunChongString(dyDZ : DiZhi, dz : DiZhi, columnPosition: ColumnPosition, data: BaziData): String {
+    fun getDaYunChongString(
+        dyDZ: DiZhi, dz: DiZhi, columnPosition: ColumnPosition, data: BaziData
+    ): String {
         val sb = StringBuilder()
-        if(DiZhiUtil().isDiZhiChong(dyDZ, dz)){
+        if (DiZhiUtil().isDiZhiChong(dyDZ, dz)) {
             sb.append(ConstUtil.SPACE)
             sb.append(stringResource(R.string.dayun_dizhi_label))
             sb.append(WuXingUtil().getDiZhiWuXingString(dyDZ))
@@ -203,7 +224,7 @@ class DaYunUtil {
             sb.append(BaziColumnUtil().getBaziColumnString(columnPosition, false))
             sb.append(WuXingUtil().getDiZhiWuXingString(dz))
 
-            if(YongShenUtil().isDiZhiYongShen(dz, data)){
+            if (YongShenUtil().isDiZhiYongShen(dz, data)) {
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_yong_shen))
                 sb.append("]")
@@ -211,8 +232,9 @@ class DaYunUtil {
                 sb.append(stringResource(R.string.app_bazi_weight_label))
 
                 data.daYunWeight -= ConstUtil.CHONG_YONG_SHEN_WEIGHT
-                sb.append("(").append(ConstUtil.SUB_SYMBOL).append(ConstUtil.CHONG_YONG_SHEN_WEIGHT).append(")")
-            }else if(YongShenUtil().isDiZhiXiShen(dz, data)){
+                sb.append("(").append(ConstUtil.SUB_SYMBOL).append(ConstUtil.CHONG_YONG_SHEN_WEIGHT)
+                    .append(")")
+            } else if (YongShenUtil().isDiZhiXiShen(dz, data)) {
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_xi_shen))
                 sb.append("]")
@@ -224,7 +246,7 @@ class DaYunUtil {
                 sb.append(ConstUtil.SUB_SYMBOL)
                 sb.append(ConstUtil.CHONG_XI_SHEN_WEIGHT)
                 sb.append(")")
-            }else if(YongShenUtil().isDiZhiJiShen(dz, data)){
+            } else if (YongShenUtil().isDiZhiJiShen(dz, data)) {
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_ji_shen))
                 sb.append("]")
@@ -243,7 +265,7 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunDiZhiChongString(dyDZ : DiZhi, data: BaziData): String {
+    fun getDaYunDiZhiChongString(dyDZ: DiZhi, data: BaziData): String {
         val sb = StringBuilder()
         sb.append(getDaYunChongString(dyDZ, data.yearDizhi, ColumnPosition.COLUMN_YEAR, data))
         sb.append(getDaYunChongString(dyDZ, data.monthDizhi, ColumnPosition.COLUMN_MONTH, data))
@@ -253,16 +275,16 @@ class DaYunUtil {
     }
 
     @Composable
-    fun get3HuiCheckString(dyDZ : DiZhi, dz1 : DiZhi, dz2 : DiZhi, data: BaziData): String {
+    fun get3HuiCheckString(dyDZ: DiZhi, dz1: DiZhi, dz2: DiZhi, data: BaziData): String {
         val sb = StringBuilder()
         var wx = WuXing.WUXING_MU
-        if(DiZhiUtil().isDiZhiSanHui(dyDZ, dz1, dz2)){
+        if (DiZhiUtil().isDiZhiSanHui(dyDZ, dz1, dz2)) {
             wx = DiZhiUtil().get3HuiWuXingByDiZhi(dyDZ)
             sb.append(ConstUtil.SPACE)
             sb.append(stringResource(R.string.dayun_dizhi_label))
             sb.append(DiZhiUtil().getSanHuiStringByWuXing(wx))
-            if(YongShenUtil().isWuXingXiYongShen(wx, data)){
-                data.daYunWeight+= ConstUtil.DIZHI_SANHUI_WEIGHT
+            if (YongShenUtil().isWuXingXiYongShen(wx, data)) {
+                data.daYunWeight += ConstUtil.DIZHI_SANHUI_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_xiyong_shen))
                 sb.append("]")
@@ -272,8 +294,8 @@ class DaYunUtil {
                 sb.append(ConstUtil.ADD_SYMBOL)
                 sb.append(ConstUtil.DIZHI_SANHUI_WEIGHT)
                 sb.append(")")
-            }else if(YongShenUtil().isWuXingJiShen(wx, data)){
-                data.daYunWeight-= ConstUtil.DIZHI_SANHUI_WEIGHT
+            } else if (YongShenUtil().isWuXingJiShen(wx, data)) {
+                data.daYunWeight -= ConstUtil.DIZHI_SANHUI_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_ji_shen))
                 sb.append("]")
@@ -283,8 +305,8 @@ class DaYunUtil {
                 sb.append(ConstUtil.SUB_SYMBOL)
                 sb.append(ConstUtil.DIZHI_SANHUI_WEIGHT)
                 sb.append(")")
-            }else{
-                data.daYunWeight+= ConstUtil.XIAN_SHEN_WEIGHT
+            } else {
+                data.daYunWeight += ConstUtil.XIAN_SHEN_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_xian_shen))
                 sb.append("]")
@@ -301,27 +323,27 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunDiZhi3HuiString(dyDZ : DiZhi, data: BaziData): String {
+    fun getDaYunDiZhi3HuiString(dyDZ: DiZhi, data: BaziData): String {
         val sb = StringBuilder()
         var str = get3HuiCheckString(dyDZ, data.yearDizhi, data.monthDizhi, data)
         sb.append(str)
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HuiCheckString(dyDZ, data.yearDizhi, data.dayDizhi, data)
             sb.append(str)
         }
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HuiCheckString(dyDZ, data.yearDizhi, data.hourDizhi, data)
             sb.append(str)
         }
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HuiCheckString(dyDZ, data.monthDizhi, data.dayDizhi, data)
             sb.append(str)
         }
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HuiCheckString(dyDZ, data.monthDizhi, data.hourDizhi, data)
             sb.append(str)
         }
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HuiCheckString(dyDZ, data.dayDizhi, data.hourDizhi, data)
             sb.append(str)
         }
@@ -329,7 +351,7 @@ class DaYunUtil {
     }
 
     @Composable
-    fun get3HeCheckString(dyDZ : DiZhi, dz1 : DiZhi, dz2 : DiZhi, data: BaziData): String {
+    fun get3HeCheckString(dyDZ: DiZhi, dz1: DiZhi, dz2: DiZhi, data: BaziData): String {
         val sb = StringBuilder()
         var wx = WuXing.WUXING_MU
         if (DiZhiUtil().isDiZhiSanHe(dyDZ, dz1, dz2)) {
@@ -350,7 +372,7 @@ class DaYunUtil {
                 sb.append(ConstUtil.ADD_SYMBOL)
                 sb.append(ConstUtil.DIZHI_SANHE_WEIGHT)
                 sb.append(")")
-            }else if (YongShenUtil().isWuXingJiShen(wx, data)) {
+            } else if (YongShenUtil().isWuXingJiShen(wx, data)) {
                 data.daYunWeight -= ConstUtil.DIZHI_SANHE_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_ji_shen))
@@ -379,27 +401,27 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunDiZhi3HeString(dyDZ : DiZhi, data: BaziData): String {
+    fun getDaYunDiZhi3HeString(dyDZ: DiZhi, data: BaziData): String {
         val sb = StringBuilder()
         var str = get3HeCheckString(dyDZ, data.yearDizhi, data.monthDizhi, data)
         sb.append(str)
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HeCheckString(dyDZ, data.yearDizhi, data.dayDizhi, data)
             sb.append(str)
         }
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HeCheckString(dyDZ, data.yearDizhi, data.hourDizhi, data)
             sb.append(str)
         }
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HeCheckString(dyDZ, data.monthDizhi, data.dayDizhi, data)
             sb.append(str)
         }
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HeCheckString(dyDZ, data.monthDizhi, data.hourDizhi, data)
             sb.append(str)
         }
-        if(sb.isEmpty()){
+        if (sb.isEmpty()) {
             str = get3HeCheckString(dyDZ, data.dayDizhi, data.hourDizhi, data)
             sb.append(str)
         }
@@ -414,7 +436,9 @@ class DaYunUtil {
     }
 
     @Composable
-    fun get6HeCheckString(dyDZ : DiZhi, dz : DiZhi, columnPosition: ColumnPosition, data: BaziData): String {
+    fun get6HeCheckString(
+        dyDZ: DiZhi, dz: DiZhi, columnPosition: ColumnPosition, data: BaziData
+    ): String {
         val sb = StringBuilder()
         var wx = WuXing.WUXING_MU
         if (DiZhiUtil().isDiZhi6He(dyDZ, dz)) {
@@ -422,7 +446,11 @@ class DaYunUtil {
 
             sb.append(ConstUtil.SPACE)
             sb.append(stringResource(R.string.dayun_dizhi_label))
-            sb.append(DiZhiUtil().getDiZhi6HeText(dyDZ, ColumnPosition.COLUMN_DA_YUN, dz, columnPosition))
+            sb.append(
+                DiZhiUtil().getDiZhi6HeText(
+                    dyDZ, ColumnPosition.COLUMN_DA_YUN, dz, columnPosition
+                )
+            )
 
             if (YongShenUtil().isWuXingXiYongShen(wx, data)) {
                 data.daYunWeight += ConstUtil.DIZHI_LIUHE_WEIGHT
@@ -435,7 +463,7 @@ class DaYunUtil {
                 sb.append(ConstUtil.ADD_SYMBOL)
                 sb.append(ConstUtil.DIZHI_LIUHE_WEIGHT)
                 sb.append(")")
-            }else if (YongShenUtil().isWuXingJiShen(wx, data)) {
+            } else if (YongShenUtil().isWuXingJiShen(wx, data)) {
                 data.daYunWeight -= ConstUtil.DIZHI_LIUHE_WEIGHT
                 sb.append("[")
                 sb.append(stringResource(R.string.app_bazi_ji_shen))
@@ -464,7 +492,7 @@ class DaYunUtil {
     }
 
     @Composable
-    fun getDaYunDiZhi6HeString(dyDZ : DiZhi, data: BaziData): String {
+    fun getDaYunDiZhi6HeString(dyDZ: DiZhi, data: BaziData): String {
         val sb = StringBuilder()
         sb.append(get6HeCheckString(dyDZ, data.yearDizhi, ColumnPosition.COLUMN_YEAR, data))
         sb.append(get6HeCheckString(dyDZ, data.monthDizhi, ColumnPosition.COLUMN_MONTH, data))
@@ -474,7 +502,7 @@ class DaYunUtil {
     }
 
     @Composable
-    fun analyzeDaYunString(dyTG : TianGan, dyDZ : DiZhi, data: BaziData): String {
+    fun analyzeDaYunString(dyTG: TianGan, dyDZ: DiZhi, data: BaziData): String {
         val sb = StringBuilder()
         data.daYunWeight = ConstUtil.ZERO_WEIGHT
 
@@ -501,15 +529,15 @@ class DaYunUtil {
     fun getDaYunJiXiongString(data: BaziData): String {
         val sb = StringBuilder()
         sb.append("[")
-        if(data.daYunWeight >2){
+        if (data.daYunWeight > 2) {
             sb.append(stringResource(R.string.app_bazi_jixiong_1))
-        }else if(data.daYunWeight >0 && data.daYunWeight <= 2){
+        } else if (data.daYunWeight > 0 && data.daYunWeight <= 2) {
             sb.append(stringResource(R.string.app_bazi_jixiong_2))
-        }else if(data.daYunWeight <0 && data.daYunWeight >= -2){
+        } else if (data.daYunWeight < 0 && data.daYunWeight >= -2) {
             sb.append(stringResource(R.string.app_bazi_jixiong_4))
-        }else if(data.daYunWeight < -2){
+        } else if (data.daYunWeight < -2) {
             sb.append(stringResource(R.string.app_bazi_jixiong_5))
-        }else{
+        } else {
             sb.append(stringResource(R.string.app_bazi_jixiong_3))
         }
         sb.append("]")
@@ -524,7 +552,7 @@ class DaYunUtil {
         var tg = TianGan.TIANGAN_JIA
         var dz = DiZhi.DIZHI_ZI
         var builder = StringBuilder()
-        var tgdz : TianGanDiZhi
+        var tgdz: TianGanDiZhi
 
         for (i in startIndex..endIndex) {
             tgdz = DaYunUtil().getDaYun(i, data)
@@ -545,10 +573,60 @@ class DaYunUtil {
         return builder.toString()
     }
 
-    fun getDaYunFirstYear(data: BaziData) : TianGanDiZhi{
-        val tmpData = BaziData(data.daYunFirstYear, data.daYunStartMonth, data.birthDateDay, data.birthHour, data.gender)
+    fun getDaYunFirstYear(data: BaziData): TianGanDiZhi {
+        val tmpData = BaziData(
+            data.daYunFirstYear,
+            data.daYunStartMonth,
+            data.birthDateDay,
+            data.birthHour,
+            data.gender
+        )
         //calculate year and month
-        BaziPaiPanUtil().calculateBazi(data.daYunFirstYear, data.daYunStartMonth, data.birthDateDay, data.birthHour, tmpData)
+        BaziPaiPanUtil().calculateBazi(
+            data.daYunFirstYear, data.daYunStartMonth, data.birthDateDay, data.birthHour, tmpData
+        )
         return TianGanDiZhi(tmpData.yearTiangan, tmpData.yearDizhi)
+    }
+
+    /**
+     * 根据当前时间，计算所在大运的天干地支与年龄区间
+     * 返回示例：庚辰大运（28–37岁）
+     */
+    @Composable
+    fun currentDaYunWithAge(data: BaziData): String {
+        val today = LocalDate.now()
+        println("[Rick]data=$data")
+        println("data.daYunStartYear=$data.daYunStartYear")
+        println("data.daYunStartMonth=$data.daYunStartMonth")
+        println("data.daYunStartDay=$data.daYunStartDay")
+        val daYunStart = LocalDate.of(
+            data.daYunFirstYear, data.daYunFirstMonth, data.daYunStartDay
+        )
+        println("[Rick]daYunStart=$daYunStart")
+        println("[Rick]today=$today")
+
+        val birthDate = LocalDate.of(
+            data.birthDateYear, data.birthDateMonth, data.birthDateDay
+        )
+
+        // 如果还没到大运开始时间
+        if (today.isBefore(daYunStart)) {
+            return "尚未起运"
+        }
+
+        // 计算当前处于第几个大运（index 从 1 开始）
+        val yearsSinceStart = today.year - daYunStart.year
+        val daYunIndex = (yearsSinceStart / 10) + 1  // 每运10年
+
+        // 取该大运天干地支
+        val daYunGz = getDaYun(daYunIndex, data)
+        val ganZhiStr =
+            "${TianGanUtil().getTianGanText(daYunGz.tg)}${DiZhiUtil().getDiZhiText(daYunGz.dz)}"
+
+        // 大运起始年龄（按出生年算虚龄差，业内常用）
+        val startAge = daYunStart.year - data.birthDateYear
+        val endAge = startAge + 9  // 每运10年，显示闭区间
+
+        return "${ganZhiStr}大运（${startAge}–${endAge}岁）"
     }
 }

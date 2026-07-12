@@ -77,9 +77,9 @@ fun BaziPaipanScreen(
 //    preProcessBazi.value
 
 //    var preProcessBazi by rememberSaveable { mutableStateOf(false) }
-    if(preProcessBazi.value) {
-        BaziMeasureUtil().analyzeBaziAndSaveStat(baziInfo, baziModel)
-    }
+//    if(preProcessBazi.value) {
+//        BaziMeasureUtil().analyzeBaziAndSaveStat(baziInfo, baziModel)
+//    }
 
     Column(
         modifier = modifier, verticalArrangement = Arrangement.SpaceBetween

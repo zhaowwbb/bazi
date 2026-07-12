@@ -9,19 +9,36 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.rick.bazi.R
 import com.rick.bazi.data.BaZiMock
 import com.rick.bazi.data.BaziInfo
+import com.rick.bazi.data.MALE
+import com.rick.bazi.data.TianGan
+import com.rick.bazi.model.HiddenGan
+import com.rick.bazi.model.Pillar
 import com.rick.bazi.navigation.BaziScreen
+import com.rick.bazi.util.BaziMeasureUtil
+import com.rick.bazi.util.BaziPaiPanUtil
+import com.rick.bazi.util.BaziUtil
+import com.rick.bazi.util.DaYunUtil
+import com.rick.bazi.util.DiZhiUtil
+import com.rick.bazi.util.LiuNianUtil
+import com.rick.bazi.util.ShiShenUtil
+import com.rick.bazi.util.TianGanUtil
+import com.rick.bazi.util.WuXingUtil
 
 // 鲜艳配色常量
 private val GradientStart = Color(0xFF667eea)
@@ -37,14 +54,105 @@ private val TextWhite = Color(0xFFFFFFFF)
 private val TextDark = Color(0xFF2C3E50)
 
 @Composable
+fun replaceHiddenGans(
+    pillar: Pillar,
+    ganList: Array<TianGan>,
+    dayTianGan: TianGan
+//    dayGan: String
+) {
+    val newList = mutableListOf<HiddenGan>()
+
+    for (gan in ganList) {
+        val ganText = TianGanUtil().getTianGanText(gan)
+        val shiShen = ShiShenUtil().getShiShenText(gan, dayTianGan)   // your logic
+        newList.add(HiddenGan(ganText, shiShen))
+    }
+
+    pillar.hiddenGans = newList
+}
+
+@Composable
 fun BaZiPanScreen(
 //    navController: NavHostController,
     baziModel: BaziViewModel,
     baziInfo: BaziInfo,
     modifier: Modifier = Modifier,
-    navController: NavController) {
+    navController: NavController
+) {
+
+    val preProcessBazi = remember { mutableStateOf(false) }
+    val data2 = baziInfo.baziData
+    if (preProcessBazi.value) {
+        BaziMeasureUtil().analyzeBaziAndSaveStat(baziInfo, baziModel)
+    }
+    var realData = BaziPaiPanUtil().paipan(
+        baziInfo.birthDateYear,
+        baziInfo.birthDateMonth,
+        baziInfo.birthDateDay,
+        baziInfo.birthHour,
+        baziInfo.gender,
+        baziModel,
+        baziInfo
+    )
+
     val data = BaZiMock.sample()
+
+    var calculatedBaziData = realData
+
+    var genderStr = MALE
+    if (calculatedBaziData.gender == MALE) {
+        genderStr = stringResource(com.rick.bazi.R.string.app_bazi_male)
+    } else {
+        genderStr = stringResource(R.string.app_bazi_female)
+    }
+    data.gender = genderStr
+    data.birthTime = BaziUtil().getBirthDateLabel(baziInfo)
+//    data.dayMaster = TianGanUtil().getTianGanText(calculatedBaziData.dayTiangan)
+    data.dayMaster = WuXingUtil().getTianGanWuXingText(calculatedBaziData.dayTiangan)
+        data.currentLiuNian = LiuNianUtil().currentYearGanZhi()
+    data.currentDaYun = DaYunUtil().currentDaYunWithAge(calculatedBaziData)
+
+    data.pillars[0].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.yearTiangan)
+    data.pillars[1].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.monthTiangan)
+    data.pillars[2].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.dayTiangan)
+    data.pillars[3].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.hourTiangan)
+
+    data.pillars[0].ganShiShen =
+        ShiShenUtil().getShiShenText(calculatedBaziData.yearTiangan, calculatedBaziData.dayTiangan)
+    data.pillars[1].ganShiShen =
+        ShiShenUtil().getShiShenText(calculatedBaziData.monthTiangan, calculatedBaziData.dayTiangan)
+//    data.pillars[2].ganShiShen = ShiShenUtil().getShiShenText(calculatedBaziData.yearTiangan, calculatedBaziData.dayTiangan)
+    data.pillars[3].ganShiShen =
+        ShiShenUtil().getShiShenText(calculatedBaziData.hourTiangan, calculatedBaziData.dayTiangan)
+
+    data.pillars[0].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.yearDizhi)
+    data.pillars[1].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.monthDizhi)
+    data.pillars[2].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.dayDizhi)
+    data.pillars[3].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.hourDizhi)
+
+    replaceHiddenGans(
+        data.pillars[0],
+        DiZhiUtil().getCanggan(calculatedBaziData.yearDizhi),
+        calculatedBaziData.dayTiangan
+    )
+    replaceHiddenGans(
+        data.pillars[1],
+        DiZhiUtil().getCanggan(calculatedBaziData.monthDizhi),
+        calculatedBaziData.dayTiangan
+    )
+    replaceHiddenGans(
+        data.pillars[2],
+        DiZhiUtil().getCanggan(calculatedBaziData.dayDizhi),
+        calculatedBaziData.dayTiangan
+    )
+    replaceHiddenGans(
+        data.pillars[3],
+        DiZhiUtil().getCanggan(calculatedBaziData.hourDizhi),
+        calculatedBaziData.dayTiangan
+    )
+
     val scrollState = rememberScrollState()
+    val baziStr = BaziUtil().createBaziStringOneLine(baziInfo)
 
     Column(
         modifier = Modifier
@@ -83,6 +191,7 @@ fun BaZiPanScreen(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "${data.name}",
+//                        text = "${baziStr}",
                         fontSize = 26.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextWhite
@@ -119,7 +228,7 @@ fun BaZiPanScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "${data.dayMaster}木",
+                            text = "${data.dayMaster}",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = AccentGreen
@@ -236,7 +345,7 @@ fun BaZiPanScreen(
                     data.pillars.forEach { pillar ->
                         Surface(
                             shape = RoundedCornerShape(8.dp),
-                            color = when(pillar.label) {
+                            color = when (pillar.label) {
                                 "年柱" -> AccentBlue.copy(alpha = 0.1f)
                                 "月柱" -> AccentGreen.copy(alpha = 0.1f)
                                 "日柱" -> AccentPurple.copy(alpha = 0.15f)
@@ -248,7 +357,7 @@ fun BaZiPanScreen(
                                 text = pillar.label,
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = when(pillar.label) {
+                                color = when (pillar.label) {
                                     "年柱" -> AccentBlue
                                     "月柱" -> AccentGreen
                                     "日柱" -> AccentPurple
@@ -283,7 +392,7 @@ fun BaZiPanScreen(
                                 text = pillar.tianGan,
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = when(pillar.tianGan) {
+                                color = when (pillar.tianGan) {
                                     "甲", "乙" -> AccentGreen
                                     "丙", "丁" -> AccentRed
                                     "戊", "己" -> Color(0xFF8B4513)
@@ -351,7 +460,7 @@ fun BaZiPanScreen(
                                             text = hiddenGan.gan,
                                             fontSize = 14.sp,
                                             fontWeight = FontWeight.Medium,
-                                            color = when(hiddenGan.gan) {
+                                            color = when (hiddenGan.gan) {
                                                 "甲", "乙" -> AccentGreen
                                                 "丙", "丁" -> AccentRed
                                                 "戊", "己" -> Color(0xFF8B4513)

@@ -9,6 +9,7 @@ import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.TianGanDiZhi
 import com.rick.bazi.data.WuXing
+import java.time.Year
 
 class LiuNianUtil {
 
@@ -646,5 +647,23 @@ class LiuNianUtil {
 
         }
         return sb.toString()
+    }
+
+    @Composable
+    fun currentYearGanZhi(): String {
+        val year = Year.now().value
+
+        val tianGan = arrayOf("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸")
+        val diZhi   = arrayOf("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥")
+
+        // 公元4年为甲子年，year - 4 对齐六十甲子起点
+        val ganIndex = (year - 4) % 10
+        val zhiIndex = (year - 4) % 12
+
+        val ganZhi = tianGan[ganIndex] + diZhi[zhiIndex]
+
+        val yearLabel = "年"
+
+        return "$year $ganZhi$yearLabel"
     }
 }
