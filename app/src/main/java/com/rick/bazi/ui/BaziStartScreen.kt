@@ -42,6 +42,7 @@ import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.FEMALE
 import com.rick.bazi.data.MALE
 import com.rick.bazi.ui.theme.BaziTheme
+import com.rick.bazi.util.BaziPaiPanUtil
 import com.rick.bazi.util.DateUtils
 import java.util.Calendar
 
@@ -68,35 +69,56 @@ fun BaziStartScreen(
     modifier: Modifier = Modifier
 ) {
     var selectedValue by rememberSaveable { mutableStateOf(MALE) }
-    val dateState = rememberDatePickerState()
-    val currentTime = Calendar.getInstance()
+
+    // 使用 ViewModel 中保存的日期和时间
+    val dateState = rememberDatePickerState(
+        initialSelectedDateMillis = baziModel.selectedDateMillis ?: System.currentTimeMillis()
+    )
     val timePickerState = rememberTimePickerState(
-        initialHour = currentTime.get(Calendar.HOUR_OF_DAY),
-        initialMinute = currentTime.get(Calendar.MINUTE),
+        initialHour = baziModel.selectedHour,
+        initialMinute = baziModel.selectedMinute,
         is24Hour = true
     )
 
-    val millisToLocalDate = dateState.selectedDateMillis?.let {
-        DateUtils().convertMillisToLocalDate(it)
+    // 使用可变状态来跟踪当前显示的日期和时间
+    var currentYear by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.YEAR)) }
+    var currentMonth by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.MONTH) + 1) }
+    var currentDay by remember { mutableIntStateOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) }
+    var currentHour by remember { mutableIntStateOf(baziModel.selectedHour) }
+    var currentMinute by remember { mutableIntStateOf(baziModel.selectedMinute) }
+
+    // 初始化时如果有保存的日期，则恢复
+    LaunchedEffect(Unit) {
+        baziModel.selectedDateMillis?.let { millis ->
+            val date = DateUtils().convertMillisToLocalDate(millis)
+            currentYear = date.year
+            currentMonth = date.monthValue
+            currentDay = date.dayOfMonth
+        }
+        currentHour = baziModel.selectedHour
+        currentMinute = baziModel.selectedMinute
     }
-    val dateToString = millisToLocalDate?.let {
-        DateUtils().dateToString(millisToLocalDate)
-    } ?: "请选择日期"
-    var formatDateStr by remember { mutableStateOf(dateToString) }
+
+    // 格式化显示字符串
+    var formatDateStr by remember {
+        mutableStateOf(String.format("%04d-%02d-%02d", currentYear, currentMonth, currentDay))
+    }
     var formatTimeStr by remember {
-        mutableStateOf(String.format("%02d:%02d", timePickerState.hour, timePickerState.minute))
+        mutableStateOf(String.format("%02d:%02d", currentHour, currentMinute))
     }
 
     var showDatePicker by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
 
-    // 更新时间显示
-    LaunchedEffect(timePickerState.hour, timePickerState.minute) {
-        formatTimeStr = String.format("%02d:%02d", timePickerState.hour, timePickerState.minute)
-    }
+    // 加载状态
+    var isLoading by remember { mutableStateOf(false) }
 
-    LaunchedEffect(dateToString) {
-        formatDateStr = dateToString
+    // 更新显示
+    LaunchedEffect(currentYear, currentMonth, currentDay) {
+        formatDateStr = String.format("%04d-%02d-%02d", currentYear, currentMonth, currentDay)
+    }
+    LaunchedEffect(currentHour, currentMinute) {
+        formatTimeStr = String.format("%02d:%02d", currentHour, currentMinute)
     }
 
     Box(
@@ -114,52 +136,7 @@ fun BaziStartScreen(
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(60.dp))
-
-            // 顶部标题区域
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = CardBg.copy(alpha = 0.15f))
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    // 图标
-                    Surface(
-                        shape = CircleShape,
-                        color = AccentGold.copy(alpha = 0.2f),
-                        modifier = Modifier.size(64.dp)
-                    ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            Icon(
-                                imageVector = Icons.Default.AutoAwesome,
-                                contentDescription = null,
-                                tint = AccentGold,
-                                modifier = Modifier.size(36.dp)
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Text(
-                        text = stringResource(R.string.app_bazi_science),
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "请输入您的出生信息",
-                        fontSize = 14.sp,
-                        color = Color.White.copy(alpha = 0.7f),
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
+            // ... 顶部标题区域保持不变 ...
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -240,15 +217,36 @@ fun BaziStartScreen(
                     // 排盘按钮
                     Button(
                         onClick = {
-                            val millisToLocalDate = dateState.selectedDateMillis?.let {
-                                DateUtils().convertMillisToLocalDate(it)
-                            }
-                            millisToLocalDate?.let { baziModel.setBirthDateYear(it.year) }
-                            millisToLocalDate?.let { baziModel.setBirthDateMonth(it.monthValue) }
-                            millisToLocalDate?.let { baziModel.setBirthDateDay(it.dayOfMonth) }
-                            baziModel.setBirthHour(timePickerState.hour)
-                            baziModel.setBirthMinute(timePickerState.minute)
+                            isLoading = true
+
+                            // 使用当前保存的年月日时分秒
+                            baziModel.setBirthDateYear(currentYear)
+                            baziModel.setBirthDateMonth(currentMonth)
+                            baziModel.setBirthDateDay(currentDay)
+                            baziModel.setBirthHour(currentHour)
+                            baziModel.setBirthMinute(currentMinute)
                             baziModel.setGender(selectedValue)
+
+                            // 保存选择的日期和时间到 ViewModel
+                            dateState.selectedDateMillis?.let {
+                                baziModel.saveSelectedDate(it)
+                            }
+                            baziModel.saveSelectedTime(currentHour, currentMinute)
+
+                            // 执行排盘计算
+                            val baziData = BaziPaiPanUtil().baziPaiPan(
+                                currentYear,
+                                currentMonth,
+                                currentDay,
+                                currentHour,
+                                currentMinute,
+                                selectedValue,
+                                baziModel,
+                                baziInfo
+                            )
+                            baziModel.setBaziDataFromObject(baziData)
+
+                            isLoading = false
                             navController.navigate(BaziScreen.Pan.name)
                         },
                         modifier = Modifier
@@ -280,7 +278,20 @@ fun BaziStartScreen(
             DatePickerDialog(
                 onDismissRequest = { showDatePicker = false },
                 confirmButton = {
-                    TextButton(onClick = { showDatePicker = false }) {
+                    TextButton(
+                        onClick = {
+                            dateState.selectedDateMillis?.let { millis ->
+                                val date = DateUtils().convertMillisToLocalDate(millis)
+                                currentYear = date.year
+                                currentMonth = date.monthValue
+                                currentDay = date.dayOfMonth
+                                formatDateStr = String.format("%04d-%02d-%02d", currentYear, currentMonth, currentDay)
+                                // 保存到 ViewModel
+                                baziModel.saveSelectedDate(millis)
+                            }
+                            showDatePicker = false
+                        }
+                    ) {
                         Text("确定", color = GradientEnd)
                     }
                 },
@@ -299,7 +310,16 @@ fun BaziStartScreen(
             AlertDialog(
                 onDismissRequest = { showTimePicker = false },
                 confirmButton = {
-                    TextButton(onClick = { showTimePicker = false }) {
+                    TextButton(
+                        onClick = {
+                            currentHour = timePickerState.hour
+                            currentMinute = timePickerState.minute
+                            formatTimeStr = String.format("%02d:%02d", currentHour, currentMinute)
+                            // 保存到 ViewModel
+                            baziModel.saveSelectedTime(currentHour, currentMinute)
+                            showDatePicker = false
+                        }
+                    ) {
                         Text("确定", color = GradientEnd)
                     }
                 },

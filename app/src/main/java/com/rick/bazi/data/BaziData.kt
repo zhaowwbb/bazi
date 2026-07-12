@@ -11,8 +11,11 @@ data class BaziData(
     var birthDateMonth: Int = 0,
     var birthDateDay: Int = 0,
     var birthHour: Int = 0,
-//    val birthMinute: Int = 0,
+
     var gender: String = "",
+
+    var birthMinute: Int = 0,
+    var birthSecond: Int = 0,
 
     var yearTiangan: TianGan = TianGan.TIANGAN_JIA,
     var monthTiangan: TianGan = TianGan.TIANGAN_YI,

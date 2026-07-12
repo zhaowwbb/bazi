@@ -85,19 +85,20 @@ fun BaZiPanScreen(
     if (preProcessBazi.value) {
         BaziMeasureUtil().analyzeBaziAndSaveStat(baziInfo, baziModel)
     }
-    var realData = BaziPaiPanUtil().paipan(
-        baziInfo.birthDateYear,
-        baziInfo.birthDateMonth,
-        baziInfo.birthDateDay,
-        baziInfo.birthHour,
-        baziInfo.gender,
-        baziModel,
-        baziInfo
-    )
+//    var realData = BaziPaiPanUtil().paipan(
+//        baziInfo.birthDateYear,
+//        baziInfo.birthDateMonth,
+//        baziInfo.birthDateDay,
+//        baziInfo.birthHour,
+//        baziInfo.gender,
+//        baziModel,
+//        baziInfo
+//    )
+//    println("[Rick] realData=$realData")
 
     val data = BaZiMock.sample()
 
-    var calculatedBaziData = realData
+    var calculatedBaziData = baziInfo.baziData
 
     var genderStr = MALE
     if (calculatedBaziData.gender == MALE) {
@@ -152,7 +153,7 @@ fun BaZiPanScreen(
     )
 
     val scrollState = rememberScrollState()
-    val baziStr = BaziUtil().createBaziStringOneLine(baziInfo)
+//    val baziStr = BaziUtil().createBaziStringOneLine(baziInfo)
 
     Column(
         modifier = Modifier

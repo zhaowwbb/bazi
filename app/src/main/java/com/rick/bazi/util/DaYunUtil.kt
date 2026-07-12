@@ -17,6 +17,8 @@ import com.rick.bazi.ui.BaziViewModel
 import com.tyme.solar.SolarTime
 import java.time.LocalDate
 import java.time.Year
+import java.time.LocalDateTime
+import java.time.YearMonth
 
 class DaYunUtil {
 
@@ -59,48 +61,7 @@ class DaYunUtil {
         return TianGanDiZhi(tg, dz)
     }
 
-    fun calculateDaYunStartSeconds(
-        startJieQi: SolarTime, endJieQi: SolarTime, ownerTime: SolarTime, data: BaziData
-    ) {
-        var seconds: Int = 0
-        if (isDaYunForward(data)) {
-            seconds = endJieQi.subtract(ownerTime)
-        } else {
-            seconds = ownerTime.subtract(startJieQi)
-        }
-        data.daYunStartSeconds = seconds
 
-        var days = data.daYunStartSeconds / 86400
-        var remainSeconds = data.daYunStartSeconds % 86400
-        var hours = remainSeconds / 3600
-        var remainTime = remainSeconds % 3600
-        var year = days / 3
-        var month = (days % 3) * 4
-        var day = hours * 5
-        day = day + (remainTime / 720)
-        if (day > 30) {
-            month = month + day / 30
-        }
-        day = day % 30
-
-        var remainHours = remainTime % 720
-        var hour = remainHours / 30
-
-        data.daYunStartYear = year
-        data.daYunStartMonth = month
-        data.daYunStartDay = day
-
-        var startYear = data.birthDateYear + data.daYunStartYear
-        var startMonth = data.birthDateMonth + data.daYunStartMonth
-        if (startMonth >= 13) {
-            startYear += 1
-            startMonth -= 12
-        }
-        data.daYunFirstYear = startYear
-        data.daYunFirstMonth = startMonth
-
-        println("daYunStartSeconds=${data.daYunStartSeconds}")
-    }
 
     @Composable
     fun getDaYunStartTimeString(data: BaziData): String {
@@ -595,12 +556,12 @@ class DaYunUtil {
     @Composable
     fun currentDaYunWithAge(data: BaziData): String {
         val today = LocalDate.now()
-        println("[Rick]data=$data")
-        println("data.daYunStartYear=$data.daYunStartYear")
-        println("data.daYunStartMonth=$data.daYunStartMonth")
-        println("data.daYunStartDay=$data.daYunStartDay")
+//        println("[Rick]data=$data")
+//        println("data.daYunStartYear=$data.daYunStartYear")
+//        println("data.daYunStartMonth=$data.daYunStartMonth")
+//        println("data.daYunStartDay=$data.daYunStartDay")
         val daYunStart = LocalDate.of(
-            data.daYunFirstYear, data.daYunFirstMonth, data.daYunStartDay
+            data.daYunFirstYear, data.daYunFirstMonth, 1
         )
         println("[Rick]daYunStart=$daYunStart")
         println("[Rick]today=$today")
@@ -629,4 +590,108 @@ class DaYunUtil {
 
         return "${ganZhiStr}大运（${startAge}–${endAge}岁）"
     }
+
+    fun calculateDaYunStartSeconds(
+        startJieQi: SolarTime, endJieQi: SolarTime, ownerTime: SolarTime, data: BaziData
+    ) {
+        var seconds: Int = 0
+        if (isDaYunForward(data)) {
+            seconds = endJieQi.subtract(ownerTime)
+        } else {
+            seconds = ownerTime.subtract(startJieQi)
+        }
+        data.daYunStartSeconds = seconds
+        var updateData = calcDaYunStartFromSeconds(data, seconds)
+        println("[Rick]calculateDaYunStartSeconds() updateData=$updateData")
+
+//        var days = data.daYunStartSeconds / 86400
+//        var remainSeconds = data.daYunStartSeconds % 86400
+//        var hours = remainSeconds / 3600
+//        var remainTime = remainSeconds % 3600
+//        var year = days / 3
+//        var month = (days % 3) * 4
+//        var day = hours * 5
+//        day = day + (remainTime / 720)
+//        if (day > 30) {
+//            month = month + day / 30
+//        }
+//        day = day % 30
+//
+//        var remainHours = remainTime % 720
+//        var hour = remainHours / 30
+//
+//        data.daYunStartYear = year
+//        data.daYunStartMonth = month
+//        data.daYunStartDay = day
+//
+//        var startYear = data.birthDateYear + data.daYunStartYear
+//        var startMonth = data.birthDateMonth + data.daYunStartMonth
+//        if (startMonth >= 13) {
+//            startYear += 1
+//            startMonth -= 12
+//        }
+//        data.daYunFirstYear = startYear
+//        data.daYunFirstMonth = startMonth
+
+//        println("daYunStartSeconds=${data.daYunStartSeconds}")
+    }
+
+    /**
+     * 根据 daYunStartSeconds（出生到最近节气的秒数，已含顺逆），
+     * 计算并更新 BaziData 中的大运起始信息
+     */
+    fun calcDaYunStartFromSeconds(
+        data: BaziData,
+        daYunStartSeconds: Int
+    ): BaziData {
+
+        // 1. 秒 → 天（带小数）
+        val totalDays = daYunStartSeconds / 86400.0      // 86400 = 24 * 60 * 60
+        val totalHours = daYunStartSeconds / 3600.0
+
+        // 2. 起运年数：3 天 = 1 岁（年）
+        val startYears = (totalDays / 3).toInt()
+
+        // 3. 剩余天数用于折算月数
+        val remainDays = totalDays % 3
+
+        // 1 天 = 4 个月 → 剩余月数（可能带小数）
+        val remainMonthsExact = remainDays * 4
+
+        // 取整月数
+        val startMonths = remainMonthsExact.toInt()
+
+        println("[Dayun] daYunStartSeconds=$daYunStartSeconds, totalDays=$totalDays, totalHours=$totalHours, startYears=$startYears, startMonths=$startMonths")
+
+        // 若还有不足 1 天的秒数，可继续折算（保守做法：忽略 <1 天的小数，或向下取整）
+        // 这里按行业常用：只取到整月，不再往下拆日（排盘够用）
+
+        // 4. 出生时间
+        val birthDateTime = LocalDateTime.of(
+            data.birthDateYear,
+            data.birthDateMonth,
+            data.birthDateDay,
+            data.birthHour,
+            data.birthMinute,
+            0
+        )
+
+        // 5. 起运的公历时间 = 出生时间 + startYears 年 + startMonths 月
+        var firstYearMonth = YearMonth.of(birthDateTime.year, birthDateTime.month)
+            .plusYears(startYears.toLong())
+            .plusMonths(startMonths.toLong())
+
+        val daYunFirstYear = firstYearMonth.year
+        val daYunFirstMonth = firstYearMonth.monthValue
+
+        // 6. 回写 BaziData（注意：data 属性目前是 var，可直接赋值）
+        data.daYunStartSeconds = daYunStartSeconds.toInt()
+        data.daYunStartYear = startYears
+        data.daYunStartMonth = startMonths
+        data.daYunFirstYear = daYunFirstYear
+        data.daYunFirstMonth = daYunFirstMonth
+
+        return data
+    }
+
 }

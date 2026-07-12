@@ -31,14 +31,6 @@ class BaziViewModel : ViewModel() {
             )
         }
     }
-//
-//    fun setBirthDate(dateMili: Long) {
-//        _uiState.update { currentState ->
-//            currentState.copy(
-//                birthDateMili = dateMili
-//            )
-//        }
-//    }
 
     fun setBirthDateYear(year: Int) {
         _uiState.update { currentState ->
@@ -573,5 +565,130 @@ class BaziViewModel : ViewModel() {
                 yongShenPickModeStr = str
             )
         }
+    }
+
+    /**
+     * 深度拷贝 BaziData 对象到 BaziInfo.baziData
+     * 创建一个全新的 BaziData 副本，确保与原对象完全独立
+     *
+     * @param source 源 BaziData 对象
+     */
+    fun setBaziDataFromObject(source: BaziData) {
+        // 创建深拷贝的 BaziData
+        val deepCopy = BaziData(
+            // 基本信息
+            birthDateYear = source.birthDateYear,
+            birthDateMonth = source.birthDateMonth,
+            birthDateDay = source.birthDateDay,
+            birthHour = source.birthHour,
+            gender = source.gender,
+            birthMinute = source.birthMinute,
+            birthSecond = source.birthSecond,
+
+            // 四柱天干
+            yearTiangan = source.yearTiangan,
+            monthTiangan = source.monthTiangan,
+            dayTiangan = source.dayTiangan,
+            hourTiangan = source.hourTiangan,
+
+            // 四柱地支
+            yearDizhi = source.yearDizhi,
+            monthDizhi = source.monthDizhi,
+            dayDizhi = source.dayDizhi,
+            hourDizhi = source.hourDizhi,
+
+            // 基数
+            yearBase = source.yearBase,
+            monthBase = source.monthBase,
+            dayBase = source.dayBase,
+
+            // 大运相关
+            dayunForward = source.dayunForward,
+            dayunDays = source.dayunDays,
+            isDangLing = source.isDangLing,
+
+            // 根统计
+            strongRootCount = source.strongRootCount,
+            mediumRootCount = source.mediumRootCount,
+            weakRootCount = source.weakRootCount,
+
+            // 地支根级别
+            yearDzRootLevel = source.yearDzRootLevel,
+            monthDzRootLevel = source.monthDzRootLevel,
+            dayDzRootLevel = source.dayDzRootLevel,
+            hourDzRootLevel = source.hourDzRootLevel,
+
+            // 用神忌神列表（深拷贝）
+            yongShenList = source.yongShenList.toList(),
+            jiShenList = source.jiShenList.toList(),
+            xiShenList = source.xiShenList.toList(),
+            tiaohouShenList = source.tiaohouShenList.toList(),
+            tongguanShenList = source.tongguanShenList.toList(),
+            tiaohouList = source.tiaohouList.toList(),
+            allYongShenList = source.allYongShenList.toList(),
+
+            // 五行权重
+            jinWeight = source.jinWeight,
+            muWeight = source.muWeight,
+            shuiWeight = source.shuiWeight,
+            huoWeight = source.huoWeight,
+            tuWeight = source.tuWeight,
+
+            // 十神权重
+            yinWeight = source.yinWeight,
+            bijieWeight = source.bijieWeight,
+            caiWeight = source.caiWeight,
+            shishangWeight = source.shishangWeight,
+            guanshaWeight = source.guanshaWeight,
+
+            // 格局
+            tongguanYongShen = source.tongguanYongShen,
+            tiaohouYongShen = source.tiaohouYongShen,
+            gj = source.gj,
+
+            // 大运起运时间
+            daYunStartSeconds = source.daYunStartSeconds,
+            daYunStartYear = source.daYunStartYear,
+            daYunStartMonth = source.daYunStartMonth,
+            daYunStartDay = source.daYunStartDay,
+            daYunFirstYear = source.daYunFirstYear,
+            daYunFirstMonth = source.daYunFirstMonth,
+
+            // 权重
+            daYunWeight = source.daYunWeight,
+            liuNianWeight = source.liuNianWeight,
+
+            // 用神列表（深拷贝）
+            baziYongShenList = source.baziYongShenList.toList(),
+            xiyongShenSet = source.xiyongShenSet.toSet(),
+            jiShenSet = source.jiShenSet.toSet(),
+            yongShenPickMode = source.yongShenPickMode
+        )
+
+        // 更新 BaziInfo 中的 baziData
+        _uiState.update { currentState ->
+            currentState.copy(
+                baziData = deepCopy
+            )
+        }
+    }
+
+    // 保存用户选择的日期和时间（毫秒值）
+    var selectedDateMillis: Long? = null
+        private set
+
+    // 保存用户选择的时间
+    var selectedHour: Int = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        private set
+    var selectedMinute: Int = Calendar.getInstance().get(Calendar.MINUTE)
+        private set
+
+    fun saveSelectedDate(millis: Long) {
+        selectedDateMillis = millis
+    }
+
+    fun saveSelectedTime(hour: Int, minute: Int) {
+        selectedHour = hour
+        selectedMinute = minute
     }
 }
