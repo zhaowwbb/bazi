@@ -50,40 +50,39 @@ class BaziPaiPanUtil {
         baziModel.setMonthTiangan(tg)
         baziModel.setMonthDiZhi(dz)
 
-        calcDayAndHourPillar(year, month, day, hour, data)
+//        calcDayAndHourPillar(year, month, day, hour, data)
 
-//        //calculate Day Tiangan & Dizhi
-//        var r = 0
-//        //23:00 to 23:59 is belong to the next day in lunar calendar
-//        if (hour == 23) {
-//            r = DateUtils().getDayTianganBase(year, month, day + 1)
-//        } else {
-//            r = DateUtils().getDayTianganBase(year, month, day)
-//        }
+        //calculate Day Tiangan & Dizhi
+        var r = 0
+        //23:00 to 23:59 is belong to the next day in lunar calendar
+        if (hour == 23) {
+            r = DateUtils().getDayTianganBase(year, month, day + 1)
+        } else {
+            r = DateUtils().getDayTianganBase(year, month, day)
+        }
 
-//        val dayBase = r % 60
-//        baziModel.setDayBase(dayBase)
-//        data.dayBase = dayBase
-//
-//        dayTG = dayBase % 10
-//        dayDZ = dayBase % 12
-//        tg = tgLookupMap[dayTG]!!
-//        dz = dzLookupMap.get(dayDZ)!!
+        val dayBase = r % 60
+        baziModel.setDayBase(dayBase)
+        data.dayBase = dayBase
 
-//        data.dayTiangan = tg
-//        data.dayDizhi = dz
-        baziModel.setDayTiangan(data.dayTiangan)
-        baziModel.setDayDiZhi(data.dayDizhi)
+        dayTG = dayBase % 10
+        dayDZ = dayBase % 12
+        tg = tgLookupMap[dayTG]!!
+        dz = dzLookupMap.get(dayDZ)!!
+
+        baziModel.setDayTiangan(tg)
+        baziModel.setDayDiZhi(dz)
+        data.dayTiangan = tg
+        data.dayDizhi = dz
 
         //calculate Hour Tiangan & Dizhi
-//        var curDayTG: TianGan = tg
-//        dz = BaziUtil().getHourDZ(hour)
-//        tg = BaziUtil().getHourTG(curDayTG, hour)
-
-//        data.hourTiangan = tg
-//        data.hourDizhi = dz
-        baziModel.setHourTiangan(data.hourTiangan)
-        baziModel.setHourDiZhi(data.hourDizhi)
+        var curDayTG: TianGan = tg
+        dz = BaziUtil().getHourDZ(hour)
+        tg = BaziUtil().getHourTG(curDayTG, hour)
+        baziModel.setHourTiangan(tg)
+        baziModel.setHourDiZhi(dz)
+        data.hourTiangan = tg
+        data.hourDizhi = dz
 
         data.yongShenPickMode = baziInfo.yongShenPickModeStr
         GeJuUtil().getGJ(data)

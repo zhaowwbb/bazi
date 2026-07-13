@@ -2,8 +2,12 @@ package com.rick.bazi.util
 
 import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.DiZhi
+import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
+import com.rick.bazi.model.HiddenGan
+import java.time.LocalDate
+import java.time.Year
 
 object BaziFormatter {
 
@@ -52,10 +56,28 @@ object BaziFormatter {
     /**
      * 生成天干地支组合字符串
      */
-    private fun formatTianganDizhi(tiangan: TianGan, dizhi: DiZhi): String {
+    fun formatTianganDizhi(tiangan: TianGan, dizhi: DiZhi): String {
         val tianganChar = convertTianganToChar(tiangan)
         val dizhiChar = convertDizhiToChar(dizhi)
         return "$tianganChar$dizhiChar"
+    }
+
+    /**
+     * 根据 BaziData 中的出生日期和时间，生成格式化字符串
+     * 格式："1990年1月15日 08:30"
+     */
+    fun formatBirthDateTime(data: BaziData): String {
+        val year = data.birthDateYear
+        val month = data.birthDateMonth
+        val day = data.birthDateDay
+        val hour = data.birthHour
+        val minute = data.birthMinute
+
+        return String.format("%04d年%d月%d日 %02d:%02d", year, month, day, hour, minute)
+    }
+
+    fun formatGender(data: BaziData): String {
+        return if (data.gender == "Male") "男" else "女"
     }
 
     /**
@@ -66,6 +88,12 @@ object BaziFormatter {
         val tianganWuxing = getTianganWuXing(tiangan)
         val dizhiWuxing = getDizhiWuXing(dizhi)
         return "$pillar(${tianganWuxing}${dizhiWuxing})"
+    }
+
+    fun formatTianGanWithWuxing(tiangan: TianGan): String{
+        val tianganChar = convertTianganToChar(tiangan)
+        val tianganWuxing = getTianganWuXing(tiangan)
+        return "$tianganChar(${tianganWuxing})"
     }
 
     /**
@@ -231,6 +259,170 @@ object BaziFormatter {
             }
         }
     }
+
+    /**
+     * 根据日主天干和目标天干，返回十神的枚举类型
+     * @param dayMaster 日主天干（日柱的天干）
+     * @param targetGan 需要转换的目标天干
+     * @return 对应的十神枚举
+     */
+    fun convertToShiShen(dayMaster: TianGan, targetGan: TianGan): ShiShen {
+        // 计算天干的阴阳属性
+        val dayMasterIndex = dayMaster.ordinal
+        val targetIndex = targetGan.ordinal
+
+        // 计算五行关系
+        // 天干五行：甲乙(0,1)=木, 丙丁(2,3)=火, 戊己(4,5)=土, 庚辛(6,7)=金, 壬癸(8,9)=水
+        val dayMasterWuXing = dayMasterIndex / 2
+        val targetWuXing = targetIndex / 2
+
+        // 判断阴阳是否相同（阳干：甲丙戊庚壬，索引为偶数；阴干：乙丁己辛癸，索引为奇数）
+        val dayMasterIsYang = dayMasterIndex % 2 == 0
+        val targetIsYang = targetIndex % 2 == 0
+
+        // 五行生克关系（0=木, 1=火, 2=土, 3=金, 4=水）
+        // 我生者：木生火(0→1)，火生土(1→2)，土生金(2→3)，金生水(3→4)，水生木(4→0)
+        val shengRelation = (targetWuXing - dayMasterWuXing + 5) % 5
+        // 我克者：木克土(0→2)，火克金(1→3)，土克水(2→4)，金克木(3→0)，水克火(4→1)
+        val keRelation = (targetWuXing - dayMasterWuXing + 5) % 5
+
+        return when {
+            // 比肩/劫财：五行相同
+            targetWuXing == dayMasterWuXing -> {
+                if (dayMasterIsYang == targetIsYang) ShiShen.SHISHEN_BI_JIAN
+                else ShiShen.SHISHEN_JIE_CAI
+            }
+            // 食神/伤官：我生者（日主生目标）
+            shengRelation == 1 -> {
+                if (dayMasterIsYang == targetIsYang) ShiShen.SHISHEN_SHI_SHEN
+                else ShiShen.SHISHEN_SHANG_GUAN
+            }
+            // 正财/偏财：我克者（日主克目标）
+            keRelation == 2 -> {
+                if (dayMasterIsYang == targetIsYang) ShiShen.SHISHEN_ZHENG_CAI
+                else ShiShen.SHISHEN_PIAN_CAI
+            }
+            // 正官/七杀：克我者（目标克日主）
+            keRelation == 3 -> {
+                if (dayMasterIsYang == targetIsYang) ShiShen.SHISHEN_QI_SHA
+                else ShiShen.SHISHEN_ZHENG_GUAN
+            }
+            // 正印/偏印：生我者（目标生日主）
+            shengRelation == 4 -> {
+                if (dayMasterIsYang == targetIsYang) ShiShen.SHISHEN_PIAN_YIN
+                else ShiShen.SHISHEN_ZHENG_YIN
+            }
+            else -> throw IllegalArgumentException("无法计算十神关系")
+        }
+    }
+
+    /**
+     * 根据日主天干和目标天干，返回十神的中文名称
+     * @param dayMaster 日主天干（日柱的天干）
+     * @param targetGan 需要转换的目标天干
+     * @return 十神的中文名称
+     */
+    fun convertToShiShenCn(dayMaster: TianGan, targetGan: TianGan): String {
+        val shiShen = convertToShiShen(dayMaster, targetGan)
+        return when (shiShen) {
+            ShiShen.SHISHEN_BI_JIAN -> "比肩"
+            ShiShen.SHISHEN_JIE_CAI -> "劫财"
+            ShiShen.SHISHEN_ZHENG_YIN -> "正印"
+            ShiShen.SHISHEN_PIAN_YIN -> "偏印"
+            ShiShen.SHISHEN_SHI_SHEN -> "食神"
+            ShiShen.SHISHEN_SHANG_GUAN -> "伤官"
+            ShiShen.SHISHEN_ZHENG_CAI -> "正财"
+            ShiShen.SHISHEN_PIAN_CAI -> "偏财"
+            ShiShen.SHISHEN_ZHENG_GUAN -> "正官"
+            ShiShen.SHISHEN_QI_SHA -> "七杀"
+        }
+    }
+
+    /**
+     * 根据地支和日主天干，获取藏干及其对应的十神列表
+     * @param dz 地支
+     * @param dayMaster 日主天干
+     * @return HiddenGan列表
+     */
+    fun getHiddenGanList(dz: DiZhi, dayMaster: TianGan): List<HiddenGan> {
+        val diZhiUtil = DiZhiUtil()
+        val tianGanUtil = TianGanUtil()
+
+        // 获取地支的藏干列表
+        val cangGans = diZhiUtil.getCanggan(dz)
+
+        // 转换为HiddenGan列表
+        return cangGans.map { tg ->
+            val ganCn = convertTianganToChar(tg)  // 天干中文
+            val shiShenCn = convertToShiShenCn(dayMaster, tg)  // 十神中文
+            HiddenGan(
+                gan = ganCn,
+                shiShen = shiShenCn
+            )
+        }
+    }
+
+    /**
+     * 返回当前时间对应的流年干支字符串
+     * 格式："2026 丙午年"
+     *
+     * 天干地支中文转换调用外部函数：
+     * - convertTianganToChar(tiangan)
+     * - convertDizhiToChar(dizhi)
+     */
+    fun getCurrentYearGanZhi(): String {
+        val year = Year.now().value
+
+        val tianGan = arrayOf("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸")
+        val diZhi   = arrayOf("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥")
+
+        // 公元4年为甲子年，year - 4 对齐六十甲子起点
+        val ganIndex = (year - 4) % 10
+        val zhiIndex = (year - 4) % 12
+
+        val ganZhi = tianGan[ganIndex] + diZhi[zhiIndex]
+
+        val yearLabel = "年"
+
+        return "$year $ganZhi$yearLabel"
+    }
+
+    fun currentDaYunWithAge(data: BaziData): String {
+        val today = LocalDate.now()
+//        println("[Rick]data=$data")
+//        println("data.daYunStartYear=$data.daYunStartYear")
+//        println("data.daYunStartMonth=$data.daYunStartMonth")
+//        println("data.daYunStartDay=$data.daYunStartDay")
+        val daYunStart = LocalDate.of(
+            data.daYunFirstYear, data.daYunFirstMonth, 1
+        )
+//        println("[Rick]daYunStart=$daYunStart")
+//        println("[Rick]today=$today")
+
+        val birthDate = LocalDate.of(
+            data.birthDateYear, data.birthDateMonth, data.birthDateDay
+        )
+
+        // 如果还没到大运开始时间
+        if (today.isBefore(daYunStart)) {
+            return "尚未起运"
+        }
+
+        // 计算当前处于第几个大运（index 从 1 开始）
+        val yearsSinceStart = today.year - daYunStart.year
+        val daYunIndex = (yearsSinceStart / 10) + 1  // 每运10年
+
+        // 取该大运天干地支
+        val daYunGz = DaYunUtil().getDaYun(daYunIndex, data)
+        val ganZhiStr =
+            "${convertTianganToChar(daYunGz.tg)}${convertDizhiToChar(daYunGz.dz)}"
+
+        // 大运起始年龄（按出生年算虚龄差，业内常用）
+        val startAge = daYunStart.year - data.birthDateYear
+        val endAge = startAge + 9  // 每运10年，显示闭区间
+
+        return "${ganZhiStr}大运（${startAge}–${endAge}岁）"
+    }
 }
 
 /**
@@ -247,3 +439,4 @@ fun BaziData.toWuXingString(): String {
 fun BaziData.toSummaryString(): String {
     return BaziFormatter.formatBaziSummary(this)
 }
+

@@ -26,6 +26,7 @@ import com.rick.bazi.R
 import com.rick.bazi.data.BaZiMock
 import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.MALE
+import com.rick.bazi.data.MockDataGenerator
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.model.HiddenGan
 import com.rick.bazi.model.Pillar
@@ -96,61 +97,63 @@ fun BaZiPanScreen(
 //    )
 //    println("[Rick] realData=$realData")
 
-    val data = BaZiMock.sample()
+//    val data = BaZiMock.sample()
 
-    var calculatedBaziData = baziInfo.baziData
+    val data = MockDataGenerator().generateBaziPanData(baziInfo.baziData)
 
-    var genderStr = MALE
-    if (calculatedBaziData.gender == MALE) {
-        genderStr = stringResource(com.rick.bazi.R.string.app_bazi_male)
-    } else {
-        genderStr = stringResource(R.string.app_bazi_female)
-    }
-    data.gender = genderStr
-    data.birthTime = BaziUtil().getBirthDateLabel(baziInfo)
-//    data.dayMaster = TianGanUtil().getTianGanText(calculatedBaziData.dayTiangan)
-    data.dayMaster = WuXingUtil().getTianGanWuXingText(calculatedBaziData.dayTiangan)
-        data.currentLiuNian = LiuNianUtil().currentYearGanZhi()
-    data.currentDaYun = DaYunUtil().currentDaYunWithAge(calculatedBaziData)
-
-    data.pillars[0].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.yearTiangan)
-    data.pillars[1].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.monthTiangan)
-    data.pillars[2].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.dayTiangan)
-    data.pillars[3].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.hourTiangan)
-
-    data.pillars[0].ganShiShen =
-        ShiShenUtil().getShiShenText(calculatedBaziData.yearTiangan, calculatedBaziData.dayTiangan)
-    data.pillars[1].ganShiShen =
-        ShiShenUtil().getShiShenText(calculatedBaziData.monthTiangan, calculatedBaziData.dayTiangan)
-//    data.pillars[2].ganShiShen = ShiShenUtil().getShiShenText(calculatedBaziData.yearTiangan, calculatedBaziData.dayTiangan)
-    data.pillars[3].ganShiShen =
-        ShiShenUtil().getShiShenText(calculatedBaziData.hourTiangan, calculatedBaziData.dayTiangan)
-
-    data.pillars[0].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.yearDizhi)
-    data.pillars[1].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.monthDizhi)
-    data.pillars[2].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.dayDizhi)
-    data.pillars[3].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.hourDizhi)
-
-    replaceHiddenGans(
-        data.pillars[0],
-        DiZhiUtil().getCanggan(calculatedBaziData.yearDizhi),
-        calculatedBaziData.dayTiangan
-    )
-    replaceHiddenGans(
-        data.pillars[1],
-        DiZhiUtil().getCanggan(calculatedBaziData.monthDizhi),
-        calculatedBaziData.dayTiangan
-    )
-    replaceHiddenGans(
-        data.pillars[2],
-        DiZhiUtil().getCanggan(calculatedBaziData.dayDizhi),
-        calculatedBaziData.dayTiangan
-    )
-    replaceHiddenGans(
-        data.pillars[3],
-        DiZhiUtil().getCanggan(calculatedBaziData.hourDizhi),
-        calculatedBaziData.dayTiangan
-    )
+//    var calculatedBaziData = baziInfo.baziData
+//
+//    var genderStr = MALE
+//    if (calculatedBaziData.gender == MALE) {
+//        genderStr = stringResource(com.rick.bazi.R.string.app_bazi_male)
+//    } else {
+//        genderStr = stringResource(R.string.app_bazi_female)
+//    }
+//    data.gender = genderStr
+//    data.birthTime = BaziUtil().getBirthDateLabel(baziInfo)
+////    data.dayMaster = TianGanUtil().getTianGanText(calculatedBaziData.dayTiangan)
+//    data.dayMaster = WuXingUtil().getTianGanWuXingText(calculatedBaziData.dayTiangan)
+//        data.currentLiuNian = LiuNianUtil().currentYearGanZhi()
+//    data.currentDaYun = DaYunUtil().currentDaYunWithAge(calculatedBaziData)
+//
+//    data.pillars[0].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.yearTiangan)
+//    data.pillars[1].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.monthTiangan)
+//    data.pillars[2].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.dayTiangan)
+//    data.pillars[3].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.hourTiangan)
+//
+//    data.pillars[0].ganShiShen =
+//        ShiShenUtil().getShiShenText(calculatedBaziData.yearTiangan, calculatedBaziData.dayTiangan)
+//    data.pillars[1].ganShiShen =
+//        ShiShenUtil().getShiShenText(calculatedBaziData.monthTiangan, calculatedBaziData.dayTiangan)
+////    data.pillars[2].ganShiShen = ShiShenUtil().getShiShenText(calculatedBaziData.yearTiangan, calculatedBaziData.dayTiangan)
+//    data.pillars[3].ganShiShen =
+//        ShiShenUtil().getShiShenText(calculatedBaziData.hourTiangan, calculatedBaziData.dayTiangan)
+//
+//    data.pillars[0].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.yearDizhi)
+//    data.pillars[1].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.monthDizhi)
+//    data.pillars[2].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.dayDizhi)
+//    data.pillars[3].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.hourDizhi)
+//
+//    replaceHiddenGans(
+//        data.pillars[0],
+//        DiZhiUtil().getCanggan(calculatedBaziData.yearDizhi),
+//        calculatedBaziData.dayTiangan
+//    )
+//    replaceHiddenGans(
+//        data.pillars[1],
+//        DiZhiUtil().getCanggan(calculatedBaziData.monthDizhi),
+//        calculatedBaziData.dayTiangan
+//    )
+//    replaceHiddenGans(
+//        data.pillars[2],
+//        DiZhiUtil().getCanggan(calculatedBaziData.dayDizhi),
+//        calculatedBaziData.dayTiangan
+//    )
+//    replaceHiddenGans(
+//        data.pillars[3],
+//        DiZhiUtil().getCanggan(calculatedBaziData.hourDizhi),
+//        calculatedBaziData.dayTiangan
+//    )
 
     val scrollState = rememberScrollState()
 //    val baziStr = BaziUtil().createBaziStringOneLine(baziInfo)
@@ -191,8 +194,8 @@ fun BaZiPanScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "${data.name}",
-//                        text = "${baziStr}",
+//                        text = "${data.name}",
+                        text = " ",
                         fontSize = 26.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextWhite

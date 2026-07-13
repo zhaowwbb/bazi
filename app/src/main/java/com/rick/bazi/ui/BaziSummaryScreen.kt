@@ -25,22 +25,12 @@ fun BaziSummaryScreen(
     baziInfo: BaziInfo,
     modifier: Modifier = Modifier
 ) {
-    val baZiData = remember { MockDataGenerator().generateMockBaZiData() }
+//    val baZiData = remember { MockDataGenerator().generateMockBaZiData() }
+    val baZiData = remember { MockDataGenerator().generateRealBaZiData(baziInfo.baziData) }
+
     var selectedTab by remember { mutableStateOf(0) }
     var selectedDaYunIndex by remember { mutableStateOf(baZiData.currentDaYunIndex) }
     var selectedLiuNianIndex by remember { mutableStateOf(0) }
-
-//    Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text("${baZiData.name} · 八字分析") },
-//                colors = TopAppBarDefaults.topAppBarColors(
-//                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-//                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-//                )
-//            )
-//        }
-//    ) { paddingValues ->
 
     Column(
         modifier = Modifier
@@ -48,8 +38,6 @@ fun BaziSummaryScreen(
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        // 八字信息摘要
-//        BaZiSummaryCard(baZiData)
 
         // 标签页
         TabRow(selectedTabIndex = selectedTab) {
