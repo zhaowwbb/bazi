@@ -12,6 +12,7 @@ import com.tyme.solar.SolarTerm
 import com.tyme.solar.SolarTime
 import java.time.LocalDate
 import java.util.Calendar
+import com.rick.bazi.util.BaziYongShenAnalyzer.analyze
 
 class BaziPaiPanUtil {
 
@@ -85,7 +86,14 @@ class BaziPaiPanUtil {
         data.hourDizhi = dz
 
         data.yongShenPickMode = baziInfo.yongShenPickModeStr
+
+
         GeJuUtil().getGJ(data)
+
+        analyze(data)
+
+        // 选择核心用神
+        PrimaryYongShenSelector.selectAndUpdate(data)
 
         baziModel.setBaziData(data)
 

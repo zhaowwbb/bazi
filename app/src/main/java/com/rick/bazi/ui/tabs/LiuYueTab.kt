@@ -64,7 +64,7 @@ fun LiuYueTab(
 
             if (selectedDaYun != null && selectedLiuNian != null) {
                 Text(
-                    text = "大运: ${selectedDaYun.yearRange} | 流年: ${selectedLiuNian.year}年 (${selectedLiuNian.ganZhi})",
+                    text = "大运: ${selectedDaYun.yearRange} (${selectedDaYun.ganZhi}) | 流年: ${selectedLiuNian.year}年 (${selectedLiuNian.ganZhi})",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(bottom = 8.dp)

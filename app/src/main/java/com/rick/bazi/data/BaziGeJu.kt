@@ -19,5 +19,7 @@ enum class BaziGeJu {
     GJ_JIA_SE,
     GJ_CONG_GE,
     GJ_RUN_XIA,
+    GJ_BI_JIAN,
+    GJ_JIE_CAI,
     GJ_NONE
 }

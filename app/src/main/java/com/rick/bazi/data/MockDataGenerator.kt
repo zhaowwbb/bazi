@@ -16,6 +16,7 @@ import com.rick.bazi.util.BaziFormatter.convertToShiShenCn
 import com.rick.bazi.util.BaziFormatter.getHiddenGanList
 import com.rick.bazi.util.BaziFormatter.getCurrentYearGanZhi
 import com.rick.bazi.util.BaziFormatter.currentDaYunWithAge
+import com.rick.bazi.util.BaziFormatter.getCurrentDaYunIndex
 import com.rick.bazi.util.DaYunUtil
 import com.rick.bazi.util.DiZhiUtil
 import com.rick.bazi.util.LiuNianUtil
@@ -27,29 +28,6 @@ class MockDataGenerator {
 
     fun generateBaziPanData(data: BaziData): BaZiDataMock {
         val dayMaster = "甲"
-//        data.currentLiuNian = LiuNianUtil().currentYearGanZhi()
-//        data.currentDaYun = DaYunUtil().currentDaYunWithAge(calculatedBaziData)
-//
-//        data.pillars[0].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.yearTiangan)
-//        data.pillars[1].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.monthTiangan)
-//        data.pillars[2].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.dayTiangan)
-//        data.pillars[3].tianGan = TianGanUtil().getTianGanText(calculatedBaziData.hourTiangan)
-//
-//        data.pillars[0].ganShiShen =
-//            ShiShenUtil().getShiShenText(calculatedBaziData.yearTiangan, calculatedBaziData.dayTiangan)
-//        data.pillars[1].ganShiShen =
-//            ShiShenUtil().getShiShenText(calculatedBaziData.monthTiangan, calculatedBaziData.dayTiangan)
-////    data.pillars[2].ganShiShen = ShiShenUtil().getShiShenText(calculatedBaziData.yearTiangan, calculatedBaziData.dayTiangan)
-//        data.pillars[3].ganShiShen =
-//            ShiShenUtil().getShiShenText(calculatedBaziData.hourTiangan, calculatedBaziData.dayTiangan)
-//
-//        data.pillars[0].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.yearDizhi)
-//        data.pillars[1].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.monthDizhi)
-//        data.pillars[2].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.dayDizhi)
-//        data.pillars[3].diZhi = DiZhiUtil().getDiZhiText(calculatedBaziData.hourDizhi)
-
-//        List<HiddenGan> yearHiddenGan = listOf(
-
         return BaZiDataMock(
             name = "张三",
             gender = formatGender(data),
@@ -99,7 +77,7 @@ class MockDataGenerator {
     //    @Composable
     fun generateRealBaZiData(data: BaziData): BaZiData {
         val daYunList = DaYunScoringSystem.generateDaYunList(data)
-        val currentDaYunIndex = 2
+
         return BaZiData(
             name = "张三",
             birthDate = formatBirthDateTime(data),
@@ -109,7 +87,7 @@ class MockDataGenerator {
             hourGanZhi = formatTianganDizhi(data.hourTiangan, data.hourDizhi),
             dayMaster = formatTianGanWithWuxing(data.dayTiangan),
             daYunList = daYunList,
-            currentDaYunIndex = 2
+            currentDaYunIndex = 0
         )
     }
 

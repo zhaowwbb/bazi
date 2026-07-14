@@ -387,20 +387,50 @@ object BaziFormatter {
         return "$year $ganZhi$yearLabel"
     }
 
+    /**
+     * 根据 BaziData 中记录的大运起始时间，
+     * 计算【当前时间】所在的大运序号（index，从 1 开始）
+     *
+     * 规则：
+     * - 每步大运 10 年
+     * - 起运时间为 daYunFirstYear / daYunFirstMonth（按当月 1 日起算）
+     * - 若当前时间早于起运时间，返回 0（表示尚未起运）
+     */
+    fun getCurrentDaYunIndex(data: BaziData): Int {
+        val today = LocalDate.now()
+
+        val daYunStart = LocalDate.of(
+            data.daYunFirstYear,
+            data.daYunFirstMonth,
+            1
+        )
+
+        // 尚未起运
+        if (today.isBefore(daYunStart)) {
+            return 0
+        }
+
+        val yearsSinceStart = today.year - daYunStart.year
+
+        // 处理同一年（起运当年算第 1 个大运）
+        val daYunIndex = (yearsSinceStart / 10) + 1
+
+        return daYunIndex
+    }
+
     fun currentDaYunWithAge(data: BaziData): String {
         val today = LocalDate.now()
-//        println("[Rick]data=$data")
-//        println("data.daYunStartYear=$data.daYunStartYear")
-//        println("data.daYunStartMonth=$data.daYunStartMonth")
-//        println("data.daYunStartDay=$data.daYunStartDay")
+
         val daYunStart = LocalDate.of(
-            data.daYunFirstYear, data.daYunFirstMonth, 1
+            data.daYunFirstYear,
+            data.daYunFirstMonth,
+            1
         )
-//        println("[Rick]daYunStart=$daYunStart")
-//        println("[Rick]today=$today")
 
         val birthDate = LocalDate.of(
-            data.birthDateYear, data.birthDateMonth, data.birthDateDay
+            data.birthDateYear,
+            data.birthDateMonth,
+            data.birthDateDay
         )
 
         // 如果还没到大运开始时间
@@ -408,9 +438,8 @@ object BaziFormatter {
             return "尚未起运"
         }
 
-        // 计算当前处于第几个大运（index 从 1 开始）
-        val yearsSinceStart = today.year - daYunStart.year
-        val daYunIndex = (yearsSinceStart / 10) + 1  // 每运10年
+        // ✅ 复用新函数
+        val daYunIndex = getCurrentDaYunIndex(data)
 
         // 取该大运天干地支
         val daYunGz = DaYunUtil().getDaYun(daYunIndex, data)
@@ -423,6 +452,170 @@ object BaziFormatter {
 
         return "${ganZhiStr}大运（${startAge}–${endAge}岁）"
     }
+
+    fun shiShenToChinese(shiShen: ShiShen): String = when (shiShen) {
+        ShiShen.SHISHEN_BI_JIAN -> "比肩"
+        ShiShen.SHISHEN_JIE_CAI -> "劫财"
+        ShiShen.SHISHEN_ZHENG_YIN -> "正印"
+        ShiShen.SHISHEN_PIAN_YIN -> "偏印"
+        ShiShen.SHISHEN_SHI_SHEN -> "食神"
+        ShiShen.SHISHEN_SHANG_GUAN -> "伤官"
+        ShiShen.SHISHEN_ZHENG_CAI -> "正财"
+        ShiShen.SHISHEN_PIAN_CAI -> "偏财"
+        ShiShen.SHISHEN_ZHENG_GUAN -> "正官"
+        ShiShen.SHISHEN_QI_SHA -> "七杀"
+    }
+
+    /**
+     * 获取生某五行的五行
+     * 例如：生木的是水
+     */
+    fun getShengWuXing(wx: WuXing): WuXing = when (wx) {
+        WuXing.WUXING_MU -> WuXing.WUXING_SHUI
+        WuXing.WUXING_HUO -> WuXing.WUXING_MU
+        WuXing.WUXING_TU -> WuXing.WUXING_HUO
+        WuXing.WUXING_JIN -> WuXing.WUXING_TU
+        WuXing.WUXING_SHUI -> WuXing.WUXING_JIN
+    }
+
+    /**
+     * 获取被某五行生的五行
+     * 例如：木生火
+     */
+    fun getBeiShengWuXing(wx: WuXing): WuXing = when (wx) {
+        WuXing.WUXING_MU -> WuXing.WUXING_HUO
+        WuXing.WUXING_HUO -> WuXing.WUXING_TU
+        WuXing.WUXING_TU -> WuXing.WUXING_JIN
+        WuXing.WUXING_JIN -> WuXing.WUXING_SHUI
+        WuXing.WUXING_SHUI -> WuXing.WUXING_MU
+    }
+
+    /**
+     * 获取克某五行的五行
+     * 例如：克木的是金
+     */
+    fun getKeWuXing(wx: WuXing): WuXing = when (wx) {
+        WuXing.WUXING_MU -> WuXing.WUXING_JIN
+        WuXing.WUXING_HUO -> WuXing.WUXING_SHUI
+        WuXing.WUXING_TU -> WuXing.WUXING_MU
+        WuXing.WUXING_JIN -> WuXing.WUXING_HUO
+        WuXing.WUXING_SHUI -> WuXing.WUXING_TU
+    }
+
+    /**
+     * 获取被某五行克的五行
+     * 例如：木克土
+     */
+    fun getBeiKeWuXing(wx: WuXing): WuXing = when (wx) {
+        WuXing.WUXING_MU -> WuXing.WUXING_TU
+        WuXing.WUXING_HUO -> WuXing.WUXING_JIN
+        WuXing.WUXING_TU -> WuXing.WUXING_SHUI
+        WuXing.WUXING_JIN -> WuXing.WUXING_MU
+        WuXing.WUXING_SHUI -> WuXing.WUXING_HUO
+    }
+
+    /**
+     * 获取通关五行（解决两种五行相克）
+     * 例如：木克土，火通关（木生火，火生土）
+     */
+    fun getTongGuanWuXing(ke: WuXing, beiKe: WuXing): WuXing? {
+        return when {
+            ke == WuXing.WUXING_MU && beiKe == WuXing.WUXING_TU -> WuXing.WUXING_HUO
+            ke == WuXing.WUXING_HUO && beiKe == WuXing.WUXING_JIN -> WuXing.WUXING_TU
+            ke == WuXing.WUXING_TU && beiKe == WuXing.WUXING_SHUI -> WuXing.WUXING_JIN
+            ke == WuXing.WUXING_JIN && beiKe == WuXing.WUXING_MU -> WuXing.WUXING_SHUI
+            ke == WuXing.WUXING_SHUI && beiKe == WuXing.WUXING_HUO -> WuXing.WUXING_MU
+            else -> null
+        }
+    }
+
+    /**
+     * 获取相克关系的通关五行
+     */
+    fun getTongGuanForKe(keWx: WuXing, beiKeWx: WuXing): WuXing? {
+        return getTongGuanWuXing(keWx, beiKeWx)
+    }
+
+
+    /**
+     * 将十神转换为对应的天干
+     * @param shiShen 要转换的十神
+     * @param dayMaster 日主天干
+     * @return 对应的天干
+     */
+    fun shiShenToTianGan(shiShen: ShiShen, dayMaster: TianGan): TianGan {
+        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(dayMaster)
+        val dayMasterIndex = dayMaster.ordinal
+        val dayMasterIsYang = dayMasterIndex % 2 == 0
+
+        // 根据十神确定对应的五行关系
+        val targetWx = when (shiShen) {
+            // 比劫：与日主同五行
+            ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI -> dayMasterWx
+
+            // 食伤：日主生的五行
+            ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN -> getBeiShengWuXing(dayMasterWx)
+
+            // 财星：日主克的五行
+            ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI -> getBeiKeWuXing(dayMasterWx)
+
+            // 官杀：克日主的五行
+            ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA -> getKeWuXing(dayMasterWx)
+
+            // 印星：生日主的五行
+            ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN -> getShengWuXing(dayMasterWx)
+        }
+
+        // 根据十神和日主阴阳，确定天干的阴阳
+        val targetIsYang = when (shiShen) {
+            // 比肩/食神/偏财/七杀/偏印：同性
+            ShiShen.SHISHEN_BI_JIAN,
+            ShiShen.SHISHEN_SHI_SHEN,
+            ShiShen.SHISHEN_PIAN_CAI,
+            ShiShen.SHISHEN_QI_SHA,
+            ShiShen.SHISHEN_PIAN_YIN -> dayMasterIsYang
+
+            // 劫财/伤官/正财/正官/正印：异性
+            ShiShen.SHISHEN_JIE_CAI,
+            ShiShen.SHISHEN_SHANG_GUAN,
+            ShiShen.SHISHEN_ZHENG_CAI,
+            ShiShen.SHISHEN_ZHENG_GUAN,
+            ShiShen.SHISHEN_ZHENG_YIN -> !dayMasterIsYang
+        }
+
+        // 根据五行和阴阳找到对应的天干
+        return findTianGanByWuXingAndYinYang(targetWx, targetIsYang)
+    }
+
+    /**
+     * 根据五行和阴阳找到对应的天干
+     * @param wx 五行
+     * @param isYang 是否阳干
+     * @return 对应的天干
+     */
+    private fun findTianGanByWuXingAndYinYang(wx: WuXing, isYang: Boolean): TianGan {
+        return when (wx) {
+            WuXing.WUXING_MU -> if (isYang) TianGan.TIANGAN_JIA else TianGan.TIANGAN_YI
+            WuXing.WUXING_HUO -> if (isYang) TianGan.TIANGAN_BING else TianGan.TIANGAN_DING
+            WuXing.WUXING_TU -> if (isYang) TianGan.TIANGAN_WU else TianGan.TIANGAN_JI
+            WuXing.WUXING_JIN -> if (isYang) TianGan.TIANGAN_GENG else TianGan.TIANGAN_XIN
+            WuXing.WUXING_SHUI -> if (isYang) TianGan.TIANGAN_REN else TianGan.TIANGAN_GUI
+        }
+    }
+
+    /**
+     * 将十神和对应的天干转换为带括号的中文格式
+     * @param shiShen 十神类型
+     * @param tianGan 对应的天干
+     * @return 格式化的字符串，例如 "正印(甲)"
+     */
+    fun formatShiShenWithTianGan(shiShen: ShiShen, tianGan: TianGan): String {
+        val shiShenCn = shiShenToChinese(shiShen)
+        val ssTianGan = shiShenToTianGan(shiShen, tianGan)
+        val tianGanCn = convertTianganToChar(ssTianGan)
+        return "${shiShenCn}(${tianGanCn})"
+    }
+
 }
 
 /**

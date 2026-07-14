@@ -28,6 +28,8 @@ fun BaziSummaryScreen(
 //    val baZiData = remember { MockDataGenerator().generateMockBaZiData() }
     val baZiData = remember { MockDataGenerator().generateRealBaZiData(baziInfo.baziData) }
 
+    println("[Rick]baZiData=$baZiData")
+
     var selectedTab by remember { mutableStateOf(0) }
     var selectedDaYunIndex by remember { mutableStateOf(baZiData.currentDaYunIndex) }
     var selectedLiuNianIndex by remember { mutableStateOf(0) }

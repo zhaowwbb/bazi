@@ -354,6 +354,7 @@ fun BaziApp(
                     },
                     baziInfo = baziUIInfo,
                     baziModel = baziModel,
+                    navController = navController,
                     modifier = Modifier.fillMaxHeight()
                 )
             }
