@@ -3,29 +3,21 @@ package com.rick.bazi.ui
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material.icons.filled.Woman
-import androidx.compose.material.icons.filled.Man
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +37,7 @@ import com.rick.bazi.ui.theme.BaziTheme
 import com.rick.bazi.util.BaziPaiPanUtil
 import com.rick.bazi.util.DateUtils
 import java.util.Calendar
+import androidx.compose.foundation.shape.CircleShape
 
 // 配色常量
 private val GradientStart = Color(0xFF667eea)
@@ -56,6 +49,7 @@ private val TextSecondary = Color(0xFF95A5A6)
 private val InputBg = Color(0xFFF0F0F5)
 private val MaleColor = Color(0xFF3498DB)
 private val FemaleColor = Color(0xFFE91E63)
+private val ExitColor = Color(0xFFE74C3C)
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,6 +62,7 @@ fun BaziStartScreen(
     baziInfo: BaziInfo,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     var selectedValue by rememberSaveable { mutableStateOf(MALE) }
 
     // 使用 ViewModel 中保存的日期和时间
@@ -113,12 +108,55 @@ fun BaziStartScreen(
     // 加载状态
     var isLoading by remember { mutableStateOf(false) }
 
+    // 退出确认对话框
+    var showExitDialog by remember { mutableStateOf(false) }
+
     // 更新显示
     LaunchedEffect(currentYear, currentMonth, currentDay) {
         formatDateStr = String.format("%04d-%02d-%02d", currentYear, currentMonth, currentDay)
     }
     LaunchedEffect(currentHour, currentMinute) {
         formatTimeStr = String.format("%02d:%02d", currentHour, currentMinute)
+    }
+
+    // 退出应用
+    if (showExitDialog) {
+        AlertDialog(
+            onDismissRequest = { showExitDialog = false },
+            title = {
+                Text(
+                    "退出应用",
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+            },
+            text = {
+                Text(
+                    "确定要退出八字排盘应用吗？",
+                    color = TextSecondary
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showExitDialog = false
+                        // 退出应用
+                        (context as? android.app.Activity)?.finishAffinity()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = ExitColor
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text("退出")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showExitDialog = false }) {
+                    Text("取消", color = TextSecondary)
+                }
+            }
+        )
     }
 
     Box(
@@ -136,7 +174,58 @@ fun BaziStartScreen(
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // ... 顶部标题区域保持不变 ...
+            Spacer(modifier = Modifier.height(48.dp))
+
+            // 顶部标题区域
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White.copy(alpha = 0.15f)
+                )
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // 图标
+                    Surface(
+                        modifier = Modifier.size(64.dp),
+                        shape = CircleShape,
+                        color = Color.White.copy(alpha = 0.2f)
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(
+                                imageVector = Icons.Default.AutoAwesome,
+                                contentDescription = null,
+                                tint = AccentGold,
+                                modifier = Modifier.size(36.dp)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "八字排盘",
+                        fontSize = 28.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "请输入您的出生信息",
+                        fontSize = 16.sp,
+                        color = Color.White.copy(alpha = 0.8f),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -255,13 +344,22 @@ fun BaziStartScreen(
                         shape = RoundedCornerShape(16.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = GradientEnd
-                        )
+                        ),
+                        enabled = !isLoading
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.AutoAwesome,
-                            contentDescription = null,
-                            modifier = Modifier.size(22.dp)
-                        )
+                        if (isLoading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(22.dp),
+                                color = Color.White,
+                                strokeWidth = 2.dp
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.AutoAwesome,
+                                contentDescription = null,
+                                modifier = Modifier.size(22.dp)
+                            )
+                        }
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = stringResource(R.string.app_bazi_paipan),
@@ -269,8 +367,43 @@ fun BaziStartScreen(
                             fontWeight = FontWeight.Bold
                         )
                     }
+
+                    // 退出应用按钮
+                    OutlinedButton(
+                        onClick = { showExitDialog = true },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = ExitColor
+                        ),
+                        border = BorderStroke(1.5.dp, ExitColor.copy(alpha = 0.5f))
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ExitToApp,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "退出应用",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
                 }
             }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // 底部版权信息
+            Text(
+                text = "© 八字排盘 v1.0",
+                fontSize = 12.sp,
+                color = Color.White.copy(alpha = 0.5f),
+                textAlign = TextAlign.Center
+            )
         }
 
         // 日期选择弹窗
@@ -317,7 +450,7 @@ fun BaziStartScreen(
                             formatTimeStr = String.format("%02d:%02d", currentHour, currentMinute)
                             // 保存到 ViewModel
                             baziModel.saveSelectedTime(currentHour, currentMinute)
-                            showDatePicker = false
+                            showTimePicker = false
                         }
                     ) {
                         Text("确定", color = GradientEnd)
@@ -339,7 +472,7 @@ fun BaziStartScreen(
 
 @Composable
 private fun InputFieldCard(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     label: String,
     value: String,
     onClick: () -> Unit
@@ -353,12 +486,7 @@ private fun InputFieldCard(
             modifier = Modifier.padding(bottom = 8.dp)
         )
         Surface(
-            modifier = Modifier
-                .fillMaxWidth(),
-//                .clickable(
-//                    interactionSource = remember { MutableInteractionSource() },
-//                    indication = LocalIndication.current
-//                ) { onClick() },
+            modifier = Modifier.fillMaxWidth(),
             onClick = { onClick() },
             shape = RoundedCornerShape(12.dp),
             color = InputBg
@@ -400,7 +528,7 @@ private fun InputFieldCard(
 @Composable
 private fun GenderOption(
     text: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     isSelected: Boolean,
     color: Color,
     onClick: () -> Unit,

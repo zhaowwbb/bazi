@@ -70,7 +70,7 @@ fun BaziAppAnalysisScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("八字命盘分析", fontWeight = FontWeight.Bold) },
+                title = { Text("命盘分析", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onCancelButtonClicked) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "返回")

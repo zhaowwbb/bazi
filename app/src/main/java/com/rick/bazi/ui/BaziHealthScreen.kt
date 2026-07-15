@@ -22,18 +22,24 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -81,7 +87,7 @@ fun BaziHealthScreen(
     baziModel: BaziViewModel,
     modifier: Modifier = Modifier
 ) {
-    BaziHealthReportScreen(baziInfo.baziData, modifier)
+    BaziHealthReportScreen(onCancelButtonClicked, onSendButtonClicked,baziModel,  baziInfo, modifier)
 }
 
 @Preview
@@ -1333,54 +1339,81 @@ fun BaziDisplayScreen(baziData: BaziData) {
     }
 }
 
-// 12. UI组件 - 健康报告界面
+// 12. UI组 件 - 健康报告界面
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaziHealthReportScreen(baziData: BaziData,modifier: Modifier) {
+fun BaziHealthReportScreen(
+    onCancelButtonClicked: () -> Unit,
+    onSendButtonClicked: (String, String) -> Unit,
+    baziModel: BaziViewModel,
+    baziInfo: BaziInfo,
+    modifier: Modifier = Modifier
+) {
+    val data = baziInfo.baziData
     val analyzer = remember { BaziHealthAnalyzer() }
-    val healthData = remember(baziData) { analyzer.analyzeHealth(baziData) }
+    val healthData = remember(data) { analyzer.analyzeHealth(data) }
 
 //    val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp)
-    ) {
-        // 报告标题
-        Text(
-            text = "八字健康分析报告",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF2196F3),
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("健康分析") },
+                navigationIcon = {
+                    IconButton(onClick = onCancelButtonClicked) {
+                        Icon(Icons.Default.ArrowBack, null)
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF667eea),
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                )
+            )
+        }
+    ) { padding ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(padding)
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            // 报告标题
+            Text(
+                text = "八字健康分析报告",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF2196F3),
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
 
-        Text(
-            text = "分析时间: ${SimpleDateFormat("yyyy-MM-dd HH:mm").format(Date())}",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-        Text(
-            text = BaziFormatter.formatBaziWithWuXing(baziData),
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Blue,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
+            Text(
+                text = "分析时间: ${SimpleDateFormat("yyyy-MM-dd HH:mm").format(Date())}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Gray,
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
+            Text(
+                text = BaziFormatter.formatBaziWithWuXing(data),
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Blue,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
 
 //        BaziDisplayScreen(baziData)
 
-        // 1. 先天体质分析
-        ConstitutionCard(healthData.constitutionAnalysis, healthData.healthRisk)
+            // 1. 先天体质分析
+            ConstitutionCard(healthData.constitutionAnalysis, healthData.healthRisk)
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        // 2. 五行平衡分析
-        ElementBalanceCard(healthData.elementAnalysis)
+            // 2. 五行平衡分析
+            ElementBalanceCard(healthData.elementAnalysis)
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
 //        // 3. 健康风险评估
 //        HealthRiskCard(healthData.healthRisk)
@@ -1405,14 +1438,15 @@ fun BaziHealthReportScreen(baziData: BaziData,modifier: Modifier) {
 //        // 7. 健康建议
 //        HealthRecommendationsCard(healthData.recommendations)
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        GrandLuckHealthDisplay(baziData, modifier)
+            GrandLuckHealthDisplay(data, modifier)
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        // 免责声明
-        DisclaimerCard()
+            // 免责声明
+            DisclaimerCard()
+        }
     }
 }
 

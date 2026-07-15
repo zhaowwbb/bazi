@@ -53,12 +53,20 @@ import com.rick.bazi.ui.BaziYimaScreen
 import com.rick.bazi.ui.*
 
 enum class BaziScreen(@StringRes val title: Int) {
-    ConfirmPrivacy(title = R.string.app_bazi_confirm_privacy),
-    UserAgreement(title = R.string.app_bazi_user_agreement),
+
     PrivacyPolicy(title = R.string.app_bazi_privacy_policy),
     Start(title = R.string.app_bazi_title),
-    Paipan(title = R.string.app_bazi_paipan),
     Pan(title = R.string.app_bazi_paipan),
+    Analysis(title = R.string.app_bazi_analysis),
+    Health(title = R.string.app_bazi_health),
+    Summary(title = R.string.app_bazi_suanming),
+    Marriage(title = R.string.app_bazi_result),
+
+
+
+    Paipan(title = R.string.app_bazi_paipan),
+    ConfirmPrivacy(title = R.string.app_bazi_confirm_privacy),
+    UserAgreement(title = R.string.app_bazi_user_agreement),
     Sample(title = R.string.app_bazi_sample),
     Version(title = R.string.app_bazi_version),
     Introduction(title = R.string.app_introduction),
@@ -66,10 +74,8 @@ enum class BaziScreen(@StringRes val title: Int) {
     DaYun(title = R.string.dayun_analysis_label),
     YiMa(title = R.string.app_bazi_yima),
     TaoHua(title = R.string.app_bazi_result),
-    Analysis(title = R.string.app_bazi_analysis),
-    Health(title = R.string.app_bazi_health),
     LiuNian(title = R.string.bazi_liunian_jixiong_label),
-    Summary(title = R.string.app_bazi_suanming)
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -112,121 +118,220 @@ fun BaziApp(
         backStackEntry?.destination?.route ?: BaziScreen.PrivacyPolicy.name
     )
 
-    Scaffold(
-        topBar = {
-            BaziAppBar(
-                currentScreen = currentScreen,
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
+    val baziUIInfo by baziModel.uiState.collectAsState()
+    NavHost(
+        navController = navController,
+        startDestination = BaziScreen.PrivacyPolicy.name,
+        modifier = Modifier
+            .fillMaxSize()
+//            .padding(innerPadding)
+    ) {
+        composable(route = BaziScreen.PrivacyPolicy.name) {
+            BaziPrivacyPolicyScreen(
+                onNextButtonClicked = {
+                    navController.navigate(BaziScreen.Start.name)
+                },
+                navController = navController,
+                baziInfo = baziUIInfo,
+                baziModel = baziModel,
+                onCancelButtonClicked = {
+//                    cancelOrderAndNavigateToStart(baziModel, navController)
+                },
+                onSendButtonClicked = { subject: String, summary: String -> {}
+
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(dimensionResource(R.dimen.padding_medium))
             )
         }
-    ) { innerPadding ->
-        val baziUIInfo by baziModel.uiState.collectAsState()
 
-        NavHost(
-            navController = navController,
-            startDestination = BaziScreen.PrivacyPolicy.name,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
+        composable(route = BaziScreen.Start.name) {
+            BaziStartScreen(
+                onNextButtonClicked = {
+                    navController.navigate(BaziScreen.Paipan.name)
+                },
+                navController = navController,
+                baziInfo = baziUIInfo,
+                baziModel = baziModel,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(dimensionResource(R.dimen.padding_medium))
+            )
+        }
+
+        composable(route = BaziScreen.Pan.name) {
+            BaZiPanScreen(
+                navController = navController,
+                onCancelButtonClicked = {
+                    navigateToStart(navController)
+                },
+                onSendButtonClicked = { subject: String, Start: String -> {}
+
+                },
+                baziModel = baziModel,
+                baziInfo = baziUIInfo,
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
+
+        composable(route = BaziScreen.Summary.name) {
+            val context = LocalContext.current
+            BaziSummaryScreen(
+                onCancelButtonClicked = {
+                    navigateToPaipan(navController)
+                },
+                onSendButtonClicked = { subject: String, summary: String -> {}
+
+                },
+                baziInfo = baziUIInfo,
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
+        composable(route = BaziScreen.Marriage.name) {
+            val context = LocalContext.current
+            BaziMarriageAnalysisScreen(
+                onCancelButtonClicked = {
+                    navigateToPaipan(navController)
+                },
+                onSendButtonClicked = { subject: String, summary: String -> {}
+
+                },
+                baziModel = baziModel,
+                baziInfo = baziUIInfo,
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
+
+        composable(route = BaziScreen.Analysis.name) {
+            BaziAppAnalysisScreen(
+                onCancelButtonClicked = {
+                    navigateToPaipan(navController)
+                },
+                onSendButtonClicked = { subject: String, Pan: String -> {}
+
+                },
+                baziInfo = baziUIInfo,
+                baziModel = baziModel,
+                navController = navController,
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
+
+        composable(route = BaziScreen.Health.name) {
+            BaziHealthScreen(
+                onCancelButtonClicked = {
+                    navigateToPaipan(navController)
+                },
+                onSendButtonClicked = { subject: String, summary: String -> {}
+
+                },
+                baziInfo = baziUIInfo,
+                baziModel = baziModel,
+                modifier = Modifier.fillMaxHeight()
+            )
+        }
+    }
 
 
-            composable(route = BaziScreen.ConfirmPrivacy.name) {
-                BaziConfirmPrivacyScreen(
-                    onNextButtonClicked = {
-                        navController.navigate(BaziScreen.Paipan.name)
-                    },
-                    navController = navController,
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_medium))
-                )
-            }
-
-            composable(route = BaziScreen.UserAgreement.name) {
-                BaziUserAgreementScreen(
-                    onNextButtonClicked = {
-                        navController.navigate(BaziScreen.Paipan.name)
-                    },
-                    navController = navController,
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_medium))
-                )
-            }
-
-
-            composable(route = BaziScreen.PrivacyPolicy.name) {
-                BaziPrivacyPolicyScreen(
-                    onNextButtonClicked = {
-                        navController.navigate(BaziScreen.Start.name)
-                    },
-                    navController = navController,
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_medium))
-                )
-            }
-
-
-
-            composable(route = BaziScreen.Start.name) {
-                BaziStartScreen(
-                    onNextButtonClicked = {
-                        navController.navigate(BaziScreen.Paipan.name)
-                    },
-                    navController = navController,
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_medium))
-                )
-            }
-
-            composable(route = BaziScreen.Paipan.name) {
-                BaziPaipanScreen(
-                    subtotal = "13.0",
-                    onNextButtonClicked = { navController.navigate(BaziScreen.TaoHua.name) },
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    options = DataSource.strList,
-                    onSelectionChanged = { //viewModel.setDate(it)
-                        },
-                    navController = navController,
-                    baziModel = baziModel,
-                    baziInfo = baziUIInfo,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.Pan.name) {
-                BaZiPanScreen(
+//
+//    Scaffold(
+//        topBar = {
+//            BaziAppBar(
+//                currentScreen = currentScreen,
+//                canNavigateBack = navController.previousBackStackEntry != null,
+//                navigateUp = { navController.navigateUp() }
+//            )
+//        }
+//    ) { innerPadding ->
+//        val baziUIInfo by baziModel.uiState.collectAsState()
+//
+//        NavHost(
+//            navController = navController,
+//            startDestination = BaziScreen.PrivacyPolicy.name,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(innerPadding)
+//        ) {
+//
+//
+//            composable(route = BaziScreen.ConfirmPrivacy.name) {
+//                BaziConfirmPrivacyScreen(
+//                    onNextButtonClicked = {
+//                        navController.navigate(BaziScreen.Paipan.name)
+//                    },
+//                    navController = navController,
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .padding(dimensionResource(R.dimen.padding_medium))
+//                )
+//            }
+//
+//            composable(route = BaziScreen.UserAgreement.name) {
+//                BaziUserAgreementScreen(
+//                    onNextButtonClicked = {
+//                        navController.navigate(BaziScreen.Paipan.name)
+//                    },
+//                    navController = navController,
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .padding(dimensionResource(R.dimen.padding_medium))
+//                )
+//            }
+//
+//
+//            composable(route = BaziScreen.PrivacyPolicy.name) {
+//                BaziPrivacyPolicyScreen(
+//                    onNextButtonClicked = {
+//                        navController.navigate(BaziScreen.Start.name)
+//                    },
+//                    navController = navController,
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .padding(dimensionResource(R.dimen.padding_medium))
+//                )
+//            }
+//
+//            composable(route = BaziScreen.Start.name) {
+//                BaziStartScreen(
+//                    onNextButtonClicked = {
+//                        navController.navigate(BaziScreen.Paipan.name)
+//                    },
+//                    navController = navController,
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .padding(dimensionResource(R.dimen.padding_medium))
+//                )
+//            }
+//
+//            composable(route = BaziScreen.Paipan.name) {
+//                BaziPaipanScreen(
 //                    subtotal = "13.0",
 //                    onNextButtonClicked = { navController.navigate(BaziScreen.TaoHua.name) },
 //                    onCancelButtonClicked = {
@@ -234,164 +339,190 @@ fun BaziApp(
 //                    },
 //                    options = DataSource.strList,
 //                    onSelectionChanged = { //viewModel.setDate(it)
+//                        },
+//                    navController = navController,
+//                    baziModel = baziModel,
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.Pan.name) {
+//                BaZiPanScreen(
+//                    navController = navController,
+//                    baziModel = baziModel,
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//
+//            composable(route = BaziScreen.TaoHua.name) {
+//                val context = LocalContext.current
+//                BaziTaoHuaScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
 //                    },
-                    navController = navController,
-                    baziModel = baziModel,
-                    baziInfo = baziUIInfo,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-
-            composable(route = BaziScreen.TaoHua.name) {
-                val context = LocalContext.current
-                BaziTaoHuaScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.Sample.name) {
-                val context = LocalContext.current
-                BaziSampleScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.Version.name) {
-                val context = LocalContext.current
-                BaziVersionScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.Summary.name) {
-                val context = LocalContext.current
-                BaziSummaryScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.Introduction.name) {
-                BaziAppIntroductionScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.TianKeDiChong.name) {
-                BaziTianKeDiChongScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.DaYun.name) {
-                BaziDayunScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.YiMa.name) {
-                BaziYimaScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.Analysis.name) {
-                BaziAppAnalysisScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    navController = navController,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.LiuNian.name) {
-                BaziLiuNianScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-            composable(route = BaziScreen.Health.name) {
-                BaziHealthScreen(
-                    onCancelButtonClicked = {
-                        cancelOrderAndNavigateToStart(baziModel, navController)
-                    },
-                    onSendButtonClicked = { subject: String, summary: String -> {}
-
-                    },
-                    baziInfo = baziUIInfo,
-                    baziModel = baziModel,
-                    modifier = Modifier.fillMaxHeight()
-                )
-            }
-        }
-    }
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.Sample.name) {
+//                val context = LocalContext.current
+//                BaziSampleScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.Version.name) {
+//                val context = LocalContext.current
+//                BaziVersionScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.Summary.name) {
+//                val context = LocalContext.current
+//                BaziSummaryScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.Marriage.name) {
+//                val context = LocalContext.current
+//                BaziMarriageAnalysisScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziModel = baziModel,
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.Introduction.name) {
+//                BaziAppIntroductionScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.TianKeDiChong.name) {
+//                BaziTianKeDiChongScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.DaYun.name) {
+//                BaziDayunScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.YiMa.name) {
+//                BaziYimaScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.Analysis.name) {
+//                BaziAppAnalysisScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    navController = navController,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.LiuNian.name) {
+//                BaziLiuNianScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//            composable(route = BaziScreen.Health.name) {
+//                BaziHealthScreen(
+//                    onCancelButtonClicked = {
+//                        cancelOrderAndNavigateToStart(baziModel, navController)
+//                    },
+//                    onSendButtonClicked = { subject: String, summary: String -> {}
+//
+//                    },
+//                    baziInfo = baziUIInfo,
+//                    baziModel = baziModel,
+//                    modifier = Modifier.fillMaxHeight()
+//                )
+//            }
+//        }
+//    }
 }
 
-private fun cancelOrderAndNavigateToStart(
-    viewModel: BaziViewModel,
+private fun navigateToPaipan(
     navController: NavHostController
 ) {
-//    viewModel.resetOrder()
+    navController.popBackStack(BaziScreen.Pan.name, inclusive = false)
+}
+
+private fun navigateToStart(
+    navController: NavHostController
+) {
     navController.popBackStack(BaziScreen.Start.name, inclusive = false)
 }

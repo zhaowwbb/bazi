@@ -55,3 +55,20 @@ data class BaZiData(
     val currentDaYunIndex: Int = 0,
     val currentLiuNianIndex: Int = 0
 )
+
+data class MarriageDaYunInfo(
+    val daYunRange: String,   // "2028–2037"
+    val ganZhi: String,       // "庚辰"
+    val spouseStar: String,   // "偏财(庚)" / "七杀(庚)"
+    val spousePalaceEffect: String, // "合入夫妻宫" / "生扶夫妻宫"
+    val yinyuanLevel: String, // "极佳" / "良好" / "一般"
+    val desc: String
+)
+
+data class PeachBlossomYear(
+    val year: Int,
+    val ganZhi: String,
+    val peachFlower: String,  // "卯(桃花)"
+    val strongReason: String, // "桃花+财星同现" / "桃花合日支"
+    val desc: String
+)

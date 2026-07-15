@@ -4,9 +4,12 @@ package com.rick.bazi.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rick.bazi.data.BaziInfo
@@ -34,41 +37,70 @@ fun BaziSummaryScreen(
     var selectedDaYunIndex by remember { mutableStateOf(baZiData.currentDaYunIndex) }
     var selectedLiuNianIndex by remember { mutableStateOf(0) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
-    ) {
-
-        // 标签页
-        TabRow(selectedTabIndex = selectedTab) {
-            Tab(selected = selectedTab == 0, onClick = { selectedTab = 0 }, text = { Text("大运") })
-            Tab(selected = selectedTab == 1, onClick = { selectedTab = 1 }, text = { Text("流年") })
-            Tab(selected = selectedTab == 2, onClick = { selectedTab = 2 }, text = { Text("流月") })
-        }
-
-        // 内容区域
-        when (selectedTab) {
-            0 -> DaYunTab(
-                baZiData = baZiData,
-                selectedIndex = selectedDaYunIndex,
-                onSelectDaYun = { selectedDaYunIndex = it })
-
-            1 -> LiuNianTab(
-                baZiData = baZiData,
-                selectedDaYunIndex = selectedDaYunIndex,
-                selectedLiuNianIndex = selectedLiuNianIndex,
-                onSelectLiuNian = { selectedLiuNianIndex = it })
-
-            2 -> LiuYueTab(
-                baZiData = baZiData,
-                selectedDaYunIndex = selectedDaYunIndex,
-                selectedLiuNianIndex = selectedLiuNianIndex
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("运势分析") },
+                navigationIcon = {
+                    IconButton(onClick = onCancelButtonClicked) {
+                        Icon(Icons.Default.ArrowBack, null)
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xFF667eea),
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                )
             )
         }
+    ) { padding ->
+
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(padding)
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+
+            // 标签页
+            TabRow(selectedTabIndex = selectedTab) {
+                Tab(
+                    selected = selectedTab == 0,
+                    onClick = { selectedTab = 0 },
+                    text = { Text("大运") })
+                Tab(
+                    selected = selectedTab == 1,
+                    onClick = { selectedTab = 1 },
+                    text = { Text("流年") })
+                Tab(
+                    selected = selectedTab == 2,
+                    onClick = { selectedTab = 2 },
+                    text = { Text("流月") })
+            }
+
+            // 内容区域
+            when (selectedTab) {
+                0 -> DaYunTab(
+                    baZiData = baZiData,
+                    selectedIndex = selectedDaYunIndex,
+                    onSelectDaYun = { selectedDaYunIndex = it })
+
+                1 -> LiuNianTab(
+                    baZiData = baZiData,
+                    selectedDaYunIndex = selectedDaYunIndex,
+                    selectedLiuNianIndex = selectedLiuNianIndex,
+                    onSelectLiuNian = { selectedLiuNianIndex = it })
+
+                2 -> LiuYueTab(
+                    baZiData = baZiData,
+                    selectedDaYunIndex = selectedDaYunIndex,
+                    selectedLiuNianIndex = selectedLiuNianIndex
+                )
+            }
+        }
     }
-//    }
 }
 
 @Preview(
