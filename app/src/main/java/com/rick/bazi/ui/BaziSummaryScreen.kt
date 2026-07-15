@@ -121,39 +121,39 @@ fun BaziSummaryScreenPreview() {
     }
 }
 
-@Composable
-fun BaZiSummaryCard(baZiData: BaZiData) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        )
-    ) {
-        Row(
-            modifier = Modifier.padding(12.dp), horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
-                Text("年柱", style = MaterialTheme.typography.labelSmall)
-                Text(baZiData.yearGanZhi, style = MaterialTheme.typography.titleMedium)
-            }
-            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
-                Text("月柱", style = MaterialTheme.typography.labelSmall)
-                Text(baZiData.monthGanZhi, style = MaterialTheme.typography.titleMedium)
-            }
-            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
-                Text("日柱", style = MaterialTheme.typography.labelSmall)
-                Text(baZiData.dayGanZhi, style = MaterialTheme.typography.titleMedium)
-            }
-            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
-                Text("时柱", style = MaterialTheme.typography.labelSmall)
-                Text(baZiData.hourGanZhi, style = MaterialTheme.typography.titleMedium)
-            }
-            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
-                Text("日主", style = MaterialTheme.typography.labelSmall)
-                Text(baZiData.dayMaster, style = MaterialTheme.typography.titleMedium)
-            }
-        }
-    }
-}
+//@Composable
+//fun BaZiSummaryCard(baZiData: BaZiData) {
+//    Card(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(horizontal = 16.dp, vertical = 8.dp),
+//        colors = CardDefaults.cardColors(
+//            containerColor = MaterialTheme.colorScheme.surfaceVariant
+//        )
+//    ) {
+//        Row(
+//            modifier = Modifier.padding(12.dp), horizontalArrangement = Arrangement.SpaceEvenly
+//        ) {
+//            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+//                Text("年柱", style = MaterialTheme.typography.labelSmall)
+//                Text(baZiData.yearGanZhi, style = MaterialTheme.typography.titleMedium)
+//            }
+//            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+//                Text("月柱", style = MaterialTheme.typography.labelSmall)
+//                Text(baZiData.monthGanZhi, style = MaterialTheme.typography.titleMedium)
+//            }
+//            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+//                Text("日柱", style = MaterialTheme.typography.labelSmall)
+//                Text(baZiData.dayGanZhi, style = MaterialTheme.typography.titleMedium)
+//            }
+//            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+//                Text("时柱", style = MaterialTheme.typography.labelSmall)
+//                Text(baZiData.hourGanZhi, style = MaterialTheme.typography.titleMedium)
+//            }
+//            Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+//                Text("日主", style = MaterialTheme.typography.labelSmall)
+//                Text(baZiData.dayMaster, style = MaterialTheme.typography.titleMedium)
+//            }
+//        }
+//    }
+//}

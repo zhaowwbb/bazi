@@ -138,7 +138,8 @@ object DaYunScoringSystem {
         if (tianGanUtil.isTianGanHe(gan, data.yearTiangan) ||
             tianGanUtil.isTianGanHe(gan, data.monthTiangan) ||
             tianGanUtil.isTianGanHe(gan, data.dayTiangan) ||
-            tianGanUtil.isTianGanHe(gan, data.hourTiangan)) {
+            tianGanUtil.isTianGanHe(gan, data.hourTiangan)
+        ) {
             score += 3f // 相合有缓和作用
         }
 
@@ -208,7 +209,8 @@ object DaYunScoringSystem {
 
         // 地支相合（大运地支与日支或月支相合有利）
         if (diZhiUtil.isDiZhiHai(zhi, data.dayDizhi) ||
-            diZhiUtil.isDiZhiHai(zhi, data.monthDizhi)) {
+            diZhiUtil.isDiZhiHai(zhi, data.monthDizhi)
+        ) {
             score += 4f
         }
 
@@ -289,7 +291,8 @@ object DaYunScoringSystem {
 
         // 日主过强时，喜克泄耗
         if (dayMasterStrength.strengthLevel == StrengthLevel.VERY_STRONG ||
-            dayMasterStrength.strengthLevel == StrengthLevel.STRONG) {
+            dayMasterStrength.strengthLevel == StrengthLevel.STRONG
+        ) {
             // 克日主的五行加分
             if (isKe(tgWx, dayMasterWx) || isKe(dzWx, dayMasterWx)) {
                 adjustment += 5f
@@ -302,7 +305,8 @@ object DaYunScoringSystem {
 
         // 日主过弱时，喜生扶
         if (dayMasterStrength.strengthLevel == StrengthLevel.VERY_WEAK ||
-            dayMasterStrength.strengthLevel == StrengthLevel.WEAK) {
+            dayMasterStrength.strengthLevel == StrengthLevel.WEAK
+        ) {
             // 生日主的五行加分
             if (isSheng(dayMasterWx, tgWx) || isSheng(dayMasterWx, dzWx)) {
                 adjustment += 5f
@@ -370,10 +374,13 @@ object DaYunScoringSystem {
             when {
                 yongSet.contains(wxToShiShen(tgWx)) || yongSet.contains(wxToShiShen(dzWx)) ->
                     sb.append("属于用神范畴，增强命局平衡，利于${dim.displayName}方面发展")
+
                 jiSet.contains(wxToShiShen(tgWx)) || jiSet.contains(wxToShiShen(dzWx)) ->
                     sb.append("属于忌神范畴，加重五行失衡，需注意${dim.displayName}方面压力")
+
                 xiSet.contains(wxToShiShen(tgWx)) || xiSet.contains(wxToShiShen(dzWx)) ->
                     sb.append("属于喜神范畴，间接生助用神，对${dim.displayName}有温和助益")
+
                 else ->
                     sb.append("为闲神，对${dim.displayName}影响较中性")
             }
@@ -381,48 +388,49 @@ object DaYunScoringSystem {
             return sb.toString()
         }
 
-        fun dimScore(dim: ScoreDimension): Float {
-            var score = overallScore
-            // 各维度微调
-            when (dim) {
-                ScoreDimension.HEALTH -> {
-                    // 木火通明利健康，金水相生也不错
-                    if (tgWx == WuXing.WUXING_MU || tgWx == WuXing.WUXING_HUO) score += 3f
-                    if (jiSet.contains(wxToShiShen(WuXing.WUXING_JIN))) score -= 3f
-                }
-                ScoreDimension.WEALTH -> {
-                    // 财星旺利财富
-                    if (tgWx == WuXing.WUXING_TU || tgWx == WuXing.WUXING_JIN) score += 3f
-                    if (yongSet.contains(wxToShiShen(tgWx))) score += 4f
-                }
-                ScoreDimension.CAREER -> {
-                    // 官杀旺利事业
-                    if (tgWx == WuXing.WUXING_HUO || tgWx == WuXing.WUXING_TU) score += 3f
-                    if (yongSet.contains(wxToShiShen(tgWx))) score += 4f
-                }
-                ScoreDimension.FAMILY -> {
-                    // 地支影响家庭
-                    if (jiSet.contains(wxToShiShen(dzWx))) score -= 4f
-                    val diZhiUtil = DiZhiUtil()
-                    if (diZhiUtil.isDiZhiChong(tgdz.dz, data.dayDizhi)) score -= 5f
-                    if (diZhiUtil.isDiZhiHai(tgdz.dz, data.dayDizhi)) score += 3f
-                }
-                ScoreDimension.LOVE -> {
-                    // 桃花星影响感情
-                    if (tgdz.dz == DiZhi.DIZHI_ZI || tgdz.dz == DiZhi.DIZHI_WU ||
-                        tgdz.dz == DiZhi.DIZHI_MOU || tgdz.dz == DiZhi.DIZHI_YOU) {
-                        score += 2f // 桃花运
-                    }
-                    if (data.tongguanShenList.isNotEmpty()) score += 2f
-                }
-            }
-            return score.coerceIn(0f, 100f)
-        }
+//        fun dimScore(dim: ScoreDimension): Float {
+//            var score = overallScore
+//            // 各维度微调
+//            when (dim) {
+//                ScoreDimension.HEALTH -> {
+//                    // 木火通明利健康，金水相生也不错
+//                    if (tgWx == WuXing.WUXING_MU || tgWx == WuXing.WUXING_HUO) score += 3f
+//                    if (jiSet.contains(wxToShiShen(WuXing.WUXING_JIN))) score -= 3f
+//                }
+//                ScoreDimension.WEALTH -> {
+//                    // 财星旺利财富
+//                    if (tgWx == WuXing.WUXING_TU || tgWx == WuXing.WUXING_JIN) score += 3f
+//                    if (yongSet.contains(wxToShiShen(tgWx))) score += 4f
+//                }
+//                ScoreDimension.CAREER -> {
+//                    // 官杀旺利事业
+//                    if (tgWx == WuXing.WUXING_HUO || tgWx == WuXing.WUXING_TU) score += 3f
+//                    if (yongSet.contains(wxToShiShen(tgWx))) score += 4f
+//                }
+//                ScoreDimension.FAMILY -> {
+//                    // 地支影响家庭
+//                    if (jiSet.contains(wxToShiShen(dzWx))) score -= 4f
+//                    val diZhiUtil = DiZhiUtil()
+//                    if (diZhiUtil.isDiZhiChong(tgdz.dz, data.dayDizhi)) score -= 5f
+//                    if (diZhiUtil.isDiZhiHai(tgdz.dz, data.dayDizhi)) score += 3f
+//                }
+//                ScoreDimension.LOVE -> {
+//                    // 桃花星影响感情
+//                    if (tgdz.dz == DiZhi.DIZHI_ZI || tgdz.dz == DiZhi.DIZHI_WU ||
+//                        tgdz.dz == DiZhi.DIZHI_MOU || tgdz.dz == DiZhi.DIZHI_YOU) {
+//                        score += 2f // 桃花运
+//                    }
+//                    if (data.tongguanShenList.isNotEmpty()) score += 2f
+//                }
+//            }
+//            return score.coerceIn(0f, 100f)
+//        }
 
         return ScoreDimension.values().map { dim ->
             ScoreDetail(
                 dimension = dim,
-                score = dimScore(dim),
+//                score = dimScore(dim),
+                score = overallScore,
                 logicExplanation = explain(dim)
             )
         }

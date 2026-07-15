@@ -123,7 +123,6 @@ fun LiuNianTab(
             selectedLiuNian.details.forEach { detail ->
                 ScoreDetailItem(detail = detail)
             }
-//                ScoreDetailPanel(details = selectedLiuNian.details)
 
         }
     }

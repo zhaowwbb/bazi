@@ -135,9 +135,7 @@ fun LiuYueTab(
             selectedLiuYue.details.forEach { detail ->
                 ScoreDetailItem(detail = detail)
             }
-//            item {
-//                ScoreDetailPanel(details = selectedLiuYue.details)
-//            }
+
         }
     }
 }
