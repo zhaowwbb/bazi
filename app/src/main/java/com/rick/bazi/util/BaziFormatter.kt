@@ -616,6 +616,70 @@ object BaziFormatter {
         return "${shiShenCn}(${tianGanCn})"
     }
 
+    /**
+     * 根据公历年份返回对应的天干和地支
+     * @param year 公历年份
+     * @return Pair<天干, 地支>
+     */
+    fun getGanZhiByYear(year: Int): Pair<TianGan, DiZhi> {
+        val adjustedYear = if (year >= 0) year else year - 1
+
+        val tianGanIndex = ((adjustedYear - 4) % 10 + 10) % 10
+        val diZhiIndex = ((adjustedYear - 4) % 12 + 12) % 12
+
+        return Pair(
+            TianGan.values()[tianGanIndex],
+            DiZhi.values()[diZhiIndex]
+        )
+    }
+
+    /**
+     * 根据流年年份，计算当年 12 个流月（寅月～丑月）的天干地支
+     *
+     * @param year 公历年份（如 2026、1984 等）
+     * @return List<Pair<TianGan, DiZhi>>，size=12
+     *          index 0  = 正月（寅月）
+     *          index 11 = 十二月（丑月）
+     */
+    fun calcYearMonthGanZhi(year: Int): List<Pair<TianGan, DiZhi>> {
+        // 1. 计算年干索引（0=甲,1=乙,...9=癸）
+        // 公元 4 年为甲子年
+        val adjustedYear = if (year >= 0) year else year - 1
+        val yearGanIndex = ((adjustedYear - 4) % 10 + 10) % 10
+
+        // 2. 五虎遁：根据年干确定正月天干索引
+        // 甲己 -> 丙(2), 乙庚 -> 戊(4), 丙辛 -> 庚(6), 丁壬 -> 壬(8), 戊癸 -> 甲(0)
+        val firstMonthGanIndex = when (yearGanIndex) {
+            0, 5 -> 2   // 甲、己
+            1, 6 -> 4   // 乙、庚
+            2, 7 -> 6   // 丙、辛
+            3, 8 -> 8   // 丁、壬
+            4, 9 -> 0   // 戊、癸
+            else -> 0
+        }
+
+        // 3. 月支固定：寅(2)、卯(3)、辰(4)、巳(5)、午(6)、未(7)、
+        //          申(8)、酉(9)、戌(10)、亥(11)、子(0)、丑(1)
+        val monthZhiBase = DiZhi.values() // 按 enum 顺序：子=0,丑=1,...,亥=11
+        val yinZhiIndex = 2 // 寅在地支数组中的索引
+
+        val result = mutableListOf<Pair<TianGan, DiZhi>>()
+
+        for (i in 0 until 12) {
+            // 月干 = 正月天干 + i，顺推
+            val ganIndex = (firstMonthGanIndex + i) % 10
+            val monthGan = TianGan.values()[ganIndex]
+
+            // 月支 = 寅 + i，顺推（超过 11 回绕）
+            val zhiIndex = (yinZhiIndex + i) % 12
+            val monthZhi = monthZhiBase[zhiIndex]
+
+            result.add(monthGan to monthZhi)
+        }
+
+        return result
+    }
+
 }
 
 /**

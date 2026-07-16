@@ -89,12 +89,14 @@ fun BaziSummaryScreen(
 
                 1 -> LiuNianTab(
                     baZiData = baZiData,
+                    data = baziInfo.baziData,
                     selectedDaYunIndex = selectedDaYunIndex,
                     selectedLiuNianIndex = selectedLiuNianIndex,
                     onSelectLiuNian = { selectedLiuNianIndex = it })
 
                 2 -> LiuYueTab(
                     baZiData = baZiData,
+                    data = baziInfo.baziData,
                     selectedDaYunIndex = selectedDaYunIndex,
                     selectedLiuNianIndex = selectedLiuNianIndex
                 )

@@ -3,6 +3,7 @@ package com.rick.bazi.data
 import androidx.compose.runtime.Composable
 //import com.rick.bazi.data.BaZiMock.ss
 import com.rick.bazi.model.*
+import com.rick.bazi.util.BaziFormatter.calcYearMonthGanZhi
 import com.rick.bazi.util.DaYunScoringSystem
 import com.rick.bazi.util.WuXingExt.getWuXingText
 import com.rick.bazi.util.WuXingUtil
@@ -17,9 +18,12 @@ import com.rick.bazi.util.BaziFormatter.getHiddenGanList
 import com.rick.bazi.util.BaziFormatter.getCurrentYearGanZhi
 import com.rick.bazi.util.BaziFormatter.currentDaYunWithAge
 import com.rick.bazi.util.BaziFormatter.getCurrentDaYunIndex
+import com.rick.bazi.util.BaziFormatter.getGanZhiByYear
 import com.rick.bazi.util.DaYunUtil
 import com.rick.bazi.util.DiZhiUtil
+import com.rick.bazi.util.LiuNianScoringSystem
 import com.rick.bazi.util.LiuNianUtil
+import com.rick.bazi.util.LiuYueScoringSystem
 import com.rick.bazi.util.ShiShenUtil
 import com.rick.bazi.util.TianGanUtil
 
@@ -182,38 +186,89 @@ class MockDataGenerator {
         }
     }
 
-    fun generateLiuNianForDaYun(daYun: DaYun): List<LiuNian> {
+    fun generateLiuNianForDaYun(daYun: DaYun, baziData : BaziData): List<LiuNian> {
         val startYear = daYun.yearRange.split("-")[0].toInt()
         return (0 until 10).map { offset ->
             val year = startYear + offset
-            val baseScore = daYun.overallScore + (Math.random() * 50 - 25).toFloat()
+//            val baseScore = daYun.overallScore + (Math.random() * 50 - 25).toFloat()
+            val baseScore = daYun.overallScore
+
+            val logicDescriptions = mutableListOf<String>()
+
+            val (tianGan, diZhi) = getGanZhiByYear(year)
+            val liuNianScore = LiuNianScoringSystem.calcLiuNianScore(
+                data = baziData,
+                liuNianTg = tianGan,
+                liuNianDz = diZhi,
+                daYunScore = baseScore,
+                logicDescriptions = logicDescriptions
+            )
+
+            val adviceText = logicDescriptions.joinToString(separator = "\n")
+            val scoreDetails = listOf(            ScoreDetail(
+                dimension = ScoreDimension.LUCK,
+                score = liuNianScore,
+                logicExplanation = adviceText
+            ))
+
             LiuNian(
                 year = year,
                 ganZhi = calculateYearGanZhi(year),
-                overallScore = baseScore.coerceIn(0f, 100f),
-                details = generateScoreDetails(baseScore.coerceIn(0f, 100f), offset)
+                overallScore = liuNianScore.coerceIn(0f, 100f),
+                details = scoreDetails
+//                details = generateScoreDetails(liuNianScore.coerceIn(0f, 100f), offset)
             )
         }
     }
 
-    fun generateLiuYueForLiuNian(liuNian: LiuNian): List<LiuYue> {
+    fun generateLiuYueForLiuNian(liuNian: LiuNian, baziData : BaziData): List<LiuYue> {
         val monthNames = listOf(
             "正月", "二月", "三月", "四月", "五月", "六月",
             "七月", "八月", "九月", "十月", "冬月", "腊月"
         )
-        val monthGanZhis = listOf(
-            "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛未",
-            "壬申", "癸酉", "甲戌", "乙亥", "丙子", "丁丑"
-        )
+//        val monthGanZhis = listOf(
+//            "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛未",
+//            "壬申", "癸酉", "甲戌", "乙亥", "丙子", "丁丑"
+//        )
+
+        val months = calcYearMonthGanZhi(liuNian.year)
 
         return (0 until 12).map { month ->
-            val baseScore = liuNian.overallScore + (Math.random() * 40 - 20).toFloat()
+//            val baseScore = liuNian.overallScore + (Math.random() * 40 - 20).toFloat()
+//            val baseScore = liuNian.overallScore
+            val tg = months[month].first
+            val dz = months[month].second
+
+            val logicDescriptions = mutableListOf<String>()
+            val baseScore = LiuYueScoringSystem.calcLiuYueScore(
+                data = baziData,
+                daYunTg = tg,
+                daYunDz = dz,
+
+                liuNianTg = tg,
+                liuNianDz = dz,
+
+                liuYueTg = tg,
+                liuYueDz = dz,
+
+                liuNianScore = liuNian.overallScore,
+                logicDescriptions = logicDescriptions
+            )
+
+            val adviceText = logicDescriptions.joinToString(separator = "\n")
+            val scoreDetails = listOf(            ScoreDetail(
+                dimension = ScoreDimension.LUCK,
+                score = baseScore,
+                logicExplanation = adviceText
+            ))
+
             LiuYue(
                 month = month + 1,
                 monthName = monthNames[month],
-                ganZhi = monthGanZhis[month],
+                ganZhi = convertTianganToChar(tg) + convertDizhiToChar(dz),
                 overallScore = baseScore.coerceIn(0f, 100f),
-                details = generateScoreDetails(baseScore.coerceIn(0f, 100f), month)
+                details = scoreDetails
+//                details = generateScoreDetails(baseScore.coerceIn(0f, 100f), month)
             )
         }
     }

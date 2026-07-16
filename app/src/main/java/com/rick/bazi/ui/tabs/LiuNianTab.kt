@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.MockDataGenerator
 import com.rick.bazi.model.BaZiData
 import com.rick.bazi.model.LiuNian
@@ -18,18 +19,19 @@ import com.rick.bazi.ui.components.ScoreDetailPanel
 @Composable
 fun LiuNianTab(
     baZiData: BaZiData,
+    data : BaziData,
     selectedDaYunIndex: Int,
     selectedLiuNianIndex: Int,
     onSelectLiuNian: (Int) -> Unit
 ) {
-    val mockData = remember { MockDataGenerator() }
+    val dataGenerator = remember { MockDataGenerator() }
     val selectedDaYun = remember(selectedDaYunIndex) {
         baZiData.daYunList.getOrNull(selectedDaYunIndex)
     }
 
     val liuNianList = remember(selectedDaYun) {
         if (selectedDaYun != null) {
-            mockData.generateLiuNianForDaYun(selectedDaYun)
+            dataGenerator.generateLiuNianForDaYun(selectedDaYun, data)
         } else {
             emptyList<LiuNian>()
         }

@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.MockDataGenerator
 import com.rick.bazi.model.BaZiData
 import com.rick.bazi.model.LiuNian
@@ -18,10 +19,11 @@ import com.rick.bazi.ui.components.ScoreDetailPanel
 @Composable
 fun LiuYueTab(
     baZiData: BaZiData,
+    data : BaziData,
     selectedDaYunIndex: Int,
     selectedLiuNianIndex: Int
 ) {
-    val mockData = remember { MockDataGenerator() }
+    val dataGenerator = remember { MockDataGenerator() }
     var selectedLiuYueIndex by remember { mutableStateOf(0) }
 
     val selectedDaYun = remember(selectedDaYunIndex) {
@@ -30,7 +32,7 @@ fun LiuYueTab(
 
     val liuNianList = remember(selectedDaYun) {
         if (selectedDaYun != null) {
-            mockData.generateLiuNianForDaYun(selectedDaYun)
+            dataGenerator.generateLiuNianForDaYun(selectedDaYun, data)
         } else {
             emptyList<LiuNian>()
         }
@@ -42,7 +44,7 @@ fun LiuYueTab(
 
     val liuYueList = remember(selectedLiuNian) {
         if (selectedLiuNian != null) {
-            mockData.generateLiuYueForLiuNian(selectedLiuNian)
+            dataGenerator.generateLiuYueForLiuNian(selectedLiuNian, data)
         } else {
             emptyList()
         }
