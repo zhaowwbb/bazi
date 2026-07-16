@@ -8,8 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.rick.bazi.data.BaziData
-import com.rick.bazi.data.MockDataGenerator
-import com.rick.bazi.model.BaZiData
+import com.rick.bazi.data.BaziUIDataGenerator
+import com.rick.bazi.model.BaziDaYunLiuNianLiuYueData
 import com.rick.bazi.model.LiuNian
 import com.rick.bazi.ui.components.ChartDataPoint
 import com.rick.bazi.ui.components.ScoreChart
@@ -18,12 +18,12 @@ import com.rick.bazi.ui.components.ScoreDetailPanel
 
 @Composable
 fun LiuYueTab(
-    baZiData: BaZiData,
+    baZiData: BaziDaYunLiuNianLiuYueData,
     data : BaziData,
     selectedDaYunIndex: Int,
     selectedLiuNianIndex: Int
 ) {
-    val dataGenerator = remember { MockDataGenerator() }
+    val dataGenerator = remember { BaziUIDataGenerator() }
     var selectedLiuYueIndex by remember { mutableStateOf(0) }
 
     val selectedDaYun = remember(selectedDaYunIndex) {

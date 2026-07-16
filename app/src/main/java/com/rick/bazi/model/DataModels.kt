@@ -45,7 +45,7 @@ data class LiuYue(
 )
 
 // 用户八字数据
-data class BaZiData(
+data class BaziDaYunLiuNianLiuYueData(
     val name: String,
     val birthDate: String,
     val yearGanZhi: String,

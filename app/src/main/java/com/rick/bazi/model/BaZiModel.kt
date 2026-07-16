@@ -25,7 +25,7 @@ data class Pillar(
     var hiddenGans: List<HiddenGan>
 )
 
-data class BaZiDataMock(
+data class BaziDataUI(
     var name: String = "张三",
     var gender: String = "男",
     var birthTime: String = "1990年 01月 15日 08:30（公历）",

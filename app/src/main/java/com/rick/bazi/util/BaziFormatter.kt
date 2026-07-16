@@ -323,7 +323,9 @@ object BaziFormatter {
      * @return 十神的中文名称
      */
     fun convertToShiShenCn(dayMaster: TianGan, targetGan: TianGan): String {
-        val shiShen = convertToShiShen(dayMaster, targetGan)
+//        val shiShen = convertToShiShen(dayMaster, targetGan)
+
+        val shiShen = ShiShenUtil().getShiShen(targetGan,dayMaster)
         return when (shiShen) {
             ShiShen.SHISHEN_BI_JIAN -> "比肩"
             ShiShen.SHISHEN_JIE_CAI -> "劫财"
@@ -447,10 +449,11 @@ object BaziFormatter {
             "${convertTianganToChar(daYunGz.tg)}${convertDizhiToChar(daYunGz.dz)}"
 
         // 大运起始年龄（按出生年算虚龄差，业内常用）
-        val startAge = daYunStart.year - data.birthDateYear
+//        val startAge = daYunStart.year - data.birthDateYear
+        val startAge = daYunStart.year + (daYunIndex - 1)* 10
         val endAge = startAge + 9  // 每运10年，显示闭区间
 
-        return "${ganZhiStr}大运（${startAge}–${endAge}岁）"
+        return "${ganZhiStr}大运（${startAge}–${endAge}）"
     }
 
     fun shiShenToChinese(shiShen: ShiShen): String = when (shiShen) {

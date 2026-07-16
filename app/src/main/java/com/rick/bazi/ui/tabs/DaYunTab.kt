@@ -8,14 +8,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.rick.bazi.model.BaZiData
+import com.rick.bazi.model.BaziDaYunLiuNianLiuYueData
 import com.rick.bazi.ui.components.ChartDataPoint
 import com.rick.bazi.ui.components.ScoreChart
 import com.rick.bazi.ui.components.ScoreDetailItem
 
 @Composable
 fun DaYunTab(
-    baZiData: BaZiData,
+    baZiData: BaziDaYunLiuNianLiuYueData,
     selectedIndex: Int,
     onSelectDaYun: (Int) -> Unit
 ) {

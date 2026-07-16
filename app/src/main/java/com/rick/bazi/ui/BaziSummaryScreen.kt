@@ -13,8 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rick.bazi.data.BaziInfo
-import com.rick.bazi.data.MockDataGenerator
-import com.rick.bazi.model.BaZiData
+import com.rick.bazi.data.BaziUIDataGenerator
 import com.rick.bazi.ui.tabs.DaYunTab
 import com.rick.bazi.ui.tabs.LiuNianTab
 import com.rick.bazi.ui.tabs.LiuYueTab
@@ -28,8 +27,7 @@ fun BaziSummaryScreen(
     baziInfo: BaziInfo,
     modifier: Modifier = Modifier
 ) {
-//    val baZiData = remember { MockDataGenerator().generateMockBaZiData() }
-    val baZiData = remember { MockDataGenerator().generateRealBaZiData(baziInfo.baziData) }
+    val baZiData = remember { BaziUIDataGenerator().generateRealBaZiData(baziInfo.baziData) }
 
     println("[Rick]baZiData=$baZiData")
 

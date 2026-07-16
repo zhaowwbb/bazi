@@ -15,31 +15,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import com.rick.bazi.R
-import com.rick.bazi.data.BaZiMock
 import com.rick.bazi.data.BaziInfo
-import com.rick.bazi.data.MALE
-import com.rick.bazi.data.MockDataGenerator
+import com.rick.bazi.data.BaziUIDataGenerator
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.model.HiddenGan
 import com.rick.bazi.model.Pillar
-import com.rick.bazi.navigation.BaziScreen
 import com.rick.bazi.util.BaziMeasureUtil
-import com.rick.bazi.util.BaziPaiPanUtil
-import com.rick.bazi.util.BaziUtil
-import com.rick.bazi.util.DaYunUtil
-import com.rick.bazi.util.DiZhiUtil
-import com.rick.bazi.util.LiuNianUtil
 import com.rick.bazi.util.ShiShenUtil
 import com.rick.bazi.util.TianGanUtil
-import com.rick.bazi.util.WuXingUtil
 
 // 鲜艳配色常量
 private val GradientStart = Color(0xFF667eea)
@@ -84,12 +72,11 @@ fun BaZiPanScreen(
 ) {
 
     val preProcessBazi = remember { mutableStateOf(false) }
-    val data2 = baziInfo.baziData
     if (preProcessBazi.value) {
         BaziMeasureUtil().analyzeBaziAndSaveStat(baziInfo, baziModel)
     }
 
-    val data = MockDataGenerator().generateBaziPanData(baziInfo.baziData)
+    val data = BaziUIDataGenerator().generateBaziPanData(baziInfo.baziData)
 
     val scrollState = rememberScrollState()
 

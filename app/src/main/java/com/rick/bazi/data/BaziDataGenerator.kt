@@ -1,12 +1,9 @@
 package com.rick.bazi.data
 
-import androidx.compose.runtime.Composable
 //import com.rick.bazi.data.BaZiMock.ss
 import com.rick.bazi.model.*
 import com.rick.bazi.util.BaziFormatter.calcYearMonthGanZhi
 import com.rick.bazi.util.DaYunScoringSystem
-import com.rick.bazi.util.WuXingExt.getWuXingText
-import com.rick.bazi.util.WuXingUtil
 import com.rick.bazi.util.BaziFormatter.formatTianganDizhi
 import com.rick.bazi.util.BaziFormatter.formatBirthDateTime
 import com.rick.bazi.util.BaziFormatter.formatTianGanWithWuxing
@@ -17,25 +14,20 @@ import com.rick.bazi.util.BaziFormatter.convertToShiShenCn
 import com.rick.bazi.util.BaziFormatter.getHiddenGanList
 import com.rick.bazi.util.BaziFormatter.getCurrentYearGanZhi
 import com.rick.bazi.util.BaziFormatter.currentDaYunWithAge
-import com.rick.bazi.util.BaziFormatter.getCurrentDaYunIndex
 import com.rick.bazi.util.BaziFormatter.getGanZhiByYear
-import com.rick.bazi.util.DaYunUtil
-import com.rick.bazi.util.DiZhiUtil
 import com.rick.bazi.util.LiuNianScoringSystem
-import com.rick.bazi.util.LiuNianUtil
 import com.rick.bazi.util.LiuYueScoringSystem
-import com.rick.bazi.util.ShiShenUtil
-import com.rick.bazi.util.TianGanUtil
 
 //@Composable
-class MockDataGenerator {
+class BaziUIDataGenerator {
 
-    fun generateBaziPanData(data: BaziData): BaZiDataMock {
-        val dayMaster = "甲"
-        return BaZiDataMock(
+    fun generateBaziPanData(data: BaziData): BaziDataUI {
+//        val dayMaster = "甲"
+        val birthTimeStr = formatBirthDateTime(data) + " 出生后${data.daYunStartYear}年${data.daYunStartMonth}月起运"
+        return BaziDataUI(
             name = "张三",
             gender = formatGender(data),
-            birthTime = formatBirthDateTime(data),
+            birthTime = birthTimeStr,
             dayMaster = formatTianGanWithWuxing(data.dayTiangan),
             pillars = listOf(
                 Pillar(
@@ -58,7 +50,6 @@ class MockDataGenerator {
                     "日主",
                     convertDizhiToChar(data.dayDizhi),
                     getHiddenGanList(data.dayDizhi, data.dayTiangan)
-//                    listOf(HiddenGan("丁", "伤官"), HiddenGan("己", "正财"))
                 ),
                 Pillar(
                     "时柱",
@@ -66,11 +57,6 @@ class MockDataGenerator {
                     convertToShiShenCn(data.dayTiangan, data.hourTiangan),
                     convertDizhiToChar(data.hourDizhi),
                     getHiddenGanList(data.hourDizhi, data.dayTiangan)
-//                    listOf(
-//                        HiddenGan("戊", "偏财"),
-//                        HiddenGan("乙", "劫财"),
-//                        HiddenGan("癸", "正印")
-//                    )
                 )
             ),
             currentDaYun = currentDaYunWithAge(data),
@@ -79,10 +65,10 @@ class MockDataGenerator {
     }
 
     //    @Composable
-    fun generateRealBaZiData(data: BaziData): BaZiData {
+    fun generateRealBaZiData(data: BaziData): BaziDaYunLiuNianLiuYueData {
         val daYunList = DaYunScoringSystem.generateDaYunList(data)
 
-        return BaZiData(
+        return BaziDaYunLiuNianLiuYueData(
             name = "张三",
             birthDate = formatBirthDateTime(data),
             yearGanZhi = formatTianganDizhi(data.yearTiangan, data.yearDizhi),
@@ -132,59 +118,59 @@ class MockDataGenerator {
 //        return daYunList
 //    }
 
-    private fun generateScoreDetails(baseScore: Float, index: Int): List<ScoreDetail> {
-        val logics = mapOf(
-            ScoreDimension.LUCK to listOf(
-                "日主甲木得令，身体基础良好",
-                "庚辰大运金旺克木，需注意肝胆健康",
-                "辛巳大运火旺泄木，精力消耗较大",
-                "壬午大运水火既济，身体状况改善"
-            ),
-//            ScoreDimension.HEALTH to listOf(
+//    private fun generateScoreDetails(baseScore: Float, index: Int): List<ScoreDetail> {
+//        val logics = mapOf(
+//            ScoreDimension.LUCK to listOf(
 //                "日主甲木得令，身体基础良好",
 //                "庚辰大运金旺克木，需注意肝胆健康",
 //                "辛巳大运火旺泄木，精力消耗较大",
 //                "壬午大运水火既济，身体状况改善"
 //            ),
-//            ScoreDimension.WEALTH to listOf(
-//                "正财透出，财运稳定增长",
-//                "偏财逢冲，投资需谨慎",
-//                "财星得地，财富积累加速",
-//                "财库被冲，有意外之财但也易破财"
-//            ),
-//            ScoreDimension.CAREER to listOf(
-//                "官星得力，事业发展顺利",
-//                "七杀攻身，职场压力增大",
-//                "印星护身，贵人相助",
-//                "食伤生财，创意带来机遇"
-//            ),
-//            ScoreDimension.FAMILY to listOf(
-//                "夫妻宫稳定，家庭和睦",
-//                "子午冲导致家庭冲突更激烈",
-//                "印星受损，长辈健康需关注",
-//                "家庭运势平稳上升"
-//            ),
-//            ScoreDimension.LOVE to listOf(
-//                "桃花入命，感情机会增多",
-//                "夫妻宫逢冲，感情波动较大",
-//                "红鸾星动，适合婚嫁",
-//                "感情趋于稳定成熟"
+////            ScoreDimension.HEALTH to listOf(
+////                "日主甲木得令，身体基础良好",
+////                "庚辰大运金旺克木，需注意肝胆健康",
+////                "辛巳大运火旺泄木，精力消耗较大",
+////                "壬午大运水火既济，身体状况改善"
+////            ),
+////            ScoreDimension.WEALTH to listOf(
+////                "正财透出，财运稳定增长",
+////                "偏财逢冲，投资需谨慎",
+////                "财星得地，财富积累加速",
+////                "财库被冲，有意外之财但也易破财"
+////            ),
+////            ScoreDimension.CAREER to listOf(
+////                "官星得力，事业发展顺利",
+////                "七杀攻身，职场压力增大",
+////                "印星护身，贵人相助",
+////                "食伤生财，创意带来机遇"
+////            ),
+////            ScoreDimension.FAMILY to listOf(
+////                "夫妻宫稳定，家庭和睦",
+////                "子午冲导致家庭冲突更激烈",
+////                "印星受损，长辈健康需关注",
+////                "家庭运势平稳上升"
+////            ),
+////            ScoreDimension.LOVE to listOf(
+////                "桃花入命，感情机会增多",
+////                "夫妻宫逢冲，感情波动较大",
+////                "红鸾星动，适合婚嫁",
+////                "感情趋于稳定成熟"
+////            )
+//        )
+//
+//        return ScoreDimension.values().map { dim ->
+//            val adjustedScore = (baseScore + (Math.random() * 40 - 20)).toFloat()
+//                .coerceIn(0f, 100f)
+//            val logicList = logics[dim] ?: listOf("暂无详细解释")
+//            val logicIndex = index.coerceAtMost(logicList.size - 1)
+//
+//            ScoreDetail(
+//                dimension = dim,
+//                score = adjustedScore,
+//                logicExplanation = logicList[logicIndex]
 //            )
-        )
-
-        return ScoreDimension.values().map { dim ->
-            val adjustedScore = (baseScore + (Math.random() * 40 - 20)).toFloat()
-                .coerceIn(0f, 100f)
-            val logicList = logics[dim] ?: listOf("暂无详细解释")
-            val logicIndex = index.coerceAtMost(logicList.size - 1)
-
-            ScoreDetail(
-                dimension = dim,
-                score = adjustedScore,
-                logicExplanation = logicList[logicIndex]
-            )
-        }
-    }
+//        }
+//    }
 
     fun generateLiuNianForDaYun(daYun: DaYun, baziData : BaziData): List<LiuNian> {
         val startYear = daYun.yearRange.split("-")[0].toInt()
