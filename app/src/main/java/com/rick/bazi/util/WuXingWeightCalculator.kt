@@ -4,6 +4,7 @@ import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
+import com.rick.bazi.util.BaziFormatter.getBeiShengWuXing
 import kotlin.math.roundToInt
 
 object WuXingWeightCalculator {
@@ -54,6 +55,12 @@ object WuXingWeightCalculator {
             monthDizhi = baziData.monthDizhi
         )
         addWeights(weights, hourWeight)
+
+        baziData.jinWeight = weights[WuXing.WUXING_JIN] ?: 0f
+        baziData.muWeight = weights[WuXing.WUXING_MU] ?: 0f
+        baziData.shuiWeight = weights[WuXing.WUXING_SHUI] ?: 0f
+        baziData.huoWeight = weights[WuXing.WUXING_HUO] ?: 0f
+        baziData.tuWeight = weights[WuXing.WUXING_TU] ?: 0f
 
         return weights
     }
@@ -270,6 +277,13 @@ object WuXingWeightCalculator {
         }
     }
 
+    fun isSeasonStrongForTian(tiangan: TianGan, monthDizhi: DiZhi): Boolean {
+        val dayMasterWuxing = getTianGanWuxing(tiangan)
+        val monthElement = getDiZhiSeasonElement(monthDizhi)
+        val isSeasonStrong = (dayMasterWuxing == monthElement || getBeiShengWuXing(monthElement) == dayMasterWuxing)
+        return isSeasonStrong
+    }
+
     /**
      * 计算日主（日干）强度
      */
@@ -278,7 +292,7 @@ object WuXingWeightCalculator {
 
         // 1. 计算得月令情况
         val monthElement = getDiZhiSeasonElement(baziData.monthDizhi)
-        val isSeasonStrong = (dayMasterWuxing == monthElement)
+        val isSeasonStrong = isSeasonStrongForTian(baziData.dayTiangan, baziData.monthDizhi)
 
         // 2. 计算得地情况（地支有无根）
         val rootCount = baziData.strongRootCount + baziData.mediumRootCount + baziData.weakRootCount
@@ -330,23 +344,23 @@ object WuXingWeightCalculator {
         return when (dayMasterWuxing) {
             WuXing.WUXING_MU -> {
                 // 木生火，水生木
-                (totalWeights[WuXing.WUXING_HUO] ?: 0f) + (totalWeights[WuXing.WUXING_SHUI] ?: 0f)
+                (totalWeights[WuXing.WUXING_MU] ?: 0f) + (totalWeights[WuXing.WUXING_SHUI] ?: 0f)
             }
             WuXing.WUXING_HUO -> {
                 // 火生土，木生火
-                (totalWeights[WuXing.WUXING_TU] ?: 0f) + (totalWeights[WuXing.WUXING_MU] ?: 0f)
+                (totalWeights[WuXing.WUXING_HUO] ?: 0f) + (totalWeights[WuXing.WUXING_MU] ?: 0f)
             }
             WuXing.WUXING_TU -> {
                 // 土生金，火生土
-                (totalWeights[WuXing.WUXING_JIN] ?: 0f) + (totalWeights[WuXing.WUXING_HUO] ?: 0f)
+                (totalWeights[WuXing.WUXING_TU] ?: 0f) + (totalWeights[WuXing.WUXING_HUO] ?: 0f)
             }
             WuXing.WUXING_JIN -> {
                 // 金生水，土生金
-                (totalWeights[WuXing.WUXING_SHUI] ?: 0f) + (totalWeights[WuXing.WUXING_TU] ?: 0f)
+                (totalWeights[WuXing.WUXING_JIN] ?: 0f) + (totalWeights[WuXing.WUXING_TU] ?: 0f)
             }
             WuXing.WUXING_SHUI -> {
                 // 水生木，金生水
-                (totalWeights[WuXing.WUXING_MU] ?: 0f) + (totalWeights[WuXing.WUXING_JIN] ?: 0f)
+                (totalWeights[WuXing.WUXING_SHUI] ?: 0f) + (totalWeights[WuXing.WUXING_JIN] ?: 0f)
             }
         }
     }
@@ -539,3 +553,4 @@ fun formatWeightsForDisplay(weights: Map<WuXing, Float>): String {
         "$wuxingChar: ${String.format("%.2f", weight)}"
     }
 }
+

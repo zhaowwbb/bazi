@@ -470,7 +470,7 @@ class GeJuUtil {
         var tg = TianGan.TIANGAN_JIA
         val monthDz = baziData.monthDizhi
         var ss = ShiShen.SHISHEN_SHI_SHEN
-        YongShenUtil().calculateWuXingWeight(baziData)
+//        YongShenUtil().calculateWuXingWeight(baziData)
 
         if (isOtherGJ(baziData)) {
             calculateGeJuXiJi(baziData.gj, baziData)
@@ -505,7 +505,7 @@ class GeJuUtil {
         }
         //no touchu
         if (!foundGJ) {
-            println("Month DiZhi is not touchu TianGan")
+//            println("Month DiZhi is not touchu TianGan")
             //check other dizhi touchu
             cangganArray = DiZhiUtil().diZhiCangGanMap[baziData.yearDizhi]!!
             if (isMonthDzTouTiangan(cangganArray[0], baziData)) {

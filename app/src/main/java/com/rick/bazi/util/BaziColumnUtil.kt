@@ -5,6 +5,9 @@ import androidx.compose.ui.res.stringResource
 import com.rick.bazi.R
 import com.rick.bazi.data.ColumnPosition
 
+
+
+
 class BaziColumnUtil {
     @Composable
     fun getBaziColumnString(columnPosition: ColumnPosition, isTG : Boolean) : String{
@@ -51,3 +54,5 @@ class BaziColumnUtil {
         return sb.toString()
     }
 }
+
+

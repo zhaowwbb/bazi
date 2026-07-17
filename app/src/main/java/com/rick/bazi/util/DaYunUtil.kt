@@ -601,39 +601,9 @@ class DaYunUtil {
             seconds = ownerTime.subtract(startJieQi)
         }
         data.daYunStartSeconds = seconds
-        var updateData = calcDaYunStartFromSeconds(data, seconds)
-        println("[Rick]calculateDaYunStartSeconds() updateData=$updateData")
+        calcDaYunStartFromSeconds(data, seconds)
 
-//        var days = data.daYunStartSeconds / 86400
-//        var remainSeconds = data.daYunStartSeconds % 86400
-//        var hours = remainSeconds / 3600
-//        var remainTime = remainSeconds % 3600
-//        var year = days / 3
-//        var month = (days % 3) * 4
-//        var day = hours * 5
-//        day = day + (remainTime / 720)
-//        if (day > 30) {
-//            month = month + day / 30
-//        }
-//        day = day % 30
-//
-//        var remainHours = remainTime % 720
-//        var hour = remainHours / 30
-//
-//        data.daYunStartYear = year
-//        data.daYunStartMonth = month
-//        data.daYunStartDay = day
-//
-//        var startYear = data.birthDateYear + data.daYunStartYear
-//        var startMonth = data.birthDateMonth + data.daYunStartMonth
-//        if (startMonth >= 13) {
-//            startYear += 1
-//            startMonth -= 12
-//        }
-//        data.daYunFirstYear = startYear
-//        data.daYunFirstMonth = startMonth
-
-//        println("daYunStartSeconds=${data.daYunStartSeconds}")
+//        println("[Rick]calculateDaYunStartSeconds() updateData=$updateData")
     }
 
     /**

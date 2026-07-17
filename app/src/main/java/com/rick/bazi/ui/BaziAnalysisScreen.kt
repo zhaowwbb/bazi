@@ -57,11 +57,11 @@ fun BaziAppAnalysisScreen(
     LaunchedEffect(baziData) {
         if (baziData.yongShenList.isEmpty()) {
             // 先计算五行权重和根气
-            WuXingWeightCalculator.calculateTotalWuXingWeights(baziData)
-            RootCounter.calculateRootCounts(baziData)
+//            WuXingWeightCalculator.calculateTotalWuXingWeights(baziData)
+//            RootCounter.calculateRootCounts(baziData)
 
             // 选择核心用神
-            PrimaryYongShenSelector.selectAndUpdate(baziData)
+//            PrimaryYongShenSelector.selectAndUpdate(baziData)
 
 //            BaziYongShenAnalyzer.analyze(baziData)
         }
@@ -287,7 +287,7 @@ private fun PillarColumn(
 
 @Composable
 private fun DayMasterStrengthCard(data: BaziData) {
-    val strength = WuXingWeightCalculator.calculateDayMasterStrength(data)
+    val strength = calculateDayMasterStrength(data)
 
     AnalysisCard(
         title = "日主旺衰",
@@ -315,11 +315,12 @@ private fun DayMasterStrengthCard(data: BaziData) {
         )
         InfoItem("地支根数", "${strength.rootCount}个")
         InfoItem("生助权重", String.format("%.2f", strength.supportWeight))
+        InfoItem("旺衰评分", "${strength.score}/20")
 
         // 进度条显示强度
         Spacer(Modifier.height(8.dp))
         LinearProgressIndicator(
-            progress = { strength.score.toFloat() / 10f },
+            progress = { strength.score.toFloat() / 20f },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp),

@@ -1,5 +1,6 @@
 package com.rick.bazi.util
 
+import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
 
 /**
@@ -53,5 +54,11 @@ object WuXingExt {
         WuXing.WUXING_SHUI -> data.shuiWeight
         WuXing.WUXING_HUO -> data.huoWeight
         WuXing.WUXING_TU -> data.tuWeight
+    }
+
+    fun tgWxIsSameAsDayMaster(tg : TianGan, dayMasterTg: TianGan) : Boolean {
+//        val wx = WuXingUtil().getBiJieWuXing(tg)
+        val wx = WuXingUtil().getTgWX(tg)
+        return (wx == WuXingUtil().getTgWX(dayMasterTg))
     }
 }

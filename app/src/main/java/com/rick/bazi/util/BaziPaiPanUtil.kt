@@ -51,8 +51,6 @@ class BaziPaiPanUtil {
         baziModel.setMonthTiangan(tg)
         baziModel.setMonthDiZhi(dz)
 
-//        calcDayAndHourPillar(year, month, day, hour, data)
-
         //calculate Day Tiangan & Dizhi
         var r = 0
         //23:00 to 23:59 is belong to the next day in lunar calendar
@@ -87,10 +85,14 @@ class BaziPaiPanUtil {
 
         data.yongShenPickMode = baziInfo.yongShenPickModeStr
 
-
+        RootCounter.calculateRootCounts(data)
+//        WuXingWeightCalculator.calculateTotalWuXingWeights(data)
+        calculateTotalWuXingWeightsV2(data)
         GeJuUtil().getGJ(data)
+//        analyze(data)
+//        WuXingWeightCalculator.calculateTotalWuXingWeights(data)
 
-        analyze(data)
+
 
         // 选择核心用神
         PrimaryYongShenSelector.selectAndUpdate(data)
@@ -181,23 +183,23 @@ class BaziPaiPanUtil {
         return data
     }
 
-    fun testTyme() {
-        var termName = "立春"
-        val year = 2025
-        val term = SolarTerm.fromName(year, termName)
-
-        // 获取精确到秒的时刻
-        val solarTime: SolarTime = term.julianDay.solarTime
-        println("$year 年 $termName 节气在：$solarTime")
-
-        // 示例2：获取某一年的全部24个节气
-        val allTerms = SolarTerm.NAMES.map { name ->
-            val t = SolarTerm.fromName(year, name)
-            val time = t.julianDay.solarTime
-            "$name: $time"
-        }
-        allTerms.forEach { println(it) }
-    }
+//    fun testTyme() {
+//        var termName = "立春"
+//        val year = 2025
+//        val term = SolarTerm.fromName(year, termName)
+//
+//        // 获取精确到秒的时刻
+//        val solarTime: SolarTime = term.julianDay.solarTime
+//        println("$year 年 $termName 节气在：$solarTime")
+//
+//        // 示例2：获取某一年的全部24个节气
+//        val allTerms = SolarTerm.NAMES.map { name ->
+//            val t = SolarTerm.fromName(year, name)
+//            val time = t.julianDay.solarTime
+//            "$name: $time"
+//        }
+//        allTerms.forEach { println(it) }
+//    }
 
     fun calculateBazi(
         year: Int,
@@ -219,7 +221,7 @@ class BaziPaiPanUtil {
 
         // 获取精确到秒的时刻
         val lichunTime: SolarTime = term.julianDay.solarTime
-        println("$year 年 $termName 节气在：$lichunTime, ownerSolarTime:$ownerSolarTime")
+//        println("$year 年 $termName 节气在：$lichunTime, ownerSolarTime:$ownerSolarTime")
         if (ownerSolarTime.isBefore(lichunTime)) {
             //belong to previous
             yearBase = yearBase - 1
@@ -284,9 +286,6 @@ class BaziPaiPanUtil {
         val daxueTime: SolarTime = term.julianDay.solarTime
         term = SolarTerm.fromName(year - 1, termName)
         val daxuePrevTime: SolarTime = term.julianDay.solarTime
-
-//        DaYunUtil().calculateDaYunStartSeconds(qingmingTime, lidongTime, ownerSolarTime, data)
-//        println("daYunStartSeconds=${data.daYunStartSeconds}")
 
         //month
         //1 month
@@ -356,7 +355,7 @@ class BaziPaiPanUtil {
         }
         calculateMonthTianGan(data)
 
-        println("year=$year, tg=$tg, dz=$dz, yearBase=$yearBase ")
+//        println("year=$year, tg=$tg, dz=$dz, yearBase=$yearBase ")
     }
 
     fun calculateMonthTianGan(data: BaziData) {
