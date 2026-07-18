@@ -1,6 +1,7 @@
 package com.rick.bazi.util
 
 import com.rick.bazi.data.*
+import com.rick.bazi.model.StrengthLevel
 import com.rick.bazi.util.WuXingWeightCalculator
 //import com.rick.bazi.util.TianGanToShiShenConverter
 import com.rick.bazi.util.RootCounter.calculateRootCounts
@@ -8,6 +9,8 @@ import com.rick.bazi.util.BaziFormatter.getShengWuXing
 import com.rick.bazi.util.BaziFormatter.getBeiShengWuXing
 import com.rick.bazi.util.BaziFormatter.getKeWuXing
 import com.rick.bazi.util.BaziFormatter.getBeiKeWuXing
+import com.rick.bazi.util.BaziFormatter.getDiZhiSeasonElement
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 import com.rick.bazi.util.BaziFormatter.getTongGuanWuXing
 import com.rick.bazi.util.BaziFormatter.getTongGuanForKe
 
@@ -36,11 +39,11 @@ object BaziYongShenAnalyzer {
         data.tuWeight = weights[WuXing.WUXING_TU] ?: 0f
 
         // 2. 计算日主强度
-        val dayMasterStrength = WuXingWeightCalculator.calculateDayMasterStrength(data)
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+        val dayMasterStrength = calculateDayMasterStrength(data)
+        val dayMasterWx = getTianGanWuxing(data.dayTiangan)
 
         // 3. 获取月令五行
-        val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+        val monthWx = getDiZhiSeasonElement(data.monthDizhi)
 
         // 4. 分析五行平衡
         val analyzer = WuXingBalanceAnalyzer()
@@ -121,7 +124,7 @@ object BaziYongShenAnalyzer {
      */
     private fun getShengFuShiShen(dayMaster: TianGan): List<ShiShen> {
         val result = mutableListOf<ShiShen>()
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(dayMaster)
+        val dayMasterWx = getTianGanWuxing(dayMaster)
 
         // 生日主的五行（印枭）
         val shengWx = getShengWuXing(dayMasterWx)
@@ -139,7 +142,7 @@ object BaziYongShenAnalyzer {
      */
     private fun getKeXieHaoShiShen(dayMaster: TianGan): List<ShiShen> {
         val result = mutableListOf<ShiShen>()
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(dayMaster)
+        val dayMasterWx = getTianGanWuxing(dayMaster)
 
         // 克日主的五行（官杀）
         val keWx = getKeWuXing(dayMasterWx)
@@ -240,8 +243,8 @@ object BaziYongShenAnalyzer {
         // 年干克日干
         if (tianGanUtil.isTianGanKe(data.yearTiangan, data.dayTiangan)) {
             val tongguanWx = getTongGuanForKe(
-                WuXingWeightCalculator.getTianGanWuxing(data.yearTiangan),
-                WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+                getTianGanWuxing(data.yearTiangan),
+                getTianGanWuxing(data.dayTiangan)
             )
             if (tongguanWx != null) {
                 result.add(wuXingToShiShen(tongguanWx))
@@ -251,8 +254,8 @@ object BaziYongShenAnalyzer {
         // 月干克日干
         if (tianGanUtil.isTianGanKe(data.monthTiangan, data.dayTiangan)) {
             val tongguanWx = getTongGuanForKe(
-                WuXingWeightCalculator.getTianGanWuxing(data.monthTiangan),
-                WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+                getTianGanWuxing(data.monthTiangan),
+                getTianGanWuxing(data.dayTiangan)
             )
             if (tongguanWx != null) {
                 result.add(wuXingToShiShen(tongguanWx))
@@ -262,8 +265,8 @@ object BaziYongShenAnalyzer {
         // 时干克日干
         if (tianGanUtil.isTianGanKe(data.hourTiangan, data.dayTiangan)) {
             val tongguanWx = getTongGuanForKe(
-                WuXingWeightCalculator.getTianGanWuxing(data.hourTiangan),
-                WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+                getTianGanWuxing(data.hourTiangan),
+                getTianGanWuxing(data.dayTiangan)
             )
             if (tongguanWx != null) {
                 result.add(wuXingToShiShen(tongguanWx))
@@ -372,7 +375,7 @@ object BaziYongShenAnalyzer {
      * @return 对应的十神列表
      */
     fun getShiShenListByWuXing(wuXing: WuXing, dayMaster: TianGan): List<ShiShen> {
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(dayMaster)
+        val dayMasterWx = getTianGanWuxing(dayMaster)
         val dayMasterIndex = dayMaster.ordinal
         val dayMasterIsYang = dayMasterIndex % 2 == 0
 

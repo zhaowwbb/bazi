@@ -1,6 +1,8 @@
 package com.rick.bazi.util
 
 import com.rick.bazi.data.*
+import com.rick.bazi.model.StrengthLevel
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 import com.rick.bazi.util.WuXingWeightCalculator
 import com.rick.bazi.util.RootCounter
 
@@ -20,7 +22,7 @@ object PrimaryYongShenSelector {
      */
     fun selectAndUpdate(data: BaziData) {
         val weights = WuXingWeightCalculator.calculateTotalWuXingWeights(data)
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+        val dayMasterWx = getTianGanWuxing(data.dayTiangan)
         val monthDz = data.monthDizhi
         val dayMaster = data.dayTiangan
 
@@ -375,8 +377,8 @@ object PrimaryYongShenSelector {
         for (i in gans.indices) {
             for (j in i + 1 until gans.size) {
                 if (tianGanUtil.isTianGanKe(gans[i], gans[j])) {
-                    val keWx = WuXingWeightCalculator.getTianGanWuxing(gans[i])
-                    val beiKeWx = WuXingWeightCalculator.getTianGanWuxing(gans[j])
+                    val keWx = getTianGanWuxing(gans[i])
+                    val beiKeWx = getTianGanWuxing(gans[j])
 
                     // 只有当相克双方的权重都超过阈值时才视为严重冲突
                     val keWeight = weights[keWx] ?: 0f
@@ -403,7 +405,7 @@ object PrimaryYongShenSelector {
         for (dz in dizhis) {
             val cangGans = DiZhiUtil().getCanggan(dz)
             for (cg in cangGans) {
-                val cgWx = WuXingWeightCalculator.getTianGanWuxing(cg)
+                val cgWx = getTianGanWuxing(cg)
                 if (cgWx == wx) {
                     when {
                         cg == cangGans[0] -> score += 1.0f  // 本气根
@@ -435,7 +437,7 @@ object PrimaryYongShenSelector {
      * 五行 → 十神列表（根据日主天干）
      */
     private fun wuXingToShiShenList(wx: WuXing, dayMaster: TianGan): List<ShiShen> {
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(dayMaster)
+        val dayMasterWx = getTianGanWuxing(dayMaster)
         val dayMasterIndex = dayMaster.ordinal
         val dayMasterIsYang = dayMasterIndex % 2 == 0
 

@@ -4,7 +4,13 @@ import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
+import com.rick.bazi.model.DayMasterStrength
+import com.rick.bazi.model.StrengthLevel
 import com.rick.bazi.util.BaziFormatter.getBeiShengWuXing
+import com.rick.bazi.util.BaziFormatter.getDiZhiMainElement
+import com.rick.bazi.util.BaziFormatter.getDiZhiResidualElement
+import com.rick.bazi.util.BaziFormatter.getDiZhiSeasonElement
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 import kotlin.math.roundToInt
 
 object WuXingWeightCalculator {
@@ -136,58 +142,58 @@ object WuXingWeightCalculator {
         return weights
     }
 
-    /**
-     * 天干对应的五行
-     */
-    fun getTianGanWuxing(tiangan: TianGan): WuXing {
-        return when (tiangan) {
-            TianGan.TIANGAN_JIA, TianGan.TIANGAN_YI -> WuXing.WUXING_MU
-            TianGan.TIANGAN_BING, TianGan.TIANGAN_DING -> WuXing.WUXING_HUO
-            TianGan.TIANGAN_WU, TianGan.TIANGAN_JI -> WuXing.WUXING_TU
-            TianGan.TIANGAN_GENG, TianGan.TIANGAN_XIN -> WuXing.WUXING_JIN
-            TianGan.TIANGAN_REN, TianGan.TIANGAN_GUI -> WuXing.WUXING_SHUI
-        }
-    }
-
-    /**
-     * 地支对应的季节五行（月令）
-     */
-    fun getDiZhiSeasonElement(dizhi: DiZhi): WuXing {
-        return when (dizhi) {
-            DiZhi.DIZHI_ZI -> WuXing.WUXING_SHUI  // 冬
-            DiZhi.DIZHI_CHOU -> WuXing.WUXING_TU  // 季冬
-            DiZhi.DIZHI_YIN -> WuXing.WUXING_MU   // 春
-            DiZhi.DIZHI_MOU -> WuXing.WUXING_MU   // 春
-            DiZhi.DIZHI_CHEN -> WuXing.WUXING_TU  // 季春
-            DiZhi.DIZHI_SI -> WuXing.WUXING_HUO   // 夏
-            DiZhi.DIZHI_WU -> WuXing.WUXING_HUO   // 夏
-            DiZhi.DIZHI_WEI -> WuXing.WUXING_TU   // 季夏
-            DiZhi.DIZHI_SHEN -> WuXing.WUXING_JIN  // 秋
-            DiZhi.DIZHI_YOU -> WuXing.WUXING_JIN  // 秋
-            DiZhi.DIZHI_XU -> WuXing.WUXING_TU    // 季秋
-            DiZhi.DIZHI_HAI -> WuXing.WUXING_SHUI  // 冬
-        }
-    }
-
-    /**
-     * 地支本气对应的五行
-     */
-    fun getDiZhiMainElement(dizhi: DiZhi): WuXing {
-        return when (dizhi) {
-            DiZhi.DIZHI_ZI -> WuXing.WUXING_SHUI
-            DiZhi.DIZHI_CHOU -> WuXing.WUXING_TU
-            DiZhi.DIZHI_YIN -> WuXing.WUXING_MU
-            DiZhi.DIZHI_MOU -> WuXing.WUXING_MU
-            DiZhi.DIZHI_CHEN -> WuXing.WUXING_TU
-            DiZhi.DIZHI_SI -> WuXing.WUXING_HUO
-            DiZhi.DIZHI_WU -> WuXing.WUXING_HUO
-            DiZhi.DIZHI_WEI -> WuXing.WUXING_TU
-            DiZhi.DIZHI_SHEN -> WuXing.WUXING_JIN
-            DiZhi.DIZHI_YOU -> WuXing.WUXING_JIN
-            DiZhi.DIZHI_XU -> WuXing.WUXING_TU
-            DiZhi.DIZHI_HAI -> WuXing.WUXING_SHUI
-        }
-    }
+//    /**
+//     * 天干对应的五行
+//     */
+//    fun getTianGanWuxing(tiangan: TianGan): WuXing {
+//        return when (tiangan) {
+//            TianGan.TIANGAN_JIA, TianGan.TIANGAN_YI -> WuXing.WUXING_MU
+//            TianGan.TIANGAN_BING, TianGan.TIANGAN_DING -> WuXing.WUXING_HUO
+//            TianGan.TIANGAN_WU, TianGan.TIANGAN_JI -> WuXing.WUXING_TU
+//            TianGan.TIANGAN_GENG, TianGan.TIANGAN_XIN -> WuXing.WUXING_JIN
+//            TianGan.TIANGAN_REN, TianGan.TIANGAN_GUI -> WuXing.WUXING_SHUI
+//        }
+//    }
+//
+//    /**
+//     * 地支对应的季节五行（月令）
+//     */
+//    fun getDiZhiSeasonElement(dizhi: DiZhi): WuXing {
+//        return when (dizhi) {
+//            DiZhi.DIZHI_ZI -> WuXing.WUXING_SHUI  // 冬
+//            DiZhi.DIZHI_CHOU -> WuXing.WUXING_TU  // 季冬
+//            DiZhi.DIZHI_YIN -> WuXing.WUXING_MU   // 春
+//            DiZhi.DIZHI_MOU -> WuXing.WUXING_MU   // 春
+//            DiZhi.DIZHI_CHEN -> WuXing.WUXING_TU  // 季春
+//            DiZhi.DIZHI_SI -> WuXing.WUXING_HUO   // 夏
+//            DiZhi.DIZHI_WU -> WuXing.WUXING_HUO   // 夏
+//            DiZhi.DIZHI_WEI -> WuXing.WUXING_TU   // 季夏
+//            DiZhi.DIZHI_SHEN -> WuXing.WUXING_JIN  // 秋
+//            DiZhi.DIZHI_YOU -> WuXing.WUXING_JIN  // 秋
+//            DiZhi.DIZHI_XU -> WuXing.WUXING_TU    // 季秋
+//            DiZhi.DIZHI_HAI -> WuXing.WUXING_SHUI  // 冬
+//        }
+//    }
+//
+//    /**
+//     * 地支本气对应的五行
+//     */
+//    fun getDiZhiMainElement(dizhi: DiZhi): WuXing {
+//        return when (dizhi) {
+//            DiZhi.DIZHI_ZI -> WuXing.WUXING_SHUI
+//            DiZhi.DIZHI_CHOU -> WuXing.WUXING_TU
+//            DiZhi.DIZHI_YIN -> WuXing.WUXING_MU
+//            DiZhi.DIZHI_MOU -> WuXing.WUXING_MU
+//            DiZhi.DIZHI_CHEN -> WuXing.WUXING_TU
+//            DiZhi.DIZHI_SI -> WuXing.WUXING_HUO
+//            DiZhi.DIZHI_WU -> WuXing.WUXING_HUO
+//            DiZhi.DIZHI_WEI -> WuXing.WUXING_TU
+//            DiZhi.DIZHI_SHEN -> WuXing.WUXING_JIN
+//            DiZhi.DIZHI_YOU -> WuXing.WUXING_JIN
+//            DiZhi.DIZHI_XU -> WuXing.WUXING_TU
+//            DiZhi.DIZHI_HAI -> WuXing.WUXING_SHUI
+//        }
+//    }
 
     /**
      * 地支本气权重
@@ -208,25 +214,7 @@ object WuXingWeightCalculator {
         }
     }
 
-    /**
-     * 地支余气对应的五行
-     */
-    fun getDiZhiResidualElement(dizhi: DiZhi): WuXing? {
-        return when (dizhi) {
-            DiZhi.DIZHI_YIN -> WuXing.WUXING_HUO  // 寅中丙火
-            DiZhi.DIZHI_SI -> WuXing.WUXING_JIN   // 巳中庚金
-            DiZhi.DIZHI_SHEN -> WuXing.WUXING_SHUI // 申中壬水
-            DiZhi.DIZHI_HAI -> WuXing.WUXING_MU   // 亥中甲木
 
-            DiZhi.DIZHI_CHEN -> WuXing.WUXING_MU  // 辰中乙木
-            DiZhi.DIZHI_XU -> WuXing.WUXING_JIN   // 戌中辛金
-            DiZhi.DIZHI_CHOU -> WuXing.WUXING_SHUI // 丑中癸水
-            DiZhi.DIZHI_WEI -> WuXing.WUXING_HUO  // 未中了火
-
-            // 子、午、卯、酉无余气
-            else -> null
-        }
-    }
 
     /**
      * 地支余气权重
@@ -426,22 +414,22 @@ object WuXingWeightCalculator {
 /**
  * 日主强度数据类
  */
-data class DayMasterStrength(
-    val wuxing: WuXing,
-    val score: Int,
-    val isSeasonStrong: Boolean,
-    val rootCount: Int,
-    val supportWeight: Float,
-    val strengthLevel: StrengthLevel
-)
-
-enum class StrengthLevel {
-    VERY_WEAK,   // 很弱
-    WEAK,        // 弱
-    MEDIUM,      // 中等
-    STRONG,      // 强
-    VERY_STRONG  // 很强
-}
+//data class DayMasterStrength(
+//    val wuxing: WuXing,
+//    val score: Int,
+//    val isSeasonStrong: Boolean,
+//    val rootCount: Int,
+//    val supportWeight: Float,
+//    val strengthLevel: StrengthLevel
+//)
+//
+//enum class StrengthLevel {
+//    VERY_WEAK,   // 很弱
+//    WEAK,        // 弱
+//    MEDIUM,      // 中等
+//    STRONG,      // 强
+//    VERY_STRONG  // 很强
+//}
 
 /**
  * 五行平衡分析

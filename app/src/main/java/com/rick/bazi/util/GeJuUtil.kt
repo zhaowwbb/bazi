@@ -13,6 +13,7 @@ import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
 import com.rick.bazi.ui.BaziViewModel
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 
 class GeJuUtil {
 
@@ -628,131 +629,130 @@ class GeJuUtil {
     }
 
     fun isYinStrong(data: BaziData): Boolean {
-        var ret = false
-        var yinCount = 0
-        var biJieCount = 0
+        // 1. 获取日主天干
+        val dayMasterTg = data.dayTiangan
 
-//        yinCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_ZHENG_YIN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
-//        biJieCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_BI_JIAN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
-//
-//        if (yinCount >= biJieCount) {
-//            ret = true
-//        }
-//        println("isYinStrong=$ret")
-        if (data.yinWeight >= data.bijieWeight) {
-            ret = true
-        }
-        return ret
+        // 2. 确定印星的五行（生日主者为印星）
+        val yinWx = WuXingUtil().getYinWuXing(dayMasterTg)
+
+        // 3. 从 data.weights 中获取五行权重
+        val weights = data.weights
+
+        // 4. 获取印星权重
+        val yinWeight = weights[yinWx] ?: 0f
+
+        // 5. 找出所有五行中的最高权重
+        val maxWeight = weights.values.maxOrNull() ?: 0f
+
+        // 6. 判断印星权重是否为最高
+        val tolerance = 0.001f
+        val isHighest = yinWeight >= maxWeight - tolerance
+
+        return isHighest
     }
 
     fun isBiJieStrong(data: BaziData): Boolean {
-        var ret = false
-//        var yinCount = 0
-//        var biJieCount = 0
-//
-//        yinCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_ZHENG_YIN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
-//        biJieCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_BI_JIAN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
-//
-//        if (biJieCount >= yinCount) {
-//            ret = true
-//        }
-//        println("isBiJieStrong=$ret")
-        if (data.bijieWeight >= data.yinWeight) {
-            ret = true
-        }
-        return ret
+        // 1. 获取日主天干
+        val dayMasterTg = data.dayTiangan
+
+        // 2. 确定比劫的五行（与日主相同者为比劫）
+        val biJieWx = WuXingUtil().getBiJieWuXing(dayMasterTg)
+
+        // 3. 从 data.weights 中获取五行权重
+        val weights = data.weights
+
+        // 4. 获取比劫权重
+        val biJieWeight = weights[biJieWx] ?: 0f
+
+        // 5. 找出所有五行中的最高权重
+        val maxWeight = weights.values.maxOrNull() ?: 0f
+
+        // 6. 判断比劫权重是否为最高
+        val tolerance = 0.001f
+        val isHighest = biJieWeight >= maxWeight - tolerance
+
+        return isHighest
     }
 
     fun isGuanShaStrong(data: BaziData): Boolean {
-        var ret = false
-//        var shiShangCount = 0
-//        var guanShaCount = 0
-//        var caiCount = 0
-//
-//        shiShangCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_SHI_SHEN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
-//        guanShaCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_ZHENG_GUAN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
-//        caiCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_ZHENG_CAI
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
-//
-//        println("shiShangCount=$shiShangCount, guanShaCount=$guanShaCount, caiCount=$caiCount")
-//
-//        if (guanShaCount >= shiShangCount && guanShaCount >= caiCount) {
-//            ret = true
-//        }
-//        println("isGuanShaStrong=$ret")
-        if (data.guanshaWeight >= data.shishangWeight && data.guanshaWeight >= data.caiWeight) {
-            ret = true
-        }
-        return ret
+        // 1. 获取日主天干
+        val dayMasterTg = data.dayTiangan
+
+        // 2. 确定官杀的五行（克日主者为官杀）
+        val guanShaWx = WuXingUtil().getGuanshaWuXing(dayMasterTg)
+
+        // 3. 从 data.weights 中获取五行权重
+        val weights = data.weights
+
+        // 4. 获取官杀权重
+        val guanShaWeight = weights[guanShaWx] ?: 0f
+
+        // 5. 找出所有五行中的最高权重
+        val maxWeight = weights.values.maxOrNull() ?: 0f
+
+        // 6. 判断官杀权重是否为最高
+        val tolerance = 0.001f
+        val isHighest = guanShaWeight >= maxWeight - tolerance
+
+        return isHighest
     }
 
     fun isShiShangStrong(data: BaziData): Boolean {
-        var ret = false
-//        var yinCount = 0
-//        var shiShangCount = 0
-//        var biJieCount = 0
-//        var guanShaCount = 0
-//        var caiCount = 0
-//
-////        yinCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_ZHENG_YIN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_YIN)
-//        shiShangCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_SHI_SHEN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
-////        biJieCount = ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_BI_JIAN) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_JIE_CAI)
-//        guanShaCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_ZHENG_GUAN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
-//        caiCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_ZHENG_CAI
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
-//
-//        if (shiShangCount >= guanShaCount && shiShangCount >= caiCount) {
-//            ret = true
-//        }
-//        println("isShiShangStrong=$ret")
-        if (data.shishangWeight >= data.guanshaWeight && data.shishangWeight >= data.caiWeight) {
-            ret = true
-        }
-        return ret
+        // 1. 获取日主天干
+        val dayMasterTg = data.dayTiangan
+
+        // 2. 确定食伤的五行（日主所生者为食伤）
+        val shiShangWx = WuXingUtil().getShishangWuXing(dayMasterTg)
+
+        // 3. 从 data.weights 中获取五行权重
+        val weights = data.weights
+
+        // 4. 获取食伤权重
+        val shiShangWeight = weights[shiShangWx] ?: 0f
+
+        // 5. 找出所有五行中的最高权重
+        val maxWeight = weights.values.maxOrNull() ?: 0f
+
+        // 6. 判断食伤权重是否为最高
+        val tolerance = 0.001f
+        val isHighest = shiShangWeight >= maxWeight - tolerance
+
+        return isHighest
     }
 
     fun isCaiStrong(data: BaziData): Boolean {
-        var ret = false
-//        var shiShangCount = 0
-//        var guanShaCount = 0
-//        var caiCount = 0
+//        var ret = false
 //
-//        shiShangCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_SHI_SHEN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_SHANG_GUAN)
-//        guanShaCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_ZHENG_GUAN
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_QI_SHA)
-//        caiCount = ShiShenUtil().getShiShenCount(
-//            data, ShiShen.SHISHEN_ZHENG_CAI
-//        ) + ShiShenUtil().getShiShenCount(data, ShiShen.SHISHEN_PIAN_CAI)
-//
-//        if (caiCount >= guanShaCount && caiCount >= shiShangCount) {
+//        if (data.caiWeight >= data.guanshaWeight && data.caiWeight >= data.shishangWeight) {
 //            ret = true
 //        }
-//        println("isCaiStrong=$ret")
-        if (data.caiWeight >= data.guanshaWeight && data.caiWeight >= data.shishangWeight) {
-            ret = true
-        }
-        return ret
+
+
+        // 1. 获取日主五行
+        val dayMasterTg = data.dayTiangan
+        val dayMasterWx = getTianGanWuxing(dayMasterTg)
+
+        // 2. 确定财星的五行（日主所克者为财）
+//        val caiWx = getCaiWuXing(dayMasterWx)
+        val caiWx = WuXingUtil().getCaiWuXing(dayMasterTg)
+
+        // 3. 获取五行权重
+//        val weights = calculateTotalWuXingWeightsV2(data)
+        val weights = data.weights
+
+        // 4. 获取财星权重
+        val caiWeight = weights[caiWx] ?: 0f
+
+        // 5. 找出所有五行中的最高权重
+        val maxWeight = weights.values.maxOrNull() ?: 0f
+
+        // 6. 判断财星权重是否为最高
+        // 允许一定的容差（浮点数比较）
+        val tolerance = 0.01f
+        val isHighest = caiWeight >= maxWeight - tolerance
+
+        return isHighest
+
     }
 
     fun checkZhengYinGJXiJi(data: BaziData) {

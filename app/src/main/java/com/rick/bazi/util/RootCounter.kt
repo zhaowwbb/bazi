@@ -3,6 +3,7 @@ package com.rick.bazi.util
 import com.rick.bazi.data.BaziData
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 
 /**
  * 计算八字中各柱地支的根气数量
@@ -14,7 +15,7 @@ object RootCounter {
      * @param data BaziData 对象（会被直接修改）
      */
     fun calculateRootCounts(data: BaziData) {
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+        val dayMasterWx = getTianGanWuxing(data.dayTiangan)
 
         // 收集四个地支
         val dizhiList = listOf(
@@ -32,7 +33,7 @@ object RootCounter {
             val cangGans = DiZhiUtil().getCanggan(dz)
 
             for (cg in cangGans) {
-                val cgWx = WuXingWeightCalculator.getTianGanWuxing(cg)
+                val cgWx = getTianGanWuxing(cg)
 
                 // 只计算与日主五行相同的藏干
                 if (cgWx == dayMasterWx) {
@@ -101,7 +102,7 @@ object RootCounter {
         var weak = 0
 
         for (cg in cangGans) {
-            val cgWx = WuXingWeightCalculator.getTianGanWuxing(cg)
+            val cgWx = getTianGanWuxing(cg)
 
             if (cgWx == dayMasterWx) {
                 when (dz) {

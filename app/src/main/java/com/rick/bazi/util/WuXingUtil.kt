@@ -11,6 +11,7 @@ import com.rick.bazi.data.RootLevel
 import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
+import com.rick.bazi.model.StrengthLevel
 import com.rick.bazi.ui.BaziViewModel
 
 class WuXingUtil {
@@ -667,33 +668,38 @@ class WuXingUtil {
     }
 
     fun isBaziStrong(data: BaziData): Boolean {
-        var ret = false
-        var danglingWeight = 0
-        var dediWeight = 0
-        var totalWeight = 0
-        var elementDiffWeight = getBaziHelpCount(data)
+        if(data.dayMasterStrength.strengthLevel == StrengthLevel.VERY_STRONG || data.dayMasterStrength.strengthLevel == StrengthLevel.STRONG){
+            return true
+        }
+        return false
+
+//        var ret = false
+//        var danglingWeight = 0
+//        var dediWeight = 0
+//        var totalWeight = 0
+//        var elementDiffWeight = getBaziHelpCount(data)
 //        var baziStrength = BaziStrength.BAZI_BALANCED
 //        var goodElementCount =
 
-        if (isDangling(data.monthDizhi, data.dayTiangan)) {
-            danglingWeight = 3
-        } else {
-            danglingWeight = -3
-        }
-
-        if (isBaziDedi(data)) {
-            dediWeight = 2
-        } else {
-            dediWeight = -2
-        }
-
-        totalWeight = danglingWeight + dediWeight + elementDiffWeight
-
-        //todo, for balanced case,
-        if (totalWeight > 0) {
-            ret = true
-        }
-        return ret
+//        if (isDangling(data.monthDizhi, data.dayTiangan)) {
+//            danglingWeight = 3
+//        } else {
+//            danglingWeight = -3
+//        }
+//
+//        if (isBaziDedi(data)) {
+//            dediWeight = 2
+//        } else {
+//            dediWeight = -2
+//        }
+//
+//        totalWeight = danglingWeight + dediWeight + elementDiffWeight
+//
+//        //todo, for balanced case,
+//        if (totalWeight > 0) {
+//            ret = true
+//        }
+//        return ret
     }
 
     //return total good element - bad element

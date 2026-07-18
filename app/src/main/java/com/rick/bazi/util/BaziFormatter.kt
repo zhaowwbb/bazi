@@ -6,6 +6,8 @@ import com.rick.bazi.data.ShiShen
 import com.rick.bazi.data.TianGan
 import com.rick.bazi.data.WuXing
 import com.rick.bazi.model.HiddenGan
+import com.rick.bazi.util.WuXingExt.isKe
+import com.rick.bazi.util.WuXingExt.isSheng
 import java.time.LocalDate
 import java.time.Year
 
@@ -547,7 +549,7 @@ object BaziFormatter {
      * @return 对应的天干
      */
     fun shiShenToTianGan(shiShen: ShiShen, dayMaster: TianGan): TianGan {
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(dayMaster)
+        val dayMasterWx = getTianGanWuxing(dayMaster)
         val dayMasterIndex = dayMaster.ordinal
         val dayMasterIsYang = dayMasterIndex % 2 == 0
 
@@ -681,6 +683,174 @@ object BaziFormatter {
         }
 
         return result
+    }
+
+    /**
+     * 根据五行和日主天干，返回对应的十神列表
+     * @param wuXing 五行类型
+     * @param dayMaster 日主天干
+     * @return 对应的十神列表
+     */
+    fun getShiShenListByWuXing(wuXing: WuXing, dayMaster: TianGan): List<ShiShen> {
+        val dayMasterWx = getTianGanWuxing(dayMaster)
+        val dayMasterIndex = dayMaster.ordinal
+        val dayMasterIsYang = dayMasterIndex % 2 == 0
+
+        return when {
+            // 1. 比劫：五行相同
+            wuXing == dayMasterWx -> {
+                if (dayMasterIsYang) {
+                    listOf(ShiShen.SHISHEN_BI_JIAN, ShiShen.SHISHEN_JIE_CAI)
+                } else {
+                    listOf(ShiShen.SHISHEN_JIE_CAI, ShiShen.SHISHEN_BI_JIAN)
+                }
+            }
+
+            // 2. 食伤：我生者（日主生五行）
+            isSheng(dayMasterWx, wuXing) -> {
+                if (dayMasterIsYang) {
+                    listOf(ShiShen.SHISHEN_SHI_SHEN, ShiShen.SHISHEN_SHANG_GUAN)
+                } else {
+                    listOf(ShiShen.SHISHEN_SHANG_GUAN, ShiShen.SHISHEN_SHI_SHEN)
+                }
+            }
+
+            // 3. 财星：我克者（日主克五行）
+            isKe(dayMasterWx, wuXing) -> {
+                if (dayMasterIsYang) {
+                    listOf(ShiShen.SHISHEN_PIAN_CAI, ShiShen.SHISHEN_ZHENG_CAI)
+                } else {
+                    listOf(ShiShen.SHISHEN_ZHENG_CAI, ShiShen.SHISHEN_PIAN_CAI)
+                }
+            }
+
+            // 4. 官杀：克我者（五行克日主）
+            isKe(wuXing, dayMasterWx) -> {
+                if (dayMasterIsYang) {
+                    listOf(ShiShen.SHISHEN_QI_SHA, ShiShen.SHISHEN_ZHENG_GUAN)
+                } else {
+                    listOf(ShiShen.SHISHEN_ZHENG_GUAN, ShiShen.SHISHEN_QI_SHA)
+                }
+            }
+
+            // 5. 印星：生我者（五行生日主）
+            isSheng(wuXing, dayMasterWx) -> {
+                if (dayMasterIsYang) {
+                    listOf(ShiShen.SHISHEN_PIAN_YIN, ShiShen.SHISHEN_ZHENG_YIN)
+                } else {
+                    listOf(ShiShen.SHISHEN_ZHENG_YIN, ShiShen.SHISHEN_PIAN_YIN)
+                }
+            }
+
+            else -> emptyList()
+        }
+    }
+
+    /**
+     * 将五行列表转换为十神列表（去重）
+     *
+     * @param wuXingList 五行列表
+     * @param dayMaster 日主天干
+     * @return List<ShiShen> 十神列表（已去重）
+     */
+    fun getShiShenListByWuXingList(wuXingList: List<WuXing>, dayMaster: TianGan): List<ShiShen> {
+        val result = mutableSetOf<ShiShen>()
+
+        for (wx in wuXingList) {
+            result.addAll(getShiShenListByWuXing(wx, dayMaster))
+        }
+
+        return result.toList()
+    }
+
+    /**
+     * 将五行集合转换为十神集合
+     *
+     * @param wuXingSet 五行集合
+     * @param dayMaster 日主天干
+     * @return Set<ShiShen> 十神集合
+     */
+    fun getShiShenSetByWuXingSet(wuXingSet: Set<WuXing>, dayMaster: TianGan): Set<ShiShen> {
+        val result = mutableSetOf<ShiShen>()
+
+        for (wx in wuXingSet) {
+            result.addAll(getShiShenListByWuXing(wx, dayMaster))
+        }
+
+        return result.toSet()
+    }
+
+    /**
+     * 天干对应的五行
+     */
+    fun getTianGanWuxing(tiangan: TianGan): WuXing {
+        return when (tiangan) {
+            TianGan.TIANGAN_JIA, TianGan.TIANGAN_YI -> WuXing.WUXING_MU
+            TianGan.TIANGAN_BING, TianGan.TIANGAN_DING -> WuXing.WUXING_HUO
+            TianGan.TIANGAN_WU, TianGan.TIANGAN_JI -> WuXing.WUXING_TU
+            TianGan.TIANGAN_GENG, TianGan.TIANGAN_XIN -> WuXing.WUXING_JIN
+            TianGan.TIANGAN_REN, TianGan.TIANGAN_GUI -> WuXing.WUXING_SHUI
+        }
+    }
+
+    /**
+     * 地支对应的季节五行（月令）
+     */
+    fun getDiZhiSeasonElement(dizhi: DiZhi): WuXing {
+        return when (dizhi) {
+            DiZhi.DIZHI_ZI -> WuXing.WUXING_SHUI  // 冬
+            DiZhi.DIZHI_CHOU -> WuXing.WUXING_TU  // 季冬
+            DiZhi.DIZHI_YIN -> WuXing.WUXING_MU   // 春
+            DiZhi.DIZHI_MOU -> WuXing.WUXING_MU   // 春
+            DiZhi.DIZHI_CHEN -> WuXing.WUXING_TU  // 季春
+            DiZhi.DIZHI_SI -> WuXing.WUXING_HUO   // 夏
+            DiZhi.DIZHI_WU -> WuXing.WUXING_HUO   // 夏
+            DiZhi.DIZHI_WEI -> WuXing.WUXING_TU   // 季夏
+            DiZhi.DIZHI_SHEN -> WuXing.WUXING_JIN  // 秋
+            DiZhi.DIZHI_YOU -> WuXing.WUXING_JIN  // 秋
+            DiZhi.DIZHI_XU -> WuXing.WUXING_TU    // 季秋
+            DiZhi.DIZHI_HAI -> WuXing.WUXING_SHUI  // 冬
+        }
+    }
+
+    /**
+     * 地支本气对应的五行
+     */
+    fun getDiZhiMainElement(dizhi: DiZhi): WuXing {
+        return when (dizhi) {
+            DiZhi.DIZHI_ZI -> WuXing.WUXING_SHUI
+            DiZhi.DIZHI_CHOU -> WuXing.WUXING_TU
+            DiZhi.DIZHI_YIN -> WuXing.WUXING_MU
+            DiZhi.DIZHI_MOU -> WuXing.WUXING_MU
+            DiZhi.DIZHI_CHEN -> WuXing.WUXING_TU
+            DiZhi.DIZHI_SI -> WuXing.WUXING_HUO
+            DiZhi.DIZHI_WU -> WuXing.WUXING_HUO
+            DiZhi.DIZHI_WEI -> WuXing.WUXING_TU
+            DiZhi.DIZHI_SHEN -> WuXing.WUXING_JIN
+            DiZhi.DIZHI_YOU -> WuXing.WUXING_JIN
+            DiZhi.DIZHI_XU -> WuXing.WUXING_TU
+            DiZhi.DIZHI_HAI -> WuXing.WUXING_SHUI
+        }
+    }
+
+    /**
+     * 地支余气对应的五行
+     */
+    fun getDiZhiResidualElement(dizhi: DiZhi): WuXing? {
+        return when (dizhi) {
+            DiZhi.DIZHI_YIN -> WuXing.WUXING_HUO  // 寅中丙火
+            DiZhi.DIZHI_SI -> WuXing.WUXING_JIN   // 巳中庚金
+            DiZhi.DIZHI_SHEN -> WuXing.WUXING_SHUI // 申中壬水
+            DiZhi.DIZHI_HAI -> WuXing.WUXING_MU   // 亥中甲木
+
+            DiZhi.DIZHI_CHEN -> WuXing.WUXING_MU  // 辰中乙木
+            DiZhi.DIZHI_XU -> WuXing.WUXING_JIN   // 戌中辛金
+            DiZhi.DIZHI_CHOU -> WuXing.WUXING_SHUI // 丑中癸水
+            DiZhi.DIZHI_WEI -> WuXing.WUXING_HUO  // 未中了火
+
+            // 子、午、卯、酉无余气
+            else -> null
+        }
     }
 
 }

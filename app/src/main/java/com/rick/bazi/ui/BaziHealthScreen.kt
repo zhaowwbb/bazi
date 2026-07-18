@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rick.bazi.data.*
 import com.rick.bazi.util.*
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 import java.time.LocalDate
 
 // 配色常量（与姻缘界面一致）
@@ -180,12 +181,12 @@ object BaziHealthAnalyzer {
     fun analyzeDaYunHealth(data: BaziData): List<DaYunHealthInfo> {
         val list = mutableListOf<DaYunHealthInfo>()
         val daYunList = DaYunScoringSystem.generateDaYunList(data)
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+        val dayMasterWx = getTianGanWuxing(data.dayTiangan)
 
         daYunList.forEachIndexed { index, dy ->
             val tg = parseTianGan(dy.ganZhi)
             val dz = parseDiZhi(dy.ganZhi)
-            val tgWx = WuXingWeightCalculator.getTianGanWuxing(tg)
+            val tgWx = getTianGanWuxing(tg)
             val dzWx = getDiZhiWuXing(dz)
 
             // 判断大运对日主的影响
@@ -239,13 +240,13 @@ object BaziHealthAnalyzer {
     fun analyzeFlowYearHealth(data: BaziData): List<FlowYearHealthInfo> {
         val list = mutableListOf<FlowYearHealthInfo>()
         val now = LocalDate.now().year
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+        val dayMasterWx = getTianGanWuxing(data.dayTiangan)
 
         for (y in now..now + 5) {
             val gz = yearToGanZhi(y)
             val tg = parseTianGan(gz)
             val dz = parseDiZhi(gz)
-            val tgWx = WuXingWeightCalculator.getTianGanWuxing(tg)
+            val tgWx = getTianGanWuxing(tg)
 
             val isKe = isWuXingKe(tgWx, dayMasterWx)
             val hasChong = hasChongWithBaZi(data, dz)
@@ -520,7 +521,7 @@ private fun InfoItem(label: String, value: String, valueColor: Color = TextPrima
 
 @Composable
 private fun HealthOverviewCard(data: BaziData, organs: List<OrganHealth>) {
-    val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+    val dayMasterWx = getTianGanWuxing(data.dayTiangan)
     val warningCount = organs.count { it.status == HealthTrendLevel.WARNING || it.status == HealthTrendLevel.DANGER }
     val goodCount = organs.count { it.status == HealthTrendLevel.GOOD || it.status == HealthTrendLevel.EXCELLENT }
 

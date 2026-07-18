@@ -1,5 +1,13 @@
 package com.rick.bazi.data
 
+import com.rick.bazi.model.DayMasterStrength
+import com.rick.bazi.model.PatternType
+import com.rick.bazi.model.StrengthLevel
+import com.rick.bazi.model.YongXiJiResult
+//import com.rick.bazi.util.getWuXingName
+
+//import com.rick.bazi.util.StrengthLevel
+
 const val MALE = "Male"
 const val FEMALE = "Female"
 
@@ -54,6 +62,38 @@ data class BaziData(
     var shuiWeight : Float = 0f,
     var huoWeight : Float = 0f,
     var tuWeight : Float = 0f,
+    var weights: MutableMap<WuXing, Float> = mutableMapOf(
+        WuXing.WUXING_JIN to 0f,
+        WuXing.WUXING_MU to 0f,
+        WuXing.WUXING_SHUI to 0f,
+        WuXing.WUXING_HUO to 0f,
+        WuXing.WUXING_TU to 0f
+    ),
+//    var strengthLevel : StrengthLevel = StrengthLevel.MEDIUM,
+    var dayMasterTotalScore : Float = 0f,
+    var dayMasterWeightPercent : Float = 0f,
+    var dayMasterStrength :DayMasterStrength = DayMasterStrength(
+        wuxing = WuXing.WUXING_JIN,
+        score = 0f.toInt(),
+        isSeasonStrong = false,
+        rootCount = 0,
+        supportWeight = 0f,
+        strengthLevel = StrengthLevel.MEDIUM
+    ),
+    var yongXiJiResult : YongXiJiResult = YongXiJiResult(
+        yongShen = WuXing.WUXING_JIN,
+        yongShenName = "",
+        yongShenReason = "",
+        xiShen = WuXing.WUXING_JIN,
+        xiShenName = "",
+        jiShenList = listOf(),
+        jiShenNames = listOf(),
+        tiaoHouShen = WuXing.WUXING_JIN,
+        tongGuanShen = WuXing.WUXING_JIN,
+        dayMasterPercent = 0f,
+        strengthLevel = StrengthLevel.MEDIUM,
+        patternType = PatternType.ZHENG_GE
+    ),
 
     var yinWeight : Float = 0f,
     var bijieWeight : Float = 0f,

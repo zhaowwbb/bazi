@@ -2,7 +2,11 @@ package com.rick.bazi.util
 
 
 import com.rick.bazi.data.*
+import com.rick.bazi.model.StrengthLevel
+import com.rick.bazi.util.BaziFormatter.getDiZhiMainElement
+import com.rick.bazi.util.BaziFormatter.getDiZhiSeasonElement
 import com.rick.bazi.util.BaziFormatter.getGanZhiByYear
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 
 /**
  * 流年评分系统
@@ -30,8 +34,8 @@ object LiuNianScoringSystem {
         logicDescriptions.add("━━━ 流年评分计算 ━━━")
         logicDescriptions.add("大运基础评分：${String.format("%.1f", daYunScore)}分")
 
-        val tgWx = WuXingWeightCalculator.getTianGanWuxing(liuNianTg)
-        val dzWx = WuXingWeightCalculator.getDiZhiMainElement(liuNianDz)
+        val tgWx = getTianGanWuxing(liuNianTg)
+        val dzWx = getDiZhiMainElement(liuNianDz)
 
         val yongSet = data.yongShenList.toSet()
         val jiSet = data.jiShenList.toSet()
@@ -120,7 +124,7 @@ object LiuNianScoringSystem {
             score += 30f
             logicDescriptions.add("  ✓ 天干${ganName}为用神，+30分")
             // 得月令加成
-            val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+            val monthWx = getDiZhiSeasonElement(data.monthDizhi)
             if (wx == monthWx) {
                 score += 5f
                 logicDescriptions.add("  ✓ 得月令加持，+5分")
@@ -135,7 +139,7 @@ object LiuNianScoringSystem {
         else if (jiSet.contains(wxToShiShen(wx))) {
             score -= 25f
             logicDescriptions.add("  ✗ 天干${ganName}为忌神，-25分")
-            val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+            val monthWx = getDiZhiSeasonElement(data.monthDizhi)
             if (wx == monthWx) {
                 score -= 5f
                 logicDescriptions.add("  ✗ 忌神得月令，加重-5分")
@@ -208,7 +212,7 @@ object LiuNianScoringSystem {
         if (yongSet.contains(wxToShiShen(wx))) {
             score += 38f
             logicDescriptions.add("  ✓ 地支${zhiName}为用神，+38分")
-            val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+            val monthWx = getDiZhiSeasonElement(data.monthDizhi)
             if (wx == monthWx) {
                 score += 7f
                 logicDescriptions.add("  ✓ 得月令加持，+7分")
@@ -223,7 +227,7 @@ object LiuNianScoringSystem {
         else if (jiSet.contains(wxToShiShen(wx))) {
             score -= 32f
             logicDescriptions.add("  ✗ 地支${zhiName}为忌神，-32分")
-            val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+            val monthWx = getDiZhiSeasonElement(data.monthDizhi)
             if (wx == monthWx) {
                 score -= 8f
                 logicDescriptions.add("  ✗ 忌神得月令，加重-8分")
@@ -246,7 +250,7 @@ object LiuNianScoringSystem {
         val cangGans = diZhiUtil.getCanggan(zhi)
         var cangGanBonus = 0f
         for (cg in cangGans) {
-            val cgWx = WuXingWeightCalculator.getTianGanWuxing(cg)
+            val cgWx = getTianGanWuxing(cg)
             if (yongSet.contains(wxToShiShen(cgWx))) {
                 cangGanBonus += 3f
             }
@@ -334,7 +338,7 @@ object LiuNianScoringSystem {
         logicDescriptions: MutableList<String>
     ): Float {
         var adjustment = 0f
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+        val dayMasterWx = getTianGanWuxing(data.dayTiangan)
         val dayMasterStrength = WuXingWeightCalculator.calculateDayMasterStrength(data)
 
         logicDescriptions.add("【流年与日主关系修正】")

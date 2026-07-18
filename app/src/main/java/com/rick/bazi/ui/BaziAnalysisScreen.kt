@@ -29,6 +29,8 @@ import com.rick.bazi.util.BaziFormatter.formatTianganDizhi
 import com.rick.bazi.util.BaziFormatter.shiShenToChinese
 import com.rick.bazi.util.BaziFormatter.formatShiShenWithTianGan
 import androidx.navigation.compose.rememberNavController
+import com.rick.bazi.model.StrengthLevel
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 
 // 配色常量
 private val GradientStart = Color(0xFF667eea)
@@ -102,6 +104,7 @@ fun BaziAppAnalysisScreen(
             WuXingStrengthCard(baziData)
 
             // 4. 喜用神与忌神
+            YongShenAnalysisCard(baziData)
             YongShenJiShenCard(baziData)
 
             // 5. 日主格局
@@ -447,6 +450,21 @@ private fun YongShenJiShenCard(data: BaziData) {
             color = TextPrimary
         )
 
+        if (data.tiaohouShenList.isNotEmpty()) {
+            Spacer(Modifier.height(12.dp))
+            Text(
+                text = "调候用神",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = AccentGold
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                text = data.tiaohouShenList.joinToString("、") { formatShiShenWithTianGan(it, data.dayTiangan) },
+                fontSize = 14.sp,
+                color = TextPrimary
+            )
+        }
         if (data.tongguanShenList.isNotEmpty()) {
             Spacer(Modifier.height(12.dp))
             Text(
@@ -481,6 +499,25 @@ private fun GeJuCard(data: BaziData) {
             text = getGeJuDescription(geJu),
             fontSize = 14.sp,
             color = TextSecondary,
+            lineHeight = 22.sp
+        )
+    }
+}
+
+@Composable
+private fun YongShenAnalysisCard(data: BaziData) {
+//    val character = data.yongXiJiResult.yongShenReason
+
+    println("data.yongXiJiResult：${data.yongXiJiResult}")
+
+    AnalysisCard(
+        title = "用神分析",
+        icon = { Icon(Icons.Default.CheckCircle, contentDescription = null, tint = InfoColor) }
+    ) {
+        Text(
+            text = "${data.yongXiJiResult.yongShenReason}",
+            fontSize = 14.sp,
+            color = TextPrimary,
             lineHeight = 22.sp
         )
     }
@@ -564,67 +601,67 @@ private fun SixRelationsCard(data: BaziData) {
 //    ShiShen.SHISHEN_QI_SHA -> "七杀"
 //}
 
-private fun geJuToChinese(geJu: BaziGeJu): String = when (geJu) {
-    BaziGeJu.GJ_NONE -> "普通格局"
-    BaziGeJu.GJ_ZHENG_GUAN -> "正官格"
-    BaziGeJu.GJ_QI_SHA -> "七杀格"
-    BaziGeJu.GJ_ZHENG_CAI -> "正财格"
-    BaziGeJu.GJ_PIAN_CAI -> "偏财格"
-    BaziGeJu.GJ_ZHENG_YIN -> "正印格"
-    BaziGeJu.GJ_PIAN_YIN -> "偏印格"
-    BaziGeJu.GJ_SHI_SHEN -> "食神格"
-    BaziGeJu.GJ_SHANG_GUAN -> "伤官格"
-    BaziGeJu.GJ_BI_JIAN -> "建禄格"
-    BaziGeJu.GJ_JIE_CAI -> "劫财格"
-    BaziGeJu.GJ_YANG_REN -> "羊刃格"
-
-    BaziGeJu.GJ_JIAN_LU -> "建禄格"
-    BaziGeJu.GJ_CONG_SHA -> "从杀格"
-    BaziGeJu.GJ_CONG_CAI -> "从财格"
-    BaziGeJu.GJ_CONG_ER -> "从儿格"
-    BaziGeJu.GJ_QU_ZHI -> "曲直格"
-    BaziGeJu.GJ_YAN_SHANG -> "炎上格"
-    BaziGeJu.GJ_JIA_SE -> "稼穑格"
-    BaziGeJu.GJ_CONG_GE -> "从格"
-    BaziGeJu.GJ_RUN_XIA -> "润下格"
-    else -> "未知格局"
-}
-
-private fun getGeJuFeature(geJu: BaziGeJu): String = when (geJu) {
-    BaziGeJu.GJ_NONE -> "无明显格局特征"
-    BaziGeJu.GJ_ZHENG_GUAN -> "为人正直，有领导力"
-    BaziGeJu.GJ_QI_SHA -> "果断勇敢，有魄力"
-    BaziGeJu.GJ_ZHENG_CAI -> "财运稳定，善于理财"
-    BaziGeJu.GJ_PIAN_CAI -> "偏财运好，敢闯敢拼"
-    BaziGeJu.GJ_ZHENG_YIN -> "学业有成，文化修养高"
-    BaziGeJu.GJ_PIAN_YIN -> "思维独特，创新能力强"
-    BaziGeJu.GJ_SHI_SHEN -> "性格温和，有艺术天赋"
-    BaziGeJu.GJ_SHANG_GUAN -> "才华横溢，表达能力好"
-    BaziGeJu.GJ_BI_JIAN -> "独立自主，朋友众多"
-    BaziGeJu.GJ_JIE_CAI -> "竞争意识强，适合创业"
-    BaziGeJu.GJ_YANG_REN -> "意志坚强，有大将之风"
-    else -> "未知格局"
-}
-
-private fun getGeJuDescription(geJu: BaziGeJu): String = when (geJu) {
-    BaziGeJu.GJ_NONE -> "八字格局较为普通，但可通过后天努力弥补先天不足。"
-    BaziGeJu.GJ_ZHENG_GUAN -> "正官格的人通常品行端正，有责任感和领导才能，适合从事管理岗位。"
-    BaziGeJu.GJ_QI_SHA -> "七杀格的人果断勇敢，具有开拓精神，适合挑战性的工作。"
-    BaziGeJu.GJ_ZHENG_CAI -> "正财格的人财运稳定，善于理财，适合稳定的职业发展。"
-    BaziGeJu.GJ_PIAN_CAI -> "偏财格的人善于把握机会，适合经商或投资领域。"
-    BaziGeJu.GJ_ZHENG_YIN -> "正印格的人学识渊博，文化修养高，适合教育、研究等工作。"
-    BaziGeJu.GJ_PIAN_YIN -> "偏印格的人思维独特，有创新精神，适合创意、设计等领域。"
-    BaziGeJu.GJ_SHI_SHEN -> "食神格的人性格温和，有艺术天赋，适合文艺创作类工作。"
-    BaziGeJu.GJ_SHANG_GUAN -> "伤官格的人才华出众，表达能力强，适合演艺、演讲等职业。"
-    BaziGeJu.GJ_BI_JIAN -> "建禄格的人独立自主，社交能力强，适合团队合作的工作。"
-    BaziGeJu.GJ_JIE_CAI -> "劫财格的人竞争意识强，适合创业或销售类工作。"
-    BaziGeJu.GJ_YANG_REN -> "羊刃格的人意志坚定，有大将风范，适合军警或管理岗位。"
-    else -> "未知格局"
-}
+//private fun geJuToChinese(geJu: BaziGeJu): String = when (geJu) {
+//    BaziGeJu.GJ_NONE -> "普通格局"
+//    BaziGeJu.GJ_ZHENG_GUAN -> "正官格"
+//    BaziGeJu.GJ_QI_SHA -> "七杀格"
+//    BaziGeJu.GJ_ZHENG_CAI -> "正财格"
+//    BaziGeJu.GJ_PIAN_CAI -> "偏财格"
+//    BaziGeJu.GJ_ZHENG_YIN -> "正印格"
+//    BaziGeJu.GJ_PIAN_YIN -> "偏印格"
+//    BaziGeJu.GJ_SHI_SHEN -> "食神格"
+//    BaziGeJu.GJ_SHANG_GUAN -> "伤官格"
+//    BaziGeJu.GJ_BI_JIAN -> "建禄格"
+//    BaziGeJu.GJ_JIE_CAI -> "劫财格"
+//    BaziGeJu.GJ_YANG_REN -> "羊刃格"
+//
+//    BaziGeJu.GJ_JIAN_LU -> "建禄格"
+//    BaziGeJu.GJ_CONG_SHA -> "从杀格"
+//    BaziGeJu.GJ_CONG_CAI -> "从财格"
+//    BaziGeJu.GJ_CONG_ER -> "从儿格"
+//    BaziGeJu.GJ_QU_ZHI -> "曲直格"
+//    BaziGeJu.GJ_YAN_SHANG -> "炎上格"
+//    BaziGeJu.GJ_JIA_SE -> "稼穑格"
+//    BaziGeJu.GJ_CONG_GE -> "从格"
+//    BaziGeJu.GJ_RUN_XIA -> "润下格"
+//    else -> "未知格局"
+//}
+//
+//private fun getGeJuFeature(geJu: BaziGeJu): String = when (geJu) {
+//    BaziGeJu.GJ_NONE -> "无明显格局特征"
+//    BaziGeJu.GJ_ZHENG_GUAN -> "为人正直，有领导力"
+//    BaziGeJu.GJ_QI_SHA -> "果断勇敢，有魄力"
+//    BaziGeJu.GJ_ZHENG_CAI -> "财运稳定，善于理财"
+//    BaziGeJu.GJ_PIAN_CAI -> "偏财运好，敢闯敢拼"
+//    BaziGeJu.GJ_ZHENG_YIN -> "学业有成，文化修养高"
+//    BaziGeJu.GJ_PIAN_YIN -> "思维独特，创新能力强"
+//    BaziGeJu.GJ_SHI_SHEN -> "性格温和，有艺术天赋"
+//    BaziGeJu.GJ_SHANG_GUAN -> "才华横溢，表达能力好"
+//    BaziGeJu.GJ_BI_JIAN -> "独立自主，朋友众多"
+//    BaziGeJu.GJ_JIE_CAI -> "竞争意识强，适合创业"
+//    BaziGeJu.GJ_YANG_REN -> "意志坚强，有大将之风"
+//    else -> "未知格局"
+//}
+//
+//private fun getGeJuDescription(geJu: BaziGeJu): String = when (geJu) {
+//    BaziGeJu.GJ_NONE -> "八字格局较为普通，但可通过后天努力弥补先天不足。"
+//    BaziGeJu.GJ_ZHENG_GUAN -> "正官格的人通常品行端正，有责任感和领导才能，适合从事管理岗位。"
+//    BaziGeJu.GJ_QI_SHA -> "七杀格的人果断勇敢，具有开拓精神，适合挑战性的工作。"
+//    BaziGeJu.GJ_ZHENG_CAI -> "正财格的人财运稳定，善于理财，适合稳定的职业发展。"
+//    BaziGeJu.GJ_PIAN_CAI -> "偏财格的人善于把握机会，适合经商或投资领域。"
+//    BaziGeJu.GJ_ZHENG_YIN -> "正印格的人学识渊博，文化修养高，适合教育、研究等工作。"
+//    BaziGeJu.GJ_PIAN_YIN -> "偏印格的人思维独特，有创新精神，适合创意、设计等领域。"
+//    BaziGeJu.GJ_SHI_SHEN -> "食神格的人性格温和，有艺术天赋，适合文艺创作类工作。"
+//    BaziGeJu.GJ_SHANG_GUAN -> "伤官格的人才华出众，表达能力强，适合演艺、演讲等职业。"
+//    BaziGeJu.GJ_BI_JIAN -> "建禄格的人独立自主，社交能力强，适合团队合作的工作。"
+//    BaziGeJu.GJ_JIE_CAI -> "劫财格的人竞争意识强，适合创业或销售类工作。"
+//    BaziGeJu.GJ_YANG_REN -> "羊刃格的人意志坚定，有大将风范，适合军警或管理岗位。"
+//    else -> "未知格局"
+//}
 
 private fun analyzeCharacter(data: BaziData): String {
     val sb = StringBuilder()
-    val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+    val dayMasterWx = getTianGanWuxing(data.dayTiangan)
 
     // 根据日主五行分析性格
     sb.append("日主五行属${WuXingExt.getWuXingText(dayMasterWx)}，")
@@ -650,7 +687,7 @@ private fun analyzeCharacter(data: BaziData): String {
 
 private fun recommendCareers(data: BaziData): List<String> {
     val careers = mutableListOf<String>()
-    val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+    val dayMasterWx = getTianGanWuxing(data.dayTiangan)
 
     // 根据日主五行推荐职业
     when (dayMasterWx) {

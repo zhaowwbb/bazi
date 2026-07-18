@@ -1,6 +1,9 @@
 package com.rick.bazi.util
 
 import com.rick.bazi.data.*
+import com.rick.bazi.model.StrengthLevel
+import com.rick.bazi.util.BaziFormatter.getDiZhiMainElement
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 
 /**
  * 流月评分系统
@@ -39,13 +42,13 @@ object LiuYueScoringSystem {
         val jiSet = data.jiShenList.toSet()
         val xiSet = data.xiyongShenSet
 
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
-        val dayMasterStrength = WuXingWeightCalculator.calculateDayMasterStrength(data)
+        val dayMasterWx = getTianGanWuxing(data.dayTiangan)
+        val dayMasterStrength = calculateDayMasterStrength(data)
 
-        val liuNianTgWx = WuXingWeightCalculator.getTianGanWuxing(liuNianTg)
-        val liuNianDzWx = WuXingWeightCalculator.getDiZhiMainElement(liuNianDz)
-        val liuYueTgWx = WuXingWeightCalculator.getTianGanWuxing(liuYueTg)
-        val liuYueDzWx = WuXingWeightCalculator.getDiZhiMainElement(liuYueDz)
+        val liuNianTgWx = getTianGanWuxing(liuNianTg)
+        val liuNianDzWx = getDiZhiMainElement(liuNianDz)
+        val liuYueTgWx = getTianGanWuxing(liuYueTg)
+        val liuYueDzWx = getDiZhiMainElement(liuYueDz)
 
         val tianGanUtil = TianGanUtil()
         val diZhiUtil = DiZhiUtil()
@@ -129,22 +132,22 @@ object LiuYueScoringSystem {
         /* ================= 3. 流月与大运关系 ================= */
         logicDescriptions.add("【流月 ↔ 大运】")
 
-        if (isSheng(WuXingWeightCalculator.getTianGanWuxing(daYunTg), liuYueTgWx) ||
-            isSheng(WuXingWeightCalculator.getDiZhiMainElement(daYunDz), liuYueDzWx)
+        if (isSheng(getTianGanWuxing(daYunTg), liuYueTgWx) ||
+            isSheng(getDiZhiMainElement(daYunDz), liuYueDzWx)
         ) {
             score += 3f
             logicDescriptions.add("  ✓ 大运生流月，气场顺畅，+3分")
         }
-        if (isKe(WuXingWeightCalculator.getTianGanWuxing(daYunTg), liuYueTgWx) ||
-            isKe(WuXingWeightCalculator.getDiZhiMainElement(daYunDz), liuYueDzWx)
+        if (isKe(getTianGanWuxing(daYunTg), liuYueTgWx) ||
+            isKe(getDiZhiMainElement(daYunDz), liuYueDzWx)
         ) {
             score -= 3f
             logicDescriptions.add("  ✗ 大运克流月，外部阻力增大，-3分")
         }
 
         // 大运与流月干支同为用神/忌神
-        val daYunTgWx = WuXingWeightCalculator.getTianGanWuxing(daYunTg)
-        val daYunDzWx = WuXingWeightCalculator.getDiZhiMainElement(daYunDz)
+        val daYunTgWx = getTianGanWuxing(daYunTg)
+        val daYunDzWx = getDiZhiMainElement(daYunDz)
 
         if (yongSet.contains(wxToShiShen(daYunTgWx)) &&
             yongSet.contains(wxToShiShen(liuYueTgWx))

@@ -8,6 +8,9 @@ import com.rick.bazi.util.WuXingExt.getWuXingText
 import com.rick.bazi.util.WuXingExt.getWeight
 import com.rick.bazi.util.BaziFormatter.convertTianganToChar
 import com.rick.bazi.util.BaziFormatter.convertDizhiToChar
+import com.rick.bazi.util.BaziFormatter.getDiZhiMainElement
+import com.rick.bazi.util.BaziFormatter.getDiZhiSeasonElement
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 
 /**
  * 大运评分系统
@@ -62,8 +65,8 @@ object DaYunScoringSystem {
     ): Float {
         var score = 55f // 基础分
 
-        val tgWx = WuXingWeightCalculator.getTianGanWuxing(daYunTg)
-        val dzWx = WuXingWeightCalculator.getDiZhiMainElement(daYunDz)
+        val tgWx = getTianGanWuxing(daYunTg)
+        val dzWx = getDiZhiMainElement(daYunDz)
 
         // 用神/忌神集合
         val yongSet = data.yongShenList.toSet()
@@ -109,7 +112,7 @@ object DaYunScoringSystem {
         if (yongSet.contains(wxToShiShen(wx))) {
             score += 30f
             // 天干得月令加成
-            val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+            val monthWx = getDiZhiSeasonElement(data.monthDizhi)
             if (wx == monthWx) score += 5f
         }
         // 喜神天干：+10~15分
@@ -120,7 +123,7 @@ object DaYunScoringSystem {
         else if (jiSet.contains(wxToShiShen(wx))) {
             score -= 25f
             // 忌神得月令加重
-            val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+            val monthWx = getDiZhiSeasonElement(data.monthDizhi)
             if (wx == monthWx) score -= 5f
         }
         // 闲神：轻微负面影响
@@ -172,7 +175,7 @@ object DaYunScoringSystem {
         if (yongSet.contains(wxToShiShen(wx))) {
             score += 38f
             // 地支得月令加成
-            val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+            val monthWx = getDiZhiSeasonElement(data.monthDizhi)
             if (wx == monthWx) score += 7f
         }
         // 喜神地支：+12~18分
@@ -183,7 +186,7 @@ object DaYunScoringSystem {
         else if (jiSet.contains(wxToShiShen(wx))) {
             score -= 32f
             // 忌神得月令加重
-            val monthWx = WuXingWeightCalculator.getDiZhiSeasonElement(data.monthDizhi)
+            val monthWx = getDiZhiSeasonElement(data.monthDizhi)
             if (wx == monthWx) score -= 8f
         }
         // 闲神：轻微负面影响
@@ -222,7 +225,7 @@ object DaYunScoringSystem {
         // 地支藏干分析（看藏干中是否有用神）
         val cangGans = diZhiUtil.getCanggan(zhi)
         for (cg in cangGans) {
-            val cgWx = WuXingWeightCalculator.getTianGanWuxing(cg)
+            val cgWx = getTianGanWuxing(cg)
             if (yongSet.contains(wxToShiShen(cgWx))) {
                 score += 3f // 藏干中有用神，加分
             }
@@ -286,7 +289,7 @@ object DaYunScoringSystem {
     ): Float {
         var adjustment = 0f
 
-        val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(data.dayTiangan)
+        val dayMasterWx = getTianGanWuxing(data.dayTiangan)
         val dayMasterStrength = WuXingWeightCalculator.calculateDayMasterStrength(data)
 
         // 日主过强时，喜克泄耗
@@ -360,8 +363,8 @@ object DaYunScoringSystem {
         tgdz: TianGanDiZhi,
         overallScore: Float
     ): List<ScoreDetail> {
-        val tgWx = WuXingWeightCalculator.getTianGanWuxing(tgdz.tg)
-        val dzWx = WuXingWeightCalculator.getDiZhiMainElement(tgdz.dz)
+        val tgWx = getTianGanWuxing(tgdz.tg)
+        val dzWx = getDiZhiMainElement(tgdz.dz)
 
         val yongSet = data.yongShenList.toSet()
         val jiSet = data.jiShenList.toSet()

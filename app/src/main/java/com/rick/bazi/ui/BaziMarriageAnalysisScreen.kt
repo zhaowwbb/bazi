@@ -31,6 +31,7 @@ import java.time.LocalDate
 import com.rick.bazi.util.BaziFormatter.convertTianganToChar
 import com.rick.bazi.util.BaziFormatter.convertDizhiToChar
 import com.rick.bazi.util.BaziFormatter.convertToShiShen
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 
 /*
   =========================
@@ -425,7 +426,7 @@ object BaziMarriageAnalyzer {
      * 十神 → 天干（复用你已有函数语义，这里兜底实现）
      */
     fun shiShenToTianGan(shiShen: ShiShen, dayMaster: TianGan): TianGan {
-        val dmWx = WuXingWeightCalculator.getTianGanWuxing(dayMaster)
+        val dmWx = getTianGanWuxing(dayMaster)
         val dmIsYang = dayMaster.ordinal % 2 == 0
 
         val targetWx = when (shiShen) {

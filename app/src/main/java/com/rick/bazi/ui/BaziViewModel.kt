@@ -498,6 +498,12 @@ class BaziViewModel : ViewModel() {
             shuiWeight = source.shuiWeight,
             huoWeight = source.huoWeight,
             tuWeight = source.tuWeight,
+            weights = source.weights,
+            dayMasterStrength = source.dayMasterStrength,
+            dayMasterTotalScore = source.dayMasterTotalScore,
+            dayMasterWeightPercent = source.dayMasterWeightPercent,
+            yongXiJiResult = source.yongXiJiResult,
+
 
             // 十神权重
             yinWeight = source.yinWeight,

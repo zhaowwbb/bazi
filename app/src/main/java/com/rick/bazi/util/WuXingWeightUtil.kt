@@ -6,15 +6,18 @@ import com.rick.bazi.data.WuXing
 import com.rick.bazi.util.WuXingExt.isKe
 import com.rick.bazi.util.WuXingExt.isSheng
 import com.rick.bazi.util.WuXingExt.tgWxIsSameAsDayMaster
-
+import com.rick.bazi.model.StrengthLevel
 
 import com.rick.bazi.data.*
+import com.rick.bazi.model.DayMasterStrength
 import com.rick.bazi.util.BaziFormatter.getCangGanFromDizhi
+import com.rick.bazi.util.BaziFormatter.getDiZhiMainElement
+import com.rick.bazi.util.BaziFormatter.getTianGanWuxing
 //import com.rick.bazi.util.WuXingWeightCalculator.calculateTongRootLevel
 import com.rick.bazi.util.WuXingWeightCalculator.calculateTotalWuXingWeights
 //import com.rick.bazi.util.WuXingWeightCalculator.getCangGanFromDizhi
-import com.rick.bazi.util.WuXingWeightCalculator.getDiZhiSeasonElement
-import com.rick.bazi.util.WuXingWeightCalculator.getTianGanWuxing
+//import com.rick.bazi.util.WuXingWeightCalculator.getDiZhiSeasonElement
+//import com.rick.bazi.util.WuXingWeightCalculator.getTianGanWuxing
 import com.rick.bazi.util.WuXingWeightCalculator.isSeasonStrongForTian
 
 /**
@@ -96,11 +99,11 @@ fun calculateTotalWuXingWeightsV2(baziData: BaziData): Map<WuXing, Float> {
 
     // 获取日主
     val dayMasterTg = baziData.dayTiangan
-    val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(dayMasterTg)
+    val dayMasterWx = getTianGanWuxing(dayMasterTg)
 
     // 获取月支五行
     val monthDz = baziData.monthDizhi
-    val monthWx = WuXingWeightCalculator.getDiZhiMainElement(monthDz)
+    val monthWx = getDiZhiMainElement(monthDz)
 
     // 判断得令类型
     val lingType = when {
@@ -116,21 +119,21 @@ fun calculateTotalWuXingWeightsV2(baziData: BaziData): Map<WuXing, Float> {
     // ==============================
 
     // 年干
-    val yearGanWx = WuXingWeightCalculator.getTianGanWuxing(baziData.yearTiangan)
+    val yearGanWx = getTianGanWuxing(baziData.yearTiangan)
     val yearGanCoef = getTianGanCoefficient("年干")
     weights[yearGanWx] = weights[yearGanWx]!! + yearGanCoef
 
     // 月干
-    val monthGanWx = WuXingWeightCalculator.getTianGanWuxing(baziData.monthTiangan)
+    val monthGanWx = getTianGanWuxing(baziData.monthTiangan)
     val monthGanCoef = getTianGanCoefficient("月干")
     weights[monthGanWx] = weights[monthGanWx]!! + monthGanCoef
 
     // 日干（日主自身，权重设为 2.0 表示核心地位）
-    val dayGanWx = WuXingWeightCalculator.getTianGanWuxing(baziData.dayTiangan)
+    val dayGanWx = getTianGanWuxing(baziData.dayTiangan)
     weights[dayGanWx] = weights[dayGanWx]!! + 2.0f
 
     // 时干
-    val hourGanWx = WuXingWeightCalculator.getTianGanWuxing(baziData.hourTiangan)
+    val hourGanWx = getTianGanWuxing(baziData.hourTiangan)
     val hourGanCoef = getTianGanCoefficient("时干")
     weights[hourGanWx] = weights[hourGanWx]!! + hourGanCoef
 
@@ -148,7 +151,7 @@ fun calculateTotalWuXingWeightsV2(baziData: BaziData): Map<WuXing, Float> {
 
     for ((dz, posCoef, posName) in diZhiPositions) {
         // 地支主气五行
-        val dzMainWx = WuXingWeightCalculator.getDiZhiMainElement(dz)
+        val dzMainWx = getDiZhiMainElement(dz)
 
         // 主气权重累加（主气占 70%）
         weights[dzMainWx] = weights[dzMainWx]!! + posCoef * 0.7f
@@ -158,13 +161,13 @@ fun calculateTotalWuXingWeightsV2(baziData: BaziData): Map<WuXing, Float> {
 
         if (cangGans.size >= 2) {
             // 中气（占 30%）
-            val zhongQiWx = WuXingWeightCalculator.getTianGanWuxing(cangGans[1])
+            val zhongQiWx = getTianGanWuxing(cangGans[1])
             weights[zhongQiWx] = weights[zhongQiWx]!! + posCoef * 0.3f
         }
 
         if (cangGans.size >= 3) {
             // 余气（占 15%）
-            val yuQiWx = WuXingWeightCalculator.getTianGanWuxing(cangGans[2])
+            val yuQiWx = getTianGanWuxing(cangGans[2])
             weights[yuQiWx] = weights[yuQiWx]!! + posCoef * 0.15f
         }
 
@@ -244,6 +247,13 @@ fun calculateTotalWuXingWeightsV2(baziData: BaziData): Map<WuXing, Float> {
         }
     }
 
+    baziData.jinWeight = weights[WuXing.WUXING_JIN] ?: 0f
+    baziData.muWeight = weights[WuXing.WUXING_MU] ?: 0f
+    baziData.shuiWeight = weights[WuXing.WUXING_SHUI] ?: 0f
+    baziData.huoWeight = weights[WuXing.WUXING_HUO] ?: 0f
+    baziData.tuWeight = weights[WuXing.WUXING_TU] ?: 0f
+
+    baziData.weights = weights
     return weights
 }
 
@@ -251,29 +261,29 @@ fun calculateTotalWuXingWeightsV2(baziData: BaziData): Map<WuXing, Float> {
 // 辅助函数
 // ==============================
 
-/**
- * 判断五行相生
- */
-private fun isSheng(a: WuXing, b: WuXing): Boolean = when (a) {
-    WuXing.WUXING_MU -> b == WuXing.WUXING_HUO
-    WuXing.WUXING_HUO -> b == WuXing.WUXING_TU
-    WuXing.WUXING_TU -> b == WuXing.WUXING_JIN
-    WuXing.WUXING_JIN -> b == WuXing.WUXING_SHUI
-    WuXing.WUXING_SHUI -> b == WuXing.WUXING_MU
-    else -> false
-}
-
-/**
- * 判断五行相克
- */
-private fun isKe(a: WuXing, b: WuXing): Boolean = when (a) {
-    WuXing.WUXING_MU -> b == WuXing.WUXING_TU
-    WuXing.WUXING_TU -> b == WuXing.WUXING_SHUI
-    WuXing.WUXING_SHUI -> b == WuXing.WUXING_HUO
-    WuXing.WUXING_HUO -> b == WuXing.WUXING_JIN
-    WuXing.WUXING_JIN -> b == WuXing.WUXING_MU
-    else -> false
-}
+///**
+// * 判断五行相生
+// */
+//private fun isSheng(a: WuXing, b: WuXing): Boolean = when (a) {
+//    WuXing.WUXING_MU -> b == WuXing.WUXING_HUO
+//    WuXing.WUXING_HUO -> b == WuXing.WUXING_TU
+//    WuXing.WUXING_TU -> b == WuXing.WUXING_JIN
+//    WuXing.WUXING_JIN -> b == WuXing.WUXING_SHUI
+//    WuXing.WUXING_SHUI -> b == WuXing.WUXING_MU
+//    else -> false
+//}
+//
+///**
+// * 判断五行相克
+// */
+//private fun isKe(a: WuXing, b: WuXing): Boolean = when (a) {
+//    WuXing.WUXING_MU -> b == WuXing.WUXING_TU
+//    WuXing.WUXING_TU -> b == WuXing.WUXING_SHUI
+//    WuXing.WUXING_SHUI -> b == WuXing.WUXING_HUO
+//    WuXing.WUXING_HUO -> b == WuXing.WUXING_JIN
+//    WuXing.WUXING_JIN -> b == WuXing.WUXING_MU
+//    else -> false
+//}
 
 /**
  * 计算通根级别
@@ -326,7 +336,7 @@ private fun calculateTongRootLevel(baziData: BaziData, dayMasterWuxing: WuXing):
 fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
 
     val dayMasterTg = baziData.dayTiangan
-    val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(dayMasterTg)
+    val dayMasterWx = getTianGanWuxing(dayMasterTg)
 
     val diZhiUtil = DiZhiUtil()
 
@@ -334,7 +344,7 @@ fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
     // 1. 得令评分（0~6分）
     // ==============================
     val monthDz = baziData.monthDizhi
-    val monthWx = WuXingWeightCalculator.getDiZhiMainElement(monthDz)
+    val monthWx = getDiZhiMainElement(monthDz)
 
     val seasonScore = when {
         // 当令同气：月支五行与日主相同
@@ -365,7 +375,7 @@ fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
     var weakRootCount = 0
 
     for ((dz, factor, posName) in allDizhi) {
-        val dzMainWx = WuXingWeightCalculator.getDiZhiMainElement(dz)
+        val dzMainWx = getDiZhiMainElement(dz)
         val cangGans = diZhiUtil.getCanggan(dz)
 
         // 本气根：+2分
@@ -386,7 +396,7 @@ fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
 
         // 中气根：+1分
         if (cangGans.size >= 2) {
-            val zhongQiWx = WuXingWeightCalculator.getTianGanWuxing(cangGans[1])
+            val zhongQiWx = getTianGanWuxing(cangGans[1])
             if (zhongQiWx == dayMasterWx) {
                 rootScore += 1f
                 mediumRootCount++
@@ -395,7 +405,7 @@ fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
 
         // 余气根：+0.5分
         if (cangGans.size >= 3) {
-            val yuQiWx = WuXingWeightCalculator.getTianGanWuxing(cangGans[2])
+            val yuQiWx = getTianGanWuxing(cangGans[2])
             if (yuQiWx == dayMasterWx) {
                 rootScore += 0.5f
                 weakRootCount++
@@ -421,7 +431,7 @@ fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
     )
 
     for ((tg, factor, posName) in tianGanItems) {
-        val tgWx = WuXingWeightCalculator.getTianGanWuxing(tg)
+        val tgWx = getTianGanWuxing(tg)
 
         // 比劫（同我）
         if (tgWx == dayMasterWx) {
@@ -449,13 +459,13 @@ fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
     )
 
     for ((dz, factor, posName) in diZhiItems) {
-        val dzMainWx = WuXingWeightCalculator.getDiZhiMainElement(dz)
+        val dzMainWx = getDiZhiMainElement(dz)
         val cangGans = diZhiUtil.getCanggan(dz)
 
         // 遍历藏干
         for (i in cangGans.indices) {
             val cg = cangGans[i]
-            val cgWx = WuXingWeightCalculator.getTianGanWuxing(cg)
+            val cgWx = getTianGanWuxing(cg)
 
             // 藏干权重系数：本气0.7，中气0.3，余气0.15
             val cangWeight = when (i) {
@@ -522,16 +532,38 @@ fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
     // 确保分数在0~20范围内
     totalScore = totalScore.coerceIn(0f, 20f)
 
+    val weights = baziData.weights
+
+//    val dayMasterWx = WuXingWeightCalculator.getTianGanWuxing(baziData.dayTiangan)
+    val dayMasterWeight = weights[dayMasterWx] ?: 0f
+    var totalWeight = weights.values.sum()
+    if (totalWeight == 0f) {
+        totalWeight = 0f
+    }
+    val percent = dayMasterWeight / totalWeight * 100f
+
     // ==============================
     // 7. 判定旺衰等级
     // ==============================
+//    val strengthLevel = when {
+//        totalScore >= 10f -> StrengthLevel.VERY_STRONG
+//        totalScore >= 7f -> StrengthLevel.STRONG
+//        totalScore >= 4f -> StrengthLevel.MEDIUM
+//        totalScore >= 2f -> StrengthLevel.WEAK
+//        else -> StrengthLevel.VERY_WEAK
+//    }
+
     val strengthLevel = when {
-        totalScore >= 10f -> StrengthLevel.VERY_STRONG
-        totalScore >= 7f -> StrengthLevel.STRONG
-        totalScore >= 4f -> StrengthLevel.MEDIUM
-        totalScore >= 2f -> StrengthLevel.WEAK
+        percent > 75f -> StrengthLevel.VERY_STRONG
+        percent >= 60f -> StrengthLevel.STRONG
+        percent >= 40f -> StrengthLevel.MEDIUM
+        percent >= 25f -> StrengthLevel.WEAK
         else -> StrengthLevel.VERY_WEAK
     }
+
+//    baziData.strengthLevel = strengthLevel
+    baziData.dayMasterWeightPercent = percent
+    baziData.dayMasterTotalScore = totalScore
 
     return DayMasterStrength(
         wuxing = dayMasterWx,

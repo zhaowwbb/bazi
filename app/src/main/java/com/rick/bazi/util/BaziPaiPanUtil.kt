@@ -3,6 +3,7 @@ package com.rick.bazi.util
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.rick.bazi.data.BaziData
+import com.rick.bazi.data.BaziGeJu
 import com.rick.bazi.data.BaziInfo
 import com.rick.bazi.data.DiZhi
 import com.rick.bazi.data.TianGan
@@ -87,15 +88,49 @@ class BaziPaiPanUtil {
 
         RootCounter.calculateRootCounts(data)
 //        WuXingWeightCalculator.calculateTotalWuXingWeights(data)
+
         calculateTotalWuXingWeightsV2(data)
-        GeJuUtil().getGJ(data)
+
+        val dayMasterStrength = calculateDayMasterStrength(data)
+        data.dayMasterStrength = dayMasterStrength
+//        println("data.dayMasterStrength：${data.dayMasterStrength}")
+
+        val gj = determineBaziGeJu(data)
+        data.gj = gj
+//        println("格局：${gj}")
+
+//        GeJuUtil().getGJ(data)
+
 //        analyze(data)
 //        WuXingWeightCalculator.calculateTotalWuXingWeights(data)
 
-
-
         // 选择核心用神
-        PrimaryYongShenSelector.selectAndUpdate(data)
+//        PrimaryYongShenSelector.selectAndUpdate(data)
+
+        val result = determineYongXiJi(
+            data = data,
+            weights = data.weights,
+            strengthLevel = dayMasterStrength.strengthLevel,
+            dayMasterPercent = data.dayMasterWeightPercent
+        )
+//        data.yongXiJiResult = result
+        updateBaziDataWithYongXiJi(data, result)
+
+        println("=== Bazi data ===")
+        println("用神：${data.yongShenList}")
+        println("喜神：${data.xiyongShenSet}")
+        println("忌神：${data.jiShenList}")
+        println("通关用神：${data.tongguanShenList}")
+        println("调候用神：${data.tiaohouShenList}")
+
+
+//        println("=== 示例1：甲木日主，木旺（极强）===")
+//        println("格局：${result.patternType.displayName}")
+//        println("用神：${result.yongShenName}")
+//        println("喜神：${result.xiShenName}")
+//        println("忌神：${result.jiShenNames.joinToString("、")}")
+//        println("理由：${result.yongShenReason}")
+//        println()
 
         baziModel.setBaziData(data)
 
