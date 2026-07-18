@@ -26,7 +26,8 @@ data class DaYun(
     val startAge: Int,
     val ganZhi: String, // 干支
     val overallScore: Float, // 综合评分 0-100
-    val details: List<ScoreDetail>
+    val details: List<ScoreDetail>,
+    val logMessages : List<String>, // 日志信息
 )
 
 // 流年数据

@@ -93,7 +93,7 @@ class BaziPaiPanUtil {
 
         val dayMasterStrength = calculateDayMasterStrength(data)
         data.dayMasterStrength = dayMasterStrength
-//        println("data.dayMasterStrength：${data.dayMasterStrength}")
+        println("data.dayMasterStrength：${data.dayMasterStrength}")
 
         val gj = determineBaziGeJu(data)
         data.gj = gj

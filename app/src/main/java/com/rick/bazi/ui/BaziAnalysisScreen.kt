@@ -290,9 +290,10 @@ private fun PillarColumn(
 
 @Composable
 private fun DayMasterStrengthCard(data: BaziData) {
-    val strength = calculateDayMasterStrength(data)
+//    val strength = calculateDayMasterStrength(data)
+    val strength = data.dayMasterStrength
 
-    AnalysisCard(
+        AnalysisCard(
         title = "日主旺衰",
         icon = { Icon(Icons.Default.Favorite, contentDescription = null, tint = BadColor) }
     ) {
@@ -318,7 +319,7 @@ private fun DayMasterStrengthCard(data: BaziData) {
         )
         InfoItem("地支根数", "${strength.rootCount}个")
         InfoItem("生助权重", String.format("%.2f", strength.supportWeight))
-        InfoItem("旺衰评分", "${strength.score}/20")
+        InfoItem("旺衰评分", "${data.dayMasterStrength.score}/20")
 
         // 进度条显示强度
         Spacer(Modifier.height(8.dp))
@@ -508,7 +509,7 @@ private fun GeJuCard(data: BaziData) {
 private fun YongShenAnalysisCard(data: BaziData) {
 //    val character = data.yongXiJiResult.yongShenReason
 
-    println("data.yongXiJiResult：${data.yongXiJiResult}")
+//    println("data.yongXiJiResult：${data.yongXiJiResult}")
 
     AnalysisCard(
         title = "用神分析",

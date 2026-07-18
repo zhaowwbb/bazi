@@ -448,7 +448,6 @@ fun updateBaziDataWithYongXiJi(
         result.tongGuanShen != result.tiaoHouShen) {
         yongShenList.add(result.tongGuanShen)
     }
-//    data.yongShenList = yongShenList.toList()
     data.yongShenList = getShiShenListByWuXingList(yongShenList, dayMaster)
 
     // 2. 喜神列表（生用神者）
@@ -458,11 +457,9 @@ fun updateBaziDataWithYongXiJi(
     }
     // 如果用神本身也是喜神（如专旺格中用神和喜神相同的情况）
     // 但通常喜神是生用神的五行，与用神不同
-//    data.xiyongShenSet = xiyongShenSet.toSet()
     data.xiyongShenSet = getShiShenSetByWuXingSet(xiyongShenSet, dayMaster)
     // 3. 忌神列表（从忌神列表中取出，按权重从大到小排序）
     val jiShenList = result.jiShenList.toList()
-//    data.jiShenList = jiShenList
     data.jiShenList = getShiShenListByWuXingList(jiShenList, dayMaster)
 
     // 4. 通关用神列表
@@ -470,7 +467,7 @@ fun updateBaziDataWithYongXiJi(
     if (result.tongGuanShen != null) {
         tongguanShenList.add(result.tongGuanShen)
     }
-//    data.tongguanShenList = tongguanShenList.toList()
+
     data.tongguanShenList = getShiShenListByWuXingList(tongguanShenList, dayMaster)
 
     // 5. 调候用神列表
@@ -478,8 +475,21 @@ fun updateBaziDataWithYongXiJi(
     if (result.tiaoHouShen != null) {
         tiaohouShenList.add(result.tiaoHouShen)
     }
-//    data.tiaohouShenList = tiaohouShenList.toList()
     data.tiaohouShenList = getShiShenListByWuXingList(tiaohouShenList, dayMaster)
+
+    // 2. 合并用神和喜神为一个集合（用于快速查找）
+    val protectSet = mutableSetOf<Any>()
+    protectSet.addAll(data.yongShenList)
+    protectSet.addAll(data.xiyongShenSet)
+
+    // 3. 过滤忌神列表：保留不在保护集合中的元素
+    val filteredJiShen = data.jiShenList.filterNot { it in protectSet }
+
+//    val cleanedJiShenList = data.jiShenList.filter { it !in protectSet }
+
+    println("filteredJiShen :${filteredJiShen}, protectSet=${protectSet}")
+    // 4. 更新 data.jiShenList
+    data.jiShenList = filteredJiShen
 
     data.yongXiJiResult = result
 }

@@ -334,7 +334,7 @@ private fun calculateTongRootLevel(baziData: BaziData, dayMasterWuxing: WuXing):
  * @return DayMasterStrength 日主旺衰结果
  */
 fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
-
+    println("[Enter] calculateDayMasterStrength：")
     val dayMasterTg = baziData.dayTiangan
     val dayMasterWx = getTianGanWuxing(dayMasterTg)
 
@@ -527,7 +527,12 @@ fun calculateDayMasterStrength(baziData: BaziData): DayMasterStrength {
     // ==============================
     // 6. 综合计算总分
     // ==============================
+
+    println("####   rootScore：${rootScore}, seasonScore：${seasonScore}, supportScore：${supportScore}, tongRootScore：${tongRootScore}, penaltyScore：${penaltyScore}")
+
     var totalScore = seasonScore + rootScore + supportScore + tongRootScore + penaltyScore
+
+    println("[totalScore] ：${totalScore}")
 
     // 确保分数在0~20范围内
     totalScore = totalScore.coerceIn(0f, 20f)
